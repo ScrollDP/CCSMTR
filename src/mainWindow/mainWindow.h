@@ -13,6 +13,8 @@ public:
     explicit mainWindow(QWidget *parent = nullptr);
     ~mainWindow() override;
 
+    static bool isAnyConnected; // Add a static boolean variable to check if any connection is active
+
 protected:
     void closeEvent(QCloseEvent *event) override; // Override the closeEvent method
 

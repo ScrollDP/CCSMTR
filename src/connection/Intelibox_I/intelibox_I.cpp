@@ -1,8 +1,12 @@
 #include "intelibox_I.h"
+#include "../../mainWindow/mainWindow.h"
 #include <QSerialPortInfo>
 #include <QLineEdit>
+#include <QMessageBox>
+#include <QCloseEvent>
 
 intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent) {
+
     ui.setupUi(this);
 
     // Populate the serial port combo box with available ports
@@ -17,17 +21,24 @@ intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent) {
 }
 
 void intelibox_I::onConnectButtonClicked() {
-    // Implement the connection logic
-    ui.connectButton->setEnabled(false);
-    ui.serialPortComboBox->setEnabled(false);
+    if (!mainWindow::isAnyConnected) {
+        // Implement the connection logic
+        ui.connectButton->setEnabled(false);
+        ui.serialPortComboBox->setEnabled(false);
+        mainWindow::isAnyConnected = true;
+        // Disable the "Connect" button of the other communication
+    }
 }
 
 void intelibox_I::onDisconnectButtonClicked() {
     // Implement the disconnection logic
     ui.connectButton->setEnabled(true);
     ui.serialPortComboBox->setEnabled(true);
+    mainWindow::isAnyConnected = false;
+    // Enable the "Connect" button of the other communication
 }
 
 void intelibox_I::onInputReturnPressed() {
     // Implement the logic to send the input
 }
+

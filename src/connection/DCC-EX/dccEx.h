@@ -17,6 +17,8 @@ private slots:
 
 private:
     Ui::dccEx ui;
+
+
 };
 
 #endif //CCSMTR_DCCEX_H

@@ -17,6 +17,7 @@ private slots:
 
 private:
     Ui::intelibox_I ui;
+
 };
 
 #endif //CCSMTR_INTELIBOX_I_H

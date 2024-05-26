@@ -26,7 +26,7 @@ set(FORMS
         src/connection/Intelibox_I/ui_intelibox_I.ui
 )
 execute_process(
-        COMMAND uic -o src/mainWindow/ui_mainwindow.h src/mainWindow/ui_mainwindow.ui
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )
@@ -37,7 +37,7 @@ else()
 endif()
 
 execute_process(
-        COMMAND uic -o src/connection/DCC-EX/ui_dccEx.h src/connection/DCC-EX/ui_dccEx.ui
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/DCC-EX/ui_dccEx.h ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/DCC-EX/ui_dccEx.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )
@@ -48,7 +48,7 @@ else()
 endif()
 
 execute_process(
-        COMMAND uic -o src/connection/Intelibox_I/ui_intelibox_I.h src/connection/Intelibox_I/ui_intelibox_I.ui
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/Intelibox_I/ui_intelibox_I.h ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/Intelibox_I/ui_intelibox_I.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )
