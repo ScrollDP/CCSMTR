@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CCSMTR</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuConnection">
+    <property name="title">
+     <string>&amp;Connection</string>
+    </property>
+    <addaction name="actionDCC_EX"/>
+    <addaction name="actionIntelibox_I"/>
+   </widget>
+   <widget class="QMenu" name="menuThrottle">
+    <property name="title">
+     <string>Too&amp;ls</string>
+    </property>
+    <addaction name="actionThrottle"/>
+    <addaction name="actionTurnouts"/>
+   </widget>
+   <addaction name="menuConnection"/>
+   <addaction name="menuThrottle"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionExit_and_Terminate">
+   <property name="text">
+    <string>Exit and Terminate</string>
+   </property>
+  </action>
+  <action name="actionDCC_EX">
+   <property name="text">
+    <string>&amp;DCC-EX</string>
+   </property>
+  </action>
+  <action name="actionIntelibox_I">
+   <property name="text">
+    <string>&amp;Intelibox I</string>
+   </property>
+  </action>
+  <action name="actionThrottle">
+   <property name="text">
+    <string>&amp;Throttle</string>
+   </property>
+  </action>
+  <action name="actionTurnouts">
+   <property name="text">
+    <string>T&amp;urnouts</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

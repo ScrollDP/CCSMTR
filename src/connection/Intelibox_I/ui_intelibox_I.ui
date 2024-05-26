@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>intelibox_I</class>
+ <widget class="QWidget" name="intelibox_I">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Intelibox_I</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QComboBox" name="serialPortComboBox"/>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="consoleOutput"/>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="consoleInput"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="connectButton">
+     <property name="text">
+      <string>Connect</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="disconnectButton">
+     <property name="text">
+      <string>Disconnect</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
