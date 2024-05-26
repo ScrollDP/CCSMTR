@@ -2,6 +2,7 @@
 #define CCSMTR_DCCEX_H
 
 #include <QWidget>
+#include <QSerialPort>
 #include "ui_dccEx.h"
 
 class dccEx : public QWidget {
@@ -17,8 +18,13 @@ private slots:
 
 private:
     Ui::dccEx ui;
+    QSerialPort *arduino;
 
+    void onDataReceived();
 
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
+    bool setupArduino();
 };
 
 #endif //CCSMTR_DCCEX_H
