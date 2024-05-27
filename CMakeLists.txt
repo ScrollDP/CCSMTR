@@ -19,6 +19,8 @@ set(SOURCES
         src/connection/DCC-EX/dccEx.h
         src/connection/Intelibox_I/intelibox_I.cpp
         src/connection/Intelibox_I/intelibox_I.h
+        src/Throttle/ThrottleWindow.cpp
+        src/Throttle/ThrottleWindow.h
 )
 set(FORMS
         src/mainWindow/ui_mainwindow.ui
@@ -56,6 +58,17 @@ if(result)
     message(WARNING "uic command for Intelibox_I failed with error: ${output}")
 else()
     message(STATUS "uic command for Intelibox_I succeeded: ${output}")
+endif()
+
+execute_process(
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/Throttle/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/Throttle/ui_ThrottleWindow.ui
+        RESULT_VARIABLE result
+        OUTPUT_VARIABLE output
+)
+if(result)
+    message(WARNING "uic command for Throttle failed with error: ${output}")
+else()
+    message(STATUS "uic command for Throttle succeeded: ${output}")
 endif()
 
 

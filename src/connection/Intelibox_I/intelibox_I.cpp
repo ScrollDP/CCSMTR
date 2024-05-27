@@ -4,7 +4,6 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <sstream>
 #include <vector>
 #include <string>
 

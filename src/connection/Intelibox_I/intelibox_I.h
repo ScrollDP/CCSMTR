@@ -18,7 +18,7 @@ private slots:
     void onDataReceived(); // Add a slot for when data is received
 
 private:
-    Ui::intelibox_I ui;
+    Ui::intelibox_I ui{};
     QSerialPort *intelibox; // Add a QSerialPort member
 
 

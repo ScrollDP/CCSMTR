@@ -6,8 +6,10 @@ mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent) {
     dccExWindow = new dccEx(nullptr);
     intelibox_IWindow = new intelibox_I(nullptr);
 
+
     connect(ui.actionDCC_EX, &QAction::triggered, this, &mainWindow::onActionDCC_EXTriggered);
     connect(ui.actionIntelibox_I, &QAction::triggered, this, &mainWindow::onActionIntelibox_ITriggered);
+    connect(ui.actionThrottle, &QAction::triggered, this, &mainWindow::onActionThrottleTriggered);
 }
 
 mainWindow::~mainWindow() {
@@ -29,3 +31,9 @@ void mainWindow::closeEvent(QCloseEvent *event) {
     event->accept();
 }
 bool mainWindow::isAnyConnected = false; // Add this line
+
+void mainWindow::onActionThrottleTriggered() {
+    auto *throttleWindow = new ThrottleWindow(this);
+    throttleWindow->setAttribute(Qt::WA_DeleteOnClose);
+    throttleWindow->show();
+}

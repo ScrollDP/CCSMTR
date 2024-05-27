@@ -17,7 +17,7 @@ private slots:
     void onInputReturnPressed();
 
 private:
-    Ui::dccEx ui;
+    Ui::dccEx ui{};
     QSerialPort *arduino;
 
     void onDataReceived();
