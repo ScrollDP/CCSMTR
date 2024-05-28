@@ -39,10 +39,8 @@ void mainWindow::closeEvent(QCloseEvent *event) {
     event->accept();
 }
 
-
 void mainWindow::onActionThrottleTriggered() {
     auto *throttleWindow = new ThrottleWindow(this,dccExWindow);
     throttleWindow->setAttribute(Qt::WA_DeleteOnClose);
     throttleWindow->show();
 }
-

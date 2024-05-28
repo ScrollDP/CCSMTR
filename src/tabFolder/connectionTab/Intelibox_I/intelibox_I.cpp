@@ -4,8 +4,6 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <vector>
-#include <string>
 
 
 intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSerialPort(this)) {
@@ -24,10 +22,7 @@ intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSeri
 }
 
 void intelibox_I::onConnectButtonClicked() {
-    if (!intelibox->isOpen() && mainWindow::isAnyConnected){
-        QMessageBox::critical(this, "Error", "Port už je otvoreny!");
-    }
-    else{
+    if (intelibox->isOpen() && !mainWindow::isAnyConnected){
         // Implement the connectionTab logic
         intelibox->setPortName(ui.serialPortComboBox->currentText());
         intelibox->open(QIODevice::ReadWrite);
@@ -41,18 +36,21 @@ void intelibox_I::onConnectButtonClicked() {
         ui.serialPortComboBox->setEnabled(false);
         mainWindow::isAnyConnected = true;
     }
+    else{
+        QMessageBox::critical(this, "Error", "Port už je otvoreny!");
+    }
 }
 
 void intelibox_I::onDisconnectButtonClicked() {
-    if (!intelibox->isOpen() && mainWindow::isAnyConnected){
-        QMessageBox::warning(this, "Info", "Najprv odpojte predchádzajúce pripojenie!");
-    }
-    else {
+    if (intelibox->isOpen() && !mainWindow::isAnyConnected){
         // Implement the disconnection logic
         intelibox->close();
         ui.connectButton->setEnabled(true);
         ui.serialPortComboBox->setEnabled(true);
         mainWindow::isAnyConnected = false;
+    }
+    else {
+        QMessageBox::warning(this, "Info", "Najprv odpojte predchádzajúce pripojenie!");
     }
 }
 
