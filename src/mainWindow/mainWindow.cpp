@@ -5,7 +5,7 @@ mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent) {
     ui.setupUi(this);
     dccExWindow = new dccEx(nullptr);
     intelibox_IWindow = new intelibox_I(nullptr);
-    powerWindow = new PowerWindow(nullptr, dccExWindow);
+    powerWindow = new PowerWindow(nullptr);
 
     connect(ui.actionDCC_EX, &QPushButton::clicked, this, &mainWindow::onActionDCC_EXTriggered);
     connect(ui.actionIntelibox_I, &QPushButton::clicked, this, &mainWindow::onActionIntelibox_ITriggered);

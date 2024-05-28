@@ -24,7 +24,6 @@ private:
     QSerialPort *intelibox; // Add a QSerialPort member
 
 
-
 };
 
 #endif //CCSMTR_INTELIBOX_I_H
