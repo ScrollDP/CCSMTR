@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <charconv>
 
 
 intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSerialPort(this)) {
@@ -61,6 +62,18 @@ void intelibox_I::onInputReturnPressed() {
 
 std::string hexToStringVerbose(const std::string& hex) {
     std::string result;
+    for (size_t i = 0; i < hex.length(); i += 2) {
+        std::string byteString = hex.substr(i, 2);
+        unsigned int byte = 0;
+        std::from_chars(byteString.data(), byteString.data() + 2, byte, 16);
+        result += static_cast<char>(byte);
+    }
+    return result;
+}
+
+/*
+std::string hexToStringVerbose(const std::string& hex) {
+    std::string result;
 
     for (size_t i = 0; i < hex.length(); i += 2) {
         // Get the current pair of characters
@@ -74,7 +87,7 @@ std::string hexToStringVerbose(const std::string& hex) {
     }
 
     return result;
-}
+}*/
 
 std::string hexToUtf8(const std::string& hex) {
     std::vector<unsigned char> bytes;
