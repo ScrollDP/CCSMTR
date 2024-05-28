@@ -31,7 +31,7 @@ dccEx::dccEx(QWidget *parent) : QWidget(parent){
 void dccEx::onConnectButtonClicked() {
 
       if (!arduino.isOpen() && mainWindow::isAnyConnected){
-          QMessageBox::critical(this, "Error", "Port already opened!");
+          QMessageBox::critical(this, "Error", "Port už je otvoreny!");
       }
          else {
         ui.connectButton->setEnabled(false);
@@ -51,7 +51,7 @@ void dccEx::onConnectButtonClicked() {
 
 void dccEx::onDisconnectButtonClicked() {
     if (!arduino.isOpen() && mainWindow::isAnyConnected){
-        QMessageBox::warning(this, "Info", "First disconect previous connection!");
+        QMessageBox::warning(this, "Info", "Najprv odpojte predchádzajúce pripojenie!");
     }
     else {
         //qDebug() << "Disconnect button clicked: Arduino open status before close = " << arduino.isOpen();

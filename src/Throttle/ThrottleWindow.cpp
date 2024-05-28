@@ -5,22 +5,28 @@
 ThrottleWindow::ThrottleWindow(QWidget *parent, dccEx *dccExInstance) : QMainWindow(parent), ui(new Ui::ThrottleWindow) {
     ui->setupUi(this);
 
-
     // Limit the inputAdress to only accept integer input
     auto* validator = new QIntValidator(this);
     ui->inputAdress->setValidator(validator);
+    ui->EmergencyStop->setStyleSheet("background-color: #8b0000");
 
-    // Initially, disable all the function buttons, the speedSlider, and the ReleaseButton
+
+    // Connect signals and slots
     for (int i = 0; i <= 28; i++) {
         auto* button = this->findChild<QPushButton*>(QString("F%1").arg(i));
         if (button) {
             button->setEnabled(false);
+            connect(button, &QPushButton::clicked, this, [=]() {
+                ThrottleWindow::onFunctionButtonClicked(dccExInstance);
+            });
         }
     }
+
     ui->speedSlider->setEnabled(false);
     ui->ReleaseButton->setEnabled(false);
     ui->ForwardSpeed->setEnabled(false);
     ui->ReverseSpeed->setEnabled(false);
+    ui->EmergencyPause->setEnabled(false);
 
     // Connect signals and slots
     connect(ui->AquireButton, &QPushButton::clicked, this, &ThrottleWindow::onAquireButtonClicked);
@@ -54,6 +60,7 @@ void ThrottleWindow::onAquireButtonClicked() {
     ui->ReverseSpeed->setEnabled(true);
     ui->inputAdress->setEnabled(false);
     ui->AquireButton->setEnabled(false);
+    ui->EmergencyPause->setEnabled(true);
 }
 
 void ThrottleWindow::onReleaseButtonClicked() {
@@ -68,6 +75,7 @@ void ThrottleWindow::onReleaseButtonClicked() {
     ui->ReleaseButton->setEnabled(false);
     ui->inputAdress->setEnabled(true);
     ui->AquireButton->setEnabled(true);
+    ui->EmergencyPause->setEnabled(false);
 }
 
 void ThrottleWindow::onSpeedSliderValueChanged(int value,dccEx *dccExInstance) {
@@ -95,6 +103,33 @@ void ThrottleWindow::onReverseButtonClicked(dccEx *dccExInstance) {
     ThrottleWindow::sendToArduino(command, dccExInstance);
 }
 
+
+void ThrottleWindow::onFunctionButtonClicked(dccEx *dccExInstance) {
+    // Get the button that was clicked
+    auto* button = qobject_cast<QPushButton*>(sender());
+    if (!button) {
+        return;
+    }
+
+    // Extract the number from the button's name
+    QString name = button->objectName();
+    int number = name.mid(1).toInt();  // Remove the 'F' and convert the rest to an integer
+
+    // Toggle the state of the button
+    int newState = (functionButtonStates[name] + 1) % 2;
+    functionButtonStates[name] = newState;
+
+    // Change the color of the button
+    if (newState == 1) {
+        button->setStyleSheet("background-color: #FFA500; border: 2px solid #FFA500;");
+    } else {
+        button->setStyleSheet("");
+    }
+
+    // Send the command to the Arduino
+    QString command = QString("<F %1 %2 %3>").arg(ui->inputAdress->text()).arg(number).arg(newState);
+    ThrottleWindow::sendToArduino(command, dccExInstance);
+}
 
 void ThrottleWindow::sendToArduino(const QString &dataList, dccEx *dccExInstance) {
     // Send the command to the Arduino

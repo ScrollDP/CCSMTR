@@ -23,18 +23,20 @@ private slots:
 
     void onSpeedSliderValueChanged(int value,dccEx *dccExInstance);
 
+    void onFunctionButtonClicked(dccEx *dccExInstance);
 
 private:
     Ui::ThrottleWindow *ui; // Add this line
     int direction = 1;
     int FRspeed = 0; // TODO: skúsiť zmeniť na 0 na -1 pri testoch
+    QMap<QString, int> functionButtonStates;
+
     void onForwardButtonClicked(dccEx *dccExInstance);
 
 
     void onReverseButtonClicked(dccEx *dccExInstance);
 
     static void sendToArduino(const QString &dataList, dccEx *dccExInstance) ;
-
 
 
 };

@@ -7,9 +7,9 @@ mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent) {
     intelibox_IWindow = new intelibox_I(nullptr);
 
 
-    connect(ui.actionDCC_EX, &QAction::triggered, this, &mainWindow::onActionDCC_EXTriggered);
-    connect(ui.actionIntelibox_I, &QAction::triggered, this, &mainWindow::onActionIntelibox_ITriggered);
-    connect(ui.actionThrottle, &QAction::triggered, this, &mainWindow::onActionThrottleTriggered);
+    connect(ui.actionDCC_EX, &QPushButton::clicked, this, &mainWindow::onActionDCC_EXTriggered);
+    connect(ui.actionIntelibox_I, &QPushButton::clicked, this, &mainWindow::onActionIntelibox_ITriggered);
+    connect(ui.actionThrottle, &QPushButton::clicked, this, &mainWindow::onActionThrottleTriggered);
 }
 
 mainWindow::~mainWindow() {

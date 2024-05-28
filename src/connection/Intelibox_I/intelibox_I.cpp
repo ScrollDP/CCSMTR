@@ -27,7 +27,7 @@ intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSeri
 
 void intelibox_I::onConnectButtonClicked() {
     if (!intelibox->isOpen() && mainWindow::isAnyConnected){
-        QMessageBox::critical(this, "Error", "Port already opened!");
+        QMessageBox::critical(this, "Error", "Port už je otvoreny!");
     }
     else{
         // Implement the connection logic
@@ -47,7 +47,7 @@ void intelibox_I::onConnectButtonClicked() {
 
 void intelibox_I::onDisconnectButtonClicked() {
     if (!intelibox->isOpen() && mainWindow::isAnyConnected){
-        QMessageBox::warning(this, "Info", "First disconect previous connection!");
+        QMessageBox::warning(this, "Info", "Najprv odpojte predchádzajúce pripojenie!");
     }
     else {
         // Implement the disconnection logic
