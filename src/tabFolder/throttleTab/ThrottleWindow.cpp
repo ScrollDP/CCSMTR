@@ -49,7 +49,6 @@ void ThrottleWindow::connectButtons(dccEx *dccExInstance) {
         QString command = QString("<t %1 %2 %3>").arg(ui->inputAdress->text()).arg(-1).arg(direction);
         //QString command = QString("<- " + ui->inputAdress->text() + ">");
         sendToArduino(command, dccExInstance);
-        //ui->speedSlider->setValue(0);
     });
 }
 

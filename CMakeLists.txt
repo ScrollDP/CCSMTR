@@ -15,17 +15,17 @@ set(SOURCES
         src/mainWindow/mainWindow.h
         "src/station_controll/stationControll.cpp"
         "src/station_controll/stationControll.h"
-        src/connection/DCC-EX/dccEx.cpp
-        src/connection/DCC-EX/dccEx.h
-        src/connection/Intelibox_I/intelibox_I.cpp
-        src/connection/Intelibox_I/intelibox_I.h
-        src/Throttle/ThrottleWindow.cpp
-        src/Throttle/ThrottleWindow.h
+        src/tabFolder/connectionTab/DCC-EX/dccEx.cpp
+        src/tabFolder/connectionTab/DCC-EX/dccEx.h
+        src/tabFolder/connectionTab/Intelibox_I/intelibox_I.cpp
+        src/tabFolder/connectionTab/Intelibox_I/intelibox_I.h
+        src/tabFolder/throttleTab/ThrottleWindow.cpp
+        src/tabFolder/throttleTab/ThrottleWindow.h
 )
 set(FORMS
         src/mainWindow/ui_mainwindow.ui
-        src/connection/DCC-EX/ui_dccEx.ui
-        src/connection/Intelibox_I/ui_intelibox_I.ui
+        src/tabFolder/connectionTab/DCC-EX/ui_dccEx.ui
+        src/tabFolder/connectionTab/Intelibox_I/ui_intelibox_I.ui
 )
 execute_process(
         COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.ui
@@ -39,7 +39,7 @@ else()
 endif()
 
 execute_process(
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/DCC-EX/ui_dccEx.h ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/DCC-EX/ui_dccEx.ui
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/DCC-EX/ui_dccEx.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/DCC-EX/ui_dccEx.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )
@@ -50,7 +50,7 @@ else()
 endif()
 
 execute_process(
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/Intelibox_I/ui_intelibox_I.h ${CMAKE_CURRENT_SOURCE_DIR}/src/connection/Intelibox_I/ui_intelibox_I.ui
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/Intelibox_I/ui_intelibox_I.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/Intelibox_I/ui_intelibox_I.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )
@@ -61,7 +61,7 @@ else()
 endif()
 
 execute_process(
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/Throttle/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/Throttle/ui_ThrottleWindow.ui
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/throttleTab/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/throttleTab/ui_ThrottleWindow.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )

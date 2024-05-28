@@ -1,5 +1,5 @@
 #include "dccEx.h"
-#include "../../mainWindow/mainWindow.h"
+#include "../../../mainWindow/mainWindow.h"
 #include <QSerialPortInfo>
 #include <QMessageBox>
 #include <QKeyEvent>

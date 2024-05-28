@@ -3,9 +3,9 @@
 
 #include <QMainWindow>
 #include "ui_mainwindow.h"
-#include "../connection/DCC-EX/dccEx.h" // Include the dccEx.h file
-#include "../connection/Intelibox_I/intelibox_I.h" // Include the intelibox_I.h file
-#include "../Throttle/ThrottleWindow.h" // Include the ThrottleWindow.h file
+#include "../tabFolder/connectionTab/DCC-EX/dccEx.h" // Include the dccEx.h file
+#include "../tabFolder/connectionTab/Intelibox_I/intelibox_I.h" // Include the intelibox_I.h file
+#include "../tabFolder/throttleTab/ThrottleWindow.h" // Include the ThrottleWindow.h file
 
 class mainWindow : public QMainWindow {
 Q_OBJECT
@@ -14,7 +14,7 @@ public:
     explicit mainWindow(QWidget *parent = nullptr);
     ~mainWindow() override;
 
-    static bool isAnyConnected; // Add a static boolean variable to check if any connection is active
+    static bool isAnyConnected; // Add a static boolean variable to check if any connectionTab is active
 
 protected:
     void closeEvent(QCloseEvent *event) override; // Override the closeEvent method

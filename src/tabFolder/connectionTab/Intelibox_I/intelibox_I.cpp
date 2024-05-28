@@ -1,5 +1,5 @@
 #include "intelibox_I.h"
-#include "../../mainWindow/mainWindow.h"
+#include "../../../mainWindow/mainWindow.h"
 #include <QSerialPortInfo>
 #include <QLineEdit>
 #include <QMessageBox>
@@ -30,7 +30,7 @@ void intelibox_I::onConnectButtonClicked() {
         QMessageBox::critical(this, "Error", "Port už je otvoreny!");
     }
     else{
-        // Implement the connection logic
+        // Implement the connectionTab logic
         intelibox->setPortName(ui.serialPortComboBox->currentText());
         intelibox->open(QIODevice::ReadWrite);
         intelibox->setBaudRate(QSerialPort::Baud115200);
