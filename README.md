@@ -4,8 +4,9 @@ Zatial co funguje:
 - pomocou projektu DCC-EX je mozne cez serialovu linku ovladať lokomotivy.
 - podpora cez wsl vo windowse
   Ciele:
-- ~~ovladanie lokomotiv~~
-    - ulozenie profilu lokomotiv
+  - ~~ovladanie lokomotiv s "DCC-EX"~~
+      - ulozenie profilu lokomotiv
+  - ovladanie lokomotiv s "Intelibox I"
 - samotne kolajisko:
   - navrhnutie kolajiska
     - dynamicky vytvarat kolajisko
