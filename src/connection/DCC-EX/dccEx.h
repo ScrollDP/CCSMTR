@@ -4,21 +4,29 @@
 #include <QWidget>
 #include <QSerialPort>
 #include "ui_dccEx.h"
+#include <QThread>
 
 class dccEx : public QWidget {
 Q_OBJECT
 
 public:
     explicit dccEx(QWidget *parent = nullptr);
+    void sendCommand(const QString &dataList); // Add a method to send the command
+    void onInputReturnPressed();
+
+    ~dccEx() override;
+
 
 private slots:
     void onConnectButtonClicked();
     void onDisconnectButtonClicked();
-    void onInputReturnPressed();
+
 
 private:
     Ui::dccEx ui{};
-    QSerialPort *arduino;
+    QSerialPort arduino{};
+
+
 
     void onDataReceived();
 

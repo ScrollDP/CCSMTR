@@ -14,10 +14,10 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -32,7 +32,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout_4;
     QLabel *AdressLabel;
-    QTextEdit *inputAdress;
+    QLineEdit *inputAdress;
     QPushButton *AquireButton;
     QPushButton *ReleaseButton;
     QGridLayout *gridLayout;
@@ -68,17 +68,23 @@ public:
     QVBoxLayout *verticalLayout_3;
     QLabel *speedLabel;
     QSlider *speedSlider;
+    QPushButton *ForwardSpeed;
+    QPushButton *pushButton_2;
 
     void setupUi(QMainWindow *ThrottleWindow)
     {
         if (ThrottleWindow->objectName().isEmpty())
             ThrottleWindow->setObjectName(QString::fromUtf8("ThrottleWindow"));
         ThrottleWindow->resize(456, 478);
-        centralWidget = new QWidget(ThrottleWindow);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(ThrottleWindow->sizePolicy().hasHeightForWidth());
+        ThrottleWindow->setSizePolicy(sizePolicy);
+        ThrottleWindow->setMinimumSize(QSize(456, 478));
+        ThrottleWindow->setMaximumSize(QSize(456, 478));
+        centralWidget = new QWidget(ThrottleWindow);
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -100,17 +106,18 @@ public:
 
         verticalLayout_4->addWidget(AdressLabel);
 
-        inputAdress = new QTextEdit(centralWidget);
+        inputAdress = new QLineEdit(centralWidget);
         inputAdress->setObjectName(QString::fromUtf8("inputAdress"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(inputAdress->sizePolicy().hasHeightForWidth());
+        inputAdress->setSizePolicy(sizePolicy1);
         inputAdress->setMinimumSize(QSize(100, 50));
         inputAdress->setMaximumSize(QSize(16777215, 50));
         QFont font1;
         font1.setPointSize(18);
         inputAdress->setFont(font1);
-        inputAdress->setContextMenuPolicy(Qt::ContextMenuPolicy::DefaultContextMenu);
-        inputAdress->setAcceptDrops(true);
-        inputAdress->setLayoutDirection(Qt::LayoutDirection::LeftToRight);
-        inputAdress->setAutoFillBackground(false);
 
         verticalLayout_4->addWidget(inputAdress);
 
@@ -343,7 +350,7 @@ public:
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setSizeConstraint(QLayout::SizeConstraint::SetDefaultConstraint);
-        verticalLayout_3->setContentsMargins(-1, -1, -1, 15);
+        verticalLayout_3->setContentsMargins(-1, -1, -1, 7);
         speedLabel = new QLabel(centralWidget);
         speedLabel->setObjectName(QString::fromUtf8("speedLabel"));
         QFont font2;
@@ -360,6 +367,18 @@ public:
         speedSlider->setOrientation(Qt::Orientation::Vertical);
 
         verticalLayout_3->addWidget(speedSlider);
+
+        ForwardSpeed = new QPushButton(centralWidget);
+        ForwardSpeed->setObjectName(QString::fromUtf8("ForwardSpeed"));
+        ForwardSpeed->setFont(font2);
+
+        verticalLayout_3->addWidget(ForwardSpeed);
+
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setFont(font2);
+
+        verticalLayout_3->addWidget(pushButton_2);
 
 
         horizontalLayout->addLayout(verticalLayout_3);
@@ -410,6 +429,8 @@ public:
         F23->setText(QCoreApplication::translate("ThrottleWindow", "F23", nullptr));
         F24->setText(QCoreApplication::translate("ThrottleWindow", "F24", nullptr));
         speedLabel->setText(QCoreApplication::translate("ThrottleWindow", "Speed", nullptr));
+        ForwardSpeed->setText(QCoreApplication::translate("ThrottleWindow", "Forward", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("ThrottleWindow", "Reverse", nullptr));
     } // retranslateUi
 
 };

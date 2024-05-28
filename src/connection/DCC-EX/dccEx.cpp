@@ -4,8 +4,10 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 
-dccEx::dccEx(QWidget *parent) : QWidget(parent), arduino(new QSerialPort(this)) {
+dccEx::dccEx(QWidget *parent) : QWidget(parent){
     ui.setupUi(this);
+
+
     for (const QSerialPortInfo &info : QSerialPortInfo::availablePorts())
         ui.serialPortComboBox->addItem(info.portName());
 
@@ -15,33 +17,63 @@ dccEx::dccEx(QWidget *parent) : QWidget(parent), arduino(new QSerialPort(this)) 
     ui.consoleInput->installEventFilter(this);
 }
 
+
+
+  /*  if (mainWindow::isAnyConnected) {
+        for (const QString &data : dataList) {
+            arduino.write(data.toUtf8());
+            qDebug()<< data;
+            ui.consoleOutput->append(data);
+        }
+    }*/
+
+
 void dccEx::onConnectButtonClicked() {
-    if (!mainWindow::isAnyConnected && setupArduino()) {
+
+      if (!arduino.isOpen() && mainWindow::isAnyConnected){
+          QMessageBox::critical(this, "Error", "Port already opened!");
+      }
+         else {
         ui.connectButton->setEnabled(false);
         ui.serialPortComboBox->setEnabled(false);
         mainWindow::isAnyConnected = true;
-        connect(arduino, &QSerialPort::readyRead, this, &dccEx::onDataReceived);
+        arduino.setPortName(ui.serialPortComboBox->currentText());
+        arduino.open(QIODevice::ReadWrite);
+        arduino.setBaudRate(QSerialPort::Baud115200);
+        arduino.setDataBits(QSerialPort::Data8);
+        arduino.setParity(QSerialPort::NoParity);
+        arduino.setStopBits(QSerialPort::OneStop);
+        arduino.setFlowControl(QSerialPort::NoFlowControl);
+        //qDebug()<< "Connect button clicked: Arduino open status = " << arduino.isOpen();
+        connect(&arduino, &QSerialPort::readyRead, this, &dccEx::onDataReceived);
     }
 }
 
 void dccEx::onDisconnectButtonClicked() {
-    arduino->close();
-    ui.connectButton->setEnabled(true);
-    ui.serialPortComboBox->setEnabled(true);
-    mainWindow::isAnyConnected = false;
+    if (!arduino.isOpen() && mainWindow::isAnyConnected){
+        QMessageBox::warning(this, "Info", "First disconect previous connection!");
+    }
+    else {
+        //qDebug() << "Disconnect button clicked: Arduino open status before close = " << arduino.isOpen();
+        arduino.close();
+        //qDebug() << "Disconnect button clicked: Arduino open status after close = " << arduino.isOpen();
+        ui.connectButton->setEnabled(true);
+        ui.serialPortComboBox->setEnabled(true);
+        mainWindow::isAnyConnected = false;
+    }
 }
 
 void dccEx::onInputReturnPressed() {
     QString dataToSend = "<" + ui.consoleInput->text().trimmed() + ">";
     if (!dataToSend.isEmpty() && mainWindow::isAnyConnected) {
-        arduino->write(dataToSend.toUtf8());
+        arduino.write(dataToSend.toUtf8());
         ui.consoleOutput->append(dataToSend);
         ui.consoleInput->clear();
     }
 }
 
 void dccEx::onDataReceived() {
-    ui.consoleOutput->append(arduino->readAll());
+    ui.consoleOutput->append(arduino.readAll());
 }
 
 bool dccEx::eventFilter(QObject *obj, QEvent *event) {
@@ -55,13 +87,56 @@ bool dccEx::eventFilter(QObject *obj, QEvent *event) {
     return QWidget::eventFilter(obj, event);
 }
 
-bool dccEx::setupArduino() {
-    arduino->setPortName(ui.serialPortComboBox->currentText());
-    arduino->open(QIODevice::ReadWrite);
-    arduino->setBaudRate(QSerialPort::Baud115200);
-    arduino->setDataBits(QSerialPort::Data8);
-    arduino->setParity(QSerialPort::NoParity);
-    arduino->setStopBits(QSerialPort::OneStop);
-    arduino->setFlowControl(QSerialPort::NoFlowControl);
-    return arduino->isOpen() || QMessageBox::critical(this, "Error", "Failed to open the port!");
+/*
+void dccEx::sendCommand(const QString(&dataList)) {
+    std::string str = dataList.toStdString();
+    QByteArray byteArray = dataList.toUtf8();
+    const char* cstr = byteArray.constData();
+    qDebug() << "Data to send: " << cstr;
+    if (arduino.isOpen()) {
+        qDebug() << "Before write: Arduino open status = " << arduino.isOpen();
+
+        qint64 bytesWritten = arduino.write(cstr);
+        if (bytesWritten == -1) {
+            qWarning() << "Error writing data to serial port:" << arduino.errorString();
+        } else {
+            qWarning() << "Bytes written to serial port:" << bytesWritten;
+        }
+        ui.consoleOutput->append(cstr);
+        qDebug() << "After write: Arduino open status = " << arduino.isOpen();
+    } else {
+        qDebug() << "Failed to write to Arduino: device not open or not connected";
+    }
+}*/
+void dccEx::sendCommand(const QString &dataList) {
+    if (!&arduino || !ui.consoleOutput) {
+        qWarning() << "Arduino or console output not initialized";
+        return;
+    }
+
+    std::string str = dataList.toStdString();
+    QByteArray byteArray = dataList.toUtf8();
+    const char* cstr = byteArray.constData();
+    //qDebug() << "Data to send: " << cstr;
+
+    if (arduino.isOpen()) {
+        //qDebug() << "Before write: Arduino open status = " << arduino.isOpen();
+
+        qint64 bytesWritten = arduino.write(cstr);
+        if (bytesWritten == -1) {
+            qWarning() << "Error writing data to serial port:" << arduino.errorString();
+        } else {
+            qWarning() << "Bytes written to serial port:" << bytesWritten;
+        }
+        ui.consoleOutput->append(cstr);
+        //qDebug() << "After write: Arduino open status = " << arduino.isOpen();
+    } else {
+        qWarning() << "Failed to write to Arduino: device not open or not connected";
+    }
+}
+
+dccEx::~dccEx() {
+    mainWindow::isAnyConnected = false;
+    delete &arduino;
+
 }

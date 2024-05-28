@@ -11,6 +11,8 @@ Q_OBJECT
 public:
     explicit intelibox_I(QWidget *parent = nullptr);
 
+    ~intelibox_I() override;
+
 private slots:
     void onConnectButtonClicked();
     void onDisconnectButtonClicked();

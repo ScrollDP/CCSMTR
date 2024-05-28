@@ -19,10 +19,12 @@ mainWindow::~mainWindow() {
 
 void mainWindow::onActionDCC_EXTriggered() {
     dccExWindow->show();
+
 }
 
 void mainWindow::onActionIntelibox_ITriggered() {
     intelibox_IWindow->show();
+
 }
 
 void mainWindow::closeEvent(QCloseEvent *event) {
@@ -33,7 +35,7 @@ void mainWindow::closeEvent(QCloseEvent *event) {
 bool mainWindow::isAnyConnected = false; // Add this line
 
 void mainWindow::onActionThrottleTriggered() {
-    auto *throttleWindow = new ThrottleWindow(this);
+    auto *throttleWindow = new ThrottleWindow(this,dccExWindow);
     throttleWindow->setAttribute(Qt::WA_DeleteOnClose);
     throttleWindow->show();
 }

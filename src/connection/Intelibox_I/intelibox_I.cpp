@@ -9,8 +9,9 @@
 
 
 intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSerialPort(this)) {
-
     ui.setupUi(this);
+
+
 
     // Populate the serial port combo box with available ports
     const auto infos = QSerialPortInfo::availablePorts();
@@ -25,7 +26,10 @@ intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSeri
 }
 
 void intelibox_I::onConnectButtonClicked() {
-    if (!mainWindow::isAnyConnected) {
+    if (!intelibox->isOpen() && mainWindow::isAnyConnected){
+        QMessageBox::critical(this, "Error", "Port already opened!");
+    }
+    else{
         // Implement the connection logic
         intelibox->setPortName(ui.serialPortComboBox->currentText());
         intelibox->open(QIODevice::ReadWrite);
@@ -42,11 +46,16 @@ void intelibox_I::onConnectButtonClicked() {
 }
 
 void intelibox_I::onDisconnectButtonClicked() {
-    // Implement the disconnection logic
-    intelibox->close();
-    ui.connectButton->setEnabled(true);
-    ui.serialPortComboBox->setEnabled(true);
-    mainWindow::isAnyConnected = false;
+    if (!intelibox->isOpen() && mainWindow::isAnyConnected){
+        QMessageBox::warning(this, "Info", "First disconect previous connection!");
+    }
+    else {
+        // Implement the disconnection logic
+        intelibox->close();
+        ui.connectButton->setEnabled(true);
+        ui.serialPortComboBox->setEnabled(true);
+        mainWindow::isAnyConnected = false;
+    }
 }
 
 void intelibox_I::onInputReturnPressed() {
@@ -96,5 +105,11 @@ void intelibox_I::onDataReceived() {
     //backup:
     //std::string verboseData = hexToStringVerbose(hexData.toStdString());
     //ui.consoleOutput->append(QString::fromStdString(verboseData));
+}
+
+intelibox_I::~intelibox_I() {
+    mainWindow::isAnyConnected = false;
+    delete intelibox;
+
 }
 
