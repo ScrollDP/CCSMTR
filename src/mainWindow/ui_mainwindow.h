@@ -11,8 +11,8 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -27,20 +27,22 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_4;
     QVBoxLayout *verticalLayout_2;
     QTabWidget *tabWidget;
     QWidget *connection;
-    QWidget *formLayoutWidget_2;
-    QFormLayout *formLayout_2;
-    QPushButton *actionDCC_EX;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout;
     QPushButton *actionIntelibox_I;
+    QPushButton *actionDCC_EX;
+    QPushButton *actionPower;
     QWidget *tools;
-    QWidget *formLayoutWidget;
-    QFormLayout *formLayout;
+    QWidget *gridLayoutWidget_2;
+    QGridLayout *gridLayout_2;
     QPushButton *actionThrottle;
     QPushButton *actionTurnouts;
-    QVBoxLayout *verticalLayout_4;
-    QFrame *frame;
+    QVBoxLayout *verticalLayout_3;
+    QFrame *frame_2;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -64,6 +66,8 @@ public:
         centralWidget->setSizePolicy(sizePolicy);
         verticalLayout = new QVBoxLayout(centralWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(-1, -1, -1, 0);
@@ -91,62 +95,76 @@ public:
         sizePolicy2.setHeightForWidth(connection->sizePolicy().hasHeightForWidth());
         connection->setSizePolicy(sizePolicy2);
         connection->setMaximumSize(QSize(16777215, 100));
-        formLayoutWidget_2 = new QWidget(connection);
-        formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
-        formLayoutWidget_2->setGeometry(QRect(0, 0, 261, 41));
-        formLayout_2 = new QFormLayout(formLayoutWidget_2);
-        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
-        formLayout_2->setHorizontalSpacing(10);
-        formLayout_2->setContentsMargins(5, 5, 0, 0);
-        actionDCC_EX = new QPushButton(formLayoutWidget_2);
-        actionDCC_EX->setObjectName(QString::fromUtf8("actionDCC_EX"));
-        actionDCC_EX->setMaximumSize(QSize(110, 35));
-
-        formLayout_2->setWidget(0, QFormLayout::LabelRole, actionDCC_EX);
-
-        actionIntelibox_I = new QPushButton(formLayoutWidget_2);
+        gridLayoutWidget = new QWidget(connection);
+        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
+        gridLayoutWidget->setGeometry(QRect(0, 0, 381, 45));
+        gridLayout = new QGridLayout(gridLayoutWidget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setHorizontalSpacing(15);
+        gridLayout->setContentsMargins(5, 5, 5, 5);
+        actionIntelibox_I = new QPushButton(gridLayoutWidget);
         actionIntelibox_I->setObjectName(QString::fromUtf8("actionIntelibox_I"));
+        actionIntelibox_I->setMinimumSize(QSize(110, 35));
         actionIntelibox_I->setMaximumSize(QSize(110, 35));
 
-        formLayout_2->setWidget(0, QFormLayout::FieldRole, actionIntelibox_I);
+        gridLayout->addWidget(actionIntelibox_I, 0, 1, 1, 1);
+
+        actionDCC_EX = new QPushButton(gridLayoutWidget);
+        actionDCC_EX->setObjectName(QString::fromUtf8("actionDCC_EX"));
+        actionDCC_EX->setMinimumSize(QSize(110, 35));
+        actionDCC_EX->setMaximumSize(QSize(110, 35));
+
+        gridLayout->addWidget(actionDCC_EX, 0, 0, 1, 1);
+
+        actionPower = new QPushButton(gridLayoutWidget);
+        actionPower->setObjectName(QString::fromUtf8("actionPower"));
+        actionPower->setMinimumSize(QSize(110, 35));
+        actionPower->setMaximumSize(QSize(110, 35));
+
+        gridLayout->addWidget(actionPower, 0, 2, 1, 1);
 
         tabWidget->addTab(connection, QString());
         tools = new QWidget();
         tools->setObjectName(QString::fromUtf8("tools"));
-        formLayoutWidget = new QWidget(tools);
-        formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(0, 0, 241, 41));
-        formLayout = new QFormLayout(formLayoutWidget);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        formLayout->setHorizontalSpacing(10);
-        formLayout->setContentsMargins(5, 5, 0, 0);
-        actionThrottle = new QPushButton(formLayoutWidget);
+        gridLayoutWidget_2 = new QWidget(tools);
+        gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
+        gridLayoutWidget_2->setGeometry(QRect(0, 0, 261, 45));
+        gridLayout_2 = new QGridLayout(gridLayoutWidget_2);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout_2->setHorizontalSpacing(15);
+        gridLayout_2->setContentsMargins(5, 5, 5, 5);
+        actionThrottle = new QPushButton(gridLayoutWidget_2);
         actionThrottle->setObjectName(QString::fromUtf8("actionThrottle"));
+        actionThrottle->setMinimumSize(QSize(110, 35));
         actionThrottle->setMaximumSize(QSize(110, 35));
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, actionThrottle);
+        gridLayout_2->addWidget(actionThrottle, 0, 0, 1, 1);
 
-        actionTurnouts = new QPushButton(formLayoutWidget);
+        actionTurnouts = new QPushButton(gridLayoutWidget_2);
         actionTurnouts->setObjectName(QString::fromUtf8("actionTurnouts"));
+        actionTurnouts->setMinimumSize(QSize(110, 35));
         actionTurnouts->setMaximumSize(QSize(110, 35));
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, actionTurnouts);
+        gridLayout_2->addWidget(actionTurnouts, 0, 1, 1, 1);
 
         tabWidget->addTab(tools, QString());
 
         verticalLayout_2->addWidget(tabWidget);
 
 
-        verticalLayout->addLayout(verticalLayout_2);
+        verticalLayout_4->addLayout(verticalLayout_2);
 
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        frame = new QFrame(centralWidget);
-        frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setFrameShape(QFrame::Shape::StyledPanel);
-        frame->setFrameShadow(QFrame::Shadow::Raised);
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        frame_2 = new QFrame(centralWidget);
+        frame_2->setObjectName(QString::fromUtf8("frame_2"));
+        frame_2->setFrameShape(QFrame::Shape::StyledPanel);
+        frame_2->setFrameShadow(QFrame::Shadow::Raised);
 
-        verticalLayout_4->addWidget(frame);
+        verticalLayout_3->addWidget(frame_2);
+
+
+        verticalLayout_4->addLayout(verticalLayout_3);
 
 
         verticalLayout->addLayout(verticalLayout_4);
@@ -158,7 +176,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -167,8 +185,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "CCSMTR", nullptr));
-        actionDCC_EX->setText(QCoreApplication::translate("MainWindow", "DCC-EX", nullptr));
         actionIntelibox_I->setText(QCoreApplication::translate("MainWindow", "Intelibox I", nullptr));
+        actionDCC_EX->setText(QCoreApplication::translate("MainWindow", "DCC-EX", nullptr));
+        actionPower->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(connection), QCoreApplication::translate("MainWindow", "Connection", nullptr));
         actionThrottle->setText(QCoreApplication::translate("MainWindow", "Throttle", nullptr));
         actionTurnouts->setText(QCoreApplication::translate("MainWindow", "Turnouts", nullptr));

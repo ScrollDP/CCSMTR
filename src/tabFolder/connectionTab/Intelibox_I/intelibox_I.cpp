@@ -11,8 +11,6 @@
 intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSerialPort(this)) {
     ui.setupUi(this);
 
-
-
     // Populate the serial port combo box with available ports
     const auto infos = QSerialPortInfo::availablePorts();
     for (const QSerialPortInfo &info : infos)

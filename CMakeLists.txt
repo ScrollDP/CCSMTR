@@ -19,8 +19,10 @@ set(SOURCES
         src/tabFolder/connectionTab/DCC-EX/dccEx.h
         src/tabFolder/connectionTab/Intelibox_I/intelibox_I.cpp
         src/tabFolder/connectionTab/Intelibox_I/intelibox_I.h
-        src/tabFolder/throttleTab/ThrottleWindow.cpp
-        src/tabFolder/throttleTab/ThrottleWindow.h
+        src/tabFolder/ToolsTab/Throttle/ThrottleWindow.cpp
+        src/tabFolder/ToolsTab/Throttle/ThrottleWindow.h
+        src/tabFolder/connectionTab/Power/PowerWindow.cpp
+        src/tabFolder/connectionTab/Power/PowerWindow.h
 )
 set(FORMS
         src/mainWindow/ui_mainwindow.ui
@@ -61,7 +63,18 @@ else()
 endif()
 
 execute_process(
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/throttleTab/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/throttleTab/ui_ThrottleWindow.ui
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui
+        RESULT_VARIABLE result
+        OUTPUT_VARIABLE output
+)
+if(result)
+    message(WARNING "uic command for Throttle failed with error: ${output}")
+else()
+    message(STATUS "uic command for Throttle succeeded: ${output}")
+endif()
+
+execute_process(
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/Power/ui_PowerWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/Power/ui_PowerWindow.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )

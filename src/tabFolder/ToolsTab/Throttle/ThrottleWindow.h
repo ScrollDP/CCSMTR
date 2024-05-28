@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "ui_ThrottleWindow.h" // Include the UI header file
-#include "../connectionTab/DCC-EX/dccEx.h"
+#include "../../connectionTab/DCC-EX/dccEx.h"
 
 class ThrottleWindow : public QMainWindow {
 Q_OBJECT

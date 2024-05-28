@@ -7,7 +7,6 @@
 dccEx::dccEx(QWidget *parent) : QWidget(parent){
     ui.setupUi(this);
 
-
     for (const QSerialPortInfo &info : QSerialPortInfo::availablePorts())
         ui.serialPortComboBox->addItem(info.portName());
 
