@@ -19,6 +19,8 @@ ThrottleWindow::ThrottleWindow(QWidget *parent, dccEx *dccExInstance) : QMainWin
     }
     ui->speedSlider->setEnabled(false);
     ui->ReleaseButton->setEnabled(false);
+    ui->ForwardSpeed->setEnabled(false);
+    ui->ReverseSpeed->setEnabled(false);
 
     // Connect signals and slots
     connect(ui->AquireButton, &QPushButton::clicked, this, &ThrottleWindow::onAquireButtonClicked);
@@ -26,6 +28,13 @@ ThrottleWindow::ThrottleWindow(QWidget *parent, dccEx *dccExInstance) : QMainWin
     connect(ui->speedSlider, &QSlider::valueChanged, this, [=](int value) {
         onSpeedSliderValueChanged(value, dccExInstance);
 
+    });
+
+    connect(ui->ForwardSpeed, &QPushButton::clicked, this, [=](){
+        ThrottleWindow::onForwardButtonClicked(dccExInstance);
+    });
+    connect(ui->ReverseSpeed, &QPushButton::clicked, this, [=](){
+        ThrottleWindow::onReverseButtonClicked(dccExInstance);
     });
 
 
@@ -41,6 +50,8 @@ void ThrottleWindow::onAquireButtonClicked() {
     }
     ui->speedSlider->setEnabled(true);
     ui->ReleaseButton->setEnabled(true);
+    ui->ForwardSpeed->setEnabled(true);
+    ui->ReverseSpeed->setEnabled(true);
     ui->inputAdress->setEnabled(false);
     ui->AquireButton->setEnabled(false);
 }
@@ -61,16 +72,35 @@ void ThrottleWindow::onReleaseButtonClicked() {
 
 void ThrottleWindow::onSpeedSliderValueChanged(int value,dccEx *dccExInstance) {
     // When the value of the speedSlider changes, send the command to the Arduino
-    //QString command = QString("<t %1 %2 1>").arg(ui->inputAdress->text()).arg(value);
 
-
-    QString command = QString("<t %1 %2 1>").arg(ui->inputAdress->text()).arg(value);
-    qDebug() << "Command sent SpeedSlider: " << command;
-
-    dccExInstance->sendCommand(command);
-
+    QString command = QString("<t %1 %2 %3>").arg(ui->inputAdress->text()).arg(value).arg(direction);
+    //qDebug() << "Command sent SpeedSlider: " << command;
+    ThrottleWindow::sendToArduino(command, dccExInstance);
 }
 
+void ThrottleWindow::onForwardButtonClicked(dccEx *dccExInstance) {
+    direction = 1;
+    ui->ReverseSpeed->setEnabled(true);
+    ui->ForwardSpeed->setEnabled(false);
+    ui->speedSlider->setValue(0);
+    QString command = QString("<t %1 %2 %3>").arg(ui->inputAdress->text()).arg(FRspeed).arg(direction);
+    ThrottleWindow::sendToArduino(command, dccExInstance);
+}
+void ThrottleWindow::onReverseButtonClicked(dccEx *dccExInstance) {
+    direction = 0;
+    ui->ForwardSpeed->setEnabled(true);
+    ui->ReverseSpeed->setEnabled(false);
+    ui->speedSlider->setValue(0);
+    QString command = QString("<t %1 %2 %3>").arg(ui->inputAdress->text()).arg(FRspeed).arg(direction);
+    ThrottleWindow::sendToArduino(command, dccExInstance);
+}
+
+
+void ThrottleWindow::sendToArduino(const QString &dataList, dccEx *dccExInstance) {
+    // Send the command to the Arduino
+    //qDebug() << "Command sent: " << command;
+    dccExInstance->sendCommand(dataList);
+}
 
 ThrottleWindow::~ThrottleWindow() {
     delete ui;

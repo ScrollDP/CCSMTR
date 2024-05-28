@@ -87,51 +87,30 @@ bool dccEx::eventFilter(QObject *obj, QEvent *event) {
     return QWidget::eventFilter(obj, event);
 }
 
-/*
-void dccEx::sendCommand(const QString(&dataList)) {
-    std::string str = dataList.toStdString();
-    QByteArray byteArray = dataList.toUtf8();
-    const char* cstr = byteArray.constData();
-    qDebug() << "Data to send: " << cstr;
-    if (arduino.isOpen()) {
-        qDebug() << "Before write: Arduino open status = " << arduino.isOpen();
-
-        qint64 bytesWritten = arduino.write(cstr);
-        if (bytesWritten == -1) {
-            qWarning() << "Error writing data to serial port:" << arduino.errorString();
-        } else {
-            qWarning() << "Bytes written to serial port:" << bytesWritten;
-        }
-        ui.consoleOutput->append(cstr);
-        qDebug() << "After write: Arduino open status = " << arduino.isOpen();
-    } else {
-        qDebug() << "Failed to write to Arduino: device not open or not connected";
-    }
-}*/
 void dccEx::sendCommand(const QString &dataList) {
     if (!&arduino || !ui.consoleOutput) {
-        qWarning() << "Arduino or console output not initialized";
+        //qWarning() << "Arduino or console output not initialized";
         return;
     }
 
     std::string str = dataList.toStdString();
     QByteArray byteArray = dataList.toUtf8();
     const char* cstr = byteArray.constData();
-    //qDebug() << "Data to send: " << cstr;
+    qDebug() << "Data to send: " << cstr;
 
     if (arduino.isOpen()) {
         //qDebug() << "Before write: Arduino open status = " << arduino.isOpen();
 
         qint64 bytesWritten = arduino.write(cstr);
         if (bytesWritten == -1) {
-            qWarning() << "Error writing data to serial port:" << arduino.errorString();
+            //qWarning() << "Error writing data to serial port:" << arduino.errorString();
         } else {
-            qWarning() << "Bytes written to serial port:" << bytesWritten;
+            //qWarning() << "Bytes written to serial port:" << bytesWritten;
         }
         ui.consoleOutput->append(cstr);
         //qDebug() << "After write: Arduino open status = " << arduino.isOpen();
     } else {
-        qWarning() << "Failed to write to Arduino: device not open or not connected";
+        //qWarning() << "Failed to write to Arduino: device not open or not connected";
     }
 }
 
