@@ -18,13 +18,12 @@ dccEx::dccEx(QWidget *parent) : QWidget(parent), arduino(new QSerialPort(this)) 
 
 void dccEx::onConnectButtonClicked() {
 
-      if (arduino->isOpen() && !mainWindow::isAnyConnected){
-
+      if (!arduino->isOpen() && mainWindow::isAnyConnected){
+          QMessageBox::critical(this, "Error", "Port už je otvoreny!");
+      } else {
           setupArduino();
           //qDebug()<< "Connect button clicked: Arduino open status = " << arduino->isOpen();
           connect(arduino.get(), &QSerialPort::readyRead, this, &dccEx::onDataReceived);
-      } else {
-          QMessageBox::critical(this, "Error", "Port už je otvoreny!");
     }
 }
 
@@ -42,17 +41,16 @@ void dccEx::setupArduino() {
 }
 
 void dccEx::onDisconnectButtonClicked() {
-    if (arduino->isOpen() && !mainWindow::isAnyConnected){
+    if (!arduino->isOpen() && mainWindow::isAnyConnected){
+        QMessageBox::warning(this, "Info", "Najprv odpojte predchádzajúce pripojenie!");
+    }
+    else {
         //qDebug() << "Disconnect button clicked: Arduino open status before close = " << arduino->isOpen();
         arduino->close();
         //qDebug() << "Disconnect button clicked: Arduino open status after close = " << arduino->isOpen();
         ui.connectButton->setEnabled(true);
         ui.serialPortComboBox->setEnabled(true);
         mainWindow::isAnyConnected = false;
-
-    }
-    else {
-        QMessageBox::warning(this, "Info", "Najprv odpojte predchádzajúce pripojenie!");
     }
 }
 
