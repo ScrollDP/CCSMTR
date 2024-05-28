@@ -7,10 +7,11 @@ Zatial co funguje:
   - ~~ovladanie lokomotiv s "DCC-EX"~~
       - ulozenie profilu lokomotiv
   - ovladanie lokomotiv s "Intelibox I"
+      - komunikacia cez intellibox 1 (serial)
 - samotne kolajisko:
   - navrhnutie kolajiska
     - dynamicky vytvarat kolajisko
     - ulozenie kolajiska
-- komunikacia cez intellibox 1 (serial)
+
 
 ![img.png](img.png)
