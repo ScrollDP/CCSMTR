@@ -5,8 +5,20 @@
 #ifndef CCSMTR_STATIONCONTROLL_H
 #define CCSMTR_STATIONCONTROLL_H
 
+#include "ui_stationControll.h"
+#include "TurnoutsRails/rails.h"
 
-class stationControll {
+
+class stationControll : public QWidget {
+
+public:
+    explicit stationControll(QWidget *parent = nullptr);
+    ~stationControll() override;
+
+
+private:
+    Ui::stationControll uiSC{};
+    rails *railsScene = new rails();
 
 };
 

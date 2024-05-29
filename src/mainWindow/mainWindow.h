@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ui_mainwindow.h"
+#include "../station_controll/stationControll.h" // Include the stationControll.h file
 #include "../tabFolder/connectionTab/DCC-EX/dccEx.h" // Include the dccEx.h file
 #include "../tabFolder/connectionTab/Intelibox_I/intelibox_I.h" // Include the intelibox_I.h file
 #include "../tabFolder/ToolsTab/Throttle/ThrottleWindow.h" // Include the ThrottleWindow.h file
@@ -28,6 +29,7 @@ private slots:
 
 private:
     Ui::MainWindow ui{};
+    stationControll *stationControllWindow; // Add a pointer to a stationControll window
     dccEx *dccExWindow; // Add a pointer to a dccEx window
     intelibox_I *intelibox_IWindow; // Add a pointer to an Intelibox_I window
     PowerWindow *powerWindow; // Add a pointer to a PowerWindow window

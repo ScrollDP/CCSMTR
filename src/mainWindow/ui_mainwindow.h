@@ -79,7 +79,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy1);
-        tabWidget->setMinimumSize(QSize(0, 0));
+        tabWidget->setMinimumSize(QSize(16777215, 85));
         tabWidget->setMaximumSize(QSize(16777215, 85));
         tabWidget->setBaseSize(QSize(0, 0));
         QFont font1;

@@ -3,9 +3,16 @@
 
 mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent) {
     ui.setupUi(this);
+    //loading stationControll class to automatickly load the ui
+    stationControllWindow = new stationControll(this);
+    ui.verticalLayout_3->addWidget(stationControllWindow);
+
+
+
     dccExWindow = new dccEx(nullptr);
     intelibox_IWindow = new intelibox_I(nullptr);
     powerWindow = new PowerWindow(nullptr, dccExWindow);
+
 
     connect(ui.actionDCC_EX, &QPushButton::clicked, this, &mainWindow::onActionDCC_EXTriggered);
     connect(ui.actionIntelibox_I, &QPushButton::clicked, this, &mainWindow::onActionIntelibox_ITriggered);

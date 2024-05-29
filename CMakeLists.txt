@@ -23,11 +23,17 @@ set(SOURCES
         src/tabFolder/ToolsTab/Throttle/ThrottleWindow.h
         src/tabFolder/connectionTab/Power/PowerWindow.cpp
         src/tabFolder/connectionTab/Power/PowerWindow.h
+        src/station_controll/TurnoutsRails/rails.cpp
+        src/station_controll/TurnoutsRails/rails.h
+        src/station_controll/ClickLineEvent.h
 )
 set(FORMS
         src/mainWindow/ui_mainwindow.ui
         src/tabFolder/connectionTab/DCC-EX/ui_dccEx.ui
         src/tabFolder/connectionTab/Intelibox_I/ui_intelibox_I.ui
+        src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui
+        src/tabFolder/connectionTab/Power/ui_PowerWindow.ui
+        src/station_controll/ui_stationControll.ui
 )
 execute_process(
         COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.ui
@@ -79,9 +85,20 @@ execute_process(
         OUTPUT_VARIABLE output
 )
 if(result)
-    message(WARNING "uic command for Throttle failed with error: ${output}")
+    message(WARNING "uic command for Power failed with error: ${output}")
 else()
-    message(STATUS "uic command for Throttle succeeded: ${output}")
+    message(STATUS "uic command for Power succeeded: ${output}")
+endif()
+
+execute_process(
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/station_controll/ui_stationControll.h ${CMAKE_CURRENT_SOURCE_DIR}/src/station_controll/ui_stationControll.ui
+        RESULT_VARIABLE result
+        OUTPUT_VARIABLE output
+)
+if(result)
+    message(WARNING "uic command for station_controll failed with error: ${output}")
+else()
+    message(STATUS "uic command for station_controll succeeded: ${output}")
 endif()
 
 
