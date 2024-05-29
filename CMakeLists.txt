@@ -13,8 +13,8 @@ set(SOURCES
         src/main.cpp
         src/mainWindow/mainWindow.cpp
         src/mainWindow/mainWindow.h
-        "src/station_controll/stationControll.cpp"
-        "src/station_controll/stationControll.h"
+        src/station_controll/stationControll.cpp
+        src/station_controll/stationControll.h
         src/tabFolder/connectionTab/DCC-EX/dccEx.cpp
         src/tabFolder/connectionTab/DCC-EX/dccEx.h
         src/tabFolder/connectionTab/Intelibox_I/intelibox_I.cpp
