@@ -4,7 +4,9 @@
 #include <QGraphicsView>
 #include <QPainter>
 #include <QGraphicsScene>
-#include "../ClickLineEvent.h"
+#include <QGridLayout>
+#include <QLabel>
+
 class rails {
 
 public:
@@ -14,6 +16,11 @@ public:
     QGraphicsScene* railsSceneGraphic= new QGraphicsScene();
 
 private:
+
+    void setupScene();
+    void addLineToScene(int x1, int y1, int x2, int y2, QColor color);
+    void addLineWithTurn(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle);
+    void addLineWithTurnMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle);
 
 
 };

@@ -27,7 +27,7 @@ public:
     {
         if (stationControll->objectName().isEmpty())
             stationControll->setObjectName(QString::fromUtf8("stationControll"));
-        stationControll->resize(627, 364);
+        stationControll->resize(1192, 733);
         verticalLayout = new QVBoxLayout(stationControll);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         graphicsView = new QGraphicsView(stationControll);

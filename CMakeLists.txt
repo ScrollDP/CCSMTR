@@ -25,7 +25,6 @@ set(SOURCES
         src/tabFolder/connectionTab/Power/PowerWindow.h
         src/station_controll/TurnoutsRails/rails.cpp
         src/station_controll/TurnoutsRails/rails.h
-        src/station_controll/ClickLineEvent.h
 )
 set(FORMS
         src/mainWindow/ui_mainwindow.ui

@@ -41,6 +41,9 @@ public:
     QGridLayout *gridLayout_2;
     QPushButton *actionThrottle;
     QPushButton *actionTurnouts;
+    QWidget *LayoutEdit;
+    QWidget *gridLayoutWidget_3;
+    QGridLayout *gridLayout_3;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame_2;
     QStatusBar *statusBar;
@@ -79,7 +82,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy1);
-        tabWidget->setMinimumSize(QSize(16777215, 85));
+        tabWidget->setMinimumSize(QSize(0, 85));
         tabWidget->setMaximumSize(QSize(16777215, 85));
         tabWidget->setBaseSize(QSize(0, 0));
         QFont font1;
@@ -148,6 +151,15 @@ public:
         gridLayout_2->addWidget(actionTurnouts, 0, 1, 1, 1);
 
         tabWidget->addTab(tools, QString());
+        LayoutEdit = new QWidget();
+        LayoutEdit->setObjectName(QString::fromUtf8("LayoutEdit"));
+        gridLayoutWidget_3 = new QWidget(LayoutEdit);
+        gridLayoutWidget_3->setObjectName(QString::fromUtf8("gridLayoutWidget_3"));
+        gridLayoutWidget_3->setGeometry(QRect(0, 0, 781, 41));
+        gridLayout_3 = new QGridLayout(gridLayoutWidget_3);
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        gridLayout_3->setContentsMargins(0, 0, 0, 0);
+        tabWidget->addTab(LayoutEdit, QString());
 
         verticalLayout_2->addWidget(tabWidget);
 
@@ -192,6 +204,7 @@ public:
         actionThrottle->setText(QCoreApplication::translate("MainWindow", "Throttle", nullptr));
         actionTurnouts->setText(QCoreApplication::translate("MainWindow", "Turnouts", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tools), QCoreApplication::translate("MainWindow", "Tools", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(LayoutEdit), QCoreApplication::translate("MainWindow", "Layout Edit", nullptr));
     } // retranslateUi
 
 };

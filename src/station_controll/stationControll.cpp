@@ -4,11 +4,11 @@
 stationControll::stationControll(QWidget *parent) : QWidget(parent) {
     uiSC.setupUi(this);
 
-    //add backgroound color to graphicsView dark grey
-    uiSC.graphicsView->setStyleSheet("background-color: #2f2f2f");
-
-    //adding the rails window to the stationControll window
+    //background color of graphics: something between black and darkgray
+    uiSC.graphicsView->setBackgroundBrush(QBrush(QColor(50,50,50)));
+    //add rails to the ui
     uiSC.graphicsView->setScene(railsScene->railsSceneGraphic);
+
 
 }
 

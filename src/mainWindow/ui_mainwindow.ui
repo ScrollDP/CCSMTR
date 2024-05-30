@@ -64,7 +64,7 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>16777215</width>
+            <width>0</width>
             <height>85</height>
            </size>
           </property>
@@ -89,7 +89,7 @@
            <enum>QTabWidget::TabPosition::North</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="documentMode">
            <bool>false</bool>
@@ -263,6 +263,22 @@
               </widget>
              </item>
             </layout>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="LayoutEdit">
+           <attribute name="title">
+            <string>Layout Edit</string>
+           </attribute>
+           <widget class="QWidget" name="gridLayoutWidget_3">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>781</width>
+              <height>46</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3"/>
            </widget>
           </widget>
          </widget>
