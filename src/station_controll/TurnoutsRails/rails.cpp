@@ -33,15 +33,13 @@ void rails::setupScene() {
 
 
 
-
-    //rail 40 pixels long
-    //addLineToScene(200, 0, 240, 0, Qt::darkGray);
     //turnout Left 40 pixels long 45 degree north
-    //addLineToScene(240, 0, 280, -40, Qt::green);
+    addLineWithTurn(280, 0, 240, 40, Qt::green, 0, 180);
     //imaginary turnout switch
-    //addLineToScene(240, 0, 280, 0, Qt::yellow);
+    addLineWithTurn(280, 0, 240, 0, Qt::yellow, 0, 180);
 
-    //turnout Left north 40 pixels long 90 degree north
+    //turnout Left 45 degree north
+    addLineWithFlippedMirror(360, -40, 320, 0, Qt::green, 0, 0);
     //addLineToScene(280, -40, 280, -80, Qt::green);
     //imaginary turnout switch under 45 degree
     //addLineToScene(280, -40, 320, -80, Qt::yellow);
@@ -125,8 +123,8 @@ void rails::setupScene() {
 
 }
 
-void rails::addLineToScene(int x1, int y1, int x2, int y2, QColor color) {
-    QGraphicsLineItem *line = new QGraphicsLineItem(x1, y1, x2, y2);
+void rails::addLineToScene(int x1, int y1, int x2, int y2, QColor color) const {
+    auto *line = new QGraphicsLineItem(x1, y1, x2, y2);
     //add condition if color is yellow no width
     if(color == Qt::yellow)
         line->setPen(QPen(color, 0, Qt::SolidLine, Qt::MPenCapStyle, Qt::MPenJoinStyle));
@@ -151,7 +149,7 @@ void rails::addLineWithTurn(int x1, int y1, int x2, int y2, QColor color, int tu
     int y3 = y1 + sin(newDirection) * (40 + turnLength);
 
     // Second part of the line: after the turn
-    addLineToScene(x1 + 40, y1, x3, y3, color);
+    addLineToScene(x1 + 40, y1, x3, y3, Qt::darkMagenta);
 }
 
 void rails::addLineWithTurnMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle) {
@@ -169,5 +167,41 @@ void rails::addLineWithTurnMirror(int x1, int y1, int x2, int y2, QColor color, 
     int y3 = y1 - sin(newDirection) * (40 + turnLength);
 
     // Second part of the line: after the turn
-    addLineToScene(x1 - 40, y1, x3, y3, color);
+    addLineToScene(x1 - 40, y1, x3, y3, Qt::darkMagenta);
+}
+
+void rails::addLineWithFlipped(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle) {
+    // First part of the line: straight until the turn
+    addLineToScene(x1, y1, x1, y1 + 40, color);
+
+    // Calculate the direction of the first line segment
+    double direction = atan2(y2 - y1, x2 - x1);
+
+    // Calculate the new direction after the turn
+    double newDirection = direction + angle * M_PI / 180;
+
+    // Calculate the end point of the second line segment
+    int x3 = x1 + cos(newDirection) * (40 + turnLength);
+    int y3 = y1 + 40 + sin(newDirection) * (40 + turnLength);
+
+    // Second part of the line: after the turn
+    addLineToScene(x1, y1 + 40, x3, y3, Qt::darkMagenta);
+}
+
+void rails::addLineWithFlippedMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle) {
+    // First part of the line: straight until the turn
+    addLineToScene(x1, y1, x1, y1 - 40, color);
+
+    // Calculate the direction of the first line segment
+    double direction = atan2(y1 - y2, x1 - x2);
+
+    // Calculate the new direction after the turn
+    double newDirection = direction + angle * M_PI / 180;
+
+    // Calculate the end point of the second line segment
+    int x3 = x1 - cos(newDirection) * (40 + turnLength);
+    int y3 = y1 - 40 - sin(newDirection) * (40 + turnLength);
+
+    // Second part of the line: after the turn
+    addLineToScene(x1, y1 - 40, x3, y3, Qt::darkMagenta);
 }
