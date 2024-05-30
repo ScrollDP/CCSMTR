@@ -15,31 +15,35 @@ void rails::setupScene() {
     addLineToScene(0, 0, 120, 0, Qt::darkGray);
 
     //under 45 degree and 80 pixels long and make end longer by 20 pixels
-    addLineWithTurn(120, 0, 160, 40, Qt::red, 10, 0);
+    addLineWithTurnAngle(120, 0, 160, 40, Qt::red, 20, 0, 0);
     //imaginary turnout switch
-    addLineWithTurn(120, 0, 160, 0, Qt::yellow, 0, 0);
+    addLineWithTurnAngle(120, 0, 160, 0, Qt::yellow, 0, 0, 0);
     //under 45 degree and 40 pixels long
-    addLineWithTurn(120, 80, 160, 40, Qt::blue, 10, 0);
+    addLineWithTurnAngle(120, 80, 160, 40, Qt::blue, 10, 0, 0);
     //imaginary turnout switch
-    addLineWithTurn(120, 80, 160, 80, Qt::yellow, 0, 0);
+    addLineWithTurnAngle(120, 80, 160, 80, Qt::yellow, 0, 0, 0);
     //turnout like this: addLineToScene(160, 40, 200, 0, Qt::red);
-    addLineWithTurnMirror(280, 80, 200, 0, Qt::red, 10, 0);
+    addLineWithTurnAngleMirror(280, 80, 200, 0, Qt::red, 10, 0, 0);
     //imaginary turnout switch
-    addLineWithTurnMirror(280, 80, 200, 80, Qt::yellow, 0, 0);
+    addLineWithTurnAngleMirror(280, 80, 200, 80, Qt::yellow, 0, 0, 0);
     //turnout opsite of addLineWithTurn(120, 0, 160, 40, Qt::red, 20, 0);
-    addLineWithTurnMirror(280, 0, 200, 80, Qt::blue, 10, 0);
+    addLineWithTurnAngleMirror(280, 0, 200, 80, Qt::blue, 10, 0, 0);
     //imaginary turnout switch
-    addLineWithTurnMirror(280, 0, 200, 0, Qt::yellow, 0, 0);
+    addLineWithTurnAngleMirror(280, 0, 200, 0, Qt::yellow, 0, 0, 0);
 
 
 
     //turnout Left 40 pixels long 45 degree north
-    addLineWithTurn(280, 0, 240, 40, Qt::green, 0, 180);
+    //addLineWithTurnAngle(280, 0, 240, 40, Qt::green, 0, 180);
     //imaginary turnout switch
-    addLineWithTurn(280, 0, 240, 0, Qt::yellow, 0, 180);
+    //addLineWithTurnAngle(280, 0, 240, 0, Qt::yellow, 0, 180);
 
-    //turnout Left 45 degree north
-    addLineWithFlippedMirror(360, -40, 320, 0, Qt::green, 0, 0);
+    //turnout Left 45 degree north after this: addLineWithTurn(280, 0, 240, 40, Qt::green, 0, 180);
+    //addLineWithTurnAngle(320, 40, 280, 0, Qt::green, 0, 180);
+
+
+
+
     //addLineToScene(280, -40, 280, -80, Qt::green);
     //imaginary turnout switch under 45 degree
     //addLineToScene(280, -40, 320, -80, Qt::yellow);
@@ -134,74 +138,52 @@ void rails::addLineToScene(int x1, int y1, int x2, int y2, QColor color) const {
     railsSceneGraphic->addItem(line);
 }
 
-void rails::addLineWithTurn(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle) {
+void rails::addLineWithTurnAngle(int x1, int y1, int x2, int y2, QColor color, int turnLength, double rotationAngle, int angle) {
+    // Convert rotationAngle from degrees to radians
+    double rotationAngleRad = rotationAngle * M_PI / 180;
+
+    // Calculate the initial position of the line
+    int x1_initial = x1 + 40 * cos(rotationAngleRad);
+    int y1_initial = y1 + 40 * sin(rotationAngleRad);
+
     // First part of the line: straight until the turn
-    addLineToScene(x1, y1, x1 + 40, y1, color);
+    addLineToScene(x1, y1, x1_initial, y1_initial, color);
 
     // Calculate the direction of the first line segment
-    double direction = atan2(y2 - y1, x2 - x1);
+    double direction = atan2(y2 - y1, x2 - x1) + rotationAngleRad;
 
     // Calculate the new direction after the turn
     double newDirection = direction + angle * M_PI / 180;
 
     // Calculate the end point of the second line segment
-    int x3 = x1 + 40 + cos(newDirection) * (40 + turnLength);
-    int y3 = y1 + sin(newDirection) * (40 + turnLength);
+    int x3 = x1_initial + cos(newDirection) * (40 + turnLength);
+    int y3 = y1_initial + sin(newDirection) * (40 + turnLength);
 
     // Second part of the line: after the turn
-    addLineToScene(x1 + 40, y1, x3, y3, Qt::darkMagenta);
+    addLineToScene(x1_initial, y1_initial, x3, y3, Qt::darkMagenta);
 }
 
-void rails::addLineWithTurnMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle) {
+void rails::addLineWithTurnAngleMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, double rotationAngle, int angle) {
+    // Convert rotationAngle from degrees to radians
+    double rotationAngleRad = rotationAngle * M_PI / 180;
+
+    // Calculate the initial position of the line
+    int x1_initial = x1 - 40 * cos(rotationAngleRad);
+    int y1_initial = y1 - 40 * sin(rotationAngleRad);
+
     // First part of the line: straight until the turn
-    addLineToScene(x1, y1, x1 - 40, y1, color);
+    addLineToScene(x1, y1, x1_initial, y1_initial, color);
 
     // Calculate the direction of the first line segment
-    double direction = atan2(y1 - y2, x1 - x2);
+    double direction = atan2(y1 - y2, x1 - x2) + rotationAngleRad;
 
     // Calculate the new direction after the turn
     double newDirection = direction + angle * M_PI / 180;
 
     // Calculate the end point of the second line segment
-    int x3 = x1 - 40 - cos(newDirection) * (40 + turnLength);
-    int y3 = y1 - sin(newDirection) * (40 + turnLength);
+    int x3 = x1_initial - cos(newDirection) * (40 + turnLength);
+    int y3 = y1_initial - sin(newDirection) * (40 + turnLength);
 
     // Second part of the line: after the turn
-    addLineToScene(x1 - 40, y1, x3, y3, Qt::darkMagenta);
-}
-
-void rails::addLineWithFlipped(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle) {
-    // First part of the line: straight until the turn
-    addLineToScene(x1, y1, x1, y1 + 40, color);
-
-    // Calculate the direction of the first line segment
-    double direction = atan2(y2 - y1, x2 - x1);
-
-    // Calculate the new direction after the turn
-    double newDirection = direction + angle * M_PI / 180;
-
-    // Calculate the end point of the second line segment
-    int x3 = x1 + cos(newDirection) * (40 + turnLength);
-    int y3 = y1 + 40 + sin(newDirection) * (40 + turnLength);
-
-    // Second part of the line: after the turn
-    addLineToScene(x1, y1 + 40, x3, y3, Qt::darkMagenta);
-}
-
-void rails::addLineWithFlippedMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, int angle) {
-    // First part of the line: straight until the turn
-    addLineToScene(x1, y1, x1, y1 - 40, color);
-
-    // Calculate the direction of the first line segment
-    double direction = atan2(y1 - y2, x1 - x2);
-
-    // Calculate the new direction after the turn
-    double newDirection = direction + angle * M_PI / 180;
-
-    // Calculate the end point of the second line segment
-    int x3 = x1 - cos(newDirection) * (40 + turnLength);
-    int y3 = y1 - 40 - sin(newDirection) * (40 + turnLength);
-
-    // Second part of the line: after the turn
-    addLineToScene(x1, y1 - 40, x3, y3, Qt::darkMagenta);
+    addLineToScene(x1_initial, y1_initial, x3, y3, Qt::darkMagenta);
 }
