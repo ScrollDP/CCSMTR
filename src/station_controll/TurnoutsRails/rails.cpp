@@ -12,36 +12,40 @@ void rails::setupScene() {
 
     //horna cast
     //initial rail
-    addLineToScene(0, 0, 120, 0, Qt::darkGray);
+    addLine(0, 0, 120, 0, Qt::darkGray);
 
     //under 45 degree and 80 pixels long and make end longer by 20 pixels
-    addLineWithTurnAngle(120, 0, 160, 40, Qt::red, 20, 0);
+    addTurnoutToScene(120, 0, Qt::red, 10, 0, false, false, false);
     //imaginary turnout switch
-    addLineWithTurnAngle(120, 0, 160, 0, Qt::yellow, 0, 0);
+    addTurnoutToScene(120, 0, Qt::yellow, 0, 0, true, false, false);
     //under 45 degree and 40 pixels long
-    addLineWithTurnAngle(120, 80, 160, 40, Qt::blue, 10, 0);
+    addTurnoutToScene(120, 80, Qt::blue, 10, 0, false, true, false);
     //imaginary turnout switch
-    addLineWithTurnAngle(120, 80, 160, 80, Qt::yellow, 0, 0);
+    addTurnoutToScene(120, 80, Qt::yellow, 0, 0, true, true, false);
     //turnout like this: addLineToScene(160, 40, 200, 0, Qt::red);
-    addLineWithTurnAngleMirror(280, 80, 200, 0, Qt::red, 10, 0);
+    addTurnoutToScene(280, 80, Qt::red, 10, 0, false, false, true);
     //imaginary turnout switch
-    addLineWithTurnAngleMirror(280, 80, 200, 80, Qt::yellow, 0, 0);
+    addTurnoutToScene(280, 80, Qt::yellow, 0, 0, true, false, true);
     //turnout opsite of addLineWithTurn(120, 0, 160, 40, Qt::red, 20, 0);
-    addLineWithTurnAngleMirror(280, 0, 200, 80, Qt::blue, 10, 0);
+    addTurnoutToScene(280, 0, Qt::blue, 10, 0, false, true, true);
     //imaginary turnout switch
-    addLineWithTurnAngleMirror(280, 0, 200, 0, Qt::yellow, 0, 0);
+    addTurnoutToScene(280, 0, Qt::yellow, 0, 0, true, true, true);
 
 
 
     //turnout Left 40 pixels long 45 degree north
-    addLineWithTurnAngle(280, 0, 320, -40, Qt::green, 10, 0);
+    //addTurnoutToScene(280, 0, 320, -40, Qt::green, 10, 0);
     //imaginary turnout switch
-    addLineWithTurnAngle(280, 0, 320, 0, Qt::yellow, 0, 0);
+    //addTurnoutToScene(280, 0, 320, 0, Qt::yellow, 0, 0);
 
     //turnout Left 45 degree north after this: addLineWithTurn(280, 0, 240, 40, Qt::green, 0, 180);
-    addLineWithTurnAngle(360, -40, 400, -80, Qt::green, 0, 315);
+    //addTurnoutToScene(360, -40, 400, -80, Qt::green, 0, 315);
     //imaginary turnout switch straight line
-    addLineWithTurnAngle(360, -40, 400, -40, Qt::yellow, 0, 315);
+    //addTurnoutToScene(360, -40, 400, -40, Qt::yellow, 0, 315);
+    //turnout right after imaginary line
+    //addTurnoutToScene(0, 0, 40, 0, Qt::green, 0, 0);
+
+
 
 
 
@@ -78,7 +82,7 @@ void rails::setupScene() {
 
     //dolna cast
     //initial rail under first one
-    addLineToScene(0, 80, 120, 80, Qt::darkGray);
+    addLine(0, 80, 120, 80, Qt::darkGray);
 
     //under 45 degree and 40 pixels long and mach end of blue line
     //addLineToScene(120, 80, 160, 40, Qt::red);
@@ -122,7 +126,7 @@ void rails::setupScene() {
 
 
     //rail 280+600 pixels long straight
-    addLineToScene(280, 80, 880, 80, Qt::darkGray); //kolaj 2
+    addLine(280, 80, 880, 80, Qt::darkGray); //kolaj 2
 
 
 
@@ -130,72 +134,65 @@ void rails::setupScene() {
 
 }
 
-void rails::addLineToScene(int x1, int y1, int x2, int y2, QColor color) const {
+void rails::addTurnoutToScene(int x1, int y1, QColor color, int turnLength, double rotationAngle, bool switchTurnout, bool flipped, bool mirror) const {
+    // Convert rotationAngle from degrees to radians
+    double rotationAngleRad = rotationAngle * M_PI / 180;
+
+    // Calculate the initial position of the line
+    int x1_initial, y1_initial;
+    if (mirror) {
+        x1_initial = x1 - 40 * cos(rotationAngleRad);
+        y1_initial = y1 - 40 * sin(rotationAngleRad);
+    } else {
+        x1_initial = x1 + 40 * cos(rotationAngleRad);
+        y1_initial = y1 + 40 * sin(rotationAngleRad);
+    }
+
+    // First part of the line: straight until the turn
+    addLine(x1, y1, x1_initial, y1_initial, color);
+
+    // Calculate the direction of the first line segment
+    double direction;
+    if (mirror) {
+        direction = atan2(y1 - y1_initial, x1 - x1_initial) + rotationAngleRad;
+    } else {
+        direction = atan2(y1_initial - y1, x1_initial - x1) + rotationAngleRad;
+    }
+
+    // Calculate the new direction after the turn
+    double newDirection;
+    if (switchTurnout) {
+        // If the turnout will switch, change the angle to 0 degrees
+        newDirection = direction;
+    } else if (flipped) {
+        // If the turnout will be flipped, change the angle to -45 degrees
+        newDirection = direction - M_PI / 4;
+    } else {
+        // Otherwise, change the angle by 45 degrees
+        newDirection = direction + M_PI / 4;
+    }
+
+    // Calculate the end point of the second line segment
+    int x2, y2;
+    if (mirror) {
+        x2 = x1_initial - cos(newDirection) * (40 + turnLength);
+        y2 = y1_initial - sin(newDirection) * (40 + turnLength);
+    } else {
+        x2 = x1_initial + cos(newDirection) * (40 + turnLength);
+        y2 = y1_initial + sin(newDirection) * (40 + turnLength);
+    }
+
+    // Second part of the line: after the turn
+    addLine(x1_initial, y1_initial, x2, y2, color);
+}
+
+void rails::addLine(int x1, int y1, int x2, int y2, QColor color) const {
     auto *line = new QGraphicsLineItem(x1, y1, x2, y2);
-    //add condition if color is yellow no width
-    if(color == Qt::yellow)
-        line->setPen(QPen(color, 0, Qt::SolidLine, Qt::MPenCapStyle, Qt::MPenJoinStyle));
-    else {
+
+    if (color == Qt::yellow){
+        line->setPen(QPen(color, 3, Qt::SolidLine, Qt::MPenCapStyle, Qt::MPenJoinStyle));
+    } else {
         line->setPen(QPen(color, 10, Qt::SolidLine, Qt::MPenCapStyle, Qt::BevelJoin));
     }
     railsSceneGraphic->addItem(line);
-}
-
-void rails::addLineWithTurnAngle(int x1, int y1, int x2, int y2, QColor color, int turnLength, double rotationAngle) {
-    // Convert rotationAngle from degrees to radians
-    double rotationAngleRad = rotationAngle * M_PI / 180;
-
-    // Calculate the initial position of the line
-    int x1_initial = x1 + 40 * cos(rotationAngleRad);
-    int y1_initial = y1 + 40 * sin(rotationAngleRad);
-
-    // First part of the line: straight until the turn
-    addLineToScene(x1, y1, x1_initial, y1_initial, color);
-
-    // Calculate the direction of the first line segment
-    double direction = atan2(y2 - y1, x2 - x1) + rotationAngleRad;
-
-    // Calculate the new direction after the turn
-    double newDirection = direction + 0 * M_PI / 180;
-
-    // Calculate the end point of the second line segment
-    int x3 = x1_initial + cos(newDirection) * (40 + turnLength);
-    int y3 = y1_initial + sin(newDirection) * (40 + turnLength);
-
-    // Second part of the line: after the turn
-    //if yellow line is needed
-    if(color == Qt::yellow)
-        addLineToScene(x1_initial, y1_initial, x3, y3, Qt::yellow);
-    else{
-        // Second part of the line: after the turn
-         addLineToScene(x1_initial, y1_initial, x3, y3, Qt::darkMagenta);
-    }
-}
-
-void rails::addLineWithTurnAngleMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, double rotationAngle) {
-    // Convert rotationAngle from degrees to radians
-    double rotationAngleRad = rotationAngle * M_PI / 180;
-
-    // Calculate the initial position of the line
-    int x1_initial = x1 - 40 * cos(rotationAngleRad);
-    int y1_initial = y1 - 40 * sin(rotationAngleRad);
-
-    // First part of the line: straight until the turn
-    addLineToScene(x1, y1, x1_initial, y1_initial, color);
-
-    // Calculate the direction of the first line segment
-    double direction = atan2(y1 - y2, x1 - x2) + rotationAngleRad;
-
-    // Calculate the new direction after the turn
-    double newDirection = direction + 0 * M_PI / 180;
-
-    // Calculate the end point of the second line segment
-    int x3 = x1_initial - cos(newDirection) * (40 + turnLength);
-    int y3 = y1_initial - sin(newDirection) * (40 + turnLength);
-    if(color == Qt::yellow)
-        addLineToScene(x1_initial, y1_initial, x3, y3, Qt::yellow);
-    else {
-        // Second part of the line: after the turn
-        addLineToScene(x1_initial, y1_initial, x3, y3, Qt::darkMagenta);
-    }
 }

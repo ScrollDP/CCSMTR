@@ -18,9 +18,8 @@ public:
 private:
 
     void setupScene();
-    void addLineToScene(int x1, int y1, int x2, int y2, QColor color) const;
-    void addLineWithTurnAngle(int x1, int y1, int x2, int y2, QColor color, int turnLength, double rotationAngle);
-    void addLineWithTurnAngleMirror(int x1, int y1, int x2, int y2, QColor color, int turnLength, double rotationAngle);
+    void addLine(int x1, int y1, int x2, int y2, QColor color) const;
+    void addTurnoutToScene(int x1, int y1, QColor color, int turnLength, double rotationAngle, bool switchTurnout, bool flipped, bool mirror) const;
 };
 
 
