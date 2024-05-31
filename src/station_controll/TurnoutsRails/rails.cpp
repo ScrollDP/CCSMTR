@@ -15,38 +15,37 @@ void rails::setupScene() {
     addLine(0, 0, 120, 0, Qt::darkGray);
 
     //under 45 degree and 80 pixels long and make end longer by 20 pixels
-    addTurnoutToScene(120, 0, Qt::red, 10, 0, false, false, false);
+    addTurnoutToScene(120, 0, Qt::red, 0, 0, false, false, false);
     //imaginary turnout switch
     addTurnoutToScene(120, 0, Qt::yellow, 0, 0, true, false, false);
     //under 45 degree and 40 pixels long
-    addTurnoutToScene(120, 80, Qt::blue, 10, 0, false, true, false);
+    addTurnoutToScene(120, 80, Qt::blue, 0, 0, false, true, false);
     //imaginary turnout switch
     addTurnoutToScene(120, 80, Qt::yellow, 0, 0, true, true, false);
     //turnout like this: addLineToScene(160, 40, 200, 0, Qt::red);
-    addTurnoutToScene(280, 80, Qt::red, 10, 0, false, false, true);
+    addTurnoutToScene(280, 80, Qt::red, 0, 0, false, true, true);
     //imaginary turnout switch
-    addTurnoutToScene(280, 80, Qt::yellow, 0, 0, true, false, true);
+    addTurnoutToScene(280, 80, Qt::yellow, 0, 0, true, true, true);
     //turnout opsite of addLineWithTurn(120, 0, 160, 40, Qt::red, 20, 0);
-    addTurnoutToScene(280, 0, Qt::blue, 10, 0, false, true, true);
+    addTurnoutToScene(280, 0, Qt::blue, 0, 0, false, false, true);
     //imaginary turnout switch
-    addTurnoutToScene(280, 0, Qt::yellow, 0, 0, true, true, true);
+    addTurnoutToScene(280, 0, Qt::yellow, 0, 0, true, false, true);
 
 
 
     //turnout Left 40 pixels long 45 degree north
-    //addTurnoutToScene(280, 0, 320, -40, Qt::green, 10, 0);
+    addTurnoutToScene(280, 0, Qt::green, 0, 0, false, true, false);
     //imaginary turnout switch
-    //addTurnoutToScene(280, 0, 320, 0, Qt::yellow, 0, 0);
+    addTurnoutToScene(280, 0, Qt::yellow, 0, 0, true, true, false);
 
     //turnout Left 45 degree north after this: addLineWithTurn(280, 0, 240, 40, Qt::green, 0, 180);
-    //addTurnoutToScene(360, -40, 400, -80, Qt::green, 0, 315);
+    addTurnoutToScene(360, -40, Qt::green, 0, 315, false, true, false);
     //imaginary turnout switch straight line
-    //addTurnoutToScene(360, -40, 400, -40, Qt::yellow, 0, 315);
+    addTurnoutToScene(360, -40, Qt::yellow, 0, 315, true, true, false);
     //turnout right after imaginary line
-    //addTurnoutToScene(0, 0, 40, 0, Qt::green, 0, 0);
+    addTurnoutToScene(440, -120, Qt::green, 0, 315, false, false, false);
 
-
-
+    addLine(520, -160, 800, -160, Qt::darkGray);
 
 
 
@@ -72,8 +71,8 @@ void rails::setupScene() {
     //straight line 40 pixels long
     //addLineToScene(360, -80, 600, -80, Qt::darkGray); //kolaj 3
 
-    //rail 280+600 pixels long straight
-    //addLineToScene(280, 0, 880, 0, Qt::darkGray); //kolaj 1
+    //rail 360 pixels long straight
+    addLine(360, 0, 880, 0, Qt::darkGray); //kolaj 1
 
 
 
@@ -152,34 +151,30 @@ void rails::addTurnoutToScene(int x1, int y1, QColor color, int turnLength, doub
     addLine(x1, y1, x1_initial, y1_initial, color);
 
     // Calculate the direction of the first line segment
-    double direction;
-    if (mirror) {
-        direction = atan2(y1 - y1_initial, x1 - x1_initial) + rotationAngleRad;
-    } else {
-        direction = atan2(y1_initial - y1, x1_initial - x1) + rotationAngleRad;
-    }
+    double direction = atan2(y1_initial - y1, x1_initial - x1);
 
     // Calculate the new direction after the turn
     double newDirection;
     if (switchTurnout) {
-        // If the turnout will switch, change the angle to 0 degrees
         newDirection = direction;
     } else if (flipped) {
-        // If the turnout will be flipped, change the angle to -45 degrees
         newDirection = direction - M_PI / 4;
     } else {
-        // Otherwise, change the angle by 45 degrees
         newDirection = direction + M_PI / 4;
+    }
+
+    if (mirror) {
+        newDirection = M_PI - newDirection;
     }
 
     // Calculate the end point of the second line segment
     int x2, y2;
     if (mirror) {
-        x2 = x1_initial - cos(newDirection) * (40 + turnLength);
-        y2 = y1_initial - sin(newDirection) * (40 + turnLength);
+        x2 = x1_initial - (40 + turnLength) * cos(newDirection);
+        y2 = y1_initial - (40 + turnLength) * sin(newDirection);
     } else {
-        x2 = x1_initial + cos(newDirection) * (40 + turnLength);
-        y2 = y1_initial + sin(newDirection) * (40 + turnLength);
+        x2 = x1_initial + (40 + turnLength) * cos(newDirection);
+        y2 = y1_initial + (40 + turnLength) * sin(newDirection);
     }
 
     // Second part of the line: after the turn
