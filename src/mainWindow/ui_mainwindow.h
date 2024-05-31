@@ -45,14 +45,14 @@ public:
     QWidget *gridLayoutWidget_3;
     QGridLayout *gridLayout_3;
     QVBoxLayout *verticalLayout_3;
-    QFrame *frame_2;
+    QFrame *frame;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(807, 478);
+        MainWindow->resize(1199, 689);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -155,7 +155,7 @@ public:
         LayoutEdit->setObjectName(QString::fromUtf8("LayoutEdit"));
         gridLayoutWidget_3 = new QWidget(LayoutEdit);
         gridLayoutWidget_3->setObjectName(QString::fromUtf8("gridLayoutWidget_3"));
-        gridLayoutWidget_3->setGeometry(QRect(0, 0, 781, 41));
+        gridLayoutWidget_3->setGeometry(QRect(0, 0, 781, 46));
         gridLayout_3 = new QGridLayout(gridLayoutWidget_3);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -168,12 +168,12 @@ public:
 
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        frame_2 = new QFrame(centralWidget);
-        frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        frame_2->setFrameShape(QFrame::Shape::StyledPanel);
-        frame_2->setFrameShadow(QFrame::Shadow::Raised);
+        frame = new QFrame(centralWidget);
+        frame->setObjectName(QString::fromUtf8("frame"));
+        frame->setFrameShape(QFrame::Shape::StyledPanel);
+        frame->setFrameShadow(QFrame::Shadow::Raised);
 
-        verticalLayout_3->addWidget(frame_2);
+        verticalLayout_3->addWidget(frame);
 
 
         verticalLayout_4->addLayout(verticalLayout_3);

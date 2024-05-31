@@ -11,8 +11,9 @@ Zatial co funguje:
       - komunikacia cez intellibox 1 (serial)
 - samotne kolajisko:
   - navrhnutie kolajiska
-    - dynamicky vytvarat kolajisko
-    - ulozenie kolajiska
+      - docasne staticke kolajisko
+      - dynamicky vytvarat kolajisko
+      - ulozenie kolajiska
 
 
 ![img.png](img.png)

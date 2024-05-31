@@ -27,11 +27,18 @@ public:
     {
         if (stationControll->objectName().isEmpty())
             stationControll->setObjectName(QString::fromUtf8("stationControll"));
-        stationControll->resize(1192, 733);
+        stationControll->resize(892, 812);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(stationControll->sizePolicy().hasHeightForWidth());
+        stationControll->setSizePolicy(sizePolicy);
+        stationControll->setMinimumSize(QSize(0, 0));
         verticalLayout = new QVBoxLayout(stationControll);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         graphicsView = new QGraphicsView(stationControll);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        graphicsView->setMinimumSize(QSize(880, 800));
 
         verticalLayout->addWidget(graphicsView);
 
