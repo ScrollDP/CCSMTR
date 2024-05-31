@@ -39,15 +39,22 @@ void rails::setupScene() {
     addTurnoutToScene(280, 0, Qt::yellow, 0, true, true, false);
 
     //turnout Left 45 degree north after this: addLineWithTurn(280, 0, 240, 40, Qt::green, 0, 180);
-    addTurnoutToScene(360, -40, Qt::green, 315, false, true, false);
+    addTurnoutToScene(360, -40, Qt::darkCyan, 315, false, true, false);
     //imaginary turnout switch straight line
     addTurnoutToScene(360, -40, Qt::yellow, 315, true, true, false);
     //turnout right after imaginary line
     addTurnoutToScene(440, -120, Qt::green, 315, false, false, false);
+    //imaginary turnout switch
+    addTurnoutToScene(440, -120, Qt::yellow, 315, true, false, false);
+    //add straight line 40 pixels long after turnout
+    addLine(520, -200, 560, -240, Qt::darkGray); //kolaj obluk ku kolaji 5
 
-    addLine(520, -160, 800, -160, Qt::darkGray);
-
-
+    //straight line 40 pixels long afterdarkCyan turnout
+    addLine(400, -120, 400, -160, Qt::darkGray);
+    //straight line
+    addLine(400, -160, 560, -320, Qt::darkGray); //obluk ku kolaji 7
+    //straight line
+    addLine(560, -320, 800, -320, Qt::darkGray); //kolaj 7
 
 
     //addLineToScene(280, -40, 280, -80, Qt::green);
@@ -58,7 +65,7 @@ void rails::setupScene() {
     //40 pixels long rail 45 degree north
     //addLineToScene(280, -120, 320, -160, Qt::darkGray);
     //straight line 40 pixels long
-    //addLineToScene(320, -160, 600, -160, Qt::darkGray); //kolaj 7
+    //addLine(320, -160, 600, -160, Qt::darkGray); //kolaj 7
 
 
     //turnout right north 40 pixels long 45 degree north
@@ -66,10 +73,10 @@ void rails::setupScene() {
     //imaginary turnout switch
     //addLineToScene(320, -80, 360, -80, Qt::yellow);
     //straight line 40 pixels long
-    //addLineToScene(360, -120, 600, -120, Qt::darkGray); //kolaj 5
+    addLine(560, -240, 800, -240, Qt::darkGray); //kolaj 5
 
     //straight line 40 pixels long
-    //addLineToScene(360, -80, 600, -80, Qt::darkGray); //kolaj 3
+    addLine(520, -160, 800, -160, Qt::darkGray); //kolaj 3
 
     //rail 360 pixels long straight
     addLine(360, 0, 880, 0, Qt::darkGray); //kolaj 1
@@ -82,41 +89,23 @@ void rails::setupScene() {
     //dolna cast
     //initial rail under first one
     addLine(0, 80, 120, 80, Qt::darkGray);
-
-    //under 45 degree and 40 pixels long and mach end of blue line
-    //addLineToScene(120, 80, 160, 40, Qt::red);
+    //straight line
+    addLine(360, 80, 880, 80, Qt::darkGray); //kolaj 2
+    //turnout line position start at 280
+    addTurnoutToScene(280, 80, Qt::green, 0, false, false, false);
     //imaginary turnout switch
-    //addLineToScene(120, 80, 160, 80, Qt::yellow);
-    //under 45 degree and 40 pixels long
-    //addLineToScene(160, 40, 200, 80, Qt::blue);
+    addTurnoutToScene(280, 80, Qt::yellow, 0, true, false, false);
+    //straight line under 45 degree
+    addLine(360, 120, 440, 200, Qt::darkGray);
+    //turnout left starting point 440,200
+    addTurnoutToScene(440, 200, Qt::green, 45, false, true, false);
     //imaginary turnout switch
-    //addLineToScene(160, 80, 200, 80, Qt::yellow);
+    addTurnoutToScene(440, 200, Qt::yellow, 45, true, true, false);
+    //straight rail kolaj 3
+    addLine(520, 240, 800, 240, Qt::darkGray); //kolaj 3
 
-    //rail 40 pixels long
-    //addLineToScene(200, 80, 240, 80, Qt::darkGray);
-    //turnout Left 40 pixels long 45 degree south
-    //addLineToScene(240, 80, 280, 120, Qt::green);
-    //imaginary turnout switch pointing to the right
-    //addLineToScene(240, 80, 280, 80, Qt::yellow);
 
-    //straight line 40 pixels long 45 degree south
-    //addLineToScene(280, 120, 320, 160, Qt::darkGray);
-    //turnout right east 40 pixels long 45 degree south
-    //addLineToScene(320, 160, 360, 160, Qt::green);
-    //imaginary turnout switch pointing to the right
-    //addLineToScene(320, 160, 360, 200, Qt::yellow);
 
-    //straight line 40 pixels long kolaj 4
-    //addLineToScene(360, 160, 600, 160, Qt::darkGray);
-
-    //turnout right 45 degree south 20 pixels long
-    //addLineToScene(360, 200, 380, 220, Qt::green);
-    //turnout straght 20 pixels long
-    //addLineToScene(380, 220, 400, 220, Qt::green);
-    //imaginary turnout switch opposite to 20pixel turnout straight to west
-    //addLineToScene(380, 220, 360, 220, Qt::yellow);
-    //imaginary turnout switch opposite to 20pixel turnout left 180 degree
-    //addLineToScene(380, 220, 400, 240, Qt::yellow);
 
 
 
@@ -125,7 +114,7 @@ void rails::setupScene() {
 
 
     //rail 280+600 pixels long straight
-    addLine(280, 80, 880, 80, Qt::darkGray); //kolaj 2
+
 
 }
 
@@ -187,7 +176,7 @@ void rails::addTurnoutToScene(int x1, int y1, QColor color, double angleTurnout,
     }
 
     // Second part of the line: after the turn
-    addLine(x1_initial, y1_initial, x2, y2, color);
+    addLine(x1_initial, y1_initial, x2, y2, Qt::darkMagenta);
 }
 
 void rails::addLine(int x1, int y1, int x2, int y2, QColor color) const {
