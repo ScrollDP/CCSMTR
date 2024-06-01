@@ -8,6 +8,7 @@
 #include "../tabFolder/connectionTab/Intelibox_I/intelibox_I.h" // Include the intelibox_I.h file
 #include "../tabFolder/ToolsTab/Throttle/ThrottleWindow.h" // Include the ThrottleWindow.h file
 #include "../tabFolder/connectionTab/Power/PowerWindow.h" // Include the PowerWindow.h file
+#include <QTimer>
 
 class mainWindow : public QMainWindow {
 Q_OBJECT
@@ -16,10 +17,9 @@ public:
     explicit mainWindow(QWidget *parent = nullptr);
     ~mainWindow() override;
 
-    static bool isAnyConnected; // Add a static boolean variable to check if any connectionTab is active
+    void toggleFullScreen(); // Add a method to toggle full screen
 
-protected:
-    void closeEvent(QCloseEvent *event) override; // Override the closeEvent method
+    static bool isAnyConnected; // Add a static boolean variable to check if any connectionTab is active
 
 private slots:
     void onActionDCC_EXTriggered(); // Add a slot for the actionDCC_EX triggered signal
@@ -34,6 +34,18 @@ private:
     intelibox_I *intelibox_IWindow; // Add a pointer to an Intelibox_I window
     PowerWindow *powerWindow; // Add a pointer to a PowerWindow window
 
+    void keyPressEvent(QKeyEvent *event) override;
+    QTimer *hideTimer; // Add a QTimer pointer to hide the tabWidget after a certain time
+
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
+
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+
+    void toggleTabShow();
 };
 
 #endif //CCSMTR_MAINWINDOW_H

@@ -15,7 +15,6 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -46,7 +45,6 @@ public:
     QGridLayout *gridLayout_3;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -77,19 +75,25 @@ public:
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setEnabled(true);
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy1);
-        tabWidget->setMinimumSize(QSize(0, 85));
+        tabWidget->setMinimumSize(QSize(377, 85));
         tabWidget->setMaximumSize(QSize(16777215, 85));
         tabWidget->setBaseSize(QSize(0, 0));
         QFont font1;
         font1.setPointSize(15);
         tabWidget->setFont(font1);
+        tabWidget->setMouseTracking(false);
         tabWidget->setTabPosition(QTabWidget::TabPosition::North);
+        tabWidget->setTabShape(QTabWidget::TabShape::Rounded);
+        tabWidget->setIconSize(QSize(16, 16));
         tabWidget->setDocumentMode(false);
+        tabWidget->setTabsClosable(false);
+        tabWidget->setMovable(false);
+        tabWidget->setTabBarAutoHide(false);
         connection = new QWidget();
         connection->setObjectName(QString::fromUtf8("connection"));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -100,7 +104,7 @@ public:
         connection->setMaximumSize(QSize(16777215, 100));
         gridLayoutWidget = new QWidget(connection);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(0, 0, 381, 45));
+        gridLayoutWidget->setGeometry(QRect(0, 0, 371, 45));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setHorizontalSpacing(15);
@@ -131,7 +135,7 @@ public:
         tools->setObjectName(QString::fromUtf8("tools"));
         gridLayoutWidget_2 = new QWidget(tools);
         gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
-        gridLayoutWidget_2->setGeometry(QRect(0, 0, 261, 45));
+        gridLayoutWidget_2->setGeometry(QRect(0, 0, 241, 45));
         gridLayout_2 = new QGridLayout(gridLayoutWidget_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setHorizontalSpacing(15);
@@ -182,9 +186,6 @@ public:
         verticalLayout->addLayout(verticalLayout_4);
 
         MainWindow->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
 

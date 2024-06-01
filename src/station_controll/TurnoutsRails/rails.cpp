@@ -54,14 +54,14 @@ void rails::setupScene() {
     //straight line
     addLine(400, -160, 560, -320, Qt::darkGray); //obluk ku kolaji 8
     //straight line
-    addLine(560, -320, 880, -320, Qt::darkGray); //kolaj 8
+    addLine(560, -320, 1260, -320, Qt::darkGray); //kolaj 8
 
 
     //straight line 40 pixels long
-    addLine(560, -240, 880, -240, Qt::darkGray); //kolaj 6
+    addLine(560, -240, 1220, -240, Qt::darkGray); //kolaj 6
 
     //straight line 40 pixels long
-    addLine(520, -160, 880, -160, Qt::darkGray); //kolaj 4
+    addLine(520, -160, 1260, -160, Qt::darkGray); //kolaj 4
 
     //rail 360 pixels long straight
     addLine(360, 0, 1420, 0, Qt::darkGray); //kolaj 2
@@ -73,6 +73,50 @@ void rails::setupScene() {
     addTurnoutToScene(1500, 0, Qt::green, 180, false, false, false);
     //imaginary turnout switch
     addTurnoutToScene(1500, 0, Qt::yellow, 180, true, false, false);
+    //straight rail kolaj 4-5 ->lietavska lucka
+    addLine(1420, -40, 1340, -120, Qt::darkGray); //kolaj 4-5 lietavska lucka
+    //turnout cross
+    addTurnoutToScene(1340, -120, Qt::darkCyan, 225, false, true, false);
+    //imaginary turnout switch
+    addTurnoutToScene(1340, -120, Qt::yellow, 225, true, true, false);
+    //turnout from other side
+    addTurnoutToScene(1260, -200, Qt::green, 45, false, true, false);
+    //imaginary turnout switch
+    addTurnoutToScene(1260, -200, Qt::yellow, 45, true, true, false);
+    //straight rail kolaj 6 obluk
+    addLine(1260, -200, 1220, -240, Qt::darkGray); //kolaj 6 obluk
+    //straight rail lietavska lucka
+    addLine(1340, -160, 1420, -160, Qt::darkGray); //kolaj 6 lietavska lucka
+    //turnout default lietavska lucka
+    addTurnoutToScene(1500, -160, Qt::green, 180, false, false, false);
+    //imaginary turnout switch
+    addTurnoutToScene(1500, -160, Qt::yellow, 180, true, false, false);
+    //kolaj lietavska lucka
+    addLine(1500, -160, 1860, -160, Qt::darkGray); //kolaj lietavska lucka
+    //kolaj obluk ku kolaji 8
+    addLine(1420, -200, 1340, -280, Qt::darkGray); //kolaj obluk ku kolaji 8
+    //turnout cross kolaj 8 a depo
+    addTurnoutToScene(1340, -280, Qt::darkCyan, 225, false, true, false);
+    //imaginary turnout switch
+    addTurnoutToScene(1340, -280, Qt::yellow, 225, true, true, false);
+    //turnout from other side
+    addTurnoutToScene(1260, -360, Qt::green, 45, false, true, false);
+    //imaginary turnout switch
+    addTurnoutToScene(1260, -360, Qt::yellow, 45, true, true, false);
+    //kolaj depo
+    addLine(1340, -320, 1600, -320, Qt::darkGray); //kolaj depo
+    //kolaj na kolaj 10 a 12
+    addLine(1260, -360, 1220 ,-400, Qt::darkGray); //kolaj na kolaj 10 a 12
+    //turnout  kolaj 10 a 12
+    addTurnoutToScene(1220, -400, Qt::green, 225, false, true, false);
+    //imaginary turnout switch
+    addTurnoutToScene(1220, -400, Qt::yellow, 225, true, true, false);
+    //kolaj 10
+    addLine(1140, -440, 980, -440, Qt::darkGray); //kolaj 10
+    //kolaj 12 obluk
+    addLine(1140, -480, 1100, -520, Qt::darkGray); //kolaj 12 obluk
+    //kolaj 12
+    addLine(1100, -520, 980, -520, Qt::darkGray); //kolaj 12
 
 
 
@@ -134,15 +178,19 @@ void rails::setupScene() {
     addLine(480, 480, 80, 480, Qt::darkGray);
 
 
-    //horna prava cast
-    //initial rail
-    addLine(1740, 0, 1860, 0, Qt::darkGray);
+
+
 
     //dolna prava cat
     //initial rail
     addLine(1740, 80, 1860, 80, Qt::darkGray);
+//initial rail
+    addLine(1740, 0, 1860, 0, Qt::darkGray);
 
-
+    //turnout opsite of addLineWithTurn(120, 0, 160, 40, Qt::red, 20, 0);
+    addTurnoutToScene(1740, 0, Qt::blue, 0, false, true, true);
+    //imaginary turnout switch
+    addTurnoutToScene(1740, 0, Qt::yellow, 0, true, true, true);
     //under 45 degree and 80 pixels long and make end longer by 20 pixels
     addTurnoutToScene(1580, 0, Qt::red, 0, false, false, false);
     //imaginary turnout switch
@@ -155,10 +203,7 @@ void rails::setupScene() {
     addTurnoutToScene(1740, 80, Qt::red, 0, false, false, true);
     //imaginary turnout switch
     addTurnoutToScene(1740, 80, Qt::yellow, 0, true, false, true);
-    //turnout opsite of addLineWithTurn(120, 0, 160, 40, Qt::red, 20, 0);
-    addTurnoutToScene(1740, 0, Qt::blue, 0, false, true, true);
-    //imaginary turnout switch
-    addTurnoutToScene(1740, 0, Qt::yellow, 0, true, true, true);
+
 
 
     //turnout first from cross turnout
