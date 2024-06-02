@@ -23,10 +23,12 @@ set(SOURCES
         src/tabFolder/ToolsTab/Throttle/ThrottleWindow.h
         src/tabFolder/connectionTab/Power/PowerWindow.cpp
         src/tabFolder/connectionTab/Power/PowerWindow.h
-        src/station_controll/TurnoutsRails/rails.cpp
-        src/station_controll/TurnoutsRails/rails.h
-        src/station_controll/Interaction/CustomLineItem.h
-        src/station_controll/Interaction/CustomTurnoutItem.h
+        src/station_controll/Rails/Rails.cpp
+        src/station_controll/Rails/Rails.h
+        src/station_controll/Interaction/RailsAction.h
+        src/station_controll/Interaction/TurnoutAction.h
+        src/station_controll/Interaction/TurnoutAction.cpp
+
 )
 set(FORMS
         src/mainWindow/ui_mainwindow.ui
@@ -35,6 +37,7 @@ set(FORMS
         src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui
         src/tabFolder/connectionTab/Power/ui_PowerWindow.ui
         src/station_controll/ui_stationControll.ui
+
 )
 execute_process(
         COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/mainWindow/ui_mainwindow.ui

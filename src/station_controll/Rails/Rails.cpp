@@ -1,5 +1,5 @@
 #include <QGraphicsScene>
-#include "rails.h"
+#include "Rails.h"
 #include <QtXml/QDomDocument>
 #include <QFile>
 #include <QDir>
@@ -8,68 +8,57 @@
 #include <QGraphicsProxyWidget>
 
 
-rails::rails() {
+Rails::Rails() {
     setupScene();
-    loadFromXml("turnouts.xml");
+    loadFromXml(id,"turnouts.xml");
 }
 
-rails::~rails() {
+Rails::~Rails() {
     delete railsSceneGraphic;
 }
 
-int rails::id = 0; // Add this line
+int Rails::id = 0;
 
 
-void rails::setupScene() {
+void Rails::setupScene() {
 
 
     //horna lava cast
     //initial rail
     addLine(0, 0, 120, 0, Qt::darkGray);
-
-
     //add straight line 40 pixels long after turnout
     addLine(520, -200, 560, -240, Qt::darkGray); //kolaj obluk ku kolaji 6
-
     //straight line 40 pixels long afterdarkCyan turnout
     addLine(400, -120, 400, -160, Qt::darkGray);
     //straight line
     addLine(400, -160, 560, -320, Qt::darkGray); //obluk ku kolaji 8
     //straight line
     addLine(560, -320, 1260, -320, Qt::darkGray); //kolaj 8
-
-
     //straight line 40 pixels long
     addLine(560, -240, 1220, -240, Qt::darkGray); //kolaj 6
-
     //straight line 40 pixels long
     addLine(520, -160, 1260, -160, Qt::darkGray); //kolaj 4
-
     //rail 360 pixels long straight
     addLine(360, 0, 1420, 0, Qt::darkGray); //kolaj 2
+
 
     //horna prava cast
     //straight line medzi turnout horna a cross turnout
     addLine(1500,0,1580,0,Qt::darkGray);
-
     //straight rail kolaj 4-5 ->lietavska lucka
     addLine(1420, -40, 1340, -120, Qt::darkGray); //kolaj 4-5 lietavska lucka
     //straight rail kolaj 6 obluk
     addLine(1260, -200, 1220, -240, Qt::darkGray); //kolaj 6 obluk
     //straight rail lietavska lucka
     addLine(1340, -160, 1420, -160, Qt::darkGray); //kolaj 6 lietavska lucka
-
     //kolaj lietavska lucka
     addLine(1500, -160, 1860, -160, Qt::darkGray); //kolaj lietavska lucka
     //kolaj obluk ku kolaji 8
     addLine(1420, -200, 1340, -280, Qt::darkGray); //kolaj obluk ku kolaji 8
-
     //kolaj depo
     addLine(1340, -320, 1600, -320, Qt::darkGray); //kolaj depo
     //kolaj na kolaj 10 a 12
     addLine(1260, -360, 1220 ,-400, Qt::darkGray); //kolaj na kolaj 10 a 12
-    //turnout  kolaj 10 a 12
-
     //kolaj 10
     addLine(1140, -440, 980, -440, Qt::darkGray); //kolaj 10
     //kolaj 12 obluk
@@ -78,36 +67,27 @@ void rails::setupScene() {
     addLine(1100, -520, 980, -520, Qt::darkGray); //kolaj 12
 
 
-
     //dolna lava cast
     //initial rail under first one
     addLine(0, 80, 120, 80, Qt::darkGray);
     //straight line
     addLine(360, 80, 1420, 80, Qt::darkGray); //kolaj 1
-    //turnout line position start at 280
-
     //straight line under 45 degree
     addLine(360, 120, 440, 200, Qt::darkGray);
     //turnout left starting point 440,200
-
     //straight rail kolaj 3
     addLine(520, 240, 1300, 240, Qt::darkGray); //kolaj 3
-
-
     //straight rail
     addLine(680, 320, 1260, 320, Qt::darkGray); //kolaj 5
     //turnout ku kolaji 5 a 7
-
     //straight rail kolaj 7 obluk
     addLine(680, 360, 720,400, Qt::darkGray); //kolaj 7 obluk
     //straight rail kolaj 7
     addLine(720, 400, 1180, 400, Qt::darkGray); //kolaj 7
-
     //straight rail
     addLine(680,440,720,480,Qt::darkGray); //kolaj 9 obluk
     //straight rail
     addLine(720,480,1140,480,Qt::darkGray); //kolaj 9
-
     //straight rail odbočka
     addLine(520, 320, 0, 320, Qt::darkGray);
     addLine(520, 400, 80, 400, Qt::darkGray);
@@ -115,19 +95,11 @@ void rails::setupScene() {
     addLine(520, 440, 480, 480, Qt::darkGray);
     addLine(480, 480, 80, 480, Qt::darkGray);
 
-
-
-
-
     //dolna prava cat
     //initial rail
     addLine(1740, 80, 1860, 80, Qt::darkGray);
-//initial rail
+    //initial rail
     addLine(1740, 0, 1860, 0, Qt::darkGray);
-
-
-
-
     //straight rail obluk kolaj 3
     addLine(1420, 120, 1300, 240, Qt::darkGray); //kolaj 3 obluk
     //straight rail obluk turnout ku kolaji 5,7,9
@@ -136,13 +108,9 @@ void rails::setupScene() {
     addLine(1260, 400, 1580, 400, Qt::darkGray); //odstavna
     //straight rail from ang2 rail 9 obluk
     addLine(1180, 440, 1140, 480, Qt::darkGray); //kolaj 9 obluk
-
-
-
-
 }
 
-void rails::addTurnoutToScene(int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
+void Rails::addTurnoutToScene(int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
     // Convert angleTurnout from degrees to radians
     double angleTurnoutRad = angleTurnout * M_PI / 180;
 
@@ -203,7 +171,7 @@ void rails::addTurnoutToScene(int x1, int y1, QColor color, double angleTurnout,
     addLine(x1_initial, y1_initial, x2, y2, color);
 
     // Add the turnout item
-    auto *turnout = new CustomTurnoutItem(++id, flipped, mirror, angleTurnout); // Assuming 'id' is the unique identifier for the turnout
+    auto *turnout = new TurnoutAction(++id, flipped, mirror, angleTurnout, switchTurnout); // Assuming 'id' is the unique identifier for the turnout
 
     // Add the turnout item to the scene
     turnout->setPos(x1, y1);
@@ -216,8 +184,8 @@ void rails::addTurnoutToScene(int x1, int y1, QColor color, double angleTurnout,
 
 
 
-void rails::addLine(int x1, int y1, int x2, int y2, QColor color) const {
-    auto *line = new CustomLineItem(x1, y1, x2, y2);
+void Rails::addLine(int x1, int y1, int x2, int y2, QColor color) const {
+    auto *line = new RailsAction(x1, y1, x2, y2);
 
     if (color == Qt::yellow){
         line->setPen(QPen(color, 3, Qt::SolidLine, Qt::MPenCapStyle, Qt::MPenJoinStyle));
@@ -231,7 +199,8 @@ void rails::addLine(int x1, int y1, int x2, int y2, QColor color) const {
 
 
 
-void rails::loadFromXml(const QString& fileName) {
+void Rails::loadFromXml(int turnoutId, const QString& fileName) {
+
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Error opening file: " << fileName;
@@ -251,6 +220,12 @@ void rails::loadFromXml(const QString& fileName) {
 
                 QXmlStreamAttributes attributes = xmlReader.attributes();
                 int id = attributes.value("id").toInt();
+
+                // Skip this turnout if its id doesn't match the id parameter
+                if (!firstLoad && turnoutId != id) {
+                    //qDebug() << "Skipping turnout with id: " << id;
+                    continue;
+                }
 
                 xmlReader.readNextStartElement();
                 if (xmlReader.name().toString() == "start") {
@@ -286,9 +261,10 @@ void rails::loadFromXml(const QString& fileName) {
                 }
 
                 addTurnoutToScene(startX, startY, color, angleTurnout, switchTurnout, flipped, mirror);
-                qDebug() << "Turnout added: " << id << " " << startX << " " << startY << " " << color.name() << " " << angleTurnout << " " << switchTurnout << " " << flipped << " " << mirror;
+                //qDebug() << "Turnout added: " << id << " " << startX << " " << startY << " " << color.name() << " " << angleTurnout << " " << switchTurnout << " " << flipped << " " << mirror;
             }
         }
+
     }
 
     if (xmlReader.hasError()) {
@@ -296,9 +272,11 @@ void rails::loadFromXml(const QString& fileName) {
     }
 
     file.close();
+
+    firstLoad = false;
 }
 
-QString rails::turnoutToXml(int startX, int startY, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
+QString Rails::turnoutToXml(int startX, int startY, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
     static int uniqueId = 1; // This will be incremented for each turnout
 
     QDomDocument doc;
@@ -346,7 +324,7 @@ QString rails::turnoutToXml(int startX, int startY, QColor color, double angleTu
     return doc.toString();
 }
 
-void rails::saveToXml(const QString& fileName, const QString& xmlString) {
+void Rails::saveToXml(const QString& fileName, const QString& xmlString) {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
         qDebug() << "Error opening file for writing: " << fileName;
@@ -379,4 +357,43 @@ void rails::saveToXml(const QString& fileName, const QString& xmlString) {
     stream << doc.toString();
 
     file.close();
+}
+
+bool Rails::updateTurnoutInXml(int id, bool switchTurnout) {
+    QFile file("turnouts.xml"); // Replace with your XML file name
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qDebug() << "Error opening file for writing: " << file.fileName();
+
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qDebug() << "Error parsing XML file: " << file.fileName();
+
+    }
+    file.close();
+
+    QDomElement root = doc.firstChildElement("turnouts");
+    QDomNodeList turnoutList = root.elementsByTagName("turnout");
+    for (int i = 0; i < turnoutList.size(); ++i) {
+        QDomElement turnoutElement = turnoutList.at(i).toElement();
+        if (turnoutElement.attribute("id").toInt() == id) {
+            QDomElement switchElement = turnoutElement.firstChildElement("switchTurnout");
+            switchElement.firstChild().setNodeValue(switchTurnout ? "1" : "0");
+            break;
+        }
+    }
+
+
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Error opening file for writing: " << file.fileName();
+
+    }
+    QTextStream stream(&file);
+    stream << doc.toString();
+
+    file.close();
+
+    return switchTurnout;
 }

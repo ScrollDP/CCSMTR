@@ -1,15 +1,15 @@
-// CustomLineItem.h
-#ifndef CCSMTR_CUSTOMLINEITEM_H
-#define CCSMTR_CUSTOMLINEITEM_H
+// RailsAction.h
+#ifndef CCSMTR_RAILSACTION_H
+#define CCSMTR_RAILSACTION_H
 #include <QGraphicsLineItem>
 #include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QPen>
-#include "CustomTurnoutItem.h"
+#include "TurnoutAction.h"
 
-class CustomLineItem : public QGraphicsLineItem {
+class RailsAction : public QGraphicsLineItem {
 public:
-    CustomLineItem(int x1, int y1, int x2, int y2) : QGraphicsLineItem(x1, y1, x2, y2) {
+    RailsAction(int x1, int y1, int x2, int y2) : QGraphicsLineItem(x1, y1, x2, y2) {
 
     }
 
@@ -24,10 +24,14 @@ protected:
             }
 
         }
+
+
+
     }
 
 private:
 
+
 };
 
-#endif //CCSMTR_CUSTOMLINEITEM_H
+#endif //CCSMTR_RAILSACTION_H

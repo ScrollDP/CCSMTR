@@ -6,7 +6,7 @@
 #define CCSMTR_STATIONCONTROLL_H
 
 #include "ui_stationControll.h"
-#include "TurnoutsRails/rails.h"
+#include "Rails/Rails.h"
 
 
 
@@ -16,10 +16,9 @@ public:
     explicit stationControll(QWidget *parent = nullptr);
     ~stationControll() override;
 
-
 private:
     Ui::stationControll uiSC{};
-    rails *railsScene = new rails();
+    Rails *railsScene = new Rails();
 
 };
 
