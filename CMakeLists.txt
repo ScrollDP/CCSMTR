@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 COMPONENTS Core Gui Widgets SerialPort REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets SerialPort Xml REQUIRED)
 
 set(SOURCES
         src/main.cpp
@@ -25,6 +25,10 @@ set(SOURCES
         src/tabFolder/connectionTab/Power/PowerWindow.h
         src/station_controll/TurnoutsRails/rails.cpp
         src/station_controll/TurnoutsRails/rails.h
+        src/station_controll/Interaction/CustomLineItem.h
+        src/station_controll/Interaction/CustomLineItem.cpp
+        src/station_controll/Interaction/CustomTurnoutItem.cpp
+        src/station_controll/Interaction/CustomTurnoutItem.h
 )
 set(FORMS
         src/mainWindow/ui_mainwindow.ui
@@ -106,7 +110,7 @@ qt6_wrap_ui(FORMS_HEADERS ${FORMS})
 
 qt6_add_executable(CCSMTR MANUAL_FINALIZATION ${SOURCES} ${FORMS_HEADERS})
 
-target_link_libraries(CCSMTR PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::SerialPort)
+target_link_libraries(CCSMTR PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::SerialPort Qt6::Xml)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/app)
 

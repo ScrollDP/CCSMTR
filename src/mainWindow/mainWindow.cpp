@@ -2,7 +2,6 @@
 #include <QCloseEvent>
 
 mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent) {
-
     // ...
     hideTimer = new QTimer(this);
     hideTimer->setInterval(5000); // Set the interval
@@ -22,8 +21,6 @@ mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent) {
     // Make the tabWidget a child of the mainWindow but not part of the layout
     ui.tabWidget->setParent(this);
     ui.tabWidget->move(0, 0); // Position the tabWidget at the top-left corner
-    //set color background of the tabWidget
-    ui.tabWidget->setStyleSheet("background-color: #333333;");
 
     ui.tabWidget->installEventFilter(this);
     this->installEventFilter(this);

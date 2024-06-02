@@ -9,7 +9,6 @@ stationControll::stationControll(QWidget *parent) : QWidget(parent) {
     //add rails to the ui
     uiSC.graphicsView->setScene(railsScene->railsSceneGraphic);
 
-
 }
 
 stationControll::~stationControll() {
