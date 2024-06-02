@@ -6,8 +6,7 @@
 #include <QGraphicsScene>
 #include <QGridLayout>
 #include <QLabel>
-#include "../Interaction/RailsAction.h"
-#include "../Interaction/TurnoutAction.h"
+#include "../Actions/RailsAction.h"
 
 
 class Rails : public QObject {
@@ -22,11 +21,14 @@ public:
     bool updateTurnoutInXml(int id, bool switchTurnout);
     void loadFromXml(int id, const QString &fileName);
 
+
+
 private:
+    QMap<int, QGraphicsItemGroup*> turnoutGroups;
 
     void setupScene();
-    void addLine(int x1, int y1, int x2, int y2, QColor color) const;
-    void addTurnoutToScene(int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror);
+    void addLine(int x1, int y1, int x2, int y2, QColor color, int turnoutId, bool switchTurnout);
+    void addTurnoutToScene(int id, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror);
 
 
     QString
@@ -36,6 +38,8 @@ private:
     void saveToXml(const QString &fileName, const QString &xmlString);
 
     bool firstLoad = true;
+
+    bool getSwitchTurnoutState(int turnoutId);
 
 };
 

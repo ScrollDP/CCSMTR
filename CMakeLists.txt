@@ -25,9 +25,9 @@ set(SOURCES
         src/tabFolder/connectionTab/Power/PowerWindow.h
         src/station_controll/Rails/Rails.cpp
         src/station_controll/Rails/Rails.h
-        src/station_controll/Interaction/RailsAction.h
-        src/station_controll/Interaction/TurnoutAction.h
-        src/station_controll/Interaction/TurnoutAction.cpp
+        src/station_controll/Actions/RailsAction.h
+        src/station_controll/Actions/RailsAction.cpp
+
 
 )
 set(FORMS
