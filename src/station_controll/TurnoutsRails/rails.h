@@ -12,11 +12,15 @@
 
 class rails : public QObject {
 
+
+
 public:
     explicit rails();
     ~rails();
 
     QGraphicsScene* railsSceneGraphic= new QGraphicsScene();
+    // Add the turnout item
+    static int id;
 
 private:
 
@@ -30,6 +34,8 @@ private:
                  bool mirror);
 
     void saveToXml(const QString &fileName, const QString &xmlString);
+
+
 };
 
 

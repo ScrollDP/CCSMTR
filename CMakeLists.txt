@@ -26,8 +26,6 @@ set(SOURCES
         src/station_controll/TurnoutsRails/rails.cpp
         src/station_controll/TurnoutsRails/rails.h
         src/station_controll/Interaction/CustomLineItem.h
-        src/station_controll/Interaction/CustomLineItem.cpp
-        src/station_controll/Interaction/CustomTurnoutItem.cpp
         src/station_controll/Interaction/CustomTurnoutItem.h
 )
 set(FORMS
