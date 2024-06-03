@@ -6,14 +6,15 @@ Zatial co funguje:
 - podpora cez wsl vo windowse (distro Arch Linux)
   Ciele:
   - ~~ovladanie lokomotiv s "DCC-EX"~~
-      - ulozenie profilu lokomotiv
   - ovladanie lokomotiv s "Intelibox I"
       - komunikacia cez intellibox 1 (serial)
+  - komunikacia cez intellibox 1 (usb)
 - samotne kolajisko:
   - navrhnutie kolajiska
-      - docasne staticke kolajisko
-      - dynamicky vytvarat kolajisko
-      - ulozenie kolajiska
+      - ~~docasne staticke kolajisko~~
+      - ~~nacitavanie cez xml suboru~~
+      - ~~dynamicky vytvarat kolajisko~~
+      - editovanie kolajiska
 
 
 ![img.png](img.png)

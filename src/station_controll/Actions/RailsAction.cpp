@@ -8,7 +8,7 @@ RailsAction::~RailsAction() = default;
 
 
 void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
-    qDebug() << "mousePressEvent" << m_turnoutId;
+    qDebug() << "Stlacena line: " << m_turnoutId;
 
     // Load the current state of the turnout from the XML file
     bool currentState = Rails::updateTurnoutInXml(m_turnoutId, m_switchedTurnout);
@@ -24,7 +24,19 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
     // Check if the item is in the scene before removing it
     if (scene() == rails->railsSceneGraphic) {
-        rails->deleteLinesWithId(m_turnoutId);
+        //dont remove if they are with darkgray color
+        if(scene() == rails->railsSceneGraphic && pen().color() == QColor(Qt::darkGray)){
+            //show position of line
+            QLineF line = this->line();
+            QPointF startPoint = line.p1();
+            QPointF endPoint = line.p2();
+            qDebug() << "Start position: (" << startPoint.x() << ", " << startPoint.y() << ")";
+            qDebug() << "End position: (" << endPoint.x() << ", " << endPoint.y() << ")";
+            return;
+        }
+        else{
+            rails->deleteLinesWithId(m_turnoutId);
+        }
         //rails->railsSceneGraphic->removeItem(this);
         //update();
         qDebug() << "item is in the scene";
@@ -33,7 +45,7 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     }
 
     // Load the updated turnout from the XML file
-    rails->loadFromXml(m_turnoutId, Rails::fileName);
+    rails->loadFromXmlTurnouts(m_turnoutId, Rails::fileName);
 
     qDebug() << "new id:" << m_turnoutId <<" switch:"<< m_switchedTurnout;
 }

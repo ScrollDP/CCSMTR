@@ -9,8 +9,8 @@
 
 
 Rails::Rails() {
-    setupScene();
-    loadFromXml(idLoad, fileName);
+    loadFromXmlRails();
+    loadFromXmlTurnouts(idLoad, fileName);
 }
 
 Rails::~Rails() {
@@ -19,94 +19,6 @@ Rails::~Rails() {
 
 const QString Rails::fileName = "turnouts.xml";
 
-
-void Rails::setupScene() {
-    //horna lava cast
-    //initial rail
-    addLine(0, 0, 120, 0, Qt::darkGray,0,false);
-    //add straight line 40 pixels long after turnout
-    addLine(520, -200, 560, -240, Qt::darkGray,0,false); //kolaj obluk ku kolaji 6
-    //straight line 40 pixels long afterdarkCyan turnout
-    addLine(400, -120, 400, -160, Qt::darkGray,0,false);
-    //straight line
-    addLine(400, -160, 560, -320, Qt::darkGray,0,false); //obluk ku kolaji 8
-    //straight line
-    addLine(560, -320, 1260, -320, Qt::darkGray,0,false); //kolaj 8
-    //straight line 40 pixels long
-    addLine(560, -240, 1220, -240, Qt::darkGray,0,false); //kolaj 6
-    //straight line 40 pixels long
-    addLine(520, -160, 1260, -160, Qt::darkGray,0,false); //kolaj 4
-    //rail 360 pixels long straight
-    addLine(360, 0, 1420, 0, Qt::darkGray,0,false); //kolaj 2
-
-
-    //horna prava cast
-    //straight line medzi turnout horna a cross turnout
-    addLine(1500,0,1580,0,Qt::darkGray,0,false);
-    //straight rail kolaj 4-5 ->lietavska lucka
-    addLine(1420, -40, 1340, -120, Qt::darkGray,0,false); //kolaj 4-5 lietavska lucka
-    //straight rail kolaj 6 obluk
-    addLine(1260, -200, 1220, -240, Qt::darkGray,0,false); //kolaj 6 obluk
-    //straight rail lietavska lucka
-    addLine(1340, -160, 1420, -160, Qt::darkGray,0,false); //kolaj 6 lietavska lucka
-    //kolaj lietavska lucka
-    addLine(1500, -160, 1860, -160, Qt::darkGray,0,false); //kolaj lietavska lucka
-    //kolaj obluk ku kolaji 8
-    addLine(1420, -200, 1340, -280, Qt::darkGray,0,false); //kolaj obluk ku kolaji 8
-    //kolaj depo
-    addLine(1340, -320, 1600, -320, Qt::darkGray,0,false); //kolaj depo
-    //kolaj na kolaj 10 a 12
-    addLine(1260, -360, 1220 ,-400, Qt::darkGray,0,false); //kolaj na kolaj 10 a 12
-    //kolaj 10
-    addLine(1140, -440, 980, -440, Qt::darkGray,0,false); //kolaj 10
-    //kolaj 12 obluk
-    addLine(1140, -480, 1100, -520, Qt::darkGray,0,false); //kolaj 12 obluk
-    //kolaj 12
-    addLine(1100, -520, 980, -520, Qt::darkGray,0,false); //kolaj 12
-
-
-    //dolna lava cast
-    //initial rail under first one
-    addLine(0, 80, 120, 80, Qt::darkGray,0,false);
-    //straight line
-    addLine(360, 80, 1420, 80, Qt::darkGray,0,false); //kolaj 1
-    //straight line under 45 degree
-    addLine(360, 120, 440, 200, Qt::darkGray,0,false);
-    //turnout left starting point 440,200
-    //straight rail kolaj 3
-    addLine(520, 240, 1300, 240, Qt::darkGray,0,false); //kolaj 3
-    //straight rail
-    addLine(680, 320, 1260, 320, Qt::darkGray,0,false); //kolaj 5
-    //turnout ku kolaji 5 a 7
-    //straight rail kolaj 7 obluk
-    addLine(680, 360, 720,400, Qt::darkGray,0,false); //kolaj 7 obluk
-    //straight rail kolaj 7
-    addLine(720, 400, 1180, 400, Qt::darkGray,0,false); //kolaj 7
-    //straight rail
-    addLine(680,440,720,480,Qt::darkGray,0,false); //kolaj 9 obluk
-    //straight rail
-    addLine(720,480,1140,480,Qt::darkGray,0,false); //kolaj 9
-    //straight rail odbočka
-    addLine(520, 320, 0, 320, Qt::darkGray,0,false);
-    addLine(520, 400, 80, 400, Qt::darkGray,0,false);
-    //obluk
-    addLine(520, 440, 480, 480, Qt::darkGray,0,false);
-    addLine(480, 480, 80, 480, Qt::darkGray,0,false);
-
-    //dolna prava cat
-    //initial rail
-    addLine(1740, 80, 1860, 80, Qt::darkGray,0,false);
-    //initial rail
-    addLine(1740, 0, 1860, 0, Qt::darkGray,0,false);
-    //straight rail obluk kolaj 3
-    addLine(1420, 120, 1300, 240, Qt::darkGray,0,false); //kolaj 3 obluk
-    //straight rail obluk turnout ku kolaji 5,7,9
-    addLine(1500, 120, 1340, 280, Qt::darkGray,0,false); //kolaj obluk ku kolaji 5,7,9
-    //straight rail from ang2
-    addLine(1260, 400, 1580, 400, Qt::darkGray,0,false); //odstavna
-    //straight rail from ang2 rail 9 obluk
-    addLine(1180, 440, 1140, 480, Qt::darkGray,0,false); //kolaj 9 obluk
-}
 
 void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
      // Convert angleTurnout from degrees to radians
@@ -179,7 +91,7 @@ void Rails::addLine(int x1, int y1, int x2, int y2, QColor color, int idLine, bo
 
 
 
-bool Rails::loadFromXml(int m_idLine, const QString& string) {
+bool Rails::loadFromXmlTurnouts(int m_idLine, const QString& string) {
 
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -240,7 +152,6 @@ bool Rails::loadFromXml(int m_idLine, const QString& string) {
                     mirror = xmlReader.readElementText().toInt();
                 }
 
-
                 addTurnoutToScene(idLine, startX, startY, color, angleTurnout, switchTurnout, flipped, mirror);
                 //qDebug() << "Turnout added: " << idLine << " " << startX << " " << startY << " " << color.name() << " " << angleTurnout << " " << switchTurnout << " " << flipped << " " << mirror;
             }
@@ -284,27 +195,12 @@ bool Rails::updateTurnoutInXml(int idLine, bool switchTurnout) {
         }
     }
 
-
-
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Error opening file for writing: " << file.fileName();
 
     }
     QTextStream stream(&file);
     stream << doc.toString();
-
-/*
-    // Iterate over all items in the QGraphicsScene
-    QList<QGraphicsItem*> allItems = railsSceneGraphic->items();
-    for (QGraphicsItem* item : allItems) {
-        // Check if the item is a RailsAction
-        if (RailsAction* line = dynamic_cast<RailsAction*>(item)) {
-            // Check if the turnoutId of the RailsAction matches the idLine
-            if (line->getTurnoutId() == idLine) {
-                qDebug() << "Found RailsAction with idLine:" << idLine;
-            }
-        }
-    }*/
 
     file.close();
 
@@ -321,4 +217,43 @@ void Rails::deleteLinesWithId(int idLine) const {
             }
         }
     }
+}
+
+bool Rails::loadFromXmlRails() {
+    QFile file("rails.xml");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Error opening file: " << file.fileName();
+        return false;
+    }
+
+    QXmlStreamReader xmlReader(&file);
+    int x1, y1, x2, y2, idLine;
+    QColor color;
+    bool switchTurnout;
+
+    while (!xmlReader.atEnd()) {
+        xmlReader.readNext();
+        if (xmlReader.isStartElement()) {
+            if (xmlReader.name().toString() == "rail") {
+                QXmlStreamAttributes attributes = xmlReader.attributes();
+                x1 = attributes.value("x1").toInt();
+                y1 = attributes.value("y1").toInt();
+                x2 = attributes.value("x2").toInt();
+                y2 = attributes.value("y2").toInt();
+                color = QColor(attributes.value("color").toString());
+                idLine = attributes.value("idLine").toInt();
+                switchTurnout = attributes.value("switchTurnout").toString() == "true";
+
+                addLine(x1, y1, x2, y2, color, idLine, switchTurnout);
+            }
+        }
+    }
+
+    if (xmlReader.hasError()) {
+        qDebug() << "Error parsing XML file: " << xmlReader.errorString();
+        return false;
+    }
+
+    file.close();
+    return true;
 }
