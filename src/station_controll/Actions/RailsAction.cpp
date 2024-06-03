@@ -11,13 +11,13 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     qDebug() << "mousePressEvent" << m_turnoutId;
 
     // Load the current state of the turnout from the XML file
-    bool currentState = rails->updateTurnoutInXml(m_turnoutId, m_switchedTurnout);
+    bool currentState = Rails::updateTurnoutInXml(m_turnoutId, m_switchedTurnout);
 
     // Switch the state of the turnout
     bool newState = !currentState;
 
     // Update the turnout in the XML file with the new state
-    rails->updateTurnoutInXml(m_turnoutId, newState);
+    Rails::updateTurnoutInXml(m_turnoutId, newState);
 
     // Update m_switchedTurnout based on the new state
     m_switchedTurnout = newState;
@@ -33,7 +33,7 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     }
 
     // Load the updated turnout from the XML file
-    rails->loadFromXml(m_turnoutId, "turnouts.xml");
+    rails->loadFromXml(m_turnoutId, Rails::fileName);
 
     qDebug() << "new id:" << m_turnoutId <<" switch:"<< m_switchedTurnout;
 }
