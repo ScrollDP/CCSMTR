@@ -14,9 +14,10 @@ class RailsAction : public QGraphicsLineItem {
 public:
     RailsAction(int x1, int y1, int x2, int y2, int turnoutId, bool switchTurnout, Rails* rails);
     ~RailsAction() override;
+    int getTurnoutId() const;
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-
 
 private:
     int m_turnoutId;

@@ -130,8 +130,10 @@ void Rails::addTurnoutToScene(int id, int x1, int y1, QColor color, double angle
         y1_initial = y1 + length1 * sin(angleTurnoutRad);
     }
 
+
     // First part of the line: straight until the turn
     addLine(x1, y1, x1_initial, y1_initial, Qt::darkMagenta, id, switchTurnout);
+
 
     // Calculate the direction of the first line segment
     double direction = angleTurnoutRad;
@@ -167,19 +169,13 @@ void Rails::addTurnoutToScene(int id, int x1, int y1, QColor color, double angle
         y2 = y1_initial + length2 * sin(newDirection);
     }
 
-    // Second part of the line: after the turn
-    addLine(x1_initial, y1_initial, x2, y2, color, id, switchTurnout);
-
+        // Second part of the line: after the turn
+        addLine(x1_initial, y1_initial, x2, y2, color, id, switchTurnout);
 }
-
 
 
 void Rails::addLine(int x1, int y1, int x2, int y2, QColor color, int turnoutId, bool switchTurnout) {
     auto *line = new RailsAction(x1, y1, x2, y2, turnoutId, switchTurnout, this);
-    if (!turnoutGroups.contains(turnoutId)) {
-        turnoutGroups[turnoutId] = new QGraphicsItemGroup();
-    }
-    turnoutGroups[turnoutId]->addToGroup(line);
 
     if (color == Qt::yellow){
         line->setPen(QPen(color, 3, Qt::SolidLine, Qt::MPenCapStyle, Qt::MPenJoinStyle));
@@ -193,13 +189,13 @@ void Rails::addLine(int x1, int y1, int x2, int y2, QColor color, int turnoutId,
 
 
 
-void Rails::loadFromXml(int turnoutId, const QString& fileName) {
+bool Rails::loadFromXml(int turnoutId, const QString& fileName) {
 
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Error opening file: " << fileName;
-        return;
     }
+
 
     QXmlStreamReader xmlReader(&file);
     int startX, startY;
@@ -255,6 +251,7 @@ void Rails::loadFromXml(int turnoutId, const QString& fileName) {
                     mirror = xmlReader.readElementText().toInt();
                 }
 
+
                 addTurnoutToScene(id, startX, startY, color, angleTurnout, switchTurnout, flipped, mirror);
                 //qDebug() << "Turnout added: " << id << " " << startX << " " << startY << " " << color.name() << " " << angleTurnout << " " << switchTurnout << " " << flipped << " " << mirror;
             }
@@ -269,89 +266,7 @@ void Rails::loadFromXml(int turnoutId, const QString& fileName) {
     file.close();
 
     firstLoad = false;
-}
-
-QString Rails::turnoutToXml(int startX, int startY, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
-    static int uniqueId = 1; // This will be incremented for each turnout
-
-    QDomDocument doc;
-    QDomElement turnoutElement = doc.createElement("turnout");
-    turnoutElement.setAttribute("id", uniqueId++); // Use and increment the unique ID
-
-    QDomElement startElement = doc.createElement("start");
-    startElement.setAttribute("x", startX);
-    startElement.setAttribute("y", startY);
-    turnoutElement.appendChild(startElement);
-
-    QDomElement colorElement = doc.createElement("color");
-    QDomText colorText = doc.createTextNode(color.name());
-    colorElement.appendChild(colorText);
-    turnoutElement.appendChild(colorElement);
-
-    QDomElement angleElement = doc.createElement("angleTurnout");
-    QDomText angleText = doc.createTextNode(QString::number(angleTurnout));
-    angleElement.appendChild(angleText);
-    turnoutElement.appendChild(angleElement);
-
-    QDomElement switchElement = doc.createElement("switchTurnout");
-    QDomText switchText = doc.createTextNode(switchTurnout ? "1" : "0");
-    switchElement.appendChild(switchText);
-    turnoutElement.appendChild(switchElement);
-
-    QDomElement flippedElement = doc.createElement("flipped");
-    QDomText flippedText = doc.createTextNode(flipped ? "1" : "0");
-    flippedElement.appendChild(flippedText);
-    turnoutElement.appendChild(flippedElement);
-
-    QDomElement mirrorElement = doc.createElement("mirror");
-    QDomText mirrorText = doc.createTextNode(mirror ? "1" : "0");
-    mirrorElement.appendChild(mirrorText);
-    turnoutElement.appendChild(mirrorElement);
-
-    // Add the address element
-    QDomElement addressElement = doc.createElement("address");
-    QDomText addressText = doc.createTextNode("5"); // Fixed address value
-    addressElement.appendChild(addressText);
-    turnoutElement.appendChild(addressElement);
-
-    doc.appendChild(turnoutElement);
-
-    return doc.toString();
-}
-
-void Rails::saveToXml(const QString& fileName, const QString& xmlString) {
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-        qDebug() << "Error opening file for writing: " << fileName;
-        return;
-    }
-
-    // Read the existing XML from the file
-    QDomDocument doc;
-    if (!doc.setContent(&file)) {
-        qDebug() << "Error parsing XML file: " << fileName;
-        return;
-    }
-    file.close();
-
-    // Parse the new turnout XML
-    QDomDocument newTurnoutDoc;
-    newTurnoutDoc.setContent(xmlString);
-    QDomElement newTurnoutElement = newTurnoutDoc.firstChildElement("turnout");
-
-    // Append the new turnout to the root element of the existing XML
-    QDomElement root = doc.firstChildElement("turnouts");
-    root.appendChild(newTurnoutElement);
-
-    // Write the updated XML back to the file
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Error opening file for writing: " << fileName;
-        return;
-    }
-    QTextStream stream(&file);
-    stream << doc.toString();
-
-    file.close();
+    return switchTurnout;
 }
 
 bool Rails::updateTurnoutInXml(int id, bool switchTurnout) {
@@ -388,9 +303,32 @@ bool Rails::updateTurnoutInXml(int id, bool switchTurnout) {
     QTextStream stream(&file);
     stream << doc.toString();
 
+/*
+    // Iterate over all items in the QGraphicsScene
+    QList<QGraphicsItem*> allItems = railsSceneGraphic->items();
+    for (QGraphicsItem* item : allItems) {
+        // Check if the item is a RailsAction
+        if (RailsAction* line = dynamic_cast<RailsAction*>(item)) {
+            // Check if the turnoutId of the RailsAction matches the id
+            if (line->getTurnoutId() == id) {
+                qDebug() << "Found RailsAction with id:" << id;
+            }
+        }
+    }*/
+
     file.close();
 
     return switchTurnout;
 }
 
-
+void Rails::deleteLinesWithId(int id) {
+    QList<QGraphicsItem*> allItems = railsSceneGraphic->items();
+    for (QGraphicsItem* item : allItems) {
+        if (RailsAction* line = dynamic_cast<RailsAction*>(item)) {
+            if (line->getTurnoutId() == id) {
+                railsSceneGraphic->removeItem(line);
+                delete line;
+            }
+        }
+    }
+}
