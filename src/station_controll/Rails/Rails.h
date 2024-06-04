@@ -31,6 +31,11 @@ private:
     void addTurnoutToScene(int id, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror);
     bool firstLoad = true;
     bool loadFromXmlRails();
+
+    void
+    addTurnoutToSceneANG(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout,
+                         bool flipped,
+                         bool mirror);
 };
 
 
