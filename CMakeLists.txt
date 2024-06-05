@@ -27,6 +27,8 @@ set(SOURCES
         src/station_controll/Rails/Rails.h
         src/station_controll/Actions/RailsAction.h
         src/station_controll/Actions/RailsAction.cpp
+        src/station_controll/RightClick/RightClick.cpp
+        src/station_controll/RightClick/RightClick.h
 
 
 )
@@ -37,6 +39,7 @@ set(FORMS
         src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui
         src/tabFolder/connectionTab/Power/ui_PowerWindow.ui
         src/station_controll/ui_stationControll.ui
+        src/station_controll/RightClick/ui_RightClick.ui
 
 )
 execute_process(
@@ -103,6 +106,17 @@ if(result)
     message(WARNING "uic command for station_controll failed with error: ${output}")
 else()
     message(STATUS "uic command for station_controll succeeded: ${output}")
+endif()
+
+execute_process(
+        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/station_controll/RightClick/ui_RightClick.h ${CMAKE_CURRENT_SOURCE_DIR}/src/station_controll/RightClick/ui_RightClick.ui
+        RESULT_VARIABLE result
+        OUTPUT_VARIABLE output
+)
+if(result)
+    message(WARNING "uic command for RightClick failed with error: ${output}")
+else()
+    message(STATUS "uic command for RightClick succeeded: ${output}")
 endif()
 
 
