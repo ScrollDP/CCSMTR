@@ -10,8 +10,8 @@ ThrottleWindow::ThrottleWindow(QWidget *parent, dccEx *dccExInstance) : QMainWin
         auto* button = this->findChild<QPushButton*>(QString("F%1").arg(i));
         if (button) {
             button->setEnabled(false);
-            connect(button, &QPushButton::clicked, this, [=]() {
-                onFunctionButtonClicked(dccExInstance);
+            connect(button, &QPushButton::clicked, this, [=, this]() {
+               onFunctionButtonClicked(dccExInstance);
             });
         }
     }
@@ -31,21 +31,21 @@ void ThrottleWindow::setButtonsEnabled(bool enabled) {
 void ThrottleWindow::connectButtons(dccEx *dccExInstance) {
     connect(ui->AquireButton, &QPushButton::clicked, this, &ThrottleWindow::onAquireButtonClicked);
     connect(ui->ReleaseButton, &QPushButton::clicked, this, &ThrottleWindow::onReleaseButtonClicked);
-    connect(ui->speedSlider, &QSlider::valueChanged, this, [=](int value) {
+    connect(ui->speedSlider, &QSlider::valueChanged, this, [=, this](int value) {
         onSpeedSliderValueChanged(value, dccExInstance);
     });
-    connect(ui->ForwardSpeed, &QPushButton::clicked, this, [=](){
+    connect(ui->ForwardSpeed, &QPushButton::clicked, this, [=, this](){
         onForwardButtonClicked(dccExInstance);
     });
-    connect(ui->ReverseSpeed, &QPushButton::clicked, this, [=](){
+    connect(ui->ReverseSpeed, &QPushButton::clicked, this, [=, this](){
         onReverseButtonClicked(dccExInstance);
     });
-    connect(ui->EmergencyStop, &QPushButton::clicked, this, [=](){
+    connect(ui->EmergencyStop, &QPushButton::clicked, this, [=, this](){
         sendToArduino("<0>", dccExInstance);
         sendToArduino("<!>", dccExInstance);
         ui->speedSlider->setValue(0);
     });
-    connect(ui->EmergencyPause, &QPushButton::clicked, this, [=](){
+    connect(ui->EmergencyPause, &QPushButton::clicked, this, [=, this](){
         QString command = QString("<t %1 %2 %3>").arg(ui->inputAdress->text()).arg(-1).arg(direction);
         //QString command = QString("<- " + ui->inputAdress->text() + ">");
         sendToArduino(command, dccExInstance);

@@ -58,17 +58,17 @@
   <flipped>1</flipped>
   <mirror>0</mirror>
   <isANG>0</isANG>
-  <dccaddress>14</dccaddress>
+  <dccaddress>36</dccaddress>
  </turnout>
  <turnout id="7">
   <start x="440" y="-120"/>
   <color>#00ff00</color>
   <angleTurnout>315</angleTurnout>
-  <switchTurnout>1</switchTurnout>
+  <switchTurnout>0</switchTurnout>
   <flipped>0</flipped>
   <mirror>0</mirror>
   <isANG>0</isANG>
-  <dccaddress>44</dccaddress>
+  <dccaddress>7</dccaddress>
  </turnout>
  <turnout id="8">
   <start x="1500" y="0"/>
@@ -124,7 +124,7 @@
   <start x="1260" y="-360"/>
   <color>#0000ff</color>
   <angleTurnout>45</angleTurnout>
-  <switchTurnout>0</switchTurnout>
+  <switchTurnout>1</switchTurnout>
   <flipped>1</flipped>
   <mirror>0</mirror>
   <isANG>1</isANG>
@@ -214,7 +214,7 @@
   <start x="1740" y="0"/>
   <color>#0000ff</color>
   <angleTurnout>0</angleTurnout>
-  <switchTurnout>1</switchTurnout>
+  <switchTurnout>0</switchTurnout>
   <flipped>1</flipped>
   <mirror>1</mirror>
   <isANG>0</isANG>
@@ -224,7 +224,7 @@
   <start x="1580" y="0"/>
   <color>#ff0000</color>
   <angleTurnout>0</angleTurnout>
-  <switchTurnout>1</switchTurnout>
+  <switchTurnout>0</switchTurnout>
   <flipped>0</flipped>
   <mirror>0</mirror>
   <isANG>0</isANG>
@@ -274,7 +274,7 @@
   <start x="1340" y="280"/>
   <color>#00ff00</color>
   <angleTurnout>135</angleTurnout>
-  <switchTurnout>0</switchTurnout>
+  <switchTurnout>1</switchTurnout>
   <flipped>0</flipped>
   <mirror>0</mirror>
   <isANG>0</isANG>
@@ -294,7 +294,7 @@
   <start x="1180" y="440"/>
   <color>#0000ff</color>
   <angleTurnout>315</angleTurnout>
-  <switchTurnout>1</switchTurnout>
+  <switchTurnout>0</switchTurnout>
   <flipped>0</flipped>
   <mirror>0</mirror>
   <isANG>1</isANG>

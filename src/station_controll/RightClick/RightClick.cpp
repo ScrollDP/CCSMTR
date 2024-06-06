@@ -9,7 +9,7 @@ RightClick::RightClick(QWidget *parent) : QDialog(parent), ui(new Ui::RightClick
 
     //rails = new Rails();
     //save button pressed it will save
-    connect(ui->SaveButton, &QPushButton::clicked, this, [=]() {
+    connect(ui->SaveButton, &QPushButton::clicked, this, [=, this]() {
         this->saveTurnout();
         // Ensure rails is initialized
        /* if (rails == nullptr) {

@@ -11,6 +11,8 @@
 
 class Rails;
 
+class mainWindow;
+
 
 class RailsAction : public QGraphicsLineItem {
 public:
@@ -28,10 +30,7 @@ private:
     bool m_switchedTurnout;
     Rails *rails;
     //void checkBool();
-    bool m_editMode = true;
-
-
-
+    bool editMode = true;
 };
 
 #endif //CCSMTR_RAILSACTION_H

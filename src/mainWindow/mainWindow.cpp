@@ -36,6 +36,7 @@ mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(ui.actionIntelibox_I, &QPushButton::clicked, this, &mainWindow::onActionIntelibox_ITriggered);
     connect(ui.actionThrottle, &QPushButton::clicked, this, &mainWindow::onActionThrottleTriggered);
     connect(ui.actionPower, &QPushButton::clicked, this, &mainWindow::onActionPowerTriggered);
+    connect(ui.checkBox, &QCheckBox::stateChanged, this, &mainWindow::editMode);
     this->showFullScreen();
 }
 
@@ -134,12 +135,13 @@ bool mainWindow::eventFilter(QObject *watched, QEvent *event) {
 }
 
 bool mainWindow::editMode(bool mode) {
+    qDebug() << "editMode called";
     if(mode){
-        return true;
         qDebug() << "editMode is true";
+        return true;
     }
     else{
-        return false;
         qDebug() << "editMode is false";
+        return false;
     }
 }

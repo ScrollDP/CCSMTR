@@ -6,7 +6,7 @@
 RailsAction::RailsAction(int x1, int y1, int x2, int y2, int turnoutId, bool switchTurnout, Rails* rails)
         : QGraphicsLineItem(x1, y1, x2, y2), m_turnoutId(turnoutId), m_switchedTurnout(switchTurnout),rails(rails) {
 
-    checkBool();
+    //checkBool();
 }
 
 RailsAction::~RailsAction() = default;
@@ -24,8 +24,8 @@ void RailsAction::checkBool() {
 
 void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // Check if the item is in the scene before removing it
-    if (!m_editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::LeftButton) {
-        qDebug() << "editMode is false";
+    if (!editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::LeftButton) {
+        qDebug() << "editMode is false" << editMode;
         qDebug() << "Stlacena line: " << m_turnoutId;
 
         // Load the current state of the turnout from the XML file
@@ -47,7 +47,7 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
             //QPointF endPoint = line.p2();
             //qDebug() << "Start position: (" << startPoint.x() << ", " << startPoint.y() << ")";
             //qDebug() << "End position: (" << endPoint.x() << ", " << endPoint.y() << ")";
-            return;
+            //return;
         }
         else{
             rails->deleteLinesWithId(m_turnoutId);
@@ -56,14 +56,10 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         // Load the updated turnout from the XML file
         rails->loadFromXmlTurnouts(m_turnoutId, Rails::fileName);
         //qDebug() << "new id:" << m_turnoutId <<" switch:"<< m_switchedTurnout;
-    } else {
-        //qDebug() << "item is not in the scene";
     }
-
-    // Event for left click
-    if(m_editMode && event->button() == Qt::LeftButton) {
-        qDebug() << "editMode is true";
-        qDebug() << "Left click in editmode";
+    else {
+        qDebug() << "editMode is true 1" << editMode;
+        qDebug() << "Left click in editmode error";
 
         // Create a new pen with a wide width and a color that stands out
         QPen glowPen;
@@ -71,35 +67,46 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         glowPen.setColor(Qt::yellow);
 
         // Set the pen of the QGraphicsLineItem to the new pen
-        this->setPen(glowPen);
+        std::shared_ptr<QPen> pen = std::make_shared<QPen>(glowPen);
+
+        //this->setPen(glowPen);
+
 
         // Iterate over all items in the scene
-        for (QGraphicsItem* item : scene()->items()) {
-            // Check if the item is a RailsAction
-            if (RailsAction* railsAction = dynamic_cast<RailsAction*>(item)) {
-                // If the id of the item matches the id of the clicked item, change its color
-                if (railsAction->getTurnoutId() == this->getTurnoutId()) {
-                    railsAction->setPen(glowPen);
+        QGraphicsScene* currentScene = scene();
+        if (currentScene) {
+            for (QGraphicsItem* item : currentScene->items()) {
+                // Check if the item is a RailsAction
+                auto* railsAction = dynamic_cast<RailsAction*>(item);
+                if (railsAction) {
+                    // If the id of the item matches the id of the clicked item, change its color
+                    if (railsAction->getTurnoutId() == this->getTurnoutId()) {
+                        railsAction->setPen(glowPen);
+                    }
                 }
             }
         }
-    }
-    //Event for right click if it is rigtbutton or id turnout is from 1-30
-    if(m_editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::RightButton) {
-        qDebug() << "editMode is true";
-        if(m_turnoutId <= 30 && m_turnoutId > 0){
+        //Event for right click if it is rigtbutton or id turnout is from 1-30
+        qDebug() << "editMode before 2" << editMode;
+        if(scene() == rails->railsSceneGraphic && event->button() == Qt::RightButton) {
+            qDebug() << "editMode is true 2" << editMode;
+            if(m_turnoutId <= 30 && m_turnoutId > 0){
 
-            qDebug() << "Right click" << m_turnoutId;
-            RightClick dialog;
-            dialog.loadTurnout(m_turnoutId);
-            dialog.exec();
-            if(dialog.saveTurnout()) {
-                rails->deleteLinesWithId(m_turnoutId);
-                rails->loadFromXmlTurnouts(m_turnoutId, Rails::fileName);
-            }
-        }else{return;}
+                qDebug() << "Right click" << m_turnoutId;
+                RightClick dialog;
+                dialog.loadTurnout(m_turnoutId);
+                dialog.exec();
+                if(dialog.saveTurnout()) {
+                    rails->deleteLinesWithId(m_turnoutId);
+                    rails->loadFromXmlTurnouts(m_turnoutId, Rails::fileName);
+                }
+            }else{return;}
 
+        }
     }
+
+
+
 }
 
 
