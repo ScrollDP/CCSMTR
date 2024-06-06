@@ -1,15 +1,31 @@
 #include "RailsAction.h"
+#include "../../mainWindow/mainWindow.h"
+
 
 
 RailsAction::RailsAction(int x1, int y1, int x2, int y2, int turnoutId, bool switchTurnout, Rails* rails)
-        : QGraphicsLineItem(x1, y1, x2, y2), m_turnoutId(turnoutId), m_switchedTurnout(switchTurnout),rails(rails) {}
+        : QGraphicsLineItem(x1, y1, x2, y2), m_turnoutId(turnoutId), m_switchedTurnout(switchTurnout),rails(rails) {
+
+    checkBool();
+}
 
 RailsAction::~RailsAction() = default;
+/*
+void RailsAction::checkBool() {
 
+    if(m_editMode){
+        qDebug() << "editMode check is true";
+    }
+    else{
+        qDebug() << "editMode check is false";
+    }
+
+}*/
 
 void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // Check if the item is in the scene before removing it
-    if (!editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::LeftButton) {
+    if (!m_editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::LeftButton) {
+        qDebug() << "editMode is false";
         qDebug() << "Stlacena line: " << m_turnoutId;
 
         // Load the current state of the turnout from the XML file
@@ -45,7 +61,8 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     }
 
     // Event for left click
-    if(editMode && event->button() == Qt::LeftButton) {
+    if(m_editMode && event->button() == Qt::LeftButton) {
+        qDebug() << "editMode is true";
         qDebug() << "Left click in editmode";
 
         // Create a new pen with a wide width and a color that stands out
@@ -68,7 +85,8 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         }
     }
     //Event for right click if it is rigtbutton or id turnout is from 1-30
-    if(editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::RightButton) {
+    if(m_editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::RightButton) {
+        qDebug() << "editMode is true";
         if(m_turnoutId <= 30 && m_turnoutId > 0){
 
             qDebug() << "Right click" << m_turnoutId;

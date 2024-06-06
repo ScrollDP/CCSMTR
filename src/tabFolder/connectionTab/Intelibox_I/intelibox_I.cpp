@@ -5,10 +5,15 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <charconv>
+#include <array>
 
-
-intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSerialPort(this)) {
+intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), port(io) {
     ui.setupUi(this);
+
+    ui.consoleInput->installEventFilter(this);
+
+    baudRate = 2400;
+
 
     // Populate the serial port combo box with available ports
     const auto infos = QSerialPortInfo::availablePorts();
@@ -19,22 +24,57 @@ intelibox_I::intelibox_I(QWidget *parent) : QWidget(parent), intelibox(new QSeri
     connect(ui.connectButton, &QPushButton::clicked, this, &intelibox_I::onConnectButtonClicked);
     connect(ui.disconnectButton, &QPushButton::clicked, this, &intelibox_I::onDisconnectButtonClicked);
     connect(ui.consoleInput, &QLineEdit::returnPressed, this, &intelibox_I::onInputReturnPressed);
-    connect(intelibox, &QSerialPort::readyRead, this, &intelibox_I::onDataReceived); // Connect the readyRead signal to the onDataReceived slot
+}
+
+void intelibox_I::setBaudRate(int newBaudRate) {
+    baudRate = newBaudRate;
+}
+
+void intelibox_I::setSyntax(const QString& newSyntax) {
+    syntax = newSyntax;
 }
 
 void intelibox_I::onConnectButtonClicked() {
-    if (!intelibox->isOpen() && mainWindow::isAnyConnected){
+    if (!port.is_open() && mainWindow::isAnyConnected){
         QMessageBox::critical(this, "Error", "Port už je otvoreny!");
     }
     else{
         // Implement the connectionTab logic
-        intelibox->setPortName(ui.serialPortComboBox->currentText());
-        intelibox->open(QIODevice::ReadWrite);
-        intelibox->setBaudRate(QSerialPort::Baud115200);
-        intelibox->setDataBits(QSerialPort::Data8);
-        intelibox->setParity(QSerialPort::NoParity);
-        intelibox->setStopBits(QSerialPort::OneStop);
-        intelibox->setFlowControl(QSerialPort::NoFlowControl);
+
+        try {
+            port.open(ui.serialPortComboBox->currentText().toStdString());
+            port.set_option(serial_port::baud_rate(baudRate));
+        } catch (const boost::system::system_error& e) {
+            QMessageBox::critical(this, "Error", "Failed to open port: " + QString::fromStdString(e.what()));
+            return;
+        }
+
+        std::array<char, 128> data{};
+        std::size_t size = data.size();
+
+
+        setSyntax(syntax);
+        boost::asio::async_read(port, boost::asio::buffer(data, size),
+                                [this](boost::system::error_code ec, std::size_t length) {
+                                    if (!ec) {
+                                        // Read operation completed successfully.
+                                        // Call the onDataReceived method.
+                                        onDataReceived();
+                                    }
+                                });
+
+
+        /*
+        boost::asio::async_read(port, boost::asio::buffer(data, size),
+        [this](boost::system::error_code ec, std::size_t length)
+        {
+            if (!ec)
+            {
+                // Read operation completed successfully.
+                // Call the onDataReceived method.
+                onDataReceived();
+            }
+        });*/
 
         ui.connectButton->setEnabled(false);
         ui.serialPortComboBox->setEnabled(false);
@@ -43,12 +83,12 @@ void intelibox_I::onConnectButtonClicked() {
 }
 
 void intelibox_I::onDisconnectButtonClicked() {
-    if (!intelibox->isOpen() && mainWindow::isAnyConnected){
+    if (!port.is_open() && mainWindow::isAnyConnected){
         QMessageBox::warning(this, "Info", "Najprv odpojte predchádzajúce pripojenie!");
     }
     else {
         // Implement the disconnection logic
-        intelibox->close();
+        port.close();
         ui.connectButton->setEnabled(true);
         ui.serialPortComboBox->setEnabled(true);
         mainWindow::isAnyConnected = false;
@@ -57,69 +97,48 @@ void intelibox_I::onDisconnectButtonClicked() {
 }
 
 void intelibox_I::onInputReturnPressed() {
-    // Implement the logic to send the input
+    // Get the text from the consoleInput QLineEdit
+    QString input = ui.consoleInput->text();
+
+    // Check if the input is not empty
+    if (!input.isEmpty()) {
+        // Convert the QString to a std::string
+        std::string dataToSend = input.toStdString();
+
+        // Write the data to the port
+        boost::asio::write(port, boost::asio::buffer(dataToSend));
+
+        // Clear the consoleInput QLineEdit
+        ui.consoleInput->clear();
+    }
 }
 
-std::string hexToStringVerbose(const std::string& hex) {
-    std::string result;
-    for (size_t i = 0; i < hex.length(); i += 2) {
-        std::string byteString = hex.substr(i, 2);
-        unsigned int byte = 0;
-        std::from_chars(byteString.data(), byteString.data() + 2, byte, 16);
-        result += static_cast<char>(byte);
+bool intelibox_I::eventFilter(QObject *obj, QEvent *event) {
+    if (obj == ui.consoleInput && event->type() == QEvent::KeyPress) {
+        auto *keyEvent = dynamic_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) {
+            onInputReturnPressed();
+            return true;
+        }
     }
-    return result;
-}
-
-/*
-std::string hexToStringVerbose(const std::string& hex) {
-    std::string result;
-
-    for (size_t i = 0; i < hex.length(); i += 2) {
-        // Get the current pair of characters
-        std::string byteString = hex.substr(i, 2);
-
-        // Convert the pair of characters from hexadecimal to decimal
-        char byte = static_cast<char>(std::stoi(byteString, nullptr, 16));
-
-        // Append the character to the result string
-        result += byte;
-    }
-
-    return result;
-}*/
-
-std::string hexToUtf8(const std::string& hex) {
-    std::vector<unsigned char> bytes;
-
-    for (unsigned int i = 0; i < hex.length(); i += 2) {
-        std::string byteString = hex.substr(i, 2);
-        auto byte = (unsigned char) strtol(byteString.c_str(), nullptr, 16);
-        bytes.push_back(byte);
-    }
-
-    return std::string(bytes.begin(), bytes.end());
+    return QWidget::eventFilter(obj, event);
 }
 
 void intelibox_I::onDataReceived() {
     // Read the data from the Intelibox
-    QByteArray data = intelibox->readAll();
-    // Convert each byte to its hexadecimal representation
-    QString hexData = data.toHex(' ').toUpper();
-    // Convert the hexadecimal data to a UTF-8 string
+    boost::asio::streambuf buffer;
+    boost::asio::read_until(port, buffer, '\n');
 
-    std::string utf8Data = hexToUtf8(hexData.toStdString());
-    // Convert the UTF-8 string to a QString and append it to the consoleOutput text edit
-    ui.consoleOutput->append(QString::fromStdString(utf8Data));
+    // Convert the data to a QString
+    std::istream is(&buffer);
+    std::string s;
+    std::getline(is, s);
+    QString data = QString::fromStdString(s);
 
-    //backup:
-    //std::string verboseData = hexToStringVerbose(hexData.toStdString());
-    //ui.consoleOutput->append(QString::fromStdString(verboseData));
+    // Display the data in the UI
+    ui.consoleOutput->setText(data);
 }
 
 intelibox_I::~intelibox_I() {
     mainWindow::isAnyConnected = false;
-    delete intelibox;
-
 }
-

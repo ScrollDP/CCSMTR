@@ -95,7 +95,7 @@
            <enum>QTabWidget::TabShape::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="iconSize">
            <size>
@@ -225,7 +225,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>241</width>
+              <width>121</width>
               <height>45</height>
              </rect>
             </property>
@@ -264,25 +264,6 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QPushButton" name="actionTurnouts">
-               <property name="minimumSize">
-                <size>
-                 <width>110</width>
-                 <height>35</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>110</width>
-                 <height>35</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Turnouts</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </widget>
@@ -299,7 +280,15 @@
               <height>46</height>
              </rect>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3"/>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="checkBox">
+               <property name="text">
+                <string>EditMode</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </widget>
          </widget>

@@ -100,6 +100,19 @@ void mainWindow::keyPressEvent(QKeyEvent *event) {
     } else {
         QMainWindow::keyPressEvent(event);
     }
+    if (event->key() == Qt::Key_F9) {
+        ui.checkBox->setChecked(!ui.checkBox->isChecked());
+        qDebug() << "F9 pressed";
+        if(ui.checkBox->isChecked()){
+            editMode(true);
+            qDebug() << "editMode F9 is true";
+        } else {
+            editMode(false);
+            qDebug() << "editMode F9 is false";
+        }
+    } else {
+        QMainWindow::keyPressEvent(event);
+    }
 }
 
 bool mainWindow::eventFilter(QObject *watched, QEvent *event) {
@@ -118,4 +131,15 @@ bool mainWindow::eventFilter(QObject *watched, QEvent *event) {
         return true;
     }
     return QMainWindow::eventFilter(watched, event);
+}
+
+bool mainWindow::editMode(bool mode) {
+    if(mode){
+        return true;
+        qDebug() << "editMode is true";
+    }
+    else{
+        return false;
+        qDebug() << "editMode is false";
+    }
 }

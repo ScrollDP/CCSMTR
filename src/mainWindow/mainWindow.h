@@ -21,6 +21,8 @@ public:
 
     static bool isAnyConnected; // Add a static boolean variable to check if any connectionTab is active
 
+    bool editMode(bool mode);
+
 private slots:
     void onActionDCC_EXTriggered(); // Add a slot for the actionDCC_EX triggered signal
     void onActionIntelibox_ITriggered(); // Add a slot for the actionIntelibox_I triggered signal
@@ -33,6 +35,7 @@ private:
     dccEx *dccExWindow; // Add a pointer to a dccEx window
     intelibox_I *intelibox_IWindow; // Add a pointer to an Intelibox_I window
     PowerWindow *powerWindow; // Add a pointer to a PowerWindow window
+    RailsAction *railsAction;
 
     void keyPressEvent(QKeyEvent *event) override;
     QTimer *hideTimer; // Add a QTimer pointer to hide the tabWidget after a certain time

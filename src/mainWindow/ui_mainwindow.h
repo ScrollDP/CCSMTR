@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
@@ -39,10 +40,10 @@ public:
     QWidget *gridLayoutWidget_2;
     QGridLayout *gridLayout_2;
     QPushButton *actionThrottle;
-    QPushButton *actionTurnouts;
     QWidget *LayoutEdit;
     QWidget *gridLayoutWidget_3;
     QGridLayout *gridLayout_3;
+    QCheckBox *checkBox;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame;
 
@@ -135,7 +136,7 @@ public:
         tools->setObjectName(QString::fromUtf8("tools"));
         gridLayoutWidget_2 = new QWidget(tools);
         gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
-        gridLayoutWidget_2->setGeometry(QRect(0, 0, 241, 45));
+        gridLayoutWidget_2->setGeometry(QRect(0, 0, 121, 45));
         gridLayout_2 = new QGridLayout(gridLayoutWidget_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setHorizontalSpacing(15);
@@ -147,13 +148,6 @@ public:
 
         gridLayout_2->addWidget(actionThrottle, 0, 0, 1, 1);
 
-        actionTurnouts = new QPushButton(gridLayoutWidget_2);
-        actionTurnouts->setObjectName(QString::fromUtf8("actionTurnouts"));
-        actionTurnouts->setMinimumSize(QSize(110, 35));
-        actionTurnouts->setMaximumSize(QSize(110, 35));
-
-        gridLayout_2->addWidget(actionTurnouts, 0, 1, 1, 1);
-
         tabWidget->addTab(tools, QString());
         LayoutEdit = new QWidget();
         LayoutEdit->setObjectName(QString::fromUtf8("LayoutEdit"));
@@ -163,6 +157,11 @@ public:
         gridLayout_3 = new QGridLayout(gridLayoutWidget_3);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
+        checkBox = new QCheckBox(gridLayoutWidget_3);
+        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+
+        gridLayout_3->addWidget(checkBox, 0, 0, 1, 1);
+
         tabWidget->addTab(LayoutEdit, QString());
 
         verticalLayout_2->addWidget(tabWidget);
@@ -189,7 +188,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -203,8 +202,8 @@ public:
         actionPower->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(connection), QCoreApplication::translate("MainWindow", "Connection", nullptr));
         actionThrottle->setText(QCoreApplication::translate("MainWindow", "Throttle", nullptr));
-        actionTurnouts->setText(QCoreApplication::translate("MainWindow", "Turnouts", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tools), QCoreApplication::translate("MainWindow", "Tools", nullptr));
+        checkBox->setText(QCoreApplication::translate("MainWindow", "EditMode", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(LayoutEdit), QCoreApplication::translate("MainWindow", "Layout Edit", nullptr));
     } // retranslateUi
 
