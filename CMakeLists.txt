@@ -17,8 +17,6 @@ set(SOURCES
         src/station_controll/stationControll.h
         src/tabFolder/connectionTab/DCC-EX/dccEx.cpp
         src/tabFolder/connectionTab/DCC-EX/dccEx.h
-        src/tabFolder/connectionTab/Intelibox_I/intelibox_I.cpp
-        src/tabFolder/connectionTab/Intelibox_I/intelibox_I.h
         src/tabFolder/ToolsTab/Throttle/ThrottleWindow.cpp
         src/tabFolder/ToolsTab/Throttle/ThrottleWindow.h
         src/tabFolder/connectionTab/Power/PowerWindow.cpp
@@ -35,7 +33,6 @@ set(SOURCES
 set(FORMS
         src/mainWindow/ui_mainwindow.ui
         src/tabFolder/connectionTab/DCC-EX/ui_dccEx.ui
-        src/tabFolder/connectionTab/Intelibox_I/ui_intelibox_I.ui
         src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui
         src/tabFolder/connectionTab/Power/ui_PowerWindow.ui
         src/station_controll/ui_stationControll.ui
@@ -64,16 +61,6 @@ else()
     message(STATUS "uic command for DCC-EX succeeded: ${output}")
 endif()
 
-execute_process(
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/Intelibox_I/ui_intelibox_I.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/connectionTab/Intelibox_I/ui_intelibox_I.ui
-        RESULT_VARIABLE result
-        OUTPUT_VARIABLE output
-)
-if(result)
-    message(WARNING "uic command for Intelibox_I failed with error: ${output}")
-else()
-    message(STATUS "uic command for Intelibox_I succeeded: ${output}")
-endif()
 
 execute_process(
         COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/tabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui

@@ -1,0 +1,9 @@
+programovanie WD10 kuehn-digital pre DCC-EX
+<T id DCC address subaddress>
+WD10 je naprogramovany pre roco, nie je podľa excel tabulku od dcc-ex, nezhoduje sa addresa, posunnutie o 1 dole
+Zatiaľ cez multimaus nastaviť hodnotu CV1 a CV9 pre group A a CV35 a CV36
+
+
+http://www.kuehn-modell.de/adressberechnung-dcc--roco--.html
+https://dcc-ex.com/reference/software/command-reference.html#gsc.tab=0
+https://kuehn-digital.de/files/WD10_GB_c.pdf

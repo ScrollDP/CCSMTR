@@ -68,7 +68,7 @@
   <flipped>0</flipped>
   <mirror>0</mirror>
   <isANG>0</isANG>
-  <dccaddress>7</dccaddress>
+  <dccaddress>8</dccaddress>
  </turnout>
  <turnout id="8">
   <start x="1500" y="0"/>
