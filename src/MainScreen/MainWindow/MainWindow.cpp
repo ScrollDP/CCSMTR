@@ -35,12 +35,20 @@ MainWindow::MainWindow(QWidget *parent)
     dccExWindow = new DccEx(nullptr);
     powerWindow = new PowerWindow(nullptr, dccExWindow);
 
+    ui->PowerOnTrack->setStyleSheet("background-color: green");
+    ui->PowerOffTrack->setStyleSheet("background-color: #8b0000");
 
     connect(ui->actionDCC_EX, &QPushButton::clicked, this, &MainWindow::onActionDCC_EXTriggered);
     connect(ui->actionThrottle, &QPushButton::clicked, this, &MainWindow::onActionThrottleTriggered);
     connect(ui->actionPower, &QPushButton::clicked, this, &MainWindow::onActionPowerTriggered);
     connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::editMode);
-    this->showFullScreen();
+    connect(ui->PowerOnTrack, &QPushButton::clicked, [=, this](){
+        dccExWindow->sendCommand("<1>");
+    });
+    connect(ui->PowerOffTrack, &QPushButton::clicked, [=, this](){
+        dccExWindow->sendCommand("<0>");
+    });
+    //this->showFullScreen();
 }
 
 bool MainWindow::isAnyConnected = false;

@@ -32,6 +32,9 @@ private:
     static void sendToArduino(const QString &dataList, DccEx *dccExInstance);
     void setButtonsEnabled(bool enabled);
     void connectButtons(DccEx *dccExInstance);
+
+    void keyPressEvent(QKeyEvent *event);
+
 };
 
 #endif // THROTTLEWINDOW_H

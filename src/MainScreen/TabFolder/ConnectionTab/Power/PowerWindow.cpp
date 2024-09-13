@@ -2,7 +2,7 @@
 
 PowerWindow::PowerWindow(QWidget *parent, DccEx *dccExInstance)
         : QMainWindow(parent),
-        ui(new Ui::PowerWindow){
+        ui(new Ui::PowerWindow) {
     ui->setupUi(this);
 
     connectButton(ui->PowerOn, "<1>", dccExInstance);
@@ -12,6 +12,7 @@ PowerWindow::PowerWindow(QWidget *parent, DccEx *dccExInstance)
     connectButton(ui->PowerOnProg, "<1 PROG>", dccExInstance);
     connectButton(ui->PowerOffProg, "<0 PROG>", dccExInstance);
     connectButton(ui->PowerOnJoin, "<1 JOIN>", dccExInstance);
+
 }
 
 void PowerWindow::connectButton(QPushButton* button, const QString& command, DccEx* dccExInstance) {

@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QObject>
 #include <QCloseEvent>
+#include <QPushButton>
 #include "ui_MainWindow.h"
 #include "../StationControl/StationControl.h"
 #include "../TabFolder/ConnectionTab/DCC-EX/DccEx.h"
@@ -13,13 +14,11 @@
 
 class PowerWindow;
 
-
-
 class MainWindow : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr); // Add a pointer to a dccEx window
     ~MainWindow() override;
 
     void toggleFullScreen(); // Add a method to toggle full screen
@@ -28,7 +27,9 @@ public:
 
     static bool editMode(bool mode);
 
-    bool edit;
+    Ui_MainWindow *ui;
+
+    bool edit{};
 
 private slots:
     void onActionDCC_EXTriggered(); // Add a slot for the actionDCC_EX triggered signal
@@ -36,7 +37,7 @@ private slots:
     void onActionPowerTriggered(); // Add a slot for the actionPower triggered signal
 
 private:
-    Ui_MainWindow *ui;
+
     StationControl *stationControllWindow; // Add a pointer to a StationControl window
     DccEx *dccExWindow; // Add a pointer to a dccEx window
     PowerWindow *powerWindow; // Add a pointer to a PowerWindow window

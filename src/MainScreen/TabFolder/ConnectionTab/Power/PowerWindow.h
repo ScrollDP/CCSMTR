@@ -13,11 +13,12 @@ Q_OBJECT
 public:
     explicit PowerWindow(QWidget *parent = nullptr, DccEx *dccExInstance = nullptr); // Add a pointer to a dccEx window
     ~PowerWindow() override;
+    static void connectButton(QPushButton* button, const QString& command, DccEx* dccExInstance);
 
 private:
-    Ui_PowerWindow *ui; // Add this line
+    Ui_PowerWindow *ui;
 
-    void connectButton(QPushButton* button, const QString& command, DccEx* dccExInstance);
+
 };
 
 #endif // POWERWINDOW_H

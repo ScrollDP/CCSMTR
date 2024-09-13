@@ -33,8 +33,10 @@ public:
     QWidget *connection;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
+    QPushButton *PowerOnTrack;
     QPushButton *actionPower;
     QPushButton *actionDCC_EX;
+    QPushButton *PowerOffTrack;
     QWidget *tools;
     QWidget *gridLayoutWidget_2;
     QGridLayout *gridLayout_2;
@@ -80,8 +82,8 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy1);
-        tabWidget->setMinimumSize(QSize(377, 85));
-        tabWidget->setMaximumSize(QSize(16777215, 85));
+        tabWidget->setMinimumSize(QSize(420, 145));
+        tabWidget->setMaximumSize(QSize(420, 145));
         tabWidget->setBaseSize(QSize(0, 0));
         QFont font1;
         font1.setPointSize(15);
@@ -96,32 +98,50 @@ public:
         tabWidget->setTabBarAutoHide(false);
         connection = new QWidget();
         connection->setObjectName("connection");
-        QSizePolicy sizePolicy2(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(connection->sizePolicy().hasHeightForWidth());
-        connection->setSizePolicy(sizePolicy2);
-        connection->setMaximumSize(QSize(16777215, 100));
+        sizePolicy1.setHeightForWidth(connection->sizePolicy().hasHeightForWidth());
+        connection->setSizePolicy(sizePolicy1);
+        connection->setMinimumSize(QSize(415, 110));
+        connection->setMaximumSize(QSize(415, 110));
         gridLayoutWidget = new QWidget(connection);
         gridLayoutWidget->setObjectName("gridLayoutWidget");
-        gridLayoutWidget->setGeometry(QRect(0, 0, 371, 45));
+        gridLayoutWidget->setGeometry(QRect(0, 0, 411, 104));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName("gridLayout");
         gridLayout->setHorizontalSpacing(15);
         gridLayout->setContentsMargins(5, 5, 5, 5);
+        PowerOnTrack = new QPushButton(gridLayoutWidget);
+        PowerOnTrack->setObjectName("PowerOnTrack");
+        sizePolicy.setHeightForWidth(PowerOnTrack->sizePolicy().hasHeightForWidth());
+        PowerOnTrack->setSizePolicy(sizePolicy);
+        PowerOnTrack->setMaximumSize(QSize(110, 35));
+
+        gridLayout->addWidget(PowerOnTrack, 0, 2, 1, 1);
+
         actionPower = new QPushButton(gridLayoutWidget);
         actionPower->setObjectName("actionPower");
+        sizePolicy.setHeightForWidth(actionPower->sizePolicy().hasHeightForWidth());
+        actionPower->setSizePolicy(sizePolicy);
         actionPower->setMinimumSize(QSize(110, 35));
-        actionPower->setMaximumSize(QSize(110, 35));
+        actionPower->setMaximumSize(QSize(140, 35));
 
         gridLayout->addWidget(actionPower, 0, 1, 1, 1);
 
         actionDCC_EX = new QPushButton(gridLayoutWidget);
         actionDCC_EX->setObjectName("actionDCC_EX");
+        sizePolicy.setHeightForWidth(actionDCC_EX->sizePolicy().hasHeightForWidth());
+        actionDCC_EX->setSizePolicy(sizePolicy);
         actionDCC_EX->setMinimumSize(QSize(110, 35));
         actionDCC_EX->setMaximumSize(QSize(110, 35));
 
         gridLayout->addWidget(actionDCC_EX, 0, 0, 1, 1);
+
+        PowerOffTrack = new QPushButton(gridLayoutWidget);
+        PowerOffTrack->setObjectName("PowerOffTrack");
+        sizePolicy.setHeightForWidth(PowerOffTrack->sizePolicy().hasHeightForWidth());
+        PowerOffTrack->setSizePolicy(sizePolicy);
+        PowerOffTrack->setMaximumSize(QSize(110, 35));
+
+        gridLayout->addWidget(PowerOffTrack, 1, 2, 1, 1);
 
         tabWidget->addTab(connection, QString());
         tools = new QWidget();
@@ -189,8 +209,10 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "CCSMTR", nullptr));
-        actionPower->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
+        PowerOnTrack->setText(QCoreApplication::translate("MainWindow", "PowerOn", nullptr));
+        actionPower->setText(QCoreApplication::translate("MainWindow", "Power Option", nullptr));
         actionDCC_EX->setText(QCoreApplication::translate("MainWindow", "DCC-EX", nullptr));
+        PowerOffTrack->setText(QCoreApplication::translate("MainWindow", "PowerOff", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(connection), QCoreApplication::translate("MainWindow", "Connection", nullptr));
         actionThrottle->setText(QCoreApplication::translate("MainWindow", "Throttle", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tools), QCoreApplication::translate("MainWindow", "Tools", nullptr));

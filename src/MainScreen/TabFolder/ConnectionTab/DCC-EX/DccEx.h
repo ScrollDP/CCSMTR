@@ -10,9 +10,13 @@
 class DccEx : public QWidget {
 Q_OBJECT
 
+
+
 public:
     explicit DccEx(QWidget *parent = nullptr);
     ~DccEx() override;
+
+    std::unique_ptr<QSerialPort> arduino;
 
 
     void sendCommand(const QString &dataList); // Add a method to send the command
@@ -26,8 +30,8 @@ private slots:
 
 
 private:
-    Ui_DccEx ui;
-    std::unique_ptr<QSerialPort> arduino;
+    Ui_DccEx ui{};
+
     void setupArduino();
 
     bool eventFilter(QObject *obj, QEvent *event) override;

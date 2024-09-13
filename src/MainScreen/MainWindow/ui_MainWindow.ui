@@ -64,14 +64,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>377</width>
-            <height>85</height>
+            <width>420</width>
+            <height>145</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>85</height>
+            <width>420</width>
+            <height>145</height>
            </size>
           </property>
           <property name="baseSize">
@@ -117,15 +117,21 @@
           </property>
           <widget class="QWidget" name="connection">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>415</width>
+             <height>110</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
-             <height>100</height>
+             <width>415</width>
+             <height>110</height>
             </size>
            </property>
            <attribute name="title">
@@ -136,8 +142,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>371</width>
-              <height>45</height>
+              <width>411</width>
+              <height>104</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout">
@@ -156,13 +162,13 @@
              <property name="horizontalSpacing">
               <number>15</number>
              </property>
-             <item row="0" column="1">
-              <widget class="QPushButton" name="actionPower">
-               <property name="minimumSize">
-                <size>
-                 <width>110</width>
-                 <height>35</height>
-                </size>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="PowerOnTrack">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
                <property name="maximumSize">
                 <size>
@@ -171,12 +177,43 @@
                 </size>
                </property>
                <property name="text">
-                <string>Power</string>
+                <string>PowerOn</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="actionPower">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>110</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>140</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Power Option</string>
                </property>
               </widget>
              </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="actionDCC_EX">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>110</width>
@@ -191,6 +228,25 @@
                </property>
                <property name="text">
                 <string>DCC-EX</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QPushButton" name="PowerOffTrack">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>110</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>PowerOff</string>
                </property>
               </widget>
              </item>

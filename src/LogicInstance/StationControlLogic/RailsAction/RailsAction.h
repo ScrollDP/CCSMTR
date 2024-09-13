@@ -30,7 +30,7 @@ private:
     bool m_switchedTurnout;
     Rails *rails;
     //void checkBool();
-    bool editMode = true;
+    bool editMode = false;
 };
 
 #endif //CCSMTR_RAILSACTION_H

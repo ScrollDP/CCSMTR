@@ -1,5 +1,6 @@
 #include "ThrottleWindow.h"
 #include <QIntValidator>
+#include <QMessageBox>
 
 ThrottleWindow::ThrottleWindow(QWidget *parent, DccEx *dccExInstance)
         : QMainWindow(parent),
@@ -20,6 +21,9 @@ ThrottleWindow::ThrottleWindow(QWidget *parent, DccEx *dccExInstance)
 
     setButtonsEnabled(false);
     connectButtons(dccExInstance);
+
+    // Connect the returnPressed signal of inputAdress to the onAquireButtonClicked slot
+    connect(ui->inputAdress, &QLineEdit::returnPressed, this, &ThrottleWindow::onAquireButtonClicked);
 }
 
 void ThrottleWindow::setButtonsEnabled(bool enabled) {
@@ -43,9 +47,17 @@ void ThrottleWindow::connectButtons(DccEx *dccExInstance) {
         onReverseButtonClicked(dccExInstance);
     });
     connect(ui->EmergencyStop, &QPushButton::clicked, this, [=, this](){
-        sendToArduino("<0>", dccExInstance);
-        sendToArduino("<!>", dccExInstance);
-        ui->speedSlider->setValue(0);
+        //check aruduino connection
+        if(dccExInstance->arduino->isOpen()){
+            sendToArduino("<0>", dccExInstance);
+            sendToArduino("<!>", dccExInstance);
+            ui->speedSlider->setValue(0);
+        }
+        else{
+            qDebug() << "Arduino nie je pripojený!";
+
+        }
+
     });
     connect(ui->EmergencyPause, &QPushButton::clicked, this, [=, this](){
         QString command = QString("<t %1 %2 %3>").arg(ui->inputAdress->text()).arg(-1).arg(direction);
@@ -125,6 +137,10 @@ void ThrottleWindow::onFunctionButtonClicked(DccEx *dccExInstance) {
 
 void ThrottleWindow::sendToArduino(const QString &dataList, DccEx *dccExInstance) {
     dccExInstance->sendCommand(dataList);
+}
+
+void ThrottleWindow::keyPressEvent(QKeyEvent *event) {
+
 }
 
 ThrottleWindow::~ThrottleWindow() {
