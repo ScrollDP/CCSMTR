@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ui_ThrottleWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.15
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -80,9 +80,9 @@ public:
     void setupUi(QMainWindow *ThrottleWindow)
     {
         if (ThrottleWindow->objectName().isEmpty())
-            ThrottleWindow->setObjectName(QString::fromUtf8("ThrottleWindow"));
+            ThrottleWindow->setObjectName("ThrottleWindow");
         ThrottleWindow->resize(456, 478);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(ThrottleWindow->sizePolicy().hasHeightForWidth());
@@ -90,23 +90,23 @@ public:
         ThrottleWindow->setMinimumSize(QSize(456, 478));
         ThrottleWindow->setMaximumSize(QSize(456, 478));
         centralWidget = new QWidget(ThrottleWindow);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setObjectName("centralWidget");
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
         verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName("verticalLayout");
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_4->setObjectName("verticalLayout_4");
         verticalLayout_4->setContentsMargins(0, 0, -1, -1);
         verticalLayout_7 = new QVBoxLayout();
-        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        verticalLayout_7->setObjectName("verticalLayout_7");
         verticalLayout_7->setContentsMargins(5, 5, 2, 5);
         AdressLabel = new QLabel(centralWidget);
-        AdressLabel->setObjectName(QString::fromUtf8("AdressLabel"));
+        AdressLabel->setObjectName("AdressLabel");
         AdressLabel->setMaximumSize(QSize(16777215, 50));
         QFont font;
         font.setPointSize(15);
@@ -116,8 +116,8 @@ public:
         verticalLayout_7->addWidget(AdressLabel);
 
         inputAdress = new QLineEdit(centralWidget);
-        inputAdress->setObjectName(QString::fromUtf8("inputAdress"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        inputAdress->setObjectName("inputAdress");
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(inputAdress->sizePolicy().hasHeightForWidth());
@@ -132,12 +132,12 @@ public:
         verticalLayout_4->addLayout(verticalLayout_7);
 
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
         verticalLayout_5 = new QVBoxLayout();
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        verticalLayout_5->setObjectName("verticalLayout_5");
         verticalLayout_5->setContentsMargins(5, 5, 2, 5);
         AquireButton = new QPushButton(centralWidget);
-        AquireButton->setObjectName(QString::fromUtf8("AquireButton"));
+        AquireButton->setObjectName("AquireButton");
         QFont font1;
         font1.setPointSize(14);
         AquireButton->setFont(font1);
@@ -145,7 +145,7 @@ public:
         verticalLayout_5->addWidget(AquireButton);
 
         EmergencyStop = new QPushButton(centralWidget);
-        EmergencyStop->setObjectName(QString::fromUtf8("EmergencyStop"));
+        EmergencyStop->setObjectName("EmergencyStop");
         EmergencyStop->setFont(font);
 
         verticalLayout_5->addWidget(EmergencyStop);
@@ -154,16 +154,16 @@ public:
         horizontalLayout_2->addLayout(verticalLayout_5);
 
         verticalLayout_6 = new QVBoxLayout();
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        verticalLayout_6->setObjectName("verticalLayout_6");
         verticalLayout_6->setContentsMargins(2, 5, 2, 5);
         ReleaseButton = new QPushButton(centralWidget);
-        ReleaseButton->setObjectName(QString::fromUtf8("ReleaseButton"));
+        ReleaseButton->setObjectName("ReleaseButton");
         ReleaseButton->setFont(font1);
 
         verticalLayout_6->addWidget(ReleaseButton);
 
         EmergencyPause = new QPushButton(centralWidget);
-        EmergencyPause->setObjectName(QString::fromUtf8("EmergencyPause"));
+        EmergencyPause->setObjectName("EmergencyPause");
         EmergencyPause->setFont(font);
 
         verticalLayout_6->addWidget(EmergencyPause);
@@ -178,206 +178,206 @@ public:
         verticalLayout_2->addLayout(verticalLayout_4);
 
         gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setObjectName("gridLayout");
         gridLayout->setContentsMargins(5, -1, 2, 5);
         F3 = new QPushButton(centralWidget);
-        F3->setObjectName(QString::fromUtf8("F3"));
+        F3->setObjectName("F3");
         F3->setMinimumSize(QSize(50, 50));
         F3->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F3, 0, 3, 1, 1);
 
         F14 = new QPushButton(centralWidget);
-        F14->setObjectName(QString::fromUtf8("F14"));
+        F14->setObjectName("F14");
         F14->setMinimumSize(QSize(50, 50));
         F14->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F14, 2, 2, 1, 1);
 
         F5 = new QPushButton(centralWidget);
-        F5->setObjectName(QString::fromUtf8("F5"));
+        F5->setObjectName("F5");
         F5->setMinimumSize(QSize(50, 50));
         F5->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F5, 0, 5, 1, 1);
 
         F13 = new QPushButton(centralWidget);
-        F13->setObjectName(QString::fromUtf8("F13"));
+        F13->setObjectName("F13");
         F13->setMinimumSize(QSize(50, 50));
         F13->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F13, 2, 1, 1, 1);
 
         F0 = new QPushButton(centralWidget);
-        F0->setObjectName(QString::fromUtf8("F0"));
+        F0->setObjectName("F0");
         F0->setMinimumSize(QSize(50, 50));
         F0->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F0, 0, 0, 1, 1);
 
         F8 = new QPushButton(centralWidget);
-        F8->setObjectName(QString::fromUtf8("F8"));
+        F8->setObjectName("F8");
         F8->setMinimumSize(QSize(50, 50));
         F8->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F8, 1, 2, 1, 1);
 
         F12 = new QPushButton(centralWidget);
-        F12->setObjectName(QString::fromUtf8("F12"));
+        F12->setObjectName("F12");
         F12->setMinimumSize(QSize(50, 50));
         F12->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F12, 2, 0, 1, 1);
 
         F16 = new QPushButton(centralWidget);
-        F16->setObjectName(QString::fromUtf8("F16"));
+        F16->setObjectName("F16");
         F16->setMinimumSize(QSize(50, 50));
         F16->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F16, 2, 4, 1, 1);
 
         F4 = new QPushButton(centralWidget);
-        F4->setObjectName(QString::fromUtf8("F4"));
+        F4->setObjectName("F4");
         F4->setMinimumSize(QSize(50, 50));
         F4->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F4, 0, 4, 1, 1);
 
         F15 = new QPushButton(centralWidget);
-        F15->setObjectName(QString::fromUtf8("F15"));
+        F15->setObjectName("F15");
         F15->setMinimumSize(QSize(50, 50));
         F15->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F15, 2, 3, 1, 1);
 
         F7 = new QPushButton(centralWidget);
-        F7->setObjectName(QString::fromUtf8("F7"));
+        F7->setObjectName("F7");
         F7->setMinimumSize(QSize(50, 50));
         F7->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F7, 1, 1, 1, 1);
 
         F6 = new QPushButton(centralWidget);
-        F6->setObjectName(QString::fromUtf8("F6"));
+        F6->setObjectName("F6");
         F6->setMinimumSize(QSize(50, 50));
         F6->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F6, 1, 0, 1, 1);
 
         F25 = new QPushButton(centralWidget);
-        F25->setObjectName(QString::fromUtf8("F25"));
+        F25->setObjectName("F25");
         F25->setMinimumSize(QSize(50, 50));
         F25->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F25, 4, 1, 1, 1);
 
         F28 = new QPushButton(centralWidget);
-        F28->setObjectName(QString::fromUtf8("F28"));
+        F28->setObjectName("F28");
         F28->setMinimumSize(QSize(50, 50));
         F28->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F28, 4, 4, 1, 1);
 
         F27 = new QPushButton(centralWidget);
-        F27->setObjectName(QString::fromUtf8("F27"));
+        F27->setObjectName("F27");
         F27->setMinimumSize(QSize(50, 50));
         F27->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F27, 4, 3, 1, 1);
 
         F1 = new QPushButton(centralWidget);
-        F1->setObjectName(QString::fromUtf8("F1"));
+        F1->setObjectName("F1");
         F1->setMinimumSize(QSize(50, 50));
         F1->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F1, 0, 1, 1, 1);
 
         F10 = new QPushButton(centralWidget);
-        F10->setObjectName(QString::fromUtf8("F10"));
+        F10->setObjectName("F10");
         F10->setMinimumSize(QSize(50, 50));
         F10->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F10, 1, 4, 1, 1);
 
         F2 = new QPushButton(centralWidget);
-        F2->setObjectName(QString::fromUtf8("F2"));
+        F2->setObjectName("F2");
         F2->setMinimumSize(QSize(50, 50));
         F2->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F2, 0, 2, 1, 1);
 
         F26 = new QPushButton(centralWidget);
-        F26->setObjectName(QString::fromUtf8("F26"));
+        F26->setObjectName("F26");
         F26->setMinimumSize(QSize(50, 50));
         F26->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F26, 4, 2, 1, 1);
 
         F9 = new QPushButton(centralWidget);
-        F9->setObjectName(QString::fromUtf8("F9"));
+        F9->setObjectName("F9");
         F9->setMinimumSize(QSize(50, 50));
         F9->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F9, 1, 3, 1, 1);
 
         F11 = new QPushButton(centralWidget);
-        F11->setObjectName(QString::fromUtf8("F11"));
+        F11->setObjectName("F11");
         F11->setMinimumSize(QSize(50, 50));
         F11->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F11, 1, 5, 1, 1);
 
         F17 = new QPushButton(centralWidget);
-        F17->setObjectName(QString::fromUtf8("F17"));
+        F17->setObjectName("F17");
         F17->setMinimumSize(QSize(50, 50));
         F17->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F17, 2, 5, 1, 1);
 
         F18 = new QPushButton(centralWidget);
-        F18->setObjectName(QString::fromUtf8("F18"));
+        F18->setObjectName("F18");
         F18->setMinimumSize(QSize(50, 50));
         F18->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F18, 3, 0, 1, 1);
 
         F19 = new QPushButton(centralWidget);
-        F19->setObjectName(QString::fromUtf8("F19"));
+        F19->setObjectName("F19");
         F19->setMinimumSize(QSize(50, 50));
         F19->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F19, 3, 1, 1, 1);
 
         F20 = new QPushButton(centralWidget);
-        F20->setObjectName(QString::fromUtf8("F20"));
+        F20->setObjectName("F20");
         F20->setMinimumSize(QSize(50, 50));
         F20->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F20, 3, 2, 1, 1);
 
         F21 = new QPushButton(centralWidget);
-        F21->setObjectName(QString::fromUtf8("F21"));
+        F21->setObjectName("F21");
         F21->setMinimumSize(QSize(50, 50));
         F21->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F21, 3, 3, 1, 1);
 
         F22 = new QPushButton(centralWidget);
-        F22->setObjectName(QString::fromUtf8("F22"));
+        F22->setObjectName("F22");
         F22->setMinimumSize(QSize(50, 50));
         F22->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F22, 3, 4, 1, 1);
 
         F23 = new QPushButton(centralWidget);
-        F23->setObjectName(QString::fromUtf8("F23"));
+        F23->setObjectName("F23");
         F23->setMinimumSize(QSize(50, 50));
         F23->setMaximumSize(QSize(50, 50));
 
         gridLayout->addWidget(F23, 3, 5, 1, 1);
 
         F24 = new QPushButton(centralWidget);
-        F24->setObjectName(QString::fromUtf8("F24"));
+        F24->setObjectName("F24");
         F24->setMinimumSize(QSize(50, 50));
         F24->setMaximumSize(QSize(50, 50));
 
@@ -390,18 +390,18 @@ public:
         horizontalLayout->addLayout(verticalLayout_2);
 
         verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setObjectName("verticalLayout_3");
         verticalLayout_3->setSizeConstraint(QLayout::SizeConstraint::SetDefaultConstraint);
         verticalLayout_3->setContentsMargins(2, 5, 5, 5);
         speedLabel = new QLabel(centralWidget);
-        speedLabel->setObjectName(QString::fromUtf8("speedLabel"));
+        speedLabel->setObjectName("speedLabel");
         speedLabel->setFont(font);
         speedLabel->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_3->addWidget(speedLabel);
 
         speedSlider = new QSlider(centralWidget);
-        speedSlider->setObjectName(QString::fromUtf8("speedSlider"));
+        speedSlider->setObjectName("speedSlider");
         speedSlider->setMinimumSize(QSize(100, 0));
         speedSlider->setMaximumSize(QSize(100, 16777215));
         speedSlider->setOrientation(Qt::Orientation::Vertical);
@@ -409,13 +409,13 @@ public:
         verticalLayout_3->addWidget(speedSlider);
 
         ForwardSpeed = new QPushButton(centralWidget);
-        ForwardSpeed->setObjectName(QString::fromUtf8("ForwardSpeed"));
+        ForwardSpeed->setObjectName("ForwardSpeed");
         ForwardSpeed->setFont(font);
 
         verticalLayout_3->addWidget(ForwardSpeed);
 
         ReverseSpeed = new QPushButton(centralWidget);
-        ReverseSpeed->setObjectName(QString::fromUtf8("ReverseSpeed"));
+        ReverseSpeed->setObjectName("ReverseSpeed");
         ReverseSpeed->setFont(font);
 
         verticalLayout_3->addWidget(ReverseSpeed);

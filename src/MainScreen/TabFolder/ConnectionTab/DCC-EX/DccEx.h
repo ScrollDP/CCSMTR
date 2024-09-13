@@ -6,12 +6,13 @@
 #include "ui_DccEx.h"
 #include "../../../MainWindow/MainWindow.h"
 
-class dccEx : public QWidget {
+
+class DccEx : public QWidget {
 Q_OBJECT
 
 public:
-    explicit dccEx(QWidget *parent = nullptr);
-    ~dccEx() override;
+    explicit DccEx(QWidget *parent = nullptr);
+    ~DccEx() override;
 
 
     void sendCommand(const QString &dataList); // Add a method to send the command
@@ -25,7 +26,7 @@ private slots:
 
 
 private:
-    Ui::dccEx ui;
+    Ui_DccEx ui;
     std::unique_ptr<QSerialPort> arduino;
     void setupArduino();
 

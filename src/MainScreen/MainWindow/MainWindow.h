@@ -2,13 +2,17 @@
 #define CCSMTR_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+#include <QObject>
+#include <QCloseEvent>
 #include "ui_MainWindow.h"
 #include "../StationControl/StationControl.h"
 #include "../TabFolder/ConnectionTab/DCC-EX/DccEx.h"
-#include "../TabFolder/ToolsTab/Throttle/ThrottleWindow.h"
 #include "../TabFolder/ConnectionTab/Power/PowerWindow.h"
-#include <QTimer>
-#include <QObject>
+#include "../TabFolder/ToolsTab/Throttle/ThrottleWindow.h"
+
+class PowerWindow;
+
 
 
 class MainWindow : public QMainWindow {
@@ -32,9 +36,9 @@ private slots:
     void onActionPowerTriggered(); // Add a slot for the actionPower triggered signal
 
 private:
-    Ui::MainWindow ui{};
+    Ui_MainWindow *ui;
     StationControl *stationControllWindow; // Add a pointer to a StationControl window
-    dccEx *dccExWindow; // Add a pointer to a dccEx window
+    DccEx *dccExWindow; // Add a pointer to a dccEx window
     PowerWindow *powerWindow; // Add a pointer to a PowerWindow window
 
     void keyPressEvent(QKeyEvent *event) override;

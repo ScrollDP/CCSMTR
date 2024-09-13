@@ -1,5 +1,5 @@
-#include <QGraphicsScene>
 #include "Rails.h"
+#include <QGraphicsScene>
 #include <QtXml/QDomDocument>
 #include <QFile>
 #include <QDir>
@@ -17,7 +17,7 @@ Rails::~Rails() {
     delete railsSceneGraphic;
 }
 
-const QString Rails::fileName = "turnouts.xml";
+const QString Rails::fileName = "../turnouts.xml";
 
 
 void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
@@ -282,7 +282,7 @@ void Rails::deleteLinesWithId(int idLine) const {
 }
 
 bool Rails::loadFromXmlRails() {
-    QFile file("rails.xml");
+    QFile file("../rails.xml");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Error opening file: " << file.fileName();
         return false;

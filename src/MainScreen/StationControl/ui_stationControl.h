@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ui_StationControl.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.15
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -17,46 +17,46 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_stationControll
+class Ui_StationControll
 {
 public:
     QVBoxLayout *verticalLayout;
     QGraphicsView *graphicsView;
 
-    void setupUi(QWidget *stationControll)
+    void setupUi(QWidget *StationControll)
     {
-        if (stationControll->objectName().isEmpty())
-            stationControll->setObjectName(QString::fromUtf8("stationControll"));
-        stationControll->resize(892, 812);
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        if (StationControll->objectName().isEmpty())
+            StationControll->setObjectName("StationControll");
+        StationControll->resize(892, 812);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(stationControll->sizePolicy().hasHeightForWidth());
-        stationControll->setSizePolicy(sizePolicy);
-        stationControll->setMinimumSize(QSize(0, 0));
-        verticalLayout = new QVBoxLayout(stationControll);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        graphicsView = new QGraphicsView(stationControll);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        sizePolicy.setHeightForWidth(StationControll->sizePolicy().hasHeightForWidth());
+        StationControll->setSizePolicy(sizePolicy);
+        StationControll->setMinimumSize(QSize(0, 0));
+        verticalLayout = new QVBoxLayout(StationControll);
+        verticalLayout->setObjectName("verticalLayout");
+        graphicsView = new QGraphicsView(StationControll);
+        graphicsView->setObjectName("graphicsView");
         graphicsView->setMinimumSize(QSize(880, 800));
 
         verticalLayout->addWidget(graphicsView);
 
 
-        retranslateUi(stationControll);
+        retranslateUi(StationControll);
 
-        QMetaObject::connectSlotsByName(stationControll);
+        QMetaObject::connectSlotsByName(StationControll);
     } // setupUi
 
-    void retranslateUi(QWidget *stationControll)
+    void retranslateUi(QWidget *StationControll)
     {
-        stationControll->setWindowTitle(QString());
+        StationControll->setWindowTitle(QString());
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class stationControll: public Ui_stationControll {};
+    class StationControll: public Ui_StationControll {};
 } // namespace Ui
 
 QT_END_NAMESPACE

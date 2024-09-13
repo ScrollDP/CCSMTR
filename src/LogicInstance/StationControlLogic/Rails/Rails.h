@@ -6,9 +6,7 @@
 #include <QGraphicsScene>
 #include <QGridLayout>
 #include <QLabel>
-#include "../Actions/RailsAction.h"
-
-class RailsAction;
+#include "../RailsAction/RailsAction.h"
 
 class Rails : public QObject {
 

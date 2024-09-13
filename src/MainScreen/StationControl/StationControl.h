@@ -1,13 +1,8 @@
-//
-// Created by darwin on 26.5.2024.
-//
-
 #ifndef CCSMTR_STATIONCONTROL_H
 #define CCSMTR_STATIONCONTROL_H
 
 #include "ui_stationControl.h"
 #include "../../LogicInstance/StationControlLogic/Rails/Rails.h"
-
 
 
 class StationControl : public QWidget {
@@ -17,7 +12,7 @@ public:
     ~StationControl() override;
 
 private:
-    Ui::stationControll uiSC{};
+    Ui::StationControll *ui;
     Rails *railsScene = new Rails();
 
 };

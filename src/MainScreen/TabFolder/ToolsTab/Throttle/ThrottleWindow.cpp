@@ -1,7 +1,9 @@
 #include "ThrottleWindow.h"
 #include <QIntValidator>
 
-ThrottleWindow::ThrottleWindow(QWidget *parent, dccEx *dccExInstance) : QMainWindow(parent), ui(new Ui::ThrottleWindow) {
+ThrottleWindow::ThrottleWindow(QWidget *parent, DccEx *dccExInstance)
+        : QMainWindow(parent),
+        ui(new Ui::ThrottleWindow) {
     ui->setupUi(this);
     ui->inputAdress->setValidator(new QIntValidator(this));
     ui->EmergencyStop->setStyleSheet("background-color: #8b0000");
@@ -28,7 +30,7 @@ void ThrottleWindow::setButtonsEnabled(bool enabled) {
     ui->EmergencyPause->setEnabled(enabled);
 }
 
-void ThrottleWindow::connectButtons(dccEx *dccExInstance) {
+void ThrottleWindow::connectButtons(DccEx *dccExInstance) {
     connect(ui->AquireButton, &QPushButton::clicked, this, &ThrottleWindow::onAquireButtonClicked);
     connect(ui->ReleaseButton, &QPushButton::clicked, this, &ThrottleWindow::onReleaseButtonClicked);
     connect(ui->speedSlider, &QSlider::valueChanged, this, [=, this](int value) {
@@ -77,24 +79,24 @@ void ThrottleWindow::onReleaseButtonClicked() {
     ui->AquireButton->setEnabled(true);
 }
 
-void ThrottleWindow::onSpeedSliderValueChanged(int value,dccEx *dccExInstance) {
+void ThrottleWindow::onSpeedSliderValueChanged(int value,DccEx *dccExInstance) {
     QString command = QString("<t %1 %2 %3>").arg(ui->inputAdress->text()).arg(value).arg(direction);
     sendToArduino(command, dccExInstance);
 }
 
-void ThrottleWindow::onForwardButtonClicked(dccEx *dccExInstance) {
+void ThrottleWindow::onForwardButtonClicked(DccEx *dccExInstance) {
     setDirection(1, dccExInstance);
     ui->ReverseSpeed->setEnabled(true);
     ui->ForwardSpeed->setEnabled(false);
 }
 
-void ThrottleWindow::onReverseButtonClicked(dccEx *dccExInstance) {
+void ThrottleWindow::onReverseButtonClicked(DccEx *dccExInstance) {
     setDirection(0, dccExInstance);
     ui->ForwardSpeed->setEnabled(true);
     ui->ReverseSpeed->setEnabled(false);
 }
 
-void ThrottleWindow::setDirection(int dir, dccEx *dccExInstance) {
+void ThrottleWindow::setDirection(int dir, DccEx *dccExInstance) {
     direction = dir;
     ui->ReverseSpeed->setEnabled(!dir);
     ui->ForwardSpeed->setEnabled(dir);
@@ -103,7 +105,7 @@ void ThrottleWindow::setDirection(int dir, dccEx *dccExInstance) {
     sendToArduino(command, dccExInstance);
 }
 
-void ThrottleWindow::onFunctionButtonClicked(dccEx *dccExInstance) {
+void ThrottleWindow::onFunctionButtonClicked(DccEx *dccExInstance) {
     auto* button = qobject_cast<QPushButton*>(sender());
     if (!button) {
         return;
@@ -121,7 +123,7 @@ void ThrottleWindow::onFunctionButtonClicked(dccEx *dccExInstance) {
     sendToArduino(command, dccExInstance);
 }
 
-void ThrottleWindow::sendToArduino(const QString &dataList, dccEx *dccExInstance) {
+void ThrottleWindow::sendToArduino(const QString &dataList, DccEx *dccExInstance) {
     dccExInstance->sendCommand(dataList);
 }
 

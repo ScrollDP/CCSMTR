@@ -23,8 +23,8 @@ set(SOURCES
         src/MainScreen/TabFolder/ConnectionTab/Power/PowerWindow.h
         src/LogicInstance/StationControlLogic/Rails/Rails.cpp
         src/LogicInstance/StationControlLogic/Rails/Rails.h
-        src/LogicInstance/StationControlLogic/Actions/RailsAction.h
-        src/LogicInstance/StationControlLogic/Actions/RailsAction.cpp
+        src/LogicInstance/StationControlLogic/RailsAction/RailsAction.h
+        src/LogicInstance/StationControlLogic/RailsAction/RailsAction.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.h
 
@@ -40,12 +40,12 @@ set(FORMS
 
 )
 execute_process(
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/MainWindow/ui_MainWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/MainWindow/ui_MainWindow.ui
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/LogicInstance/StationControlLogic/RightClick/ui_RightClick.h ${CMAKE_CURRENT_SOURCE_DIR}/src/LogicInstance/StationControlLogic/RightClick/ui_RightClick.ui
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/DCC-EX/ui_DccEx.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/DCC-EX/ui_DccEx.ui
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ToolsTab/Throttle/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/Power/ui_PowerWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/Power/ui_PowerWindow.ui
-        COMMAND uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/StationControl/ui_stationControl.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/StationControl/ui_StationControl.ui
+        COMMAND /usr/lib/qt6/uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/MainWindow/ui_MainWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/MainWindow/ui_MainWindow.ui
+        COMMAND /usr/lib/qt6/uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/LogicInstance/StationControlLogic/RightClick/ui_RightClick.h ${CMAKE_CURRENT_SOURCE_DIR}/src/LogicInstance/StationControlLogic/RightClick/ui_RightClick.ui
+        COMMAND /usr/lib/qt6/uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/DCC-EX/ui_DccEx.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/DCC-EX/ui_DccEx.ui
+        COMMAND /usr/lib/qt6/uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ToolsTab/Throttle/ui_ThrottleWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ToolsTab/Throttle/ui_ThrottleWindow.ui
+        COMMAND /usr/lib/qt6/uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/Power/ui_PowerWindow.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/TabFolder/ConnectionTab/Power/ui_PowerWindow.ui
+        COMMAND /usr/lib/qt6/uic -o ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/StationControl/ui_stationControl.h ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen/StationControl/ui_StationControl.ui
         RESULT_VARIABLE result
         OUTPUT_VARIABLE output
 )

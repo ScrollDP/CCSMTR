@@ -2,34 +2,36 @@
 #define THROTTLEWINDOW_H
 
 #include <QMainWindow>
-#include "ui_ThrottleWindow.h" // Include the UI header file
+#include "ui_ThrottleWindow.h"
 #include "../../ConnectionTab/DCC-EX/DccEx.h"
+
+class DccEx;
 
 class ThrottleWindow : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit ThrottleWindow(QWidget *parent = nullptr, dccEx *dccExInstance = nullptr); // Add a pointer to a dccEx window
+    explicit ThrottleWindow(QWidget *parent = nullptr, DccEx *dccExInstance = nullptr); // Add a pointer to a dccEx window
     ~ThrottleWindow() override;
 
 private slots:
     void onReleaseButtonClicked();
     void onAquireButtonClicked();
-    void onSpeedSliderValueChanged(int value,dccEx *dccExInstance);
-    void onFunctionButtonClicked(dccEx *dccExInstance);
+    void onSpeedSliderValueChanged(int value,DccEx *dccExInstance);
+    void onFunctionButtonClicked(DccEx *dccExInstance);
 
 private:
-    Ui::ThrottleWindow *ui;
+    Ui_ThrottleWindow *ui;
     int direction = 1;
     int FRspeed = 0; // TODO: skúsiť zmeniť na 0 na -1 pri testoch
     QMap<QString, int> functionButtonStates;
 
-    void onForwardButtonClicked(dccEx *dccExInstance);
-    void onReverseButtonClicked(dccEx *dccExInstance);
-    void setDirection(int dir, dccEx *dccExInstance);
-    static void sendToArduino(const QString &dataList, dccEx *dccExInstance);
+    void onForwardButtonClicked(DccEx *dccExInstance);
+    void onReverseButtonClicked(DccEx *dccExInstance);
+    void setDirection(int dir, DccEx *dccExInstance);
+    static void sendToArduino(const QString &dataList, DccEx *dccExInstance);
     void setButtonsEnabled(bool enabled);
-    void connectButtons(dccEx *dccExInstance);
+    void connectButtons(DccEx *dccExInstance);
 };
 
 #endif // THROTTLEWINDOW_H

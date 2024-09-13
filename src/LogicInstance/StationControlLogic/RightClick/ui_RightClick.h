@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ui_RightClick.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.15
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -41,18 +41,18 @@ public:
     void setupUi(QWidget *RightClick)
     {
         if (RightClick->objectName().isEmpty())
-            RightClick->setObjectName(QString::fromUtf8("RightClick"));
+            RightClick->setObjectName("RightClick");
         RightClick->resize(416, 399);
         RightClick->setMinimumSize(QSize(300, 200));
         verticalLayout = new QVBoxLayout(RightClick);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName("verticalLayout");
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName("verticalLayout_2");
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName("horizontalLayout");
         horizontalLayout->setContentsMargins(-1, 5, -1, 5);
         TurnoutLabel = new QLabel(RightClick);
-        TurnoutLabel->setObjectName(QString::fromUtf8("TurnoutLabel"));
+        TurnoutLabel->setObjectName("TurnoutLabel");
         TurnoutLabel->setMinimumSize(QSize(125, 50));
         TurnoutLabel->setMaximumSize(QSize(130, 50));
         QFont font;
@@ -63,7 +63,7 @@ public:
         horizontalLayout->addWidget(TurnoutLabel);
 
         TurnoutID = new QTextEdit(RightClick);
-        TurnoutID->setObjectName(QString::fromUtf8("TurnoutID"));
+        TurnoutID->setObjectName("TurnoutID");
         TurnoutID->setMinimumSize(QSize(50, 50));
         TurnoutID->setMaximumSize(QSize(50, 50));
         TurnoutID->setFont(font);
@@ -75,10 +75,10 @@ public:
         verticalLayout_2->addLayout(horizontalLayout);
 
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
         horizontalLayout_2->setContentsMargins(-1, 5, -1, 5);
         Adress = new QLabel(RightClick);
-        Adress->setObjectName(QString::fromUtf8("Adress"));
+        Adress->setObjectName("Adress");
         Adress->setMinimumSize(QSize(100, 50));
         Adress->setMaximumSize(QSize(110, 50));
         Adress->setFont(font);
@@ -88,7 +88,7 @@ public:
         horizontalLayout_2->addWidget(Adress);
 
         AddressSet = new QTextEdit(RightClick);
-        AddressSet->setObjectName(QString::fromUtf8("AddressSet"));
+        AddressSet->setObjectName("AddressSet");
         AddressSet->setMinimumSize(QSize(85, 50));
         AddressSet->setMaximumSize(QSize(85, 50));
         AddressSet->setFont(font);
@@ -99,9 +99,9 @@ public:
         verticalLayout_2->addLayout(horizontalLayout_2);
 
         horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setObjectName("horizontalLayout_4");
         SwitchTLabel = new QLabel(RightClick);
-        SwitchTLabel->setObjectName(QString::fromUtf8("SwitchTLabel"));
+        SwitchTLabel->setObjectName("SwitchTLabel");
         SwitchTLabel->setMinimumSize(QSize(125, 50));
         SwitchTLabel->setMaximumSize(QSize(130, 50));
         SwitchTLabel->setFont(font);
@@ -110,7 +110,7 @@ public:
         horizontalLayout_4->addWidget(SwitchTLabel);
 
         SwitchCheckBox = new QCheckBox(RightClick);
-        SwitchCheckBox->setObjectName(QString::fromUtf8("SwitchCheckBox"));
+        SwitchCheckBox->setObjectName("SwitchCheckBox");
         SwitchCheckBox->setMaximumSize(QSize(150, 50));
         SwitchCheckBox->setBaseSize(QSize(0, 0));
         SwitchCheckBox->setFont(font);
@@ -127,10 +127,10 @@ public:
         verticalLayout->addLayout(verticalLayout_2);
 
         horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
         horizontalLayout_3->setContentsMargins(-1, 5, -1, 5);
         SaveButton = new QPushButton(RightClick);
-        SaveButton->setObjectName(QString::fromUtf8("SaveButton"));
+        SaveButton->setObjectName("SaveButton");
         SaveButton->setMinimumSize(QSize(95, 45));
         SaveButton->setMaximumSize(QSize(100, 50));
         SaveButton->setFont(font);

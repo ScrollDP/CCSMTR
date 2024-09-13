@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ui_PowerWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.15
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -40,9 +40,9 @@ public:
     void setupUi(QMainWindow *PowerWindow)
     {
         if (PowerWindow->objectName().isEmpty())
-            PowerWindow->setObjectName(QString::fromUtf8("PowerWindow"));
+            PowerWindow->setObjectName("PowerWindow");
         PowerWindow->resize(327, 256);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(PowerWindow->sizePolicy().hasHeightForWidth());
@@ -50,19 +50,19 @@ public:
         PowerWindow->setMinimumSize(QSize(0, 0));
         PowerWindow->setMaximumSize(QSize(327, 256));
         centralWidget = new QWidget(PowerWindow);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setObjectName("centralWidget");
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
         centralWidget->setMaximumSize(QSize(327, 256));
         verticalLayout = new QVBoxLayout(centralWidget);
         verticalLayout->setSpacing(0);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setObjectName("verticalLayout_3");
         verticalLayout_3->setContentsMargins(5, 5, 5, 5);
         label = new QLabel(centralWidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName("label");
         label->setMaximumSize(QSize(16777215, 50));
         QFont font;
         font.setPointSize(15);
@@ -75,56 +75,56 @@ public:
         verticalLayout->addLayout(verticalLayout_3);
 
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName("verticalLayout_2");
         gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setObjectName("gridLayout");
         gridLayout->setHorizontalSpacing(15);
         gridLayout->setVerticalSpacing(10);
         gridLayout->setContentsMargins(5, 5, 5, 5);
         PowerOnMain = new QPushButton(centralWidget);
-        PowerOnMain->setObjectName(QString::fromUtf8("PowerOnMain"));
+        PowerOnMain->setObjectName("PowerOnMain");
         PowerOnMain->setMaximumSize(QSize(150, 50));
         PowerOnMain->setFont(font);
 
         gridLayout->addWidget(PowerOnMain, 1, 0, 1, 1);
 
         PowerOffMain = new QPushButton(centralWidget);
-        PowerOffMain->setObjectName(QString::fromUtf8("PowerOffMain"));
+        PowerOffMain->setObjectName("PowerOffMain");
         PowerOffMain->setMaximumSize(QSize(150, 50));
         PowerOffMain->setFont(font);
 
         gridLayout->addWidget(PowerOffMain, 1, 1, 1, 1);
 
         PowerOffProg = new QPushButton(centralWidget);
-        PowerOffProg->setObjectName(QString::fromUtf8("PowerOffProg"));
+        PowerOffProg->setObjectName("PowerOffProg");
         PowerOffProg->setMaximumSize(QSize(150, 50));
         PowerOffProg->setFont(font);
 
         gridLayout->addWidget(PowerOffProg, 2, 1, 1, 1);
 
         PowerOff = new QPushButton(centralWidget);
-        PowerOff->setObjectName(QString::fromUtf8("PowerOff"));
+        PowerOff->setObjectName("PowerOff");
         PowerOff->setMaximumSize(QSize(150, 50));
         PowerOff->setFont(font);
 
         gridLayout->addWidget(PowerOff, 0, 1, 1, 1);
 
         PowerOnProg = new QPushButton(centralWidget);
-        PowerOnProg->setObjectName(QString::fromUtf8("PowerOnProg"));
+        PowerOnProg->setObjectName("PowerOnProg");
         PowerOnProg->setMaximumSize(QSize(150, 50));
         PowerOnProg->setFont(font);
 
         gridLayout->addWidget(PowerOnProg, 2, 0, 1, 1);
 
         PowerOn = new QPushButton(centralWidget);
-        PowerOn->setObjectName(QString::fromUtf8("PowerOn"));
+        PowerOn->setObjectName("PowerOn");
         PowerOn->setMaximumSize(QSize(150, 50));
         PowerOn->setFont(font);
 
         gridLayout->addWidget(PowerOn, 0, 0, 1, 1);
 
         PowerOnJoin = new QPushButton(centralWidget);
-        PowerOnJoin->setObjectName(QString::fromUtf8("PowerOnJoin"));
+        PowerOnJoin->setObjectName("PowerOnJoin");
         PowerOnJoin->setMaximumSize(QSize(150, 50));
         PowerOnJoin->setFont(font);
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ui_MainWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.15
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -49,9 +49,9 @@ public:
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+            MainWindow->setObjectName("MainWindow");
         MainWindow->resize(1199, 689);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
@@ -62,20 +62,20 @@ public:
         font.setPointSize(10);
         MainWindow->setFont(font);
         centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setObjectName("centralWidget");
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
         verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName("verticalLayout");
         verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_4->setObjectName("verticalLayout_4");
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_2->setContentsMargins(-1, -1, -1, 0);
         tabWidget = new QTabWidget(centralWidget);
-        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setObjectName("tabWidget");
         tabWidget->setEnabled(true);
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
@@ -95,29 +95,29 @@ public:
         tabWidget->setMovable(false);
         tabWidget->setTabBarAutoHide(false);
         connection = new QWidget();
-        connection->setObjectName(QString::fromUtf8("connection"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        connection->setObjectName("connection");
+        QSizePolicy sizePolicy2(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(connection->sizePolicy().hasHeightForWidth());
         connection->setSizePolicy(sizePolicy2);
         connection->setMaximumSize(QSize(16777215, 100));
         gridLayoutWidget = new QWidget(connection);
-        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
+        gridLayoutWidget->setObjectName("gridLayoutWidget");
         gridLayoutWidget->setGeometry(QRect(0, 0, 371, 45));
         gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setObjectName("gridLayout");
         gridLayout->setHorizontalSpacing(15);
         gridLayout->setContentsMargins(5, 5, 5, 5);
         actionPower = new QPushButton(gridLayoutWidget);
-        actionPower->setObjectName(QString::fromUtf8("actionPower"));
+        actionPower->setObjectName("actionPower");
         actionPower->setMinimumSize(QSize(110, 35));
         actionPower->setMaximumSize(QSize(110, 35));
 
         gridLayout->addWidget(actionPower, 0, 1, 1, 1);
 
         actionDCC_EX = new QPushButton(gridLayoutWidget);
-        actionDCC_EX->setObjectName(QString::fromUtf8("actionDCC_EX"));
+        actionDCC_EX->setObjectName("actionDCC_EX");
         actionDCC_EX->setMinimumSize(QSize(110, 35));
         actionDCC_EX->setMaximumSize(QSize(110, 35));
 
@@ -125,16 +125,16 @@ public:
 
         tabWidget->addTab(connection, QString());
         tools = new QWidget();
-        tools->setObjectName(QString::fromUtf8("tools"));
+        tools->setObjectName("tools");
         gridLayoutWidget_2 = new QWidget(tools);
-        gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
+        gridLayoutWidget_2->setObjectName("gridLayoutWidget_2");
         gridLayoutWidget_2->setGeometry(QRect(0, 0, 121, 45));
         gridLayout_2 = new QGridLayout(gridLayoutWidget_2);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout_2->setObjectName("gridLayout_2");
         gridLayout_2->setHorizontalSpacing(15);
         gridLayout_2->setContentsMargins(5, 5, 5, 5);
         actionThrottle = new QPushButton(gridLayoutWidget_2);
-        actionThrottle->setObjectName(QString::fromUtf8("actionThrottle"));
+        actionThrottle->setObjectName("actionThrottle");
         actionThrottle->setMinimumSize(QSize(110, 35));
         actionThrottle->setMaximumSize(QSize(110, 35));
 
@@ -142,15 +142,15 @@ public:
 
         tabWidget->addTab(tools, QString());
         LayoutEdit = new QWidget();
-        LayoutEdit->setObjectName(QString::fromUtf8("LayoutEdit"));
+        LayoutEdit->setObjectName("LayoutEdit");
         gridLayoutWidget_3 = new QWidget(LayoutEdit);
-        gridLayoutWidget_3->setObjectName(QString::fromUtf8("gridLayoutWidget_3"));
+        gridLayoutWidget_3->setObjectName("gridLayoutWidget_3");
         gridLayoutWidget_3->setGeometry(QRect(0, 0, 781, 46));
         gridLayout_3 = new QGridLayout(gridLayoutWidget_3);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        gridLayout_3->setObjectName("gridLayout_3");
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
         checkBox = new QCheckBox(gridLayoutWidget_3);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        checkBox->setObjectName("checkBox");
 
         gridLayout_3->addWidget(checkBox, 0, 0, 1, 1);
 
@@ -162,9 +162,9 @@ public:
         verticalLayout_4->addLayout(verticalLayout_2);
 
         verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setObjectName("verticalLayout_3");
         frame = new QFrame(centralWidget);
-        frame->setObjectName(QString::fromUtf8("frame"));
+        frame->setObjectName("frame");
         frame->setFrameShape(QFrame::Shape::StyledPanel);
         frame->setFrameShadow(QFrame::Shadow::Raised);
 

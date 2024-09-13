@@ -5,9 +5,6 @@
 #include "ui_RightClick.h"
 #include "../Rails/Rails.h"
 
-class Rails;
-class RailsAction;
-
 class RightClick : public QDialog {
 Q_OBJECT
 
@@ -19,7 +16,7 @@ public:
     bool saveTurnout();
 
 private:
-    Ui::RightClick *ui;
+    Ui_RightClick *ui;
 
 };
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ui_DccEx.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.15
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -20,7 +20,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_dccEx
+class Ui_DccEx
 {
 public:
     QVBoxLayout *verticalLayout;
@@ -30,55 +30,55 @@ public:
     QPushButton *connectButton;
     QPushButton *disconnectButton;
 
-    void setupUi(QWidget *dccEx)
+    void setupUi(QWidget *DccEx)
     {
-        if (dccEx->objectName().isEmpty())
-            dccEx->setObjectName(QString::fromUtf8("dccEx"));
-        dccEx->resize(400, 300);
-        verticalLayout = new QVBoxLayout(dccEx);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        serialPortComboBox = new QComboBox(dccEx);
-        serialPortComboBox->setObjectName(QString::fromUtf8("serialPortComboBox"));
+        if (DccEx->objectName().isEmpty())
+            DccEx->setObjectName("DccEx");
+        DccEx->resize(400, 300);
+        verticalLayout = new QVBoxLayout(DccEx);
+        verticalLayout->setObjectName("verticalLayout");
+        serialPortComboBox = new QComboBox(DccEx);
+        serialPortComboBox->setObjectName("serialPortComboBox");
 
         verticalLayout->addWidget(serialPortComboBox);
 
-        consoleOutput = new QTextEdit(dccEx);
-        consoleOutput->setObjectName(QString::fromUtf8("consoleOutput"));
+        consoleOutput = new QTextEdit(DccEx);
+        consoleOutput->setObjectName("consoleOutput");
 
         verticalLayout->addWidget(consoleOutput);
 
-        consoleInput = new QLineEdit(dccEx);
-        consoleInput->setObjectName(QString::fromUtf8("consoleInput"));
+        consoleInput = new QLineEdit(DccEx);
+        consoleInput->setObjectName("consoleInput");
 
         verticalLayout->addWidget(consoleInput);
 
-        connectButton = new QPushButton(dccEx);
-        connectButton->setObjectName(QString::fromUtf8("connectButton"));
+        connectButton = new QPushButton(DccEx);
+        connectButton->setObjectName("connectButton");
 
         verticalLayout->addWidget(connectButton);
 
-        disconnectButton = new QPushButton(dccEx);
-        disconnectButton->setObjectName(QString::fromUtf8("disconnectButton"));
+        disconnectButton = new QPushButton(DccEx);
+        disconnectButton->setObjectName("disconnectButton");
 
         verticalLayout->addWidget(disconnectButton);
 
 
-        retranslateUi(dccEx);
+        retranslateUi(DccEx);
 
-        QMetaObject::connectSlotsByName(dccEx);
+        QMetaObject::connectSlotsByName(DccEx);
     } // setupUi
 
-    void retranslateUi(QWidget *dccEx)
+    void retranslateUi(QWidget *DccEx)
     {
-        dccEx->setWindowTitle(QCoreApplication::translate("dccEx", "DCC-EX", nullptr));
-        connectButton->setText(QCoreApplication::translate("dccEx", "Connect", nullptr));
-        disconnectButton->setText(QCoreApplication::translate("dccEx", "Disconnect", nullptr));
+        DccEx->setWindowTitle(QCoreApplication::translate("DccEx", "DCC-EX", nullptr));
+        connectButton->setText(QCoreApplication::translate("DccEx", "Connect", nullptr));
+        disconnectButton->setText(QCoreApplication::translate("DccEx", "Disconnect", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class dccEx: public Ui_dccEx {};
+    class DccEx: public Ui_DccEx {};
 } // namespace Ui
 
 QT_END_NAMESPACE

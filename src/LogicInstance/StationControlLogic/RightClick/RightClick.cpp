@@ -1,7 +1,8 @@
+#include "RightClick.h"
 #include <QFile>
 #include <QXmlStreamAttributes>
 #include <QDomDocument>
-#include "RightClick.h"
+
 
 
 RightClick::RightClick(QWidget *parent) : QDialog(parent), ui(new Ui::RightClick) {
