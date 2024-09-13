@@ -9,6 +9,7 @@
 #include "../RightClick/RightClick.h"
 
 
+
 class Rails;
 
 class MainWindow;
@@ -21,7 +22,11 @@ public:
     int getTurnoutId() const;
     int m_turnoutId;
 
-    //bool editMode;
+
+    static bool editMode;
+    static void setEditMode(bool mode);
+
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
@@ -29,8 +34,9 @@ private:
 
     bool m_switchedTurnout;
     Rails *rails;
-    //void checkBool();
-    bool editMode = false;
+
+
+    static bool getEditMode();
 };
 
 #endif //CCSMTR_RAILSACTION_H

@@ -11,6 +11,7 @@
 #include "../TabFolder/ConnectionTab/DCC-EX/DccEx.h"
 #include "../TabFolder/ConnectionTab/Power/PowerWindow.h"
 #include "../TabFolder/ToolsTab/Throttle/ThrottleWindow.h"
+#include "../../LogicInstance/StationControlLogic/RailsAction/RailsAction.h"
 
 class PowerWindow;
 
@@ -25,7 +26,7 @@ public:
 
     static bool isAnyConnected; // Add a static boolean variable to check if any ConnectionTab is active
 
-    static bool editMode(bool mode);
+    static bool editModeFunction(bool mode);
 
     Ui_MainWindow *ui;
 

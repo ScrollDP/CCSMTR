@@ -1,23 +1,17 @@
 #include "RailsAction.h"
 
-RailsAction::RailsAction(int x1, int y1, int x2, int y2, int turnoutId, bool switchTurnout, Rails* rails)
-        : QGraphicsLineItem(x1, y1, x2, y2), m_turnoutId(turnoutId), m_switchedTurnout(switchTurnout),rails(rails) {
 
-    //checkBool();
+bool RailsAction::editMode = false;
+
+
+RailsAction::RailsAction(int x1, int y1, int x2, int y2, int turnoutId, bool switchTurnout, Rails* rails)
+        : QGraphicsLineItem(x1, y1, x2, y2),
+        m_turnoutId(turnoutId),
+        m_switchedTurnout(switchTurnout),
+        rails(rails) {
 }
 
 RailsAction::~RailsAction() = default;
-/*
-void RailsAction::checkBool() {
-
-    if(m_editMode){
-        qDebug() << "editMode check is true";
-    }
-    else{
-        qDebug() << "editMode check is false";
-    }
-
-}*/
 
 void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // Check if the item is in the scene before removing it
@@ -97,16 +91,22 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
                     rails->deleteLinesWithId(m_turnoutId);
                     rails->loadFromXmlTurnouts(m_turnoutId, Rails::fileName);
                 }
-            }else{return;}
-
+            }
+            else{return;}
         }
     }
-
-
-
 }
 
 
 int RailsAction::getTurnoutId() const {
     return m_turnoutId;
+}
+
+// Add methods to set and get the editMode status
+void RailsAction::setEditMode(bool mode) {
+    editMode = mode;
+}
+
+bool RailsAction::getEditMode() {
+    return editMode;
 }

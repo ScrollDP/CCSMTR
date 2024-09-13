@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionDCC_EX, &QPushButton::clicked, this, &MainWindow::onActionDCC_EXTriggered);
     connect(ui->actionThrottle, &QPushButton::clicked, this, &MainWindow::onActionThrottleTriggered);
     connect(ui->actionPower, &QPushButton::clicked, this, &MainWindow::onActionPowerTriggered);
-    connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::editMode);
+    connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::editModeFunction);
     connect(ui->PowerOnTrack, &QPushButton::clicked, [=, this](){
         dccExWindow->sendCommand("<1>");
     });
@@ -111,10 +111,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         ui->checkBox->setChecked(!ui->checkBox->isChecked());
         qDebug() << "F9 pressed";
         if(ui->checkBox->isChecked()){
-            editMode(true);
+            editModeFunction(true);
             qDebug() << "editMode F9 is true";
         } else {
-            editMode(false);
+            editModeFunction(false);
             qDebug() << "editMode F9 is false";
         }
     } else {
@@ -140,8 +140,9 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     return QMainWindow::eventFilter(watched, event);
 }
 
-bool MainWindow::editMode(bool mode) {
+bool MainWindow::editModeFunction(bool mode) {
     qDebug() << "editMode called";
+    RailsAction::setEditMode(mode);
     if(mode){
         qDebug() << "editMode is true";
         return true;
