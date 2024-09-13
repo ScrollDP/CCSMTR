@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<turnouts>
+ <turnout id="1">
+  <start x="120" y="0"/>
+  <color>#ff0000</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>6</dccaddress>
+ </turnout>
+ <turnout id="2">
+  <start x="120" y="80"/>
+  <color>#0000ff</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="3">
+  <start x="280" y="80"/>
+  <color>#ff0000</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>1</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="4">
+  <start x="280" y="0"/>
+  <color>#0000ff</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>1</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="5">
+  <start x="280" y="0"/>
+  <color>#00ff00</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>10</dccaddress>
+ </turnout>
+ <turnout id="6">
+  <start x="360" y="-40"/>
+  <color>#008080</color>
+  <angleTurnout>315</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>36</dccaddress>
+ </turnout>
+ <turnout id="7">
+  <start x="440" y="-120"/>
+  <color>#00ff00</color>
+  <angleTurnout>315</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>8</dccaddress>
+ </turnout>
+ <turnout id="8">
+  <start x="1500" y="0"/>
+  <color>#00ff00</color>
+  <angleTurnout>180</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="9">
+  <start x="1340" y="-120"/>
+  <color>#ff0000</color>
+  <angleTurnout>225</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="10">
+  <start x="1260" y="-200"/>
+  <color>#0000ff</color>
+  <angleTurnout>45</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="11">
+  <start x="1500" y="-160"/>
+  <color>#00ff00</color>
+  <angleTurnout>180</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="12">
+  <start x="1340" y="-280"/>
+  <color>#ff0000</color>
+  <angleTurnout>225</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="13">
+  <start x="1260" y="-360"/>
+  <color>#0000ff</color>
+  <angleTurnout>45</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="14">
+  <start x="1220" y="-400"/>
+  <color>#00ff00</color>
+  <angleTurnout>225</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="15">
+  <start x="280" y="80"/>
+  <color>#00ff00</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="16">
+  <start x="440" y="200"/>
+  <color>#00ff00</color>
+  <angleTurnout>45</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>25</dccaddress>
+ </turnout>
+ <turnout id="17">
+  <start x="520" y="280"/>
+  <color>#ff0000</color>
+  <angleTurnout>45</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="18">
+  <start x="600" y="360"/>
+  <color>#0000ff</color>
+  <angleTurnout>225</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="19">
+  <start x="680" y="440"/>
+  <color>#00ff00</color>
+  <angleTurnout>225</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="20">
+  <start x="600" y="400"/>
+  <color>#00ff00</color>
+  <angleTurnout>180</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="21">
+  <start x="600" y="320"/>
+  <color>#00ff00</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="22">
+  <start x="1740" y="0"/>
+  <color>#0000ff</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>1</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="23">
+  <start x="1580" y="0"/>
+  <color>#ff0000</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="24">
+  <start x="1580" y="80"/>
+  <color>#0000ff</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="25">
+  <start x="1740" y="80"/>
+  <color>#ff0000</color>
+  <angleTurnout>0</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>1</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="26">
+  <start x="1580" y="80"/>
+  <color>#00ff00</color>
+  <angleTurnout>180</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="27">
+  <start x="1500" y="80"/>
+  <color>#008080</color>
+  <angleTurnout>180</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>1</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="28">
+  <start x="1340" y="280"/>
+  <color>#00ff00</color>
+  <angleTurnout>135</angleTurnout>
+  <switchTurnout>1</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>0</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="29">
+  <start x="1260" y="360"/>
+  <color>#ff0000</color>
+  <angleTurnout>135</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+ <turnout id="30">
+  <start x="1180" y="440"/>
+  <color>#0000ff</color>
+  <angleTurnout>315</angleTurnout>
+  <switchTurnout>0</switchTurnout>
+  <flipped>0</flipped>
+  <mirror>0</mirror>
+  <isANG>1</isANG>
+  <dccaddress>5</dccaddress>
+ </turnout>
+</turnouts>

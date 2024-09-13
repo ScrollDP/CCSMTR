@@ -1,11 +1,11 @@
 #include <QApplication>
-#include "mainWindow/mainWindow.h"
+#include "MainScreen/MainWindow/MainWindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    mainWindow mainWindow; // Create an instance of mainWindow
-    mainWindow.show(); // Show the mainWindow instance
+    MainWindow mainWindow; // Create an instance of MainWindow
+    mainWindow.show(); // Show the MainWindow instance
 
     return QApplication::exec(); // Start the event loop
 }

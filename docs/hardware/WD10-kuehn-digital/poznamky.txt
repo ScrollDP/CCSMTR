@@ -1,0 +1,19 @@
+programovanie WD10 kuehn-digital pre DCC-EX v režime pre "lenz a ostatne"
+    !!V tomto režime je potom cez roco multimaus posunutie o jednu group, čiže napr.
+    mame cv 1 1 ale u roco to je vnímane ako cv 1 2 potom pri prestavovaní.
+    alebo nastaviť rovnake id !-> neotestovane cez loconet, zatiaľ len osobitne cez expressnet
+príkaz pre PROG:
+<W cv value>
+kde:
+    cv je 1 pre A a 35 pre B.... pre rošírenie 9 A a 36 B
+  otestovanie v MAIN alebo v JOIN:
+    <a address subaddress activate>
+uloženie podľa tabuľky DCCpp-stationary-decoder-addresses.xlsx
+<T id DCC address subaddress>
+
+programovanie WD10 kuehn-digital pre DCC-EX v režime pre "roco"
+    to iste len adresa bude o jeden 'value+1'
+
+http://www.kuehn-modell.de/adressberechnung-dcc--roco--.html
+https://dcc-ex.com/reference/software/command-reference.html#gsc.tab=0
+https://kuehn-digital.de/files/WD10_GB_c.pdf

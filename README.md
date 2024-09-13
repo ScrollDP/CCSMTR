@@ -18,4 +18,5 @@ Zatial co funguje:
   https://www.facebook.com/profile.php?id=61559042625592
 
 
-![img.png](img.png)
+![img.png](docs/img.png)
+![img.png](docs/stationControll.png)
