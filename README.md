@@ -5,7 +5,7 @@ Zatial co funguje:
 - program je zatiaľ spustiteľny na distre Arch Linux [podpora cez wsl vo windowse (distro Arch Linux)]
 
 - Co je hotove:
-- - pomocou projektu DCC-EX je mozne ovladať lokomotivy (serialna komunikacia).
+  - pomocou projektu DCC-EX je mozne ovladať lokomotivy (serialna komunikacia).
   - prestavovanie prestavníkov cez WD10-kuehn-digital viz poznamkyWD10.txt
   - docasne staticke kolajisko
   - nacitavanie cez xml suboru
