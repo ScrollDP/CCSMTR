@@ -65,7 +65,10 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
         // Iterate over all items in the scene
         QGraphicsScene* currentScene = scene();
-        if (currentScene) {
+
+        //Event for right click if it is rigtbutton or id turnout is from 1-30
+        qDebug() << "editMode before 2" << editMode;
+        if(scene() == rails->railsSceneGraphic && event->button() == Qt::RightButton && editMode) {
             for (QGraphicsItem* item : currentScene->items()) {
                 // Check if the item is a RailsAction
                 auto* railsAction = dynamic_cast<RailsAction*>(item);
@@ -76,10 +79,7 @@ void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
                     }
                 }
             }
-        }
-        //Event for right click if it is rigtbutton or id turnout is from 1-30
-        qDebug() << "editMode before 2" << editMode;
-        if(scene() == rails->railsSceneGraphic && event->button() == Qt::RightButton) {
+
             qDebug() << "editMode is true 2" << editMode;
             if(m_turnoutId <= 30 && m_turnoutId > 0){
 
