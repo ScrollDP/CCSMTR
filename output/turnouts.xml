@@ -14,7 +14,7 @@
   <start x="120" y="80"/>
   <color>#0000ff</color>
   <angleTurnout>0</angleTurnout>
-  <switchTurnout>0</switchTurnout>
+  <switchTurnout>1</switchTurnout>
   <flipped>1</flipped>
   <mirror>0</mirror>
   <isANG>0</isANG>

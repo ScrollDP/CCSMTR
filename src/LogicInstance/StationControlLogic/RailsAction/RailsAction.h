@@ -19,7 +19,7 @@ class RailsAction : public QGraphicsLineItem {
 public:
     RailsAction(int x1, int y1, int x2, int y2, int turnoutId, bool switchTurnout, Rails* rails);
     ~RailsAction() override;
-    int getTurnoutId() const;
+    [[nodiscard]] int getTurnoutId() const;
     int m_turnoutId;
 
 
@@ -28,7 +28,7 @@ public:
 
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    [[maybe_unused]] void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
 
@@ -36,7 +36,7 @@ private:
     Rails *rails;
 
 
-    static bool getEditMode();
+    [[maybe_unused]] [[maybe_unused]] static bool getEditMode();
 };
 
 #endif //CCSMTR_RAILSACTION_H

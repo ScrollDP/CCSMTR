@@ -34,7 +34,7 @@ private:
 
     void setupArduino();
 
-    bool eventFilter(QObject *obj, QEvent *event) override;
+    [[maybe_unused]] bool eventFilter(QObject *obj, QEvent *event) override;
 
 };
 

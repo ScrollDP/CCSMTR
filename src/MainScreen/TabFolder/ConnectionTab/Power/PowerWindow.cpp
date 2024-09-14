@@ -15,7 +15,7 @@ PowerWindow::PowerWindow(QWidget *parent, DccEx *dccExInstance)
 
 }
 
-void PowerWindow::connectButton(QPushButton* button, const QString& command, DccEx* dccExInstance) {
+void PowerWindow::connectButton(QPushButton* button, const QString& command, [[maybe_unused]] DccEx * dccExInstance) {
     connect(button, &QPushButton::clicked, [=]() {
         dccExInstance->sendCommand(command);
     });

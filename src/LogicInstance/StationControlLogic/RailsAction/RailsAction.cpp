@@ -13,7 +13,7 @@ RailsAction::RailsAction(int x1, int y1, int x2, int y2, int turnoutId, bool swi
 
 RailsAction::~RailsAction() = default;
 
-void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+[[maybe_unused]] void RailsAction::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // Check if the item is in the scene before removing it
     if (!editMode && scene() == rails->railsSceneGraphic && event->button() == Qt::LeftButton) {
         qDebug() << "editMode is false" << editMode;
@@ -107,6 +107,6 @@ void RailsAction::setEditMode(bool mode) {
     editMode = mode;
 }
 
-bool RailsAction::getEditMode() {
+[[maybe_unused]] bool RailsAction::getEditMode() {
     return editMode;
 }

@@ -139,7 +139,7 @@ void ThrottleWindow::sendToArduino(const QString &dataList, DccEx *dccExInstance
     dccExInstance->sendCommand(dataList);
 }
 
-void ThrottleWindow::keyPressEvent(QKeyEvent *event) {
+[[maybe_unused]] void ThrottleWindow::keyPressEvent(QKeyEvent *event) {
 
 }
 

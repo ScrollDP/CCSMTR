@@ -68,7 +68,7 @@ void DccEx::onDataReceived() {
     ui.consoleOutput->append(arduino->readAll());
 }
 
-bool DccEx::eventFilter(QObject *obj, QEvent *event) {
+[[maybe_unused]] bool DccEx::eventFilter(QObject *obj, QEvent *event) {
     if (obj == ui.consoleInput && event->type() == QEvent::KeyPress) {
         auto *keyEvent = dynamic_cast<QKeyEvent *>(event);
         if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) {

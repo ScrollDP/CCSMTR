@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Make the tabWidget a child of the MainWindow but not part of the layout
     ui->tabWidget->setParent(this);
-    ui->tabWidget->move(0, 0); // Position the tabWidget at the top-left corner
+    ui->tabWidget->move(0, 0); // Position the tabWidget in the top-left corner
 
     ui->tabWidget->installEventFilter(this);
     this->installEventFilter(this);
@@ -66,7 +66,7 @@ void MainWindow::onActionPowerTriggered() {
     powerWindow->show();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
+[[maybe_unused]] void MainWindow::closeEvent(QCloseEvent *event) {
     dccExWindow->close();
     powerWindow->close();
     event->accept();
@@ -87,7 +87,7 @@ void MainWindow::toggleFullScreen() {
     }
 }
 
-void MainWindow::toggleTabShow() {
+void MainWindow::toggleTabShow() const {
     //condition on if tab is shown or not
     if (ui->tabWidget->isVisible()) {
         ui->tabWidget->setVisible(false);
@@ -96,7 +96,7 @@ void MainWindow::toggleTabShow() {
     }
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event) {
+[[maybe_unused]] void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_F11) {
         toggleFullScreen();
     } else {
@@ -122,7 +122,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     }
 }
 
-bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
+[[maybe_unused]] bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     if (watched == this && event->type() == QEvent::HoverMove) {
         auto *mouseEvent = dynamic_cast<QHoverEvent*>(event);
         if (mouseEvent->position().y() <= 5) { // Check if the mouse is within 10px from the top

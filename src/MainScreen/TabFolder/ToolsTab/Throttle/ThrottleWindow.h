@@ -33,7 +33,7 @@ private:
     void setButtonsEnabled(bool enabled);
     void connectButtons(DccEx *dccExInstance);
 
-    void keyPressEvent(QKeyEvent *event);
+    [[maybe_unused]] void keyPressEvent(QKeyEvent *event) override;
 
 };
 

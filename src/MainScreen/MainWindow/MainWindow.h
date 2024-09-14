@@ -30,7 +30,7 @@ public:
 
     Ui_MainWindow *ui;
 
-    bool edit{};
+    [[maybe_unused]] bool edit{};
 
 private slots:
     void onActionDCC_EXTriggered(); // Add a slot for the actionDCC_EX triggered signal
@@ -43,18 +43,18 @@ private:
     DccEx *dccExWindow; // Add a pointer to a dccEx window
     PowerWindow *powerWindow; // Add a pointer to a PowerWindow window
 
-    void keyPressEvent(QKeyEvent *event) override;
+    [[maybe_unused]] void keyPressEvent(QKeyEvent *event) override;
     QTimer *hideTimer; // Add a QTimer pointer to hide the tabWidget after a certain time
 
 
 protected:
-    void closeEvent(QCloseEvent *event) override;
+    [[maybe_unused]] void closeEvent(QCloseEvent *event) override;
 
 
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    [[maybe_unused]] bool eventFilter(QObject *watched, QEvent *event) override;
 
 
-    void toggleTabShow();
+    void toggleTabShow() const;
 };
 
 #endif //CCSMTR_MAINWINDOW_H
