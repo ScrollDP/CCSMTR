@@ -29,6 +29,13 @@ StationControl::StationControl(QWidget *parent)
     ClickableSvgItem* svgItem = new ClickableSvgItem();
     QString filePath = QStringLiteral("../layout/layout.svg");
     QSvgRenderer* renderer = new QSvgRenderer(filePath);
+
+    if (!renderer->isValid()) {
+        qDebug() << "Failed to load SVG file:" << filePath;
+    } else {
+        qDebug() << "Successfully loaded SVG file:" << filePath;
+    }
+
     svgItem->setSharedRenderer(renderer);
     scene->addItem(svgItem);
     svgItem->setScale(10);
