@@ -1,0 +1,10 @@
+<svg width="8" height="12" data-attach-point-x1="0" data-attach-point-y1="6" data-attach-point-x2="8" data-attach-point-y2="6" data-attach-point-x3="4" data-attach-point-y3="0" viewBox="0 0 8 12" xmlns="http://www.w3.org/2000/svg" >
+    <g id="1">
+        <!-- Straight State -->
+        <path id="turnout_1_straight" d="M8,6 L0,6 M4,0,L3,1.5" stroke="gray" stroke-width="1.1" stroke-linecap="round" visibility="visible"/>
+
+        <!-- Diverging State -->
+        <path id="turnout_1_diverging" d="M4,0,L0,6" stroke="gray" stroke-width="1.1" stroke-linecap="round" visibility="hidden"/>
+    </g>
+
+</svg>

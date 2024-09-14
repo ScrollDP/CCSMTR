@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 COMPONENTS Core Gui Widgets SerialPort Xml REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets SerialPort Xml SvgWidgets REQUIRED)
 
 set(SOURCES
         src/main.cpp
@@ -27,6 +27,8 @@ set(SOURCES
         src/LogicInstance/StationControlLogic/RailsAction/RailsAction.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.h
+        src/LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.cpp
+        src/LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.h
 
 
 )
@@ -61,7 +63,7 @@ qt6_wrap_ui(FORMS_HEADERS ${FORMS})
 
 qt6_add_executable(CCSMTR MANUAL_FINALIZATION ${SOURCES} ${FORMS_HEADERS})
 
-target_link_libraries(CCSMTR PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::SerialPort Qt6::Xml)
+target_link_libraries(CCSMTR PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::SerialPort Qt6::Xml Qt6::SvgWidgets)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/output/bin)
 

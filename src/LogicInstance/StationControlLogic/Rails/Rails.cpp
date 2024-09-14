@@ -11,16 +11,18 @@
 Rails::Rails() {
     loadFromXmlRails();
     loadFromXmlTurnouts(idLoad, fileName);
+
 }
 
 Rails::~Rails() {
     delete railsSceneGraphic;
 }
 
-const QString Rails::fileName = "../turnouts.xml";
+const QString Rails::fileName = "../placement.xml";
 
 
 void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
+
     double angleTurnoutRad = angleTurnout * M_PI / 180;
     double length1 = 40;
     if (angleTurnout == 45 || angleTurnout == 135 || angleTurnout == 225 || angleTurnout == 315) {
@@ -36,7 +38,7 @@ void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double a
         y1_initial = y1 + length1 * sin(angleTurnoutRad);
     }
 
-    addLine(x1 * (5.0 / 6.0), y1 * (5.0 / 6.0), x1_initial * (5.0 / 6.0), y1_initial * (5.0 / 6.0), Qt::darkMagenta, idLine, switchTurnout);
+    addLine(x1 * scaleFactor, y1 * scaleFactor, x1_initial * scaleFactor, y1_initial * scaleFactor, Qt::darkMagenta, idLine, switchTurnout);
 
     double direction = angleTurnoutRad;
     double newDirection;
@@ -55,16 +57,18 @@ void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double a
 
     int x2, y2;
     if (mirror) {
-        x2 = x1_initial - length2 * cos(newDirection);
-        y2 = y1_initial - length2 * sin(newDirection);
+        x2 = x1_initial - (length2-20) * cos(newDirection);
+        y2 = y1_initial - (length2-20) * sin(newDirection);
     } else {
-        x2 = x1_initial + length2 * cos(newDirection);
-        y2 = y1_initial + length2 * sin(newDirection);
+        x2 = x1_initial + (length2-20) * cos(newDirection);
+        y2 = y1_initial + (length2-20) * sin(newDirection);
     }
-    addLine(x1_initial * (5.0 / 6.0), y1_initial * (5.0 / 6.0), x2 * (5.0 / 6.0), y2 * (5.0 / 6.0), color, idLine, switchTurnout);
+    addLine(x1_initial * scaleFactor, y1_initial * scaleFactor, x2 * scaleFactor, y2 * scaleFactor, color, idLine, switchTurnout);
+
 }
 
 void Rails::addTurnoutToSceneANG(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
+
     double angleTurnoutRad = angleTurnout * M_PI / 180;
     double length1 = 40;
     if (angleTurnout == 45 || angleTurnout == 135 || angleTurnout == 225 || angleTurnout == 315) {
@@ -97,20 +101,20 @@ void Rails::addTurnoutToSceneANG(int idLine, int x1, int y1, QColor color, doubl
 
     int x2, y2;
     if (mirror) {
-        x2 = x1_initial - length2 * cos(newDirection);
-        y2 = y1_initial - length2 * sin(newDirection);
+        x2 = x1_initial - (length2-20) * cos(newDirection);
+        y2 = y1_initial - (length2-20) * sin(newDirection);
     } else {
-        x2 = x1_initial + length2 * cos(newDirection);
-        y2 = y1_initial + length2 * sin(newDirection);
+        x2 = x1_initial + (length2-20) * cos(newDirection);
+        y2 = y1_initial + (length2-20) * sin(newDirection);
     }
-    addLine(x1_initial * (5.0 / 6.0), y1_initial * (5.0 / 6.0), x2 * (5.0 / 6.0), y2 * (5.0 / 6.0), color, idLine, switchTurnout);
+    addLine(x1_initial * scaleFactor, y1_initial * scaleFactor, x2 * scaleFactor, y2 * scaleFactor, color, idLine, switchTurnout);
 }
 
 
 void Rails::addLine(int x1, int y1, int x2, int y2, QColor color, int idLine, bool switchTurnout) {
     auto *line = new RailsAction(x1, y1, x2, y2, idLine, switchTurnout, this);
 
-    line->setPen(QPen(color, 12, Qt::SolidLine, Qt::MPenCapStyle, Qt::MPenJoinStyle));
+    line->setPen(QPen(color, 8, Qt::SolidLine, Qt::MPenCapStyle, Qt::MPenJoinStyle));
     line->setZValue(0);
     railsSceneGraphic->addItem(line);
 }
@@ -266,10 +270,10 @@ bool Rails::loadFromXmlRails() {
         if (xmlReader.isStartElement()) {
             if (xmlReader.name().toString() == "rail") {
                 QXmlStreamAttributes attributes = xmlReader.attributes();
-                x1 = attributes.value("x1").toInt() * (5.0 / 6.0);
-                y1 = attributes.value("y1").toInt() * (5.0 / 6.0);
-                x2 = attributes.value("x2").toInt() * (5.0 / 6.0);
-                y2 = attributes.value("y2").toInt() * (5.0 / 6.0);
+                x1 = attributes.value("x1").toInt() * scaleFactor;
+                y1 = attributes.value("y1").toInt() * scaleFactor;
+                x2 = attributes.value("x2").toInt() * scaleFactor;
+                y2 = attributes.value("y2").toInt() * scaleFactor;
                 color = QColor(attributes.value("color").toString());
                 idLine = attributes.value("idLine").toInt();
                 switchTurnout = attributes.value("switchTurnout").toString() == "true";

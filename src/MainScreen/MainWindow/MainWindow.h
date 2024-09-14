@@ -11,7 +11,6 @@
 #include "../TabFolder/ConnectionTab/DCC-EX/DccEx.h"
 #include "../TabFolder/ConnectionTab/Power/PowerWindow.h"
 #include "../TabFolder/ToolsTab/Throttle/ThrottleWindow.h"
-#include "../../LogicInstance/StationControlLogic/RailsAction/RailsAction.h"
 
 class PowerWindow;
 

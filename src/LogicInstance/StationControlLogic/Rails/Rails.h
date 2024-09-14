@@ -34,6 +34,8 @@ private:
     addTurnoutToSceneANG(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout,
                          bool flipped,
                          bool mirror);
+
+    double scaleFactor = (6.0 / 6.0);
 };
 
 

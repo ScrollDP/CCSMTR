@@ -34,6 +34,9 @@
        <height>800</height>
       </size>
      </property>
+     <property name="layoutDirection">
+      <enum>Qt::LayoutDirection::LeftToRight</enum>
+     </property>
     </widget>
    </item>
   </layout>

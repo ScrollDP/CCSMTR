@@ -2,7 +2,7 @@
 #define CCSMTR_STATIONCONTROL_H
 
 #include "ui_stationControl.h"
-#include "../../LogicInstance/StationControlLogic/Rails/Rails.h"
+#include "../../LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.h"
 
 
 class StationControl : public QWidget {
@@ -13,7 +13,7 @@ public:
 
 private:
     Ui::StationControll *ui;
-    Rails *railsScene = new Rails();
+    //Rails *railsScene = new Rails();
 
 };
 

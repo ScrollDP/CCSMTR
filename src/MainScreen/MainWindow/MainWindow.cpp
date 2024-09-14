@@ -4,7 +4,8 @@
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent),
-          ui(new Ui::MainWindow) {
+          ui(new Ui::MainWindow),
+          stationControllWindow(new StationControl(this)) {
 
     ui->setupUi(this);
 
@@ -17,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //loading StationControl class to automatically load the ui
-    stationControllWindow = new StationControl(this);
     ui->verticalLayout_3->addWidget(stationControllWindow);
 
     // Remove the tabWidget from the layout
@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionDCC_EX, &QPushButton::clicked, this, &MainWindow::onActionDCC_EXTriggered);
     connect(ui->actionThrottle, &QPushButton::clicked, this, &MainWindow::onActionThrottleTriggered);
     connect(ui->actionPower, &QPushButton::clicked, this, &MainWindow::onActionPowerTriggered);
-    connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::editModeFunction);
+    //connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::editModeFunction);
     connect(ui->PowerOnTrack, &QPushButton::clicked, [=, this](){
         dccExWindow->sendCommand("<1>");
     });
@@ -107,19 +107,6 @@ void MainWindow::toggleTabShow() const {
     } else {
         QMainWindow::keyPressEvent(event);
     }
-    if (event->key() == Qt::Key_F9) {
-        ui->checkBox->setChecked(!ui->checkBox->isChecked());
-        qDebug() << "F9 pressed";
-        if(ui->checkBox->isChecked()){
-            editModeFunction(true);
-            qDebug() << "editMode F9 is true";
-        } else {
-            editModeFunction(false);
-            qDebug() << "editMode F9 is false";
-        }
-    } else {
-        QMainWindow::keyPressEvent(event);
-    }
 }
 
 [[maybe_unused]] bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
@@ -138,17 +125,4 @@ void MainWindow::toggleTabShow() const {
         return true;
     }
     return QMainWindow::eventFilter(watched, event);
-}
-
-bool MainWindow::editModeFunction(bool mode) {
-    qDebug() << "editMode called";
-    RailsAction::setEditMode(mode);
-    if(mode){
-        qDebug() << "editMode is true";
-        return true;
-    }
-    else{
-        qDebug() << "editMode is false";
-        return false;
-    }
 }

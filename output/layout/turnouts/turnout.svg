@@ -1,0 +1,14 @@
+<svg width="8" height="12" data-attach-point-x1="0" data-attach-point-y1="6" data-attach-point-x2="8" data-attach-point-y2="6" data-attach-point-x3="4" data-attach-point-y3="0" viewBox="0 0 8 12" xmlns="http://www.w3.org/2000/svg" >
+
+    <g id="1_A"  fill="none" stroke="gray" stroke-width="1.1">
+        <line x1="0" y1="6" x2="8" y2="6" stroke-linecap="round" />
+        <line x1="3" y1="1.5" x2="4" y2="0" stroke-linecap="round"/>
+        <!--<rect x="0" y="0" width="8" height="12" fill="none" stroke="red" stroke-width="0.2" />-->
+    </g>
+
+    <g id="1_B" fill="none" stroke="gray" stroke-width="1.1">
+        <line x1="0" y1="6" x2="4" y2="0" stroke-linecap="round" />
+        <!--<rect x="0" y="0" width="8" height="12" fill="none" stroke="blue" stroke-width="0.2" />-->
+    </g>
+
+</svg>
