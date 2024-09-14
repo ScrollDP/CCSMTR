@@ -21,16 +21,12 @@ const QString Rails::fileName = "../turnouts.xml";
 
 
 void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
-     // Convert angleTurnout from degrees to radians
     double angleTurnoutRad = angleTurnout * M_PI / 180;
-
-    // Calculate the length of the first line
     double length1 = 40;
     if (angleTurnout == 45 || angleTurnout == 135 || angleTurnout == 225 || angleTurnout == 315) {
         length1 = sqrt(3200);
     }
 
-    // Calculate the initial position of the first line
     int x1_initial, y1_initial;
     if (mirror) {
         x1_initial = x1 - length1 * cos(angleTurnoutRad);
@@ -40,34 +36,23 @@ void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double a
         y1_initial = y1 + length1 * sin(angleTurnoutRad);
     }
 
-    // First part of the line: straight until the turn
-    addLine(x1, y1, x1_initial, y1_initial, Qt::darkMagenta, idLine, switchTurnout);
+    addLine(x1 * (5.0 / 6.0), y1 * (5.0 / 6.0), x1_initial * (5.0 / 6.0), y1_initial * (5.0 / 6.0), Qt::darkMagenta, idLine, switchTurnout);
 
-    // Calculate the direction of the first line segment
     double direction = angleTurnoutRad;
-
-    // Calculate the new direction after the turn
     double newDirection;
     double length2 = 40;
     if (switchTurnout) {
-        // If the turnout will switch, the second half will be straight
         newDirection = direction;
     } else if (flipped) {
-        // If the turnout will be flipped, the default angle will be -45 degrees
         newDirection = direction - M_PI / 4;
-
     } else {
-        // Otherwise, the default angle will be 45 degrees
         newDirection = direction + M_PI / 4;
     }
 
-    // Calculate the length of the second line
     if (fabs(newDirection) == M_PI / 4 || fabs(newDirection) == 3 * M_PI / 4 || fabs(newDirection) == 5 * M_PI / 4 || fabs(newDirection) == 7 * M_PI / 4) {
         length2 = sqrt(3200);
-        //qDebug() << "length2: " << length2;
     }
 
-    // Calculate the end point of the second line segment
     int x2, y2;
     if (mirror) {
         x2 = x1_initial - length2 * cos(newDirection);
@@ -76,21 +61,16 @@ void Rails::addTurnoutToScene(int idLine, int x1, int y1, QColor color, double a
         x2 = x1_initial + length2 * cos(newDirection);
         y2 = y1_initial + length2 * sin(newDirection);
     }
-        // Second part of the line: after the turn
-        addLine(x1_initial, y1_initial, x2, y2, color, idLine, switchTurnout);
+    addLine(x1_initial * (5.0 / 6.0), y1_initial * (5.0 / 6.0), x2 * (5.0 / 6.0), y2 * (5.0 / 6.0), color, idLine, switchTurnout);
 }
 
 void Rails::addTurnoutToSceneANG(int idLine, int x1, int y1, QColor color, double angleTurnout, bool switchTurnout, bool flipped, bool mirror) {
-    // Convert angleTurnout from degrees to radians
     double angleTurnoutRad = angleTurnout * M_PI / 180;
-
-    // Calculate the length of the first line
     double length1 = 40;
     if (angleTurnout == 45 || angleTurnout == 135 || angleTurnout == 225 || angleTurnout == 315) {
         length1 = sqrt(3200);
     }
 
-    // Calculate the initial position of the first line
     int x1_initial, y1_initial;
     if (mirror) {
         x1_initial = x1 - length1 * cos(angleTurnoutRad);
@@ -100,32 +80,21 @@ void Rails::addTurnoutToSceneANG(int idLine, int x1, int y1, QColor color, doubl
         y1_initial = y1 + length1 * sin(angleTurnoutRad);
     }
 
-
-    // Calculate the direction of the first line segment
     double direction = angleTurnoutRad;
-
-    // Calculate the new direction after the turn
     double newDirection;
     double length2 = 40;
     if (switchTurnout) {
-        // If the turnout will switch, the second half will be straight
         newDirection = direction;
     } else if (flipped) {
-        // If the turnout will be flipped, the default angle will be -45 degrees
         newDirection = direction - M_PI / 4;
-
     } else {
-        // Otherwise, the default angle will be 45 degrees
         newDirection = direction + M_PI / 4;
     }
 
-    // Calculate the length of the second line
     if (fabs(newDirection) == M_PI / 4 || fabs(newDirection) == 3 * M_PI / 4 || fabs(newDirection) == 5 * M_PI / 4 || fabs(newDirection) == 7 * M_PI / 4) {
         length2 = sqrt(3200);
-        //qDebug() << "length2: " << length2;
     }
 
-    // Calculate the end point of the second line segment
     int x2, y2;
     if (mirror) {
         x2 = x1_initial - length2 * cos(newDirection);
@@ -134,8 +103,7 @@ void Rails::addTurnoutToSceneANG(int idLine, int x1, int y1, QColor color, doubl
         x2 = x1_initial + length2 * cos(newDirection);
         y2 = y1_initial + length2 * sin(newDirection);
     }
-    // Second part of the line: after the turn
-    addLine(x1_initial, y1_initial, x2, y2, color, idLine, switchTurnout);
+    addLine(x1_initial * (5.0 / 6.0), y1_initial * (5.0 / 6.0), x2 * (5.0 / 6.0), y2 * (5.0 / 6.0), color, idLine, switchTurnout);
 }
 
 
@@ -298,10 +266,10 @@ bool Rails::loadFromXmlRails() {
         if (xmlReader.isStartElement()) {
             if (xmlReader.name().toString() == "rail") {
                 QXmlStreamAttributes attributes = xmlReader.attributes();
-                x1 = attributes.value("x1").toInt();
-                y1 = attributes.value("y1").toInt();
-                x2 = attributes.value("x2").toInt();
-                y2 = attributes.value("y2").toInt();
+                x1 = attributes.value("x1").toInt() * (5.0 / 6.0);
+                y1 = attributes.value("y1").toInt() * (5.0 / 6.0);
+                x2 = attributes.value("x2").toInt() * (5.0 / 6.0);
+                y2 = attributes.value("y2").toInt() * (5.0 / 6.0);
                 color = QColor(attributes.value("color").toString());
                 idLine = attributes.value("idLine").toInt();
                 switchTurnout = attributes.value("switchTurnout").toString() == "true";
