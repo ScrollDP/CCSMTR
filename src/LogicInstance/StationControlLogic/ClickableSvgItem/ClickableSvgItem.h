@@ -3,21 +3,16 @@
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QDebug>
 
 class ClickableSvgItem : public QGraphicsSvgItem {
 Q_OBJECT
 
 public:
-    explicit ClickableSvgItem(const QString &fileName, QGraphicsItem *parent = nullptr);
+    explicit ClickableSvgItem(QGraphicsItem* parent = nullptr);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-
-private:
-    bool stateAVisible;
-    QString fileName; // Add this member variable
-    void toggleTurnoutState(const QString &clickedId);
-    QMap<QString, QRectF> elementBoundingBoxes;
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 };
 
 #endif // CLICKABLESVGITEM_H

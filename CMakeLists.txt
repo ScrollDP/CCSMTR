@@ -31,6 +31,7 @@ set(SOURCES
         src/LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.h
 
 
+
 )
 set(FORMS
         src/MainScreen/MainWindow/ui_MainWindow.ui

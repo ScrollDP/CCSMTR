@@ -38,8 +38,6 @@ public:
         verticalLayout->setObjectName("verticalLayout");
         graphicsView = new QGraphicsView(StationControll);
         graphicsView->setObjectName("graphicsView");
-        graphicsView->setMinimumSize(QSize(880, 800));
-        graphicsView->setLayoutDirection(Qt::LayoutDirection::LeftToRight);
 
         verticalLayout->addWidget(graphicsView);
 

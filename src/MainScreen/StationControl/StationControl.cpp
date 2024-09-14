@@ -2,11 +2,12 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QFile>
-#include <QDebug>
+#include <QGraphicsSvgItem>
+#include <QSvgRenderer>
 
 StationControl::StationControl(QWidget *parent)
         : QWidget(parent),
-          ui(new Ui::StationControll){
+          ui(new Ui::StationControll) {
 
     ui->setupUi(this);
 
@@ -24,27 +25,15 @@ StationControl::StationControl(QWidget *parent)
         qDebug() << "Using existing QGraphicsScene.";
     }
 
-    // Load the SVG file
-    QString svgFilePath = "../layout/layout.svg";
-    QFile file(svgFilePath);
-    if (!file.exists()) {
-        qDebug() << "SVG file does not exist:" << svgFilePath;
-        return;
-    }
-
-    // Create a ClickableSvgItem and add it to the scene
-    ClickableSvgItem* svgItem = new ClickableSvgItem(svgFilePath);
-    svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
-    svgItem->setCacheMode(QGraphicsItem::NoCache);
-    svgItem->setZValue(0);
-    svgItem->setScale(10); // Adjust the scale as needed
-
-    // Add the SVG item to the scene
+    // Load the layout.svg file
+    ClickableSvgItem* svgItem = new ClickableSvgItem();
+    QString filePath = QStringLiteral("../layout/layout.svg");
+    QSvgRenderer* renderer = new QSvgRenderer(filePath);
+    svgItem->setSharedRenderer(renderer);
     scene->addItem(svgItem);
-    qDebug() << "Added ClickableSvgItem to the scene.";
+    svgItem->setScale(10);
 }
 
 StationControl::~StationControl() {
     delete ui;
-    qDebug() << "StationControl destroyed.";
 }

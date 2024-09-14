@@ -11,9 +11,7 @@ public:
     explicit StationControl(QWidget *parent = nullptr);
     ~StationControl() override;
 
-private:
     Ui::StationControll *ui;
-    //Rails *railsScene = new Rails();
 
 };
 
