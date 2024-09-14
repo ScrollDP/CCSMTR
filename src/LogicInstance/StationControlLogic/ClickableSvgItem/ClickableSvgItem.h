@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QXmlStreamReader>
 #include <QFile>
+#include <QDomDocument>
 
 class ClickableSvgItem : public QGraphicsSvgItem {
 Q_OBJECT
@@ -22,6 +23,8 @@ protected:
 private:
     QString getElementIdAtPosition(const QPointF& position);
     QStringList getElementIdsFromSvg(const QString& filePath);
+    void toggleVisibility(const QString& groupId, const QString& elementId1, const QString& elementId2);
+    QDomDocument loadSvgDocument();
 };
 
 #endif // CLICKABLESVGITEM_H

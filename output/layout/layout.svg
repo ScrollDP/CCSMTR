@@ -1,24 +1,18 @@
-<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" >
+<svg height="50" viewBox="0 0 50 50" width="50" xmlns="http://www.w3.org/2000/svg">
     <g id="turnout_1">
         <!-- Straight State -->
-        <path id="turnout_1_straight" d="M8,6 L0,6 M4,0,L3,1.5" stroke="gray" stroke-width="1.1" stroke-linecap="round" visibility="visible"/>
-
+        <path d="M8,6 L0,6 M4,0,L3,1.5" id="turnout_1_straight" stroke="gray" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
         <!-- Diverging State -->
-        <path id="turnout_1_diverging" d="M4,0,L0,6" stroke="gray" stroke-width="1.1" stroke-linecap="round" visibility="hidden"/>
+        <path d="M4,0,L0,6" id="turnout_1_diverging" stroke="gray" stroke-linecap="round" stroke-width="1.1" visibility="hidden"/>
     </g>
-
-
     <g id="rail_1">
         <!-- Straight State -->
-        <line id="rail_1_straight" x1="8" y1="6" x2="16" y2="6" stroke="green" stroke-width="1.1" stroke-linecap="round" visibility="visible"/>
+        <line id="rail_1_straight" stroke="green" stroke-linecap="round" stroke-width="1.1" visibility="visible" x1="8" x2="16" y1="6" y2="6"/>
         <!--<path id="rail_1" d="M8,6 L16,6 " stroke="gray" stroke-width="1.1" stroke-linecap="round" visibility="visible"/>-->
     </g>
-
     <g id="rail_2">
         <!-- Straight State -->
-        <line id="rail_2_straight" x1="16" y1="6" x2="24" y2="6" stroke="red" stroke-width="1.1" stroke-linecap="round" visibility="visible"/>
+        <line id="rail_2_straight" stroke="red" stroke-linecap="round" stroke-width="1.1" visibility="visible" x1="16" x2="24" y1="6" y2="6"/>
         <!--<path id="rail_1" d="M8,6 L16,6 " stroke="gray" stroke-width="1.1" stroke-linecap="round" visibility="visible"/>-->
     </g>
-
-
 </svg>
