@@ -27,7 +27,6 @@ StationControl::~StationControl() {
 void StationControl::LoadingSvgFile() {
     const QString layoutFilePath = QFileInfo("../layout/layout.xml").filePath();
 
-    // Create a new scene for the graphicsView
     auto *scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
     qDebug() << "New QGraphicsScene created.";
@@ -46,7 +45,6 @@ void StationControl::LoadingSvgFile() {
     }
     file.close();
 
-    // Create a map to handle the file paths
     std::unordered_map<QString, QString> typeToFilePath = {
             {"turnout", QFileInfo("../layout/turnouts/turnout.svg").filePath()},
             {"rail", QFileInfo("../layout/rails/rail.svg").filePath()}
@@ -66,7 +64,6 @@ void StationControl::LoadingSvgFile() {
 
             qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
-            // Use the map to get the file path
             auto it = typeToFilePath.find(type);
             if (it == typeToFilePath.end()) {
                 qWarning() << "Invalid type:" << type;
@@ -80,8 +77,12 @@ void StationControl::LoadingSvgFile() {
                 continue;
             }
 
-            // Load the SVG file
-            auto *svgItem = new SVGHandleEvent(svgFilePath, id);
+            // Create a temporary file
+            QString tmpFilePath = QString(".tmp/tmp_%1_%2.svg").arg(type).arg(id);
+            QFile::copy(svgFilePath, tmpFilePath);
+
+            // Load the temporary SVG file
+            auto *svgItem = new SVGHandleEvent(tmpFilePath, id);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
             scene->addItem(svgItem);

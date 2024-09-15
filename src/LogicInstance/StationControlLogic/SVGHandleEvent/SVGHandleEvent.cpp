@@ -27,13 +27,9 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
 [[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
     if(event->button() == Qt::LeftButton) {
-        qDebug() << "Element ID:" << elementId;
+        qDebug() << "Element ID:" << elementId << "File:" << svgFilePath;
         toggleVisibility();
         return;
-    }
-    else if(event->button() == Qt::RightButton) {
-        qDebug() << "color in Element ID:" << elementId;
-        changeColor();
     }
 }
 
