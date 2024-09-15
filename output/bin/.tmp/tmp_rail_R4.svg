@@ -1,0 +1,5 @@
+<svg height="12" stroke="gray" viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" id="rail" stroke-width="1.1" transform="scale(1, 1) translate(0,0) rotate(0)">
+  <line stroke-linecap="round" x1="0" x2="8" y1="6" y2="6"/>
+ </g>
+</svg>
