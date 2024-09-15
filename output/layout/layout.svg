@@ -5,6 +5,12 @@
         <!-- Diverging State -->
         <path d="M4,0,L0,6" id="turnout_1_diverging" stroke="gray" stroke-linecap="round" stroke-width="1.1" visibility="hidden"/>
     </g>
+    <g id="turnout_2">
+        <!-- Straight State -->
+        <path d="M8,18 L0,18 M4,12,L3,13.5" id="turnout_2_straight" stroke="gray" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
+        <!-- Diverging State -->
+        <path d="M4,12,L0,18" id="turnout_2_diverging" stroke="gray" stroke-linecap="round" stroke-width="1.1" visibility="hidden"/>
+    </g>
     <g id="rail_1">
         <!-- Straight State -->
         <line id="rail_1_straight" stroke="green" stroke-linecap="round" stroke-width="1.1" visibility="visible" x1="8" x2="16" y1="6" y2="6"/>

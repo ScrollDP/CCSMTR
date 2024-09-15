@@ -17,45 +17,45 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_StationControll
+class Ui_StationControl
 {
 public:
     QVBoxLayout *verticalLayout;
     QGraphicsView *graphicsView;
 
-    void setupUi(QWidget *StationControll)
+    void setupUi(QWidget *StationControl)
     {
-        if (StationControll->objectName().isEmpty())
-            StationControll->setObjectName("StationControll");
-        StationControll->resize(892, 812);
+        if (StationControl->objectName().isEmpty())
+            StationControl->setObjectName("StationControl");
+        StationControl->resize(892, 812);
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(StationControll->sizePolicy().hasHeightForWidth());
-        StationControll->setSizePolicy(sizePolicy);
-        StationControll->setMinimumSize(QSize(0, 0));
-        verticalLayout = new QVBoxLayout(StationControll);
+        sizePolicy.setHeightForWidth(StationControl->sizePolicy().hasHeightForWidth());
+        StationControl->setSizePolicy(sizePolicy);
+        StationControl->setMinimumSize(QSize(0, 0));
+        verticalLayout = new QVBoxLayout(StationControl);
         verticalLayout->setObjectName("verticalLayout");
-        graphicsView = new QGraphicsView(StationControll);
+        graphicsView = new QGraphicsView(StationControl);
         graphicsView->setObjectName("graphicsView");
 
         verticalLayout->addWidget(graphicsView);
 
 
-        retranslateUi(StationControll);
+        retranslateUi(StationControl);
 
-        QMetaObject::connectSlotsByName(StationControll);
+        QMetaObject::connectSlotsByName(StationControl);
     } // setupUi
 
-    void retranslateUi(QWidget *StationControll)
+    void retranslateUi(QWidget *StationControl)
     {
-        StationControll->setWindowTitle(QString());
+        StationControl->setWindowTitle(QString());
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class StationControll: public Ui_StationControll {};
+    class StationControl: public Ui_StationControl {};
 } // namespace Ui
 
 QT_END_NAMESPACE

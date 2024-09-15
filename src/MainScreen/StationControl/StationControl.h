@@ -3,16 +3,24 @@
 
 #include "ui_stationControl.h"
 #include "../../LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.h"
+#include <QWidget>
+#include <QDomDocument>
 
 
 class StationControl : public QWidget {
+    Q_OBJECT
 
 public:
     explicit StationControl(QWidget *parent = nullptr);
-    ~StationControl() override;
+    ~StationControl() override;  // Ensure the destructor is declared here
 
-    Ui::StationControll *ui;
+private:
+    Ui::StationControl *ui;
+    static void setScaleAndPosition(QGraphicsSvgItem *item, qreal scale, qreal x, qreal y);
 
+    int Scale = 20;
+    int Position_Col = 8;
+    int Position_Row = 12;
 };
 
 

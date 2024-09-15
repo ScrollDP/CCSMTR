@@ -1,0 +1,5 @@
+<layout>
+    <element type="turnout" id="turnout_1" row="1" col="1"/>
+    <element type="rail" id="rail_1" row="1" col="2"/>
+    <element type="turnout" id="turnout_2" row="2" col="1"/>
+</layout>

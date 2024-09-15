@@ -1,7 +1,6 @@
-<svg width="8" height="12" data-attach-point-x1="0" data-attach-point-y1="6" data-attach-point-x2="8" data-attach-point-y2="6" viewBox="0 0 8 12" xmlns="http://www.w3.org/2000/svg">
+<svg width="8" height="12" viewBox="0 0 8 12" xmlns="http://www.w3.org/2000/svg">
 
     <g id="rail" fill="none" stroke="gray" stroke-width="1.1">
         <line x1="0" y1="6" x2="8" y2="6" stroke-linecap="round"/>
-        <!--<rect x="0" y="0" width="8" height="12" fill="none" stroke="green" stroke-width="0.2"/>-->
     </g>
 </svg>

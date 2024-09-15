@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StationControll</class>
- <widget class="QWidget" name="StationControll">
+ <class>StationControl</class>
+ <widget class="QWidget" name="StationControl">
   <property name="geometry">
    <rect>
     <x>0</x>

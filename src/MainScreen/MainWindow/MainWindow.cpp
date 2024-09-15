@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
 
-
     //loading StationControl class to automatically load the ui
     ui->verticalLayout_3->addWidget(stationControllWindow);
 

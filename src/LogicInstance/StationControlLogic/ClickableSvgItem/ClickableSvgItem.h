@@ -15,16 +15,17 @@ Q_OBJECT
 public:
     explicit ClickableSvgItem(QGraphicsItem* parent = nullptr);
 
+    void initialize();
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
+
+    void loadGridLayout(const QString &layoutFilePath);
+
     QString getElementIdAtPosition(const QPointF& position);
-    QStringList getElementIdsFromSvg(const QString& filePath);
-    void toggleVisibility(const QString& groupId, const QString& elementId1, const QString& elementId2);
-    QDomDocument loadSvgDocument();
+
 };
 
 #endif // CLICKABLESVGITEM_H
