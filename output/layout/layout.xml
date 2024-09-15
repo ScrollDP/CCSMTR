@@ -1,13 +1,22 @@
 <layout>
     <turnouts>
-        <turnout type="turnout" id="T1" row="1" col="1" flipped="false" rotate="0"/>
-        <turnout type="turnout" id="T2" row="3" col="1" flipped="false" rotate="0" />
+        <turnout type="turnout" id="T1" row="1" col="1" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T2" row="3" col="1" flipped="false" rotate="180" />
+
         <turnout type="turnout" id="T3" row="1" col="3" flipped="true" rotate="180"/>
         <turnout type="turnout" id="T4" row="3" col="3" flipped="false" rotate="0" />
+        <turnout type="turnout" id="T5" row="1" col="4" flipped="false" rotate="180" />
+        <turnout type="turnout" id="T6" row="3" col="4" flipped="true" rotate="0" />
     </turnouts>
+
+    <cross_turnouts>
+        <cross_turnout type="cross_turnout" id="CT1" row="2" col="3" rotate="0"/>
+    </cross_turnouts>
 
     <rails>
         <rail type="rail" id="R1" row="1" col="2"/>
         <rail type="rail" id="R2" row="3" col="2"/>
+        <rail type="rail" id="R3" row="1" col="5"/>
+        <rail type="rail" id="R4" row="3" col="5"/>
     </rails>
 </layout>

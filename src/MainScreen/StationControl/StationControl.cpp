@@ -49,7 +49,8 @@ void StationControl::LoadingSvgFile() {
 
     std::unordered_map<QString, QString> typeToFilePath = {
             {"turnout", QFileInfo("../layout/turnouts/turnout.svg").filePath()},
-            {"rail", QFileInfo("../layout/rails/rail.svg").filePath()}
+            {"rail", QFileInfo("../layout/rails/rail.svg").filePath()},
+            {"cross_turnout", QFileInfo("../layout/turnouts/cross_turnout.svg").filePath()}
     };
 
     QDomElement root = doc.documentElement();

@@ -18,7 +18,7 @@ private:
     Ui::StationControl *ui;
     void LoadingSvgFile();
 
-    int Scale = 10;
+    int Scale = 5;
     int Position_Col = 8;
     int Position_Row = 12;
 
