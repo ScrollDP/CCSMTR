@@ -5,6 +5,7 @@
 #include <QDomDocument>
 #include <QDebug>
 #include <QFileInfo>
+#include <unordered_map>
 
 StationControl::StationControl(QWidget *parent)
         : QWidget(parent),
@@ -31,20 +32,13 @@ void StationControl::LoadingSvgFile() {
     ui->graphicsView->setScene(scene);
     qDebug() << "New QGraphicsScene created.";
 
-    // Ensure the layout file exists
-    QFileInfo layoutFileInfo(layoutFilePath);
-    if (!layoutFileInfo.exists()) {
-        qWarning() << "Layout file does not exist:" << layoutFilePath;
+    QFile file(layoutFilePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Failed to open layout file:" << layoutFilePath;
         return;
     }
 
-    // Load the layout XML
     QDomDocument doc;
-    QFile file(layoutFilePath);
-    if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Failed to open layout file:" << layoutFilePath << "Error:" << file.errorString();
-        return;
-    }
     if (!doc.setContent(&file)) {
         qWarning() << "Failed to parse layout file:" << layoutFilePath;
         file.close();
@@ -52,41 +46,46 @@ void StationControl::LoadingSvgFile() {
     }
     file.close();
 
-    // Read layout elements
+    // Create a map to handle the file paths
+    std::unordered_map<QString, QString> typeToFilePath = {
+            {"turnout", QFileInfo("../layout/turnouts/turnout.svg").absoluteFilePath()},
+            {"rail", QFileInfo("../layout/rails/rail.svg").absoluteFilePath()}
+    };
+
     QDomElement root = doc.documentElement();
-    QDomNodeList elements = root.elementsByTagName("element");
+    QDomNodeList categories = root.childNodes();
+    for (int i = 0; i < categories.count(); ++i) {
+        QDomNode categoryNode = categories.at(i);
+        QDomNodeList elements = categoryNode.childNodes();
+        for (int j = 0; j < elements.count(); ++j) {
+            QDomElement element = elements.at(j).toElement();
+            QString type = element.attribute("type");
+            QString id = element.attribute("id");
+            int row = element.attribute("row").toInt();
+            int col = element.attribute("col").toInt();
 
-    qDebug() << "Number of elements found:" << elements.count();
+            qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
-    for (int i = 0; i < elements.count(); ++i) {
-        QDomElement element = elements.at(i).toElement();
-        QString type = element.attribute("type");
-        QString id = element.attribute("id");
-        int row = element.attribute("row").toInt();
-        int col = element.attribute("col").toInt();
+            // Use the map to get the file path
+            auto it = typeToFilePath.find(type);
+            if (it == typeToFilePath.end()) {
+                qWarning() << "Invalid type:" << type;
+                continue;
+            }
+            QString svgFilePath = it->second;
 
-        qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
+            QFileInfo svgFileInfo(svgFilePath);
+            if (!svgFileInfo.exists()) {
+                qWarning() << "SVG file does not exist at:" << svgFilePath;
+                continue;
+            }
 
-        QString svgFilePath;
-        if (type == "turnout") {
-            svgFilePath = QFileInfo("../layout/turnouts/turnout.svg").absoluteFilePath();
-        } else if (type == "rail") {
-            svgFilePath = QFileInfo("../layout/rails/rail.svg").absoluteFilePath();
-        } else {
-            continue;
+            auto *svgItem = new SVGHandleEvent(svgFilePath, id);
+            svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
+
+            scene->addItem(svgItem);
+
+            qDebug() << "SVG item added at (" << col * Position_Col << "," << row * Position_Row << ")";
         }
-
-        QFileInfo svgFileInfo(svgFilePath);
-        if (!svgFileInfo.exists()) {
-            qWarning() << "SVG file does not exist at:" << svgFilePath;
-            continue;
-        }
-
-        auto *svgItem = new SVGHandleEvent(svgFilePath, id);
-        svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
-
-        scene->addItem(svgItem);
-
-        qDebug() << "SVG item added at (" << col * Position_Col << "," << row * Position_Row << ")";
     }
 }
