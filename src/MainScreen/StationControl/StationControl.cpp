@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <unordered_map>
+#include <QTransform>
+#include <QRegularExpression>
 
 StationControl::StationControl(QWidget *parent)
         : QWidget(parent),
@@ -61,6 +63,9 @@ void StationControl::LoadingSvgFile() {
             QString id = element.attribute("id");
             int row = element.attribute("row").toInt();
             int col = element.attribute("col").toInt();
+            bool flipped = element.attribute("flipped").toLower() == "true";
+            int rotate = element.attribute("rotate").toInt();
+
 
             qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
@@ -90,9 +95,44 @@ void StationControl::LoadingSvgFile() {
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
+            ApplyTransformation(flipped, rotate, svgItem);
+
             scene->addItem(svgItem);
 
             qDebug() << "SVG item added at (" << col * Position_Col << "," << row * Position_Row << ")";
         }
     }
+}
+
+void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEvent *svgItem) {
+    QString transformStr;
+
+
+    if (rotate == 0) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(-8,0) rotate(0)";
+        } else {
+            transformStr = "scale(1, 1) translate(0,0) rotate(0)";
+        }
+    } else if (rotate == 90) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(-1,2) rotate(90)";
+        } else {
+            transformStr = "scale(-1, -1) translate(-1,-10) rotate(90)";
+        }
+    } else if (rotate == 180) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(0,12) rotate(180)";
+        } else {
+            transformStr = "scale(1, 1) translate(8,12) rotate(180)";
+        }
+    } else if (rotate == 270) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(-7,10) rotate(270)";
+        } else {
+            transformStr = "scale(-1, -1) translate(-7,-2) rotate(270)";
+        }
+    }
+
+    svgItem->updateTransform(transformStr);
 }

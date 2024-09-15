@@ -1,0 +1,66 @@
+#Original
+transform="scale(1, 1) translate(0,0) rotate(0)"
+#Flipped Horizontally
+transform="scale(-1, 1) translate(-8,0) rotate(0)"
+#Flipped Vertically
+transform="scale(1, -1) translate(0,-12) rotate(0)"
+#Flipped Vertically and Horizontally
+transform="scale(-1, -1) translate(-8,-12) rotate(0)"
+
+#Rotated 90 Degrees
+transform="scale(1, 1) translate(6,2) rotate(90)"
+#Flipped Horizontally and Rotated 90 Degrees
+transform="scale(-1, 1) translate(-1,2) rotate(90)"
+#Flipped Vertically and Rotated 90 Degrees
+transform="scale(1, -1) translate(7,-10) rotate(90)"
+#Flipped Vertically, Horizontally, and Rotated 90 Degrees
+transform="scale(-1, -1) translate(-1,-10) rotate(90)"
+
+#Rotated 180 Degrees
+transform="scale(1, 1) translate(8,12) rotate(180)"
+#Flipped Horizontally and Rotated 180 Degrees
+transform="scale(-1, 1) translate(0,12) rotate(180)"
+#Flipped Vertically and Rotated 180 Degrees
+transform="scale(1, -1) translate(8,0) rotate(180)"
+#Flipped Vertically, Horizontally, and Rotated 180 Degrees
+transform="scale(-1, -1) translate(0,0) rotate(180)"
+
+#Rotated 270 Degrees
+transform="scale(1, 1) translate(1,10) rotate(270)"
+#Flipped Horizontally and Rotated 270 Degrees
+transform="scale(-1, 1) translate(-7,10) rotate(270)"
+#Flipped Vertically and Rotated 270 Degrees
+transform="scale(1, -1) translate(1,-2) rotate(270)"
+#Flipped Vertically, Horizontally, and Rotated 270 Degrees
+transform="scale(-1, -1) translate(-7,-2) rotate(270)"
+
+
+
+
+
+
+if (rotate == 0) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(-8,0) rotate(0)";
+        } else {
+            transformStr = "scale(1, 1) translate(0,0) rotate(0)";
+        }
+    } else if (rotate == 90) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(-1,2) rotate(90)";
+        } else {
+            transformStr = "scale(-1, -1) translate(-1,-10) rotate(90)";
+        }
+    } else if (rotate == 180) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(0,12) rotate(180)";
+        } else {
+            transformStr = "scale(1, 1) translate(8,12) rotate(180)";
+        }
+    } else if (rotate == 270) {
+        if (flipped) {
+            transformStr = "scale(-1, 1) translate(-7,10) rotate(270)";
+        } else {
+            transformStr = "scale(-1, -1) translate(-7,-2) rotate(270)";
+        }
+    }

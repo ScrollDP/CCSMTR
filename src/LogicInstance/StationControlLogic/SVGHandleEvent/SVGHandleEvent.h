@@ -17,6 +17,8 @@ public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, QGraphicsItem* parent = nullptr);
     void setScaleAndPosition(qreal scale, qreal x, qreal y);
 
+    void updateTransform(const QString &transformStr);
+
 
 
 protected:

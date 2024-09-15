@@ -128,3 +128,38 @@ void SVGHandleEvent::toggleVisibility() {
     renderer->load(svgFilePath);
     this->update();
 }
+
+void SVGHandleEvent::updateTransform(const QString &transformStr) {
+    QFile file(svgFilePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file:" << svgFilePath;
+        return;
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse SVG file:" << svgFilePath;
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomElement gElement = root.firstChildElement("g");
+
+    if (!gElement.isNull()) {
+        gElement.setAttribute("transform", transformStr);
+    }
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream << doc.toString();
+    file.close();
+
+    this->renderer->load(svgFilePath);
+    this->update();
+}
