@@ -45,7 +45,6 @@ public:
     QWidget *gridLayoutWidget_3;
     QGridLayout *gridLayout_3;
     QCheckBox *checkBox;
-    QPushButton *Refresh;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame;
 
@@ -175,11 +174,6 @@ public:
 
         gridLayout_3->addWidget(checkBox, 0, 0, 1, 1);
 
-        Refresh = new QPushButton(gridLayoutWidget_3);
-        Refresh->setObjectName("Refresh");
-
-        gridLayout_3->addWidget(Refresh, 0, 1, 1, 1);
-
         tabWidget->addTab(LayoutEdit, QString());
 
         verticalLayout_2->addWidget(tabWidget);
@@ -223,7 +217,6 @@ public:
         actionThrottle->setText(QCoreApplication::translate("MainWindow", "Throttle", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tools), QCoreApplication::translate("MainWindow", "Tools", nullptr));
         checkBox->setText(QCoreApplication::translate("MainWindow", "EditMode", nullptr));
-        Refresh->setText(QCoreApplication::translate("MainWindow", "Refresh", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(LayoutEdit), QCoreApplication::translate("MainWindow", "Layout Edit", nullptr));
     } // retranslateUi
 
