@@ -2,8 +2,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QFile>
-#include <QSvgRenderer>
-#include <QGraphicsSvgItem>
+#include <QDomDocument>
 #include <QDebug>
 #include <QFileInfo>
 
@@ -59,7 +58,6 @@ StationControl::StationControl(QWidget *parent)
 
         qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
-        // Determine the SVG file path based on element type
         QString svgFilePath;
         if (type == "turnout") {
             svgFilePath = QFileInfo("../layout/turnouts/turnout.svg").absoluteFilePath();
@@ -75,34 +73,13 @@ StationControl::StationControl(QWidget *parent)
             continue;
         }
 
-        // Create and set up the SVG item and renderer
-        QGraphicsSvgItem *svgItem = new QGraphicsSvgItem();
-        QSvgRenderer *renderer = new QSvgRenderer(svgFilePath);
-        if (!renderer->isValid()) {
-            qWarning() << "Failed to load SVG file:" << svgFilePath;
-            delete renderer;
-            delete svgItem;
-            continue;
-        }
+        SVGHandleEvent *svgItem = new SVGHandleEvent(svgFilePath, id);
+        svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
-        svgItem->setSharedRenderer(renderer);  // Set the shared renderer
-        setScaleAndPosition(svgItem, Scale, col*Position_Col, row*Position_Row);  // Set scale and position
-
-        scene->addItem(svgItem);  // Add the SVG item to the scene
+        scene->addItem(svgItem);
 
         qDebug() << "SVG item added at (" << col * Position_Col << "," << row * Position_Row << ")";
     }
-
-    // Update the scene rect and center the view on the scene
-    scene->setSceneRect(scene->itemsBoundingRect());
-    ui->graphicsView->centerOn(scene->sceneRect().center());
-
-    qDebug() << "Scene setup completed.";
-}
-
-void StationControl::setScaleAndPosition(QGraphicsSvgItem *item, qreal scale, qreal x, qreal y) {
-    item->setScale(scale);
-    item->setPos(x * scale, y * scale);
 }
 
 StationControl::~StationControl() {

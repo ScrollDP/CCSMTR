@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QDomDocument>
 #include <QGraphicsSvgItem>
-
+#include "../../LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.h"
 
 class StationControl : public QWidget {
     Q_OBJECT
@@ -18,7 +18,7 @@ private:
     Ui::StationControl *ui;
     static void setScaleAndPosition(QGraphicsSvgItem *item, qreal scale, qreal x, qreal y);
 
-    int Scale = 30;
+    int Scale = 20;
     int Position_Col = 8;
     int Position_Row = 12;
 };
