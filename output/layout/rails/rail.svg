@@ -1,6 +1,5 @@
-<svg width="8" height="12" viewBox="0 0 8 12" xmlns="http://www.w3.org/2000/svg">
-
-    <g id="rail" fill="none" stroke="gray" stroke-width="1.1">
-        <line x1="0" y1="6" x2="8" y2="6" stroke-linecap="round"/>
-    </g>
+<svg height="12" stroke="gray" viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" id="rail" stroke-width="1.1">
+  <line stroke-linecap="round" x1="0" x2="8" y1="6" y2="6"/>
+ </g>
 </svg>

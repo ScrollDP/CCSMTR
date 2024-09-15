@@ -8,7 +8,7 @@
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
         svgFilePath(svgFilePath),
-          elementId(std::move(elementId)),
+        elementId(std::move(elementId)),
         renderer(new QSvgRenderer(svgFilePath)) {
     if (!renderer->isValid()) {
         qWarning() << "Failed to load SVG file:" << svgFilePath;
@@ -28,7 +28,12 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
     QGraphicsSvgItem::mousePressEvent(event);
     if(event->button() == Qt::LeftButton) {
         qDebug() << "Element ID:" << elementId;
+        toggleVisibility();
         return;
+    }
+    else if(event->button() == Qt::RightButton) {
+        qDebug() << "color in Element ID:" << elementId;
+        changeColor();
     }
 }
 
@@ -84,4 +89,46 @@ QStringList SVGHandleEvent::getElementIdsFromSvg(const QString &filePath) {
 
     file.close();
     return elementIds;
+}
+
+
+void SVGHandleEvent::toggleVisibility() {
+    QFile file(svgFilePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file:" << svgFilePath;
+        return;
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse SVG file:" << svgFilePath;
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomNodeList elements = root.elementsByTagName("path");
+
+    for (int i = 0; i < elements.count(); ++i) {
+        QDomElement element = elements.at(i).toElement();
+        QString id = element.attribute("id");
+
+        if (id == "_straight" || id == "_diverging") {
+            QString visibility = element.attribute("visibility");
+            element.setAttribute("visibility", visibility == "visible" ? "hidden" : "visible");
+        }
+    }
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream << doc.toString();
+    file.close();
+
+    renderer->load(svgFilePath);
+    this->update();
 }

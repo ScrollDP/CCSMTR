@@ -25,7 +25,7 @@ StationControl::~StationControl() {
 }
 
 void StationControl::LoadingSvgFile() {
-    const QString layoutFilePath = QFileInfo("../layout/layout.xml").absoluteFilePath();
+    const QString layoutFilePath = QFileInfo("../layout/layout.xml").filePath();
 
     // Create a new scene for the graphicsView
     auto *scene = new QGraphicsScene(this);
@@ -48,8 +48,8 @@ void StationControl::LoadingSvgFile() {
 
     // Create a map to handle the file paths
     std::unordered_map<QString, QString> typeToFilePath = {
-            {"turnout", QFileInfo("../layout/turnouts/turnout.svg").absoluteFilePath()},
-            {"rail", QFileInfo("../layout/rails/rail.svg").absoluteFilePath()}
+            {"turnout", QFileInfo("../layout/turnouts/turnout.svg").filePath()},
+            {"rail", QFileInfo("../layout/rails/rail.svg").filePath()}
     };
 
     QDomElement root = doc.documentElement();
@@ -80,6 +80,7 @@ void StationControl::LoadingSvgFile() {
                 continue;
             }
 
+            // Load the SVG file
             auto *svgItem = new SVGHandleEvent(svgFilePath, id);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 

@@ -1,10 +1,10 @@
 <layout>
     <turnouts>
-        <turnout type="turnout" id="turnout_1" row="1" col="1"/>
-        <turnout type="turnout" id="turnout_2" row="2" col="1"/>
+        <turnout type="turnout" id="T1" row="1" col="1"/>
+        <turnout type="turnout" id="T2" row="2" col="1"/>
     </turnouts>
 
     <rails>
-        <rail type="rail" id="rail_1" row="1" col="2"/>
+        <rail type="rail" id="R1" row="1" col="2"/>
     </rails>
 </layout>

@@ -21,10 +21,6 @@ set(SOURCES
         src/MainScreen/TabFolder/ToolsTab/Throttle/ThrottleWindow.h
         src/MainScreen/TabFolder/ConnectionTab/Power/PowerWindow.cpp
         src/MainScreen/TabFolder/ConnectionTab/Power/PowerWindow.h
-        src/LogicInstance/StationControlLogic/Rails/Rails.cpp
-        src/LogicInstance/StationControlLogic/Rails/Rails.h
-        src/LogicInstance/StationControlLogic/RailsAction/RailsAction.h
-        src/LogicInstance/StationControlLogic/RailsAction/RailsAction.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.h
         src/LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.cpp

@@ -27,6 +27,8 @@ private:
     QString svgFilePath;
     QString elementId;
     QSvgRenderer *renderer;
+
+    void toggleVisibility();
 };
 
 #endif // CLICKABLESVGITEM_H
