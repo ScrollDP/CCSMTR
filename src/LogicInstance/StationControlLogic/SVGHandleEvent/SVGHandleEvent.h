@@ -17,6 +17,8 @@ public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, QGraphicsItem* parent = nullptr);
     void setScaleAndPosition(qreal scale, qreal x, qreal y);
 
+
+
 protected:
     [[maybe_unused]] void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
@@ -29,6 +31,8 @@ private:
     QSvgRenderer *renderer;
 
     void toggleVisibility();
+
+
 };
 
 #endif // CLICKABLESVGITEM_H

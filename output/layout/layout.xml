@@ -1,7 +1,7 @@
 <layout>
     <turnouts>
-        <turnout type="turnout" id="T1" row="1" col="1"/>
-        <turnout type="turnout" id="T2" row="2" col="1"/>
+        <turnout type="turnout" id="T1" row="1" col="1" mirror="true"/>
+        <turnout type="turnout" id="T2" row="2" col="1" rotate="90"/>
     </turnouts>
 
     <rails>

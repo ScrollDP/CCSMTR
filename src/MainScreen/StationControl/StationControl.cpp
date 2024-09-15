@@ -79,7 +79,12 @@ void StationControl::LoadingSvgFile() {
 
             // Create a temporary file
             QString tmpFilePath = QString(".tmp/tmp_%1_%2.svg").arg(type).arg(id);
-            QFile::copy(svgFilePath, tmpFilePath);
+            QFile tmpFile(tmpFilePath);
+            if (tmpFile.exists()) {
+                tmpFile.remove(); // Delete the temporary file if it exists
+            }
+            QFile::copy(svgFilePath, tmpFilePath); // Copy the original file to the temporary location
+
 
             // Load the temporary SVG file
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id);
