@@ -101,8 +101,8 @@ StationControl::StationControl(QWidget *parent)
 }
 
 void StationControl::setScaleAndPosition(QGraphicsSvgItem *item, qreal scale, qreal x, qreal y) {
-item->setScale(scale);
-item->setPos(x * scale, y * scale);
+    item->setScale(scale);
+    item->setPos(x * scale, y * scale);
 }
 
 StationControl::~StationControl() {

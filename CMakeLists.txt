@@ -27,8 +27,8 @@ set(SOURCES
         src/LogicInstance/StationControlLogic/RailsAction/RailsAction.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.h
-        src/LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.cpp
-        src/LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.h
+        src/LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.cpp
+        src/LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.h
 
 
 

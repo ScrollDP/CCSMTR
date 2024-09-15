@@ -2,9 +2,9 @@
 #define CCSMTR_STATIONCONTROL_H
 
 #include "ui_stationControl.h"
-#include "../../LogicInstance/StationControlLogic/ClickableSvgItem/ClickableSvgItem.h"
 #include <QWidget>
 #include <QDomDocument>
+#include <QGraphicsSvgItem>
 
 
 class StationControl : public QWidget {
@@ -18,7 +18,7 @@ private:
     Ui::StationControl *ui;
     static void setScaleAndPosition(QGraphicsSvgItem *item, qreal scale, qreal x, qreal y);
 
-    int Scale = 20;
+    int Scale = 30;
     int Position_Col = 8;
     int Position_Row = 12;
 };
