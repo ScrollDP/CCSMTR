@@ -16,7 +16,7 @@ public:
 
 private:
     Ui::StationControl *ui;
-    static void setScaleAndPosition(QGraphicsSvgItem *item, qreal scale, qreal x, qreal y);
+    void LoadingSvgFile();
 
     int Scale = 20;
     int Position_Col = 8;

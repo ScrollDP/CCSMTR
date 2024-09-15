@@ -15,10 +15,19 @@ StationControl::StationControl(QWidget *parent)
     // Set background color of graphicsView to black
     ui->graphicsView->setStyleSheet("background-color: black");
 
+    LoadingSvgFile();
+
+}
+
+StationControl::~StationControl() {
+    delete ui;
+}
+
+void StationControl::LoadingSvgFile() {
     const QString layoutFilePath = QFileInfo("../layout/layout.xml").absoluteFilePath();
 
     // Create a new scene for the graphicsView
-    QGraphicsScene *scene = new QGraphicsScene(this);
+    auto *scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
     qDebug() << "New QGraphicsScene created.";
 
@@ -73,15 +82,11 @@ StationControl::StationControl(QWidget *parent)
             continue;
         }
 
-        SVGHandleEvent *svgItem = new SVGHandleEvent(svgFilePath, id);
+        auto *svgItem = new SVGHandleEvent(svgFilePath, id);
         svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
         scene->addItem(svgItem);
 
         qDebug() << "SVG item added at (" << col * Position_Col << "," << row * Position_Row << ")";
     }
-}
-
-StationControl::~StationControl() {
-    delete ui;
 }

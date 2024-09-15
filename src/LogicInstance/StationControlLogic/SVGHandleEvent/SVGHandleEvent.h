@@ -14,16 +14,15 @@ class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
 public:
-    explicit SVGHandleEvent(const QString &svgFilePath, const QString &elementId, QGraphicsItem* parent = nullptr);
+    explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, QGraphicsItem* parent = nullptr);
     void setScaleAndPosition(qreal scale, qreal x, qreal y);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    [[maybe_unused]] void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    QString getElementIdAtPosition(const QPointF &position);
+    [[maybe_unused]] QString getElementIdAtPosition(const QPointF &position);
     QStringList getElementIdsFromSvg(const QString &filePath);
-    bool matchesPosition(const QDomElement &element, const QPointF &position);
 
     QString svgFilePath;
     QString elementId;

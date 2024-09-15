@@ -3,11 +3,12 @@
 #include <QDomDocument>
 #include <QRegularExpression>
 #include <QGraphicsSceneMouseEvent>
+#include <utility>
 
-SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, const QString &elementId, QGraphicsItem* parent)
+SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
         svgFilePath(svgFilePath),
-          elementId(elementId),
+          elementId(std::move(elementId)),
         renderer(new QSvgRenderer(svgFilePath)) {
     if (!renderer->isValid()) {
         qWarning() << "Failed to load SVG file:" << svgFilePath;
@@ -23,36 +24,39 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
     this->setPos(x * scale, y * scale);
 }
 
-void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+[[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
-    qDebug() << "Element ID:" << elementId;
+    if(event->button() == Qt::LeftButton) {
+        qDebug() << "Element ID:" << elementId;
+        return;
+    }
 }
 
-QString SVGHandleEvent::getElementIdAtPosition(const QPointF &position) {
+[[maybe_unused]] QString SVGHandleEvent::getElementIdAtPosition(const QPointF &position) {
     QStringList elementIds = getElementIdsFromSvg(QString());
-    for (const QString &id : elementIds) {
+    for ([[maybe_unused]] const QString &id : elementIds) {
         QDomDocument doc;
         QFile file(svgFilePath);
         if (!file.open(QIODevice::ReadOnly)) {
             qWarning() << "Failed to open SVG file:" << file.fileName();
-            return QString();
+            return {};
         }
         if (!doc.setContent(&file)) {
             qWarning() << "Failed to parse SVG file:" << file.fileName();
             file.close();
-            return QString();
+            return {};
         }
         file.close();
 
         QDomNodeList elements = doc.elementsByTagName("*");
-        for (const QString& elementId : elementIds) {
-            QRectF elementBounds = renderer->boundsOnElement(elementId);
+        for (const QString& ElementIds : elementIds) {
+            QRectF elementBounds = renderer->boundsOnElement(ElementIds);
             if (elementBounds.contains(position)) {
-                return elementId;
+                return ElementIds;
             }
         }
     }
-    return QString();
+    return {};
 }
 
 QStringList SVGHandleEvent::getElementIdsFromSvg(const QString &filePath) {
