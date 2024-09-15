@@ -45,6 +45,7 @@ public:
     QWidget *gridLayoutWidget_3;
     QGridLayout *gridLayout_3;
     QCheckBox *checkBox;
+    QPushButton *Refresh;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame;
 
@@ -165,7 +166,7 @@ public:
         LayoutEdit->setObjectName("LayoutEdit");
         gridLayoutWidget_3 = new QWidget(LayoutEdit);
         gridLayoutWidget_3->setObjectName("gridLayoutWidget_3");
-        gridLayoutWidget_3->setGeometry(QRect(0, 0, 781, 46));
+        gridLayoutWidget_3->setGeometry(QRect(0, 0, 301, 46));
         gridLayout_3 = new QGridLayout(gridLayoutWidget_3);
         gridLayout_3->setObjectName("gridLayout_3");
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -173,6 +174,11 @@ public:
         checkBox->setObjectName("checkBox");
 
         gridLayout_3->addWidget(checkBox, 0, 0, 1, 1);
+
+        Refresh = new QPushButton(gridLayoutWidget_3);
+        Refresh->setObjectName("Refresh");
+
+        gridLayout_3->addWidget(Refresh, 0, 1, 1, 1);
 
         tabWidget->addTab(LayoutEdit, QString());
 
@@ -200,7 +206,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -217,6 +223,7 @@ public:
         actionThrottle->setText(QCoreApplication::translate("MainWindow", "Throttle", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tools), QCoreApplication::translate("MainWindow", "Tools", nullptr));
         checkBox->setText(QCoreApplication::translate("MainWindow", "EditMode", nullptr));
+        Refresh->setText(QCoreApplication::translate("MainWindow", "Refresh", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(LayoutEdit), QCoreApplication::translate("MainWindow", "Layout Edit", nullptr));
     } // retranslateUi
 

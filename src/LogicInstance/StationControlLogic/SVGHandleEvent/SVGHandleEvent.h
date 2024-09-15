@@ -20,7 +20,6 @@ public:
     void updateTransform(const QString &transformStr);
 
 
-
 protected:
     [[maybe_unused]] void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
@@ -33,7 +32,6 @@ private:
     QSvgRenderer *renderer;
 
     void toggleVisibility();
-
 
 };
 
