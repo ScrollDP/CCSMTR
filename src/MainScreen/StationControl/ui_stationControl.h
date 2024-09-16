@@ -36,6 +36,7 @@ public:
         StationControl->setMinimumSize(QSize(0, 0));
         verticalLayout = new QVBoxLayout(StationControl);
         verticalLayout->setObjectName("verticalLayout");
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         graphicsView = new QGraphicsView(StationControl);
         graphicsView->setObjectName("graphicsView");
 

@@ -9,11 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    hideTimer = new QTimer(this);
+    /*hideTimer = new QTimer(this);
     hideTimer->setInterval(5000); // Set the interval
     connect(hideTimer, &QTimer::timeout, [this]() {
         ui->tabWidget->setVisible(false);
-    });
+    });*/
 
 
     //loading StationControl class to automatically load the ui
@@ -111,16 +111,14 @@ void MainWindow::toggleTabShow() const {
 [[maybe_unused]] bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     if (watched == this && event->type() == QEvent::HoverMove) {
         auto *mouseEvent = dynamic_cast<QHoverEvent*>(event);
-        if (mouseEvent->position().y() <= 5) { // Check if the mouse is within 10px from the top
+        if (mouseEvent->position().y() <= 5) { // Check if the mouse is within 5px from the top
             ui->tabWidget->setVisible(true);
-            hideTimer->start();
-            //qDebug() << "Tab widget shown";
+            // qDebug() << "Tab widget shown";
         }
         return true;
     } else if (watched == ui->tabWidget && event->type() == QEvent::Leave) {
         ui->tabWidget->setVisible(false);
-        hideTimer->stop();
-        //qDebug() << "Tab widget hidden LEAVE";
+        // qDebug() << "Tab widget hidden LEAVE";
         return true;
     }
     return QMainWindow::eventFilter(watched, event);
