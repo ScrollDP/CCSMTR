@@ -60,7 +60,9 @@ void StationControl::LoadingSvgFile() {
             {"rail_sklon1",    QFileInfo("../layout/rails/rail_sklon1.svg").filePath()},
             {"rail_sklon2",    QFileInfo("../layout/rails/rail_sklon2.svg").filePath()},
             {"rail_sklon3",    QFileInfo("../layout/rails/rail_sklon3.svg").filePath()},
-            {"rail_sklon4",    QFileInfo("../layout/rails/rail_sklon4.svg").filePath()}
+            {"rail_sklon4",    QFileInfo("../layout/rails/rail_sklon4.svg").filePath()},
+            {"zarazadlo1",     QFileInfo("../layout/zarazadlo/zarazadlo1.svg").filePath()},
+            {"zarazadlo2",     QFileInfo("../layout/zarazadlo/zarazadlo2.svg").filePath()}
 
     };
 
@@ -97,10 +99,11 @@ void StationControl::LoadingSvgFile() {
             // Create a temporary file
             QString tmpFilePath = QString(".tmp/tmp_%1_%2.svg").arg(type).arg(id);
             QFile tmpFile(tmpFilePath);
-            if (tmpFile.exists()) {
-                tmpFile.remove(); // Delete the temporary file if it exists
+            if (!tmpFile.exists()) {
+                //tmpFile.remove(); // Delete the temporary file if it exists
+                QFile::copy(svgFilePath, tmpFilePath); // Copy the original file to the temporary location
             }
-            QFile::copy(svgFilePath, tmpFilePath); // Copy the original file to the temporary location
+
 
 
             // Load the temporary SVG file
