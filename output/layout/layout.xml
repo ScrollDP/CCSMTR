@@ -1,22 +1,329 @@
 <layout>
     <turnouts>
-        <turnout type="turnout" id="T1" row="1" col="1" flipped="true" rotate="0"/>
-        <turnout type="turnout" id="T2" row="3" col="1" flipped="false" rotate="180" />
+        <turnout type="turnout" id="T2" row="-1" col="4" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T4" row="-1" col="5" flipped="false" rotate="180"/>
+        <turnout type="turnout" id="T6" row="-1" col="6" flipped="false" rotate="0"/>
+        <turnout type="turnout" id="T8" row="-2" col="7" flipped="false" rotate="0"/>
+        <turnout type="turnout" id="T10" row="-3" col="8" flipped="false" rotate="0"/>
 
-        <turnout type="turnout" id="T3" row="1" col="3" flipped="true" rotate="180"/>
-        <turnout type="turnout" id="T4" row="3" col="3" flipped="false" rotate="0" />
-        <turnout type="turnout" id="T5" row="1" col="4" flipped="false" rotate="180" />
-        <turnout type="turnout" id="T6" row="3" col="4" flipped="true" rotate="0" />
+        <turnout type="turnout" id="T12" row="-1" col="31" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T14" row="-1" col="32" flipped="false" rotate="180"/>
+        <turnout type="turnout" id="T16" row="-1" col="29" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T18" row="-2" col="28" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T20" row="-2" col="30" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T22" row="-2" col="29" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T24" row="-4" col="28" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T26" row="-4" col="29" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T28" row="-5" col="27" flipped="true" rotate="0"/>
+
+
+
+
+        <turnout type="turnout" id="T1" row="1" col="4" flipped="false" rotate="0"/>
+        <turnout type="turnout" id="T3" row="1" col="5" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T5" row="1" col="6" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T7" row="2" col="7" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T9" row="3" col="8" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T11" row="3" col="7" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T13" row="3" col="10" flipped="true" rotate="180"/>
+        <turnout type="turnout" id="T15" row="4" col="8" flipped="true" rotate="0"/>
+        <turnout type="turnout" id="T17" row="4" col="7" flipped="false" rotate="180"/>
+
+        <turnout type="turnout" id="T19" row="4" col="27" flipped="false" rotate="180"/>
+        <turnout type="turnout" id="T21" row="3" col="28" flipped="false" rotate="180"/>
+        <turnout type="turnout" id="T23" row="4" col="28" flipped="false" rotate="0"/>
+        <turnout type="turnout" id="T25" row="2" col="29" flipped="false" rotate="180"/>
+        <turnout type="turnout" id="T27" row="1" col="30" flipped="false" rotate="180"/>
+        <turnout type="turnout" id="T29" row="1" col="31" flipped="false" rotate="0"/>
+        <turnout type="turnout" id="T31" row="1" col="32" flipped="true" rotate="0"/>
+
+
+
+
     </turnouts>
 
     <cross_turnouts>
-        <cross_turnout type="cross_turnout" id="CT1" row="2" col="3" rotate="0"/>
+        <cross_turnout type="cross_turnout" id="CT1" row="0" col="4" rotate="0"/>
+        <cross_turnout type="cross_turnout" id="CT1" row="0" col="31" rotate="0"/>
     </cross_turnouts>
 
     <rails>
-        <rail type="rail" id="R1" row="1" col="2"/>
-        <rail type="rail" id="R2" row="3" col="2"/>
-        <rail type="rail" id="R3" row="1" col="5"/>
-        <rail type="rail" id="R4" row="3" col="5"/>
+
+        <rail type="rail_sklon2" id="-R6.27" row="-6" col="27"/>
+        <rail type="rail" id="-R6.26" row="-6" col="26"/>
+        <rail type="rail" id="-R6.25" row="-6" col="25"/>
+        <rail type="rail" id="-R6.24" row="-6" col="24"/>
+        <rail type="rail" id="-R6.23" row="-6" col="23"/>
+
+        <rail type="rail_sklon2" id="-R5.28" row="-5" col="28"/>
+        <rail type="rail" id="-R5.26" row="-5" col="26"/>
+        <rail type="rail" id="-R5.25" row="-5" col="25"/>
+        <rail type="rail" id="-R5.24" row="-5" col="24"/>
+        <rail type="rail" id="-R5.23" row="-5" col="23"/>
+
+
+        <rail type="rail_sklon1" id="-R4.8" row="-4" col="8"/>
+        <rail type="rail" id="-R4.9" row="-4" col="9"/>
+        <rail type="rail" id="-R4.10" row="-4" col="10"/>
+        <rail type="rail" id="-R4.11" row="-4" col="11"/>
+        <rail type="rail" id="-R4.12" row="-4" col="12"/>
+        <rail type="rail" id="-R4.13" row="-4" col="13"/>
+        <rail type="rail" id="-R4.14" row="-4" col="14"/>
+        <rail type="rail" id="-R4.15" row="-4" col="15"/>
+        <rail type="rail" id="-R4.16" row="-4" col="16"/>
+        <rail type="rail" id="-R4.17" row="-4" col="17"/>
+        <rail type="rail" id="-R4.18" row="-4" col="18"/>
+        <rail type="rail" id="-R4.19" row="-4" col="19"/>
+        <rail type="rail" id="-R4.20" row="-4" col="20"/>
+        <rail type="rail" id="-R4.21" row="-4" col="21"/>
+        <rail type="rail" id="-R4.22" row="-4" col="22"/>
+        <rail type="rail" id="-R4.23" row="-4" col="23"/>
+        <rail type="rail" id="-R4.24" row="-4" col="24"/>
+        <rail type="rail" id="-R4.25" row="-4" col="25"/>
+        <rail type="rail" id="-R4.26" row="-4" col="26"/>
+        <rail type="rail" id="-R4.27" row="-4" col="27"/>
+        <rail type="rail" id="-R4.30" row="-4" col="30"/>
+        <rail type="rail" id="-R4.31" row="-4" col="31"/>
+        <rail type="rail" id="-R4.32" row="-4" col="32"/>
+
+
+        <rail type="rail_sklon1" id="-R3.7" row="-3" col="7"/>
+        <rail type="rail" id="-R3.9" row="-3" col="9"/>
+        <rail type="rail" id="-R3.10" row="-3" col="10"/>
+        <rail type="rail" id="-R3.11" row="-3" col="11"/>
+        <rail type="rail" id="-R3.12" row="-3" col="12"/>
+        <rail type="rail" id="-R3.13" row="-3" col="13"/>
+        <rail type="rail" id="-R3.14" row="-3" col="14"/>
+        <rail type="rail" id="-R3.15" row="-3" col="15"/>
+        <rail type="rail" id="-R3.16" row="-3" col="16"/>
+        <rail type="rail" id="-R3.17" row="-3" col="17"/>
+        <rail type="rail" id="-R3.18" row="-3" col="18"/>
+        <rail type="rail" id="-R3.19" row="-3" col="19"/>
+        <rail type="rail" id="-R3.20" row="-3" col="20"/>
+        <rail type="rail" id="-R3.21" row="-3" col="21"/>
+        <rail type="rail" id="-R3.22" row="-3" col="22"/>
+        <rail type="rail" id="-R3.23" row="-3" col="23"/>
+        <rail type="rail" id="-R3.24" row="-3" col="24"/>
+        <rail type="rail" id="-R3.25" row="-3" col="25"/>
+        <rail type="rail" id="-R3.26" row="-3" col="26"/>
+        <rail type="rail" id="-R3.27" row="-3" col="27"/>
+        <rail type="rail_sklon2" id="-R3.28" row="-3" col="28"/>
+        <rail type="rail_sklon4" id="-R3.29" row="-3" col="29"/>
+        <rail type="rail_sklon2" id="-R3.30" row="-3" col="30"/>
+
+
+        <rail type="rail" id="-R2.8" row="-2" col="8"/>
+        <rail type="rail_sklon1" id="-R2.6" row="-2" col="6"/>
+        <rail type="rail" id="-R2.9" row="-2" col="9"/>
+        <rail type="rail" id="-R2.10" row="-2" col="10"/>
+        <rail type="rail" id="-R2.11" row="-2" col="11"/>
+        <rail type="rail" id="-R2.12" row="-2" col="12"/>
+        <rail type="rail" id="-R2.13" row="-2" col="13"/>
+        <rail type="rail" id="-R2.14" row="-2" col="14"/>
+        <rail type="rail" id="-R2.15" row="-2" col="15"/>
+        <rail type="rail" id="-R2.16" row="-2" col="16"/>
+        <rail type="rail" id="-R2.17" row="-2" col="17"/>
+        <rail type="rail" id="-R2.18" row="-2" col="18"/>
+        <rail type="rail" id="-R2.19" row="-2" col="19"/>
+        <rail type="rail" id="-R2.20" row="-2" col="20"/>
+        <rail type="rail" id="-R2.21" row="-2" col="21"/>
+        <rail type="rail" id="-R2.22" row="-2" col="22"/>
+        <rail type="rail" id="-R2.23" row="-2" col="23"/>
+        <rail type="rail" id="-R2.24" row="-2" col="24"/>
+        <rail type="rail" id="-R2.25" row="-2" col="25"/>
+        <rail type="rail" id="-R2.26" row="-2" col="26"/>
+        <rail type="rail" id="-R2.27" row="-2" col="27"/>
+        <rail type="rail" id="-R2.30" row="-2" col="30"/>
+        <rail type="rail" id="-R2.31" row="-2" col="31"/>
+        <rail type="rail" id="-R2.32" row="-2" col="32"/>
+        <rail type="rail" id="-R2.33" row="-2" col="33"/>
+        <rail type="rail" id="-R2.34" row="-2" col="34"/>
+
+
+
+        <rail type="rail" id="-R1.1" row="-1" col="1"/>
+        <rail type="rail" id="-R1.2" row="-1" col="2"/>
+        <rail type="rail" id="-R1.3" row="-1" col="3"/>
+        <rail type="rail" id="-R1.7" row="-1" col="7"/>
+        <rail type="rail" id="-R1.8" row="-1" col="8"/>
+        <rail type="rail" id="-R1.9" row="-1" col="9"/>
+        <rail type="rail" id="-R1.10" row="-1" col="10"/>
+        <rail type="rail" id="-R1.11" row="-1" col="11"/>
+        <rail type="rail" id="-R1.12" row="-1" col="12"/>
+        <rail type="rail" id="-R1.13" row="-1" col="13"/>
+        <rail type="rail" id="-R1.14" row="-1" col="14"/>
+        <rail type="rail" id="-R1.15" row="-1" col="15"/>
+        <rail type="rail" id="-R1.16" row="-1" col="16"/>
+        <rail type="rail" id="-R1.17" row="-1" col="17"/>
+        <rail type="rail" id="-R1.18" row="-1" col="18"/>
+        <rail type="rail" id="-R1.19" row="-1" col="19"/>
+        <rail type="rail" id="-R1.20" row="-1" col="20"/>
+        <rail type="rail" id="-R1.21" row="-1" col="21"/>
+        <rail type="rail" id="-R1.22" row="-1" col="22"/>
+        <rail type="rail" id="-R1.23" row="-1" col="23"/>
+        <rail type="rail" id="-R1.24" row="-1" col="24"/>
+        <rail type="rail" id="-R1.25" row="-1" col="25"/>
+        <rail type="rail" id="-R1.26" row="-1" col="26"/>
+        <rail type="rail" id="-R1.27" row="-1" col="27"/>
+        <rail type="rail" id="-R1.28" row="-1" col="28"/>
+
+        <rail type="rail" id="-R1.32" row="-1" col="32"/>
+        <rail type="rail" id="-R1.33" row="-1" col="33"/>
+        <rail type="rail" id="-R1.34" row="-1" col="34"/>
+        <rail type="rail" id="-R1.30" row="-1" col="30"/>
+
+
+        <rail type="rail" id="R1.1" row="1" col="1"/>
+        <rail type="rail" id="R1.2" row="1" col="2"/>
+        <rail type="rail" id="R1.3" row="1" col="3"/>
+        <rail type="rail" id="R1.7" row="1" col="7"/>
+        <rail type="rail" id="R1.8" row="1" col="8"/>
+        <rail type="rail" id="R1.9" row="1" col="9"/>
+        <rail type="rail" id="R1.10" row="1" col="10"/>
+        <rail type="rail" id="R1.11" row="1" col="11"/>
+        <rail type="rail" id="R1.12" row="1" col="12"/>
+        <rail type="rail" id="R1.13" row="1" col="13"/>
+        <rail type="rail" id="R1.14" row="1" col="14"/>
+        <rail type="rail" id="R1.15" row="1" col="15"/>
+        <rail type="rail" id="R1.16" row="1" col="16"/>
+        <rail type="rail" id="R1.17" row="1" col="17"/>
+        <rail type="rail" id="R1.18" row="1" col="18"/>
+        <rail type="rail" id="R1.19" row="1" col="19"/>
+        <rail type="rail" id="R1.20" row="1" col="20"/>
+        <rail type="rail" id="R1.21" row="1" col="21"/>
+        <rail type="rail" id="R1.22" row="1" col="22"/>
+        <rail type="rail" id="R1.23" row="1" col="23"/>
+        <rail type="rail" id="R1.24" row="1" col="24"/>
+        <rail type="rail" id="R1.25" row="1" col="25"/>
+        <rail type="rail" id="R1.26" row="1" col="26"/>
+        <rail type="rail" id="R1.27" row="1" col="27"/>
+        <rail type="rail" id="R1.28" row="1" col="28"/>
+        <rail type="rail" id="R1.29" row="1" col="29"/>
+
+        <rail type="rail" id="R1.32" row="1" col="32"/>
+        <rail type="rail" id="R1.33" row="1" col="33"/>
+        <rail type="rail" id="R1.34" row="1" col="34"/>
+
+
+        <rail type="rail" id="R2.8" row="2" col="8"/>
+        <rail type="rail_sklon4" id="R2.6" row="2" col="6"/>
+        <rail type="rail" id="R2.9" row="2" col="9"/>
+        <rail type="rail" id="R2.10" row="2" col="10"/>
+        <rail type="rail" id="R2.11" row="2" col="11"/>
+        <rail type="rail" id="R2.12" row="2" col="12"/>
+        <rail type="rail" id="R2.13" row="2" col="13"/>
+        <rail type="rail" id="R2.14" row="2" col="14"/>
+        <rail type="rail" id="R2.15" row="2" col="15"/>
+        <rail type="rail" id="R2.16" row="2" col="16"/>
+        <rail type="rail" id="R2.17" row="2" col="17"/>
+        <rail type="rail" id="R2.18" row="2" col="18"/>
+        <rail type="rail" id="R2.19" row="2" col="19"/>
+        <rail type="rail" id="R2.20" row="2" col="20"/>
+        <rail type="rail" id="R2.21" row="2" col="21"/>
+        <rail type="rail" id="R2.22" row="2" col="22"/>
+        <rail type="rail" id="R2.23" row="2" col="23"/>
+        <rail type="rail" id="R2.24" row="2" col="24"/>
+        <rail type="rail" id="R2.25" row="2" col="25"/>
+        <rail type="rail" id="R2.26" row="2" col="26"/>
+
+        <rail type="rail" id="R2.27" row="2" col="27"/>
+        <rail type="rail" id="R2.28" row="2" col="28"/>
+        <rail type="rail_sklon3" id="R2.30" row="2" col="30"/>
+
+
+
+        <rail type="rail" id="R3.1" row="3" col="1"/>
+        <rail type="rail" id="R3.2" row="3" col="2"/>
+        <rail type="rail" id="R3.3" row="3" col="3"/>
+        <rail type="rail" id="R3.4" row="3" col="4"/>
+        <rail type="rail" id="R3.5" row="3" col="5"/>
+        <rail type="rail" id="R3.6" row="3" col="6"/>
+        <rail type="rail" id="R3.9" row="3" col="9"/>
+        <rail type="rail" id="R3.11" row="3" col="11"/>
+        <rail type="rail" id="R3.12" row="3" col="12"/>
+        <rail type="rail" id="R3.13" row="3" col="13"/>
+        <rail type="rail" id="R3.14" row="3" col="14"/>
+        <rail type="rail" id="R3.15" row="3" col="15"/>
+        <rail type="rail" id="R3.16" row="3" col="16"/>
+        <rail type="rail" id="R3.17" row="3" col="17"/>
+        <rail type="rail" id="R3.18" row="3" col="18"/>
+        <rail type="rail" id="R3.19" row="3" col="19"/>
+        <rail type="rail" id="R3.20" row="3" col="20"/>
+        <rail type="rail" id="R3.21" row="3" col="21"/>
+        <rail type="rail" id="R3.22" row="3" col="22"/>
+        <rail type="rail" id="R3.23" row="3" col="23"/>
+        <rail type="rail" id="R3.24" row="3" col="24"/>
+        <rail type="rail" id="R3.25" row="3" col="25"/>
+        <rail type="rail" id="R3.26" row="3" col="26"/>
+
+        <rail type="rail" id="R3.27" row="3" col="27"/>
+        <rail type="rail_sklon3" id="R3.29" row="3" col="29"/>
+
+
+        <rail type="rail_sklon2" id="R4.9" row="4" col="9"/>
+        <rail type="rail_sklon4" id="R4.10" row="4" col="10"/>
+        <rail type="rail" id="R4.11" row="4" col="11"/>
+        <rail type="rail" id="R4.12" row="4" col="12"/>
+        <rail type="rail" id="R4.13" row="4" col="13"/>
+        <rail type="rail" id="R4.14" row="4" col="14"/>
+        <rail type="rail" id="R4.15" row="4" col="15"/>
+        <rail type="rail" id="R4.16" row="4" col="16"/>
+        <rail type="rail" id="R4.17" row="4" col="17"/>
+        <rail type="rail" id="R4.18" row="4" col="18"/>
+        <rail type="rail" id="R4.19" row="4" col="19"/>
+        <rail type="rail" id="R4.20" row="4" col="20"/>
+        <rail type="rail" id="R4.21" row="4" col="21"/>
+        <rail type="rail" id="R4.22" row="4" col="22"/>
+        <rail type="rail" id="R4.23" row="4" col="23"/>
+        <rail type="rail" id="R4.24" row="4" col="24"/>
+        <rail type="rail" id="R4.25" row="4" col="25"/>
+        <rail type="rail" id="R4.26" row="4" col="26"/>
+        <rail type="rail" id="R4.2" row="4" col="2"/>
+        <rail type="rail" id="R4.3" row="4" col="3"/>
+        <rail type="rail" id="R4.4" row="4" col="4"/>
+        <rail type="rail" id="R4.5" row="4" col="5"/>
+        <rail type="rail" id="R4.6" row="4" col="6"/>
+
+        <rail type="rail" id="R4.29" row="4" col="29"/>
+        <rail type="rail" id="R4.30" row="4" col="30"/>
+        <rail type="rail" id="R4.31" row="4" col="31"/>
+        <rail type="rail" id="R4.32" row="4" col="32"/>
+
+
+
+
+
+        <rail type="rail" id="R5.2" row="5" col="2"/>
+        <rail type="rail" id="R5.3" row="5" col="3"/>
+        <rail type="rail" id="R5.4" row="5" col="4"/>
+        <rail type="rail" id="R5.5" row="5" col="5"/>
+        <rail type="rail" id="R5.6" row="5" col="6"/>
+        <rail type="rail_sklon3" id="R5.7" row="5" col="7"/>
+        <rail type="rail_sklon4" id="R5.9" row="5" col="9"/>
+        <rail type="rail" id="R5.10" row="5" col="10"/>
+        <rail type="rail" id="R5.11" row="5" col="11"/>
+        <rail type="rail" id="R5.12" row="5" col="12"/>
+        <rail type="rail" id="R5.13" row="5" col="13"/>
+        <rail type="rail" id="R5.14" row="5" col="14"/>
+        <rail type="rail" id="R5.15" row="5" col="15"/>
+        <rail type="rail" id="R5.16" row="5" col="16"/>
+        <rail type="rail" id="R5.17" row="5" col="17"/>
+        <rail type="rail" id="R5.18" row="5" col="18"/>
+        <rail type="rail" id="R5.19" row="5" col="19"/>
+        <rail type="rail" id="R5.20" row="5" col="20"/>
+        <rail type="rail" id="R5.21" row="5" col="21"/>
+        <rail type="rail" id="R5.22" row="5" col="22"/>
+        <rail type="rail" id="R5.23" row="5" col="23"/>
+        <rail type="rail" id="R5.24" row="5" col="24"/>
+        <rail type="rail" id="R5.25" row="5" col="25"/>
+        <rail type="rail" id="R5.26" row="5" col="26"/>
+
+
+        <rail type="rail_sklon3" id="R5.27" row="5" col="27"/>
+
+
+
+
+
     </rails>
 </layout>

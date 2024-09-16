@@ -17,6 +17,7 @@ SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, QG
         return;
     }
     this->setSharedRenderer(renderer);
+
 }
 
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {

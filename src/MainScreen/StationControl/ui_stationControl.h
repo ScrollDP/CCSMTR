@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -21,6 +22,7 @@ class Ui_StationControl
 {
 public:
     QVBoxLayout *verticalLayout;
+    QPushButton *Refresh;
     QGraphicsView *graphicsView;
 
     void setupUi(QWidget *StationControl)
@@ -37,6 +39,11 @@ public:
         verticalLayout = new QVBoxLayout(StationControl);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        Refresh = new QPushButton(StationControl);
+        Refresh->setObjectName("Refresh");
+
+        verticalLayout->addWidget(Refresh);
+
         graphicsView = new QGraphicsView(StationControl);
         graphicsView->setObjectName("graphicsView");
 
@@ -51,6 +58,7 @@ public:
     void retranslateUi(QWidget *StationControl)
     {
         StationControl->setWindowTitle(QString());
+        Refresh->setText(QCoreApplication::translate("StationControl", "Refresh", nullptr));
     } // retranslateUi
 
 };

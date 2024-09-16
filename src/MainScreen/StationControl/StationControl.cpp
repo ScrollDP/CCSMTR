@@ -9,8 +9,9 @@
 #include <QTransform>
 #include <QRegularExpression>
 
-StationControl::StationControl(QWidget *parent)
+StationControl::StationControl(QWidget *parent, const QString &svgFilePath)
         : QWidget(parent),
+          renderer(new QSvgRenderer(svgFilePath)),
           ui(new Ui::StationControl) {
 
     ui->setupUi(this);
@@ -19,6 +20,10 @@ StationControl::StationControl(QWidget *parent)
     ui->graphicsView->setStyleSheet("background-color: black");
 
     LoadingSvgFile();
+
+    connect(ui->Refresh, &QPushButton::clicked, this, [svgFilePath, this]() {
+        LoadingSvgFile();
+    });
 
 }
 
@@ -48,9 +53,15 @@ void StationControl::LoadingSvgFile() {
     file.close();
 
     std::unordered_map<QString, QString> typeToFilePath = {
-            {"turnout", QFileInfo("../layout/turnouts/turnout.svg").filePath()},
-            {"rail", QFileInfo("../layout/rails/rail.svg").filePath()},
-            {"cross_turnout", QFileInfo("../layout/turnouts/cross_turnout.svg").filePath()}
+            {"turnout",       QFileInfo("../layout/turnouts/turnout.svg").filePath()},
+            {"turnout_sklon",QFileInfo("../layout/turnouts/turnout_sklon.svg").filePath()},
+            {"rail",          QFileInfo("../layout/rails/rail.svg").filePath()},
+            {"cross_turnout", QFileInfo("../layout/turnouts/cross_turnout.svg").filePath()},
+            {"rail_sklon1",    QFileInfo("../layout/rails/rail_sklon1.svg").filePath()},
+            {"rail_sklon2",    QFileInfo("../layout/rails/rail_sklon2.svg").filePath()},
+            {"rail_sklon3",    QFileInfo("../layout/rails/rail_sklon3.svg").filePath()},
+            {"rail_sklon4",    QFileInfo("../layout/rails/rail_sklon4.svg").filePath()}
+
     };
 
     QDomElement root = doc.documentElement();
@@ -96,7 +107,7 @@ void StationControl::LoadingSvgFile() {
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
-            ApplyTransformation(flipped, rotate, svgItem);
+            ApplyTransformation(flipped, rotate, svgItem, type);
 
             scene->addItem(svgItem);
 
@@ -105,34 +116,39 @@ void StationControl::LoadingSvgFile() {
     }
 }
 
-void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEvent *svgItem) {
+void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEvent *svgItem, QString type) {
     QString transformStr;
 
+    if(type == "turnout"){
+        if (rotate == 0) {
+            if (flipped) {
+                transformStr = "scale(-1, 1) translate(-8,0) rotate(0)";
+            } else {
+                transformStr = "scale(1, 1) translate(0,0) rotate(0)";
+            }
+        } else if (rotate == 90) {
+            if (flipped) {
+                transformStr = "scale(-1, 1) translate(-1,2) rotate(90)";
+            } else {
+                transformStr = "scale(-1, -1) translate(-1,-10) rotate(90)";
+            }
+        } else if (rotate == 180) {
+            if (flipped) {
+                transformStr = "scale(-1, 1) translate(0,12) rotate(180)";
+            } else {
+                transformStr = "scale(1, 1) translate(8,12) rotate(180)";
+            }
+        } else if (rotate == 270) {
+            if (flipped) {
+                transformStr = "scale(-1, 1) translate(-7,10) rotate(270)";
+            } else {
+                transformStr = "scale(-1, -1) translate(-7,-2) rotate(270)";
+            }
+        }
+    }
+    if(type == "turnout_sklon"){
 
-    if (rotate == 0) {
-        if (flipped) {
-            transformStr = "scale(-1, 1) translate(-8,0) rotate(0)";
-        } else {
-            transformStr = "scale(1, 1) translate(0,0) rotate(0)";
-        }
-    } else if (rotate == 90) {
-        if (flipped) {
-            transformStr = "scale(-1, 1) translate(-1,2) rotate(90)";
-        } else {
-            transformStr = "scale(-1, -1) translate(-1,-10) rotate(90)";
-        }
-    } else if (rotate == 180) {
-        if (flipped) {
-            transformStr = "scale(-1, 1) translate(0,12) rotate(180)";
-        } else {
-            transformStr = "scale(1, 1) translate(8,12) rotate(180)";
-        }
-    } else if (rotate == 270) {
-        if (flipped) {
-            transformStr = "scale(-1, 1) translate(-7,10) rotate(270)";
-        } else {
-            transformStr = "scale(-1, -1) translate(-7,-2) rotate(270)";
-        }
+
     }
 
     svgItem->updateTransform(transformStr);

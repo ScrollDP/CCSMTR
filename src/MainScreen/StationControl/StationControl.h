@@ -10,19 +10,23 @@
 class StationControl : public QWidget {
     Q_OBJECT
 
+
+
 public:
-    explicit StationControl(QWidget *parent = nullptr);
+    explicit StationControl(QWidget *parent = nullptr, const QString &svgFilePath = "../layout/layout.xml");
     ~StationControl() override;  // Ensure the destructor is declared here
+    Ui::StationControl *ui;
 
 private:
-    Ui::StationControl *ui;
     void LoadingSvgFile();
 
     int Scale = 5;
     int Position_Col = 8;
     int Position_Row = 12;
 
-    static void ApplyTransformation(bool mirror, int rotate, SVGHandleEvent* svgHandleEvent);
+    static void ApplyTransformation(bool mirror, int rotate, SVGHandleEvent* svgHandleEvent, QString type);
+    QSvgRenderer *renderer;
+    QString svgFilePath;
 };
 
 
