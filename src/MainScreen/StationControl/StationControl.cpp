@@ -81,6 +81,7 @@ void StationControl::LoadingSvgFile() {
             int rotate = element.attribute("rotate").toInt();
 
 
+
             qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
             auto it = typeToFilePath.find(type);
@@ -107,7 +108,7 @@ void StationControl::LoadingSvgFile() {
 
 
             // Load the temporary SVG file
-            auto *svgItem = new SVGHandleEvent(tmpFilePath, id);
+            auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col,flipped,rotate);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
             ApplyTransformation(flipped, rotate, svgItem, type);

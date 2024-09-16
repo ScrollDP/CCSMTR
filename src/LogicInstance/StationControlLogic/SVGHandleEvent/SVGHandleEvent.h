@@ -14,7 +14,7 @@ class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
 public:
-    explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, QGraphicsItem* parent = nullptr);
+    explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
     void setScaleAndPosition(qreal scale, qreal x, qreal y);
 
     void updateTransform(const QString &transformStr);
@@ -30,8 +30,18 @@ private:
     QString svgFilePath;
     QString elementId;
     QSvgRenderer *renderer;
+    int row;
+    int col;
+    bool flipped;
+    int rotate;
+
 
     void toggleVisibility();
+
+    void reloadSVG();
+
+    void changeColor();
+
 
 };
 
