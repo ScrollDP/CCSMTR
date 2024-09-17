@@ -16,7 +16,7 @@ StationControl::StationControl(QWidget *parent, const QString &svgFilePath)
           ui(new Ui::StationControl) {
 
     ui->setupUi(this);
-
+    ui->Refresh->hide();
     // Set background color of graphicsView to black
     ui->graphicsView->setStyleSheet("background-color: black");
 

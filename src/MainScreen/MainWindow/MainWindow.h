@@ -54,6 +54,8 @@ protected:
 
 
     void toggleTabShow() const;
+
+    void editMenuEnabled();
 };
 
 #endif //CCSMTR_MAINWINDOW_H

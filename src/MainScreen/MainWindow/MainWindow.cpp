@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->PowerOffTrack, &QPushButton::clicked, [=, this](){
         dccExWindow->sendCommand("<0>");
     });
+
+    connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::editMenuEnabled);
     //this->showFullScreen();
 }
 
@@ -127,4 +129,16 @@ void MainWindow::toggleTabShow() const {
         return true;
     }
     return QMainWindow::eventFilter(watched, event);
+}
+
+void MainWindow::editMenuEnabled() {
+    if (ui->checkBox->isChecked()) {
+        if (stationControllWindow && stationControllWindow->ui && stationControllWindow->ui->Refresh) {
+            stationControllWindow->ui->Refresh->show();
+        }
+    } else {
+        if (stationControllWindow && stationControllWindow->ui && stationControllWindow->ui->Refresh) {
+            stationControllWindow->ui->Refresh->hide();
+        }
+    }
 }
