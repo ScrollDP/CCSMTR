@@ -3,7 +3,6 @@
 #include <QGraphicsScene>
 #include <QFile>
 #include <QDomDocument>
-#include <QDebug>
 #include <QFileInfo>
 #include <unordered_map>
 #include <QTransform>
@@ -148,29 +147,13 @@ void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEven
             } else {
                 transformStr = "scale(1, 1) translate(0,0) rotate(0)";
             }
-        } else if (rotate == 90) {
-            if (flipped) {
-                transformStr = "scale(-1, 1) translate(-1,2) rotate(90)";
-            } else {
-                transformStr = "scale(-1, -1) translate(-1,-10) rotate(90)";
-            }
         } else if (rotate == 180) {
             if (flipped) {
                 transformStr = "scale(-1, 1) translate(0,12) rotate(180)";
             } else {
                 transformStr = "scale(1, 1) translate(8,12) rotate(180)";
             }
-        } else if (rotate == 270) {
-            if (flipped) {
-                transformStr = "scale(-1, 1) translate(-7,10) rotate(270)";
-            } else {
-                transformStr = "scale(-1, -1) translate(-7,-2) rotate(270)";
-            }
         }
-    }
-    if(type == "turnout_sklon"){
-
-
     }
 
     svgItem->updateTransform(transformStr);
