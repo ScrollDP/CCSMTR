@@ -1,0 +1,5 @@
+<svg height="12" width="15" xmlns="http://www.w3.org/2000/svg">
+ <text fill="gray" font-family="Arial" font-size="6" x="0.6" y="11">depo</text>
+ <path d="M10,0 12,3 10,6 " fill="none" stroke="gray"/>
+ <path d="M2,3 12,3 " fill="none" stroke="gray"/>
+</svg>
