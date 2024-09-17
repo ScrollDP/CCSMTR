@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <QTransform>
 #include <QRegularExpression>
+#include <QXmlStreamReader>
+#include <QString>
 
 StationControl::StationControl(QWidget *parent, const QString &svgFilePath)
         : QWidget(parent),
@@ -31,6 +33,34 @@ StationControl::~StationControl() {
     delete ui;
 }
 
+std::unordered_map<QString, QString> loadTypeToFilePath(const QString &filePath) {
+    std::unordered_map<QString, QString> typeToFilePath;
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Cannot open file:" << filePath;
+        return typeToFilePath;
+    }
+
+    QXmlStreamReader xml(&file);
+    while (!xml.atEnd() && !xml.hasError()) {
+        xml.readNext();
+        if (xml.isStartElement() && xml.name() == QString("location")) {
+            QString id = xml.attributes().value("id").toString();
+            QString path = xml.attributes().value("path").toString();
+            typeToFilePath[id] = QFileInfo(path).filePath();
+        }
+    }
+
+    if (xml.hasError()) {
+        qWarning() << "XML error:" << xml.errorString();
+    }
+
+    file.close();
+    return typeToFilePath;
+}
+
+
 void StationControl::LoadingSvgFile() {
     const QString layoutFilePath = QFileInfo("../layout/layout.xml").filePath();
 
@@ -52,19 +82,7 @@ void StationControl::LoadingSvgFile() {
     }
     file.close();
 
-    std::unordered_map<QString, QString> typeToFilePath = {
-            {"turnout",       QFileInfo("../layout/turnouts/turnout.svg").filePath()},
-            {"turnout_sklon",QFileInfo("../layout/turnouts/turnout_sklon.svg").filePath()},
-            {"rail",          QFileInfo("../layout/rails/rail.svg").filePath()},
-            {"cross_turnout", QFileInfo("../layout/turnouts/cross_turnout.svg").filePath()},
-            {"rail_sklon1",    QFileInfo("../layout/rails/rail_sklon1.svg").filePath()},
-            {"rail_sklon2",    QFileInfo("../layout/rails/rail_sklon2.svg").filePath()},
-            {"rail_sklon3",    QFileInfo("../layout/rails/rail_sklon3.svg").filePath()},
-            {"rail_sklon4",    QFileInfo("../layout/rails/rail_sklon4.svg").filePath()},
-            {"zarazadlo1",     QFileInfo("../layout/zarazadlo/zarazadlo1.svg").filePath()},
-            {"zarazadlo2",     QFileInfo("../layout/zarazadlo/zarazadlo2.svg").filePath()}
-
-    };
+    std::unordered_map<QString, QString> typeToFilePath = loadTypeToFilePath("../layout/layout.xml");
 
     QDomElement root = doc.documentElement();
     QDomNodeList categories = root.childNodes();

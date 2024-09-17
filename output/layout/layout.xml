@@ -1,4 +1,18 @@
 <layout>
+
+    <locations>
+        <location id="turnout"       path="../layout/turnouts/turnout.svg"/>
+        <location id="turnout_sklon" path="../layout/turnouts/turnout_sklon.svg"/>
+        <location id="rail"          path="../layout/rails/rail.svg"/>
+        <location id="cross_turnout" path="../layout/turnouts/cross_turnout.svg"/>
+        <location id="rail_sklon1"   path="../layout/rails/rail_sklon1.svg"/>
+        <location id="rail_sklon2"   path="../layout/rails/rail_sklon2.svg"/>
+        <location id="rail_sklon3"   path="../layout/rails/rail_sklon3.svg"/>
+        <location id="rail_sklon4"   path="../layout/rails/rail_sklon4.svg"/>
+        <location id="zarazadlo1"    path="../layout/zarazadlo/zarazadlo1.svg"/>
+        <location id="zarazadlo2"    path="../layout/zarazadlo/zarazadlo2.svg"/>
+    </locations>
+
     <turnouts>
         <turnout type="turnout" id="T2" row="-1" col="4" flipped="true" rotate="180"/>
         <turnout type="turnout" id="T4" row="-1" col="5" flipped="false" rotate="180"/>
