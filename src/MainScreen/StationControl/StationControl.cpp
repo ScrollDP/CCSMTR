@@ -97,8 +97,6 @@ void StationControl::LoadingSvgFile() {
             bool flipped = element.attribute("flipped").toLower() == "true";
             int rotate = element.attribute("rotate").toInt();
 
-
-
             qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
             auto it = typeToFilePath.find(type);
@@ -121,8 +119,6 @@ void StationControl::LoadingSvgFile() {
                 //tmpFile.remove(); // Delete the temporary file if it exists
                 QFile::copy(svgFilePath, tmpFilePath); // Copy the original file to the temporary location
             }
-
-
 
             // Load the temporary SVG file
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col,flipped,rotate);

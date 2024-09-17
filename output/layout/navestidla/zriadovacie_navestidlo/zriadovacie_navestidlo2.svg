@@ -1,6 +1,0 @@
-<svg height="12"  viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
-    <g fill="none" stroke="gray" id="hlavne_navestidlo1" stroke-width="1.1" >
-        <polyline points="6.5,2 1.4,6 6.5,10" visibility="visible"/>
-        <!--<rect x="0" y="0" width="8" height="12" fill="none" stroke="green" stroke-width="0.4" visibility="visible"/>-->
-    </g>
-</svg>
