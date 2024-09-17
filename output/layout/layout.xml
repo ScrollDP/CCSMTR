@@ -2,15 +2,16 @@
 
     <locations>
         <location id="turnout"       path="../layout/turnouts/turnout.svg"/>
-        <location id="turnout_sklon" path="../layout/turnouts/turnout_sklon.svg"/>
-        <location id="rail"          path="../layout/rails/rail.svg"/>
         <location id="cross_turnout" path="../layout/turnouts/cross_turnout.svg"/>
+        <location id="rail"          path="../layout/rails/rail.svg"/>
         <location id="rail_sklon1"   path="../layout/rails/rail_sklon1.svg"/>
         <location id="rail_sklon2"   path="../layout/rails/rail_sklon2.svg"/>
         <location id="rail_sklon3"   path="../layout/rails/rail_sklon3.svg"/>
         <location id="rail_sklon4"   path="../layout/rails/rail_sklon4.svg"/>
         <location id="zarazadlo1"    path="../layout/zarazadlo/zarazadlo1.svg"/>
         <location id="zarazadlo2"    path="../layout/zarazadlo/zarazadlo2.svg"/>
+        <location id="navestidlo1"   path="../layout/navestidlo/navestidlo1.svg"/>
+        <location id="navestidlo2"   path="../layout/navestidlo/navestidlo2.svg"/>
     </locations>
 
     <turnouts>
@@ -94,6 +95,8 @@
         <rail type="rail" id="-R4.30" row="-4" col="30"/>
         <rail type="rail" id="-R4.31" row="-4" col="31"/>
         <rail type="rail" id="-R4.32" row="-4" col="32"/>
+        <rail type="rail" id="-R4.33" row="-4" col="33"/>
+        <rail type="rail" id="-R4.34" row="-4" col="34"/>
 
 
         <rail type="rail_sklon1" id="-R3.7" row="-3" col="7"/>
@@ -295,8 +298,6 @@
         <rail type="rail" id="R4.30" row="4" col="30"/>
         <rail type="rail" id="R4.31" row="4" col="31"/>
 
-
-
         <rail type="rail" id="R5.3" row="5" col="3"/>
         <rail type="rail" id="R5.4" row="5" col="4"/>
         <rail type="rail" id="R5.5" row="5" col="5"/>
@@ -320,7 +321,6 @@
         <rail type="rail" id="R5.24" row="5" col="24"/>
         <rail type="rail" id="R5.25" row="5" col="25"/>
         <rail type="rail" id="R5.26" row="5" col="26"/>
-
 
         <rail type="rail_sklon3" id="R5.27" row="5" col="27"/>
 
