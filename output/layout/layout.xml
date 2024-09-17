@@ -10,8 +10,10 @@
         <location id="rail_sklon4"   path="../layout/rails/rail_sklon4.svg"/>
         <location id="zarazadlo1"    path="../layout/zarazadlo/zarazadlo1.svg"/>
         <location id="zarazadlo2"    path="../layout/zarazadlo/zarazadlo2.svg"/>
-        <location id="navestidlo1"   path="../layout/navestidlo/navestidlo1.svg"/>
-        <location id="navestidlo2"   path="../layout/navestidlo/navestidlo2.svg"/>
+        <location id="hlavne_navestidlo1"   path="../layout/navestidlo/hlavne_navestidlo/hlavne_navestidlo1.svg"/>
+        <location id="hlavne_navestidlo2"   path="../layout/navestidlo/hlavne_navestidlo/hlavne_navestidlo2.svg"/>
+        <location id="zriadovacie_navestidlo1"   path="../layout/navestidlo/zriadovacie_navestidlo/zriadovacie_navestidlo1.svg"/>
+        <location id="zriadovacie_navestidlo2"   path="../layout/navestidlo/zriadovacie_navestidlo/zriadovacie_navestidlo2.svg"/>
     </locations>
 
     <turnouts>
