@@ -28,6 +28,13 @@
         <location id="desat"   path="../layout/symboly/cisla/desat.svg"/>
         <location id="dvanast"   path="../layout/symboly/cisla/dvanast.svg"/>
 
+        <!--text-->
+        <location id="ZILINA"   path="../layout/symboly/text/ZILINA.svg"/>
+        <location id="depo"   path="../layout/symboly/text/DEPO.svg"/>
+        <location id="KOSICE"   path="../layout/symboly/text/KOSICE.svg"/>
+        <location id="BRATISLAVA"   path="../layout/symboly/text/BRATISLAVA.svg"/>
+        <location id="LIETAVSKA_LUCKA"   path="../layout/symboly/text/LIETAVSKA_LUCKA.svg"/>
+
 
 
     </locations>
@@ -361,5 +368,13 @@
         <cislo type="sedem" id="C7" row="4" col="19"/>
         <cislo type="devat" id="C9" row="5" col="19"/>
     </cisla>
+
+    <text>
+        <text type="ZILINA" id="ZILINA" row="-6" col="17"/>
+        <text type="depo" id="depo" row="-5" col="33"/>
+        <text type="KOSICE" id="KOSICE" row="2" col="33"/>
+        <text type="BRATISLAVA" id="BRATISLAVA" row="-2" col="2"/>
+        <text type="LIETAVSKA_LUCKA" id="LIETAVSKA_LUCKA" row="-3" col="33"/>
+    </text>
 
 </layout>
