@@ -14,6 +14,22 @@
         <location id="hlavne_navestidlo2"   path="../layout/symboly/navestidla/hlavne_navestidlo/hlavne_navestidlo2.svg"/>
         <location id="zriadovacie_navestidlo1"   path="../layout/symboly/navestidla/zriadovacie_navestidlo/zriadovacie_navestidlo1.svg"/>
         <location id="zriadovacie_navestidlo2"   path="../layout/symboly/navestidla/zriadovacie_navestidlo/zriadovacie_navestidlo2.svg"/>
+        <!--cisla-->
+        <location id="nula"   path="../layout/symboly/cisla/nula.svg"/>
+        <location id="jedna"   path="../layout/symboly/cisla/jedna.svg"/>
+        <location id="dva"   path="../layout/symboly/cisla/dva.svg"/>
+        <location id="tri"   path="../layout/symboly/cisla/tri.svg"/>
+        <location id="styri"   path="../layout/symboly/cisla/styri.svg"/>
+        <location id="pat"   path="../layout/symboly/cisla/pat.svg"/>
+        <location id="sest"   path="../layout/symboly/cisla/sest.svg"/>
+        <location id="sedem"   path="../layout/symboly/cisla/sedem.svg"/>
+        <location id="osem"   path="../layout/symboly/cisla/osem.svg"/>
+        <location id="devat"   path="../layout/symboly/cisla/devat.svg"/>
+        <location id="desat"   path="../layout/symboly/cisla/desat.svg"/>
+        <location id="dvanast"   path="../layout/symboly/cisla/dvanast.svg"/>
+
+
+
     </locations>
 
     <turnouts>
@@ -65,11 +81,9 @@
 
         <rail type="rail_sklon2" id="-R6.27" row="-6" col="27"/>
         <rail type="rail" id="-R6.25" row="-6" col="25"/>
-        <rail type="rail" id="-R6.24" row="-6" col="24"/>
 
         <rail type="rail_sklon2" id="-R5.28" row="-5" col="28"/>
         <rail type="rail" id="-R5.25" row="-5" col="25"/>
-        <rail type="rail" id="-R5.24" row="-5" col="24"/>
 
 
         <rail type="rail_sklon1" id="-R4.9" row="-4" col="9"/>
@@ -132,7 +146,6 @@
         <rail type="rail" id="-R2.24" row="-2" col="24"/>
         <rail type="rail" id="-R2.25" row="-2" col="25"/>
         <rail type="rail" id="-R2.27" row="-2" col="27"/>
-        <rail type="rail" id="-R2.30" row="-2" col="30"/>
         <rail type="rail" id="-R2.31" row="-2" col="31"/>
         <rail type="rail" id="-R2.32" row="-2" col="32"/>
         <rail type="rail" id="-R2.34" row="-2" col="34"/>
@@ -161,7 +174,6 @@
         <rail type="rail" id="-R1.27" row="-1" col="27"/>
         <rail type="rail" id="-R1.28" row="-1" col="28"/>
         <rail type="rail" id="-R1.30" row="-1" col="30"/>
-        <rail type="rail" id="-R1.32" row="-1" col="32"/>
         <rail type="rail" id="-R1.34" row="-1" col="34"/>
         <rail type="rail" id="-R1.36" row="-1" col="36"/>
 
@@ -187,7 +199,6 @@
         <rail type="rail" id="R1.27" row="1" col="27"/>
         <rail type="rail" id="R1.28" row="1" col="28"/>
         <rail type="rail" id="R1.29" row="1" col="29"/>
-        <rail type="rail" id="R1.32" row="1" col="32"/>
         <rail type="rail" id="R1.34" row="1" col="34"/>
         <rail type="rail" id="R1.36" row="1" col="36"/>
 
@@ -333,13 +344,22 @@
         <navestidlo type="zriadovacie_navestidlo1" id="HN32" row="4" col="5"/>
         <navestidlo type="zriadovacie_navestidlo1" id="HN33" row="3" col="5"/>
 
-
-
-
-
-
-
-
     </navestidla>
+
+    <cisla>
+
+        <cislo type="dva" id="-C2" row="-1" col="19"/>
+        <cislo type="styri" id="-C4" row="-2" col="19"/>
+        <cislo type="sest" id="-C6" row="-3" col="19"/>
+        <cislo type="osem" id="-C8" row="-4" col="19"/>
+        <cislo type="desat" id="-C10" row="-5" col="24"/>
+        <cislo type="dvanast" id="-C12" row="-6" col="24"/>
+
+        <cislo type="jedna" id="C1" row="1" col="19"/>
+        <cislo type="tri" id="C3" row="2" col="19"/>
+        <cislo type="pat" id="C5" row="3" col="19"/>
+        <cislo type="sedem" id="C7" row="4" col="19"/>
+        <cislo type="devat" id="C9" row="5" col="19"/>
+    </cisla>
 
 </layout>
