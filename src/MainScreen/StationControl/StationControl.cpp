@@ -9,6 +9,7 @@
 #include <QRegularExpression>
 #include <QXmlStreamReader>
 #include <QString>
+#include <QDir>
 
 StationControl::StationControl(QWidget *parent, const QString &svgFilePath)
         : QWidget(parent),
@@ -113,6 +114,11 @@ void StationControl::LoadingSvgFile() {
             }
 
             // Create a temporary file
+            //if folder dont exist create it
+            QDir dir;
+            if (!dir.exists(".tmp")) {
+                dir.mkpath(".tmp");
+            }
             QString tmpFilePath = QString(".tmp/tmp_%1_%2.svg").arg(type).arg(id);
             QFile tmpFile(tmpFilePath);
             if (!tmpFile.exists()) {
