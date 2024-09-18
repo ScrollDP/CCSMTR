@@ -34,9 +34,12 @@ private:
     int col;
     bool flipped;
     int rotate;
+    std::mutex mtx_vyhybka_menu,mtx_toggle_vyhybka;
 
 
     void toggleVisibility(bool straight, bool diverging);
+    void threadVyhybkaMenu(const QPoint &pos, const QString &id);
+    void threadToggleVyhybka(bool straight, bool diverging);
 
     void reloadSVG();
 

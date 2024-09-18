@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <iostream>
 #include <QEventLoop>
+#include <thread>
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
@@ -47,7 +48,7 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
         }
         else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
             //toggleVisibility(true,false);
-            vyhybkaMenu(event->screenPos(), elementId);
+            threadVyhybkaMenu(event->screenPos(), elementId);
             return;
         }
         return;
@@ -122,6 +123,7 @@ QStringList SVGHandleEvent::getElementIdsFromSvg(const QString &filePath) {
 
 
 void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
+    std::lock_guard<std::mutex> lock(mtx_toggle_vyhybka);
     QFile file(svgFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file:" << svgFilePath;
@@ -334,53 +336,64 @@ void SVGHandleEvent::reloadSVG() {
 }
 
 void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
+    std::lock_guard<std::mutex> lock(mtx_vyhybka_menu);
+
     QString m_value;
     QMenu contextMenu;
     contextMenu.addAction(id);
     contextMenu.addSeparator();
 
-    QFile file("../layout/menu_vyhybky/vyhybky.xml");
+    QFile file(svgFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open vyhybky.xml";
+        qWarning() << "Failed to open SVG file:" << svgFilePath;
         return;
     }
 
     QDomDocument doc;
     if (!doc.setContent(&file)) {
-        qWarning() << "Failed to parse vyhybky.xml";
+        qWarning() << "Failed to parse SVG file:" << svgFilePath;
         file.close();
         return;
     }
     file.close();
 
     QDomElement root = doc.documentElement();
-    QDomNodeList parameters = root.childNodes();
+    QDomNodeList elements = root.elementsByTagName("path");
 
-    if (parameters.isEmpty()) {
-        qWarning() << "No parameters found in vyhybky.xml.";
-        return;
-    }
-
-    for (int i = 0; i < parameters.count(); ++i) {
-        QDomElement element = parameters.at(i).toElement();
+    QString currentState;
+    for (int i = 0; i < elements.count(); ++i) {
+        QDomElement element = elements.at(i).toElement();
         if (element.isNull()) {
             continue;
         }
-        QString value = element.text();
-        contextMenu.addAction(value);
+        QString id = element.attribute("id");
 
+        if (id == "_straight" || id == "_diverging") {
+            QString visibility = element.attribute("visibility");
+            if (visibility == "visible") {
+                currentState = id;
+                break;
+            }
+        }
     }
+
+    if (currentState == "_straight") {
+        contextMenu.addAction("S-");
+    } else if (currentState == "_diverging") {
+        contextMenu.addAction("S+");
+    }
+
     QAction* selectedAction = contextMenu.exec(pos);
     if (selectedAction) {
         m_value = selectedAction->text();
     }
 
     if (m_value == "S+") {
-        toggleVisibility(true, false);
+        threadToggleVyhybka(true, false);
         qDebug() << "S+";
     } else if (m_value == "S-") {
         qDebug() << "S-";
-        toggleVisibility(false, true);
+        threadToggleVyhybka(false, true);
     }
 }
 
@@ -447,4 +460,12 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     }
 
     contextMenu.exec(pos);
+}
+
+void SVGHandleEvent::threadVyhybkaMenu(const QPoint &pos, const QString &id) {
+    std::thread(&SVGHandleEvent::vyhybkaMenu, this, pos, id).detach();
+}
+
+void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging) {
+    std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging).detach();
 }
