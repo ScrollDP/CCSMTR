@@ -5,6 +5,7 @@
 #include <QSerialPort>
 #include "ui_DccEx.h"
 #include "../../../MainWindow/MainWindow.h"
+#include "CommandQueue.h"
 
 
 class DccEx : public QWidget {
@@ -19,23 +20,24 @@ public:
     std::unique_ptr<QSerialPort> arduino;
 
 
-    void sendCommand(const QString &dataList); // Add a method to send the command
+    void sendCommand(const QString &dataList) const; // Add a method to send the command
 
 
 private slots:
     void onConnectButtonClicked();
     void onDisconnectButtonClicked();
-    void onInputReturnPressed();
-    void onDataReceived();
+    void onInputReturnPressed() const;
+    void onDataReceived() const;
 
 
 private:
     Ui_DccEx ui{};
 
-    void setupArduino();
+    void setupArduino() const;
 
     [[maybe_unused]] bool eventFilter(QObject *obj, QEvent *event) override;
 
+    void readFromQueue() const;
 };
 
 #endif //CCSMTR_DCCEX_H

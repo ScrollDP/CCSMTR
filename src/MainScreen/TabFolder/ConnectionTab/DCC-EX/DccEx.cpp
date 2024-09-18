@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 
+QQueue<QString> commandQueue;
+
 DccEx::DccEx(QWidget *parent)
         : QWidget(parent),
         arduino(new QSerialPort(this)) {
@@ -15,6 +17,11 @@ DccEx::DccEx(QWidget *parent)
     connect(ui.disconnectButton, &QPushButton::clicked, this, &DccEx::onDisconnectButtonClicked);
     connect(ui.consoleInput, &QLineEdit::returnPressed, this, &DccEx::onInputReturnPressed);
     ui.consoleInput->installEventFilter(this);
+
+    // Timer to check the queue
+    auto *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &DccEx::readFromQueue);
+    timer->start(500); // Check every second
 }
 
 void DccEx::onConnectButtonClicked() {
@@ -28,7 +35,7 @@ void DccEx::onConnectButtonClicked() {
     }
 }
 
-void DccEx::setupArduino() {
+void DccEx::setupArduino() const {
     ui.connectButton->setEnabled(false);
     ui.serialPortComboBox->setEnabled(false);
     MainWindow::isAnyConnected = true;
@@ -55,7 +62,7 @@ void DccEx::onDisconnectButtonClicked() {
     }
 }
 
-void DccEx::onInputReturnPressed() {
+void DccEx::onInputReturnPressed() const {
     QString dataToSend = "<" + ui.consoleInput->text().trimmed() + ">";
     if (!dataToSend.isEmpty() && MainWindow::isAnyConnected) {
         arduino->write(dataToSend.toUtf8());
@@ -64,7 +71,7 @@ void DccEx::onInputReturnPressed() {
     }
 }
 
-void DccEx::onDataReceived() {
+void DccEx::onDataReceived() const {
     ui.consoleOutput->append(arduino->readAll());
 }
 
@@ -79,7 +86,7 @@ void DccEx::onDataReceived() {
     return QWidget::eventFilter(obj, event);
 }
 
-void DccEx::sendCommand(const QString &dataList) {
+void DccEx::sendCommand(const QString &dataList) const {
     if (!arduino || !ui.consoleOutput) {
         //qWarning() << "Arduino or console output not initialized";
         return;
@@ -92,6 +99,15 @@ void DccEx::sendCommand(const QString &dataList) {
         //qDebug() << "After write: Arduino open status = " << arduino->isOpen();
     } else {
         //qWarning() << "Failed to write to Arduino: device not open or not connected";
+    }
+}
+
+void DccEx::readFromQueue() const {
+    while (!commandQueue.isEmpty()) {
+        QString command = commandQueue.dequeue();
+        if (!command.isEmpty()) {
+            sendCommand(command);
+        }
     }
 }
 

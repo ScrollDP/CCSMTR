@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QStringList>
+#include "../../../MainScreen/TabFolder/ConnectionTab/DCC-EX/CommandQueue.h"
 
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
@@ -53,6 +54,8 @@ private:
 
 
     void saveAndReload(const QDomDocument& doc);
+
+    static void sendToArduino(const QString &dataList);
 };
 
 #endif // CLICKABLESVGITEM_H

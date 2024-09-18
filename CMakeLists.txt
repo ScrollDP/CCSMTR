@@ -25,7 +25,7 @@ set(SOURCES
         src/LogicInstance/StationControlLogic/RightClick/RightClick.h
         src/LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.cpp
         src/LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.h
-
+        src/MainScreen/TabFolder/ConnectionTab/DCC-EX/CommandQueue.h
 
 
 )

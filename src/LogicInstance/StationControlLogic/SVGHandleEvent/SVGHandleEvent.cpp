@@ -146,7 +146,6 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
         return;
     }
 
-    QString currentState;
     for (int i = 0; i < elements.count(); ++i) {
         QDomElement element = elements.at(i).toElement();
         if (element.isNull()) {
@@ -157,7 +156,6 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
         if (id == "_straight" || id == "_diverging") {
             QString visibility = element.attribute("visibility");
             if (visibility == "visible") {
-                currentState = id;
                 element.setAttribute("visibility", "hidden");
             }
         }
@@ -176,9 +174,18 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
     };
 
     if (straight) {
-        qDebug() << "Switching to straight";
+        //qDebug() << "Switching to straight";
         setVisibility("_between", "visible");
         saveAndReload(doc);
+        QRegularExpression re("\\d+");
+        QRegularExpressionMatch match = re.match(elementId);
+        if (match.hasMatch()) {
+            QString number = match.captured(0);
+            QString command = QString("<T %1 1>").arg(number);
+            //qDebug() << "command: " << command;
+            sendToArduino(command);
+
+        }
         QEventLoop loop;
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
@@ -186,9 +193,18 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
         setVisibility("_straight", "visible");
         saveAndReload(doc);
     } else if (diverging) {
-        qDebug() << "Switching to diverging";
+        //qDebug() << "Switching to diverging";
         setVisibility("_between", "visible");
         saveAndReload(doc);
+        QRegularExpression re("\\d+");
+        QRegularExpressionMatch match = re.match(elementId);
+        if (match.hasMatch()) {
+            QString number = match.captured(0);
+            QString command = QString("<T %1 0>").arg(number);
+            //qDebug() << "command: " << command;
+            sendToArduino(command);
+
+        }
         QEventLoop loop;
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
@@ -366,12 +382,12 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
         if (element.isNull()) {
             continue;
         }
-        QString id = element.attribute("id");
+        QString Id = element.attribute("id");
 
-        if (id == "_straight" || id == "_diverging") {
+        if (Id == "_straight" || Id == "_diverging") {
             QString visibility = element.attribute("visibility");
             if (visibility == "visible") {
-                currentState = id;
+                currentState = Id;
                 break;
             }
         }
@@ -390,9 +406,9 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
 
     if (m_value == "S+") {
         threadToggleVyhybka(true, false);
-        qDebug() << "S+";
+        //qDebug() << "S+";
     } else if (m_value == "S-") {
-        qDebug() << "S-";
+        //qDebug() << "S-";
         threadToggleVyhybka(false, true);
     }
 }
@@ -468,4 +484,9 @@ void SVGHandleEvent::threadVyhybkaMenu(const QPoint &pos, const QString &id) {
 
 void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging) {
     std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging).detach();
+}
+
+void SVGHandleEvent::sendToArduino(const QString &dataList) {
+    //qDebug() << "Adding command to queue: " << dataList;
+    commandQueue.enqueue(dataList);
 }
