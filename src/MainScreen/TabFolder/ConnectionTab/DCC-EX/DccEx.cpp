@@ -108,6 +108,9 @@ void DccEx::readFromQueue() const {
         if (!command.isEmpty()) {
             sendCommand(command);
         }
+        else{
+            qWarning() << "Command is empty";
+        }
     }
 }
 

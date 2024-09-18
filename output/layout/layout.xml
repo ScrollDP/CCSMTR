@@ -89,7 +89,7 @@
         <rail type="rail" id="-R6.24" row="-6" col="24"/>
 
         <rail type="rail_sklon2" id="-R5.28" row="-5" col="28"/>
-        <rail type="rail" id="-R5.25" row="-5" col="25"/>
+        <rail type="rail" id="-R5.26" row="-5" col="26"/>
         <rail type="rail" id="-R5.24" row="-5" col="24"/>
 
 
@@ -333,7 +333,7 @@
         <navestidlo type="hlavne_navestidlo1" id="HN16" row="-2" col="26"/>
         <navestidlo type="hlavne_navestidlo1" id="HN17" row="-3" col="26"/>
         <navestidlo type="hlavne_navestidlo1" id="HN18" row="-4" col="26"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN19" row="-5" col="26"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN19" row="-5" col="25"/>
         <navestidlo type="hlavne_navestidlo1" id="HN20" row="-6" col="25"/>
 
 
