@@ -86,7 +86,6 @@
 
         <rail type="rail_sklon2" id="-R6.27" row="-6" col="27"/>
         <rail type="rail" id="-R6.26" row="-6" col="26"/>
-        <rail type="rail" id="-R6.25" row="-6" col="25"/>
         <rail type="rail" id="-R6.24" row="-6" col="24"/>
 
         <rail type="rail_sklon2" id="-R5.28" row="-5" col="28"/>
