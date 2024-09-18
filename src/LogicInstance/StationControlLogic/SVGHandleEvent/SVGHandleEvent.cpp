@@ -4,6 +4,7 @@
 #include <QRegularExpression>
 #include <QGraphicsSceneMouseEvent>
 #include <utility>
+#include <QMenu>
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
@@ -32,9 +33,23 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
 [[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
     if(event->button() == Qt::LeftButton) {
+
         qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
         "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
-        toggleVisibility();
+
+
+        if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
+            hlavneNavestidloMenu(event->screenPos(), elementId);
+            return;
+        }
+        else if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
+            zriadovacieNavestidloMenu(event->screenPos(), elementId);
+            return;
+        }
+        else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
+            toggleVisibility();
+            return;
+        }
         return;
     }
     if(event->button() == Qt::RightButton) {
@@ -260,4 +275,69 @@ void SVGHandleEvent::changeColor(bool m_rightclicked, bool m_middleclicked) {
 void SVGHandleEvent::reloadSVG() {
     this->renderer->load(svgFilePath);
     this->update();
+}
+
+
+void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) {
+    QMenu contextMenu;
+    contextMenu.addAction(id);
+    contextMenu.addSeparator();
+
+    // Load default values from hlavne_navestidlo.xml
+    QFile file("../layout/menu_navestidla/hlavne_navestidlo.xml");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open hlavne_navestidlo.xml";
+        return;
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse hlavne_navestidlo.xml";
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomNodeList defaultValues = root.elementsByTagName("default");
+
+    for (int i = 0; i < defaultValues.count(); ++i) {
+        QDomElement element = defaultValues.at(i).toElement();
+        QString value = element.text();
+        contextMenu.addAction(value);
+    }
+
+    contextMenu.exec(pos);
+}
+
+void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString &id){
+    QMenu contextMenu;
+    contextMenu.addAction(id);
+    contextMenu.addSeparator();
+
+    // Load default values from zriadovacie_navestidlo.xml
+    QFile file("../layout/menu_navestidla/zriadovacie_navestidlo.xml");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open zriadovacie_navestidlo.xml";
+        return;
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse zriadovacie_navestidlo.xml";
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomNodeList defaultValues = root.elementsByTagName("default");
+
+    for (int i = 0; i < defaultValues.count(); ++i) {
+        QDomElement element = defaultValues.at(i).toElement();
+        QString value = element.text();
+        contextMenu.addAction(value);
+    }
+
+    contextMenu.exec(pos);
 }

@@ -44,6 +44,9 @@ private:
 
     bool rightclicked, middleclicked;
 
+    static void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
+    static void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
+
 
 };
 

@@ -1,6 +1,4 @@
 <svg height="12" width="20" xmlns="http://www.w3.org/2000/svg">
-    <text x="0.6" y="5" font-family="Arial" font-size="6" fill="gray">Kosice</text>
+    <text x="0.6" y="8" font-family="Arial" font-size="6" fill="gray">Kosice</text>
 
-    <path d="M14,6 16,9 14,12 " stroke="gray" fill="none"/>
-    <path d="M3,9 16,9 " stroke="gray" fill="none"/>
 </svg>

@@ -1,6 +1,6 @@
 <layout>
 
-    <locations>
+    <locations_symbols>
         <location id="turnout"       path="../layout/symboly/turnouts/turnout.svg"/>
         <location id="cross_turnout" path="../layout/symboly/turnouts/cross_turnout.svg"/>
         <location id="rail"          path="../layout/symboly/rails/rail.svg"/>
@@ -35,16 +35,14 @@
         <location id="BRATISLAVA"   path="../layout/symboly/text/BRATISLAVA.svg"/>
         <location id="LIETAVSKA_LUCKA"   path="../layout/symboly/text/LIETAVSKA_LUCKA.svg"/>
 
-
-
-    </locations>
+    </locations_symbols>
 
     <turnouts>
         <turnout type="turnout" id="T2" row="-1" col="5" flipped="true" rotate="180"/>
         <turnout type="turnout" id="T4" row="-1" col="6" flipped="false" rotate="180"/>
         <turnout type="turnout" id="T6" row="-1" col="7" flipped="false" rotate="0"/>
         <turnout type="turnout" id="T8" row="-2" col="8" flipped="false" rotate="0"/>
-        <turnout type="turnout" id="T10" row="-3" col="9" flipped="false" rotate="0"/>
+        <turnout type="turnout" id="T10" row="-2" col="10" flipped="false" rotate="0"/>
 
         <turnout type="turnout" id="T12" row="-1" col="31" flipped="true" rotate="180"/>
         <turnout type="turnout" id="T14" row="-1" col="32" flipped="false" rotate="180"/>
@@ -87,15 +85,18 @@
     <rails>
 
         <rail type="rail_sklon2" id="-R6.27" row="-6" col="27"/>
+        <rail type="rail" id="-R6.26" row="-6" col="26"/>
         <rail type="rail" id="-R6.25" row="-6" col="25"/>
+        <rail type="rail" id="-R6.24" row="-6" col="24"/>
 
         <rail type="rail_sklon2" id="-R5.28" row="-5" col="28"/>
         <rail type="rail" id="-R5.25" row="-5" col="25"/>
+        <rail type="rail" id="-R5.24" row="-5" col="24"/>
 
 
         <rail type="rail_sklon1" id="-R4.9" row="-4" col="9"/>
         <rail type="rail" id="-R4.10" row="-4" col="10"/>
-        <rail type="rail" id="-R4.11" row="-4" col="11"/>
+        <rail type="rail" id="-R4.12" row="-4" col="12"/>
         <rail type="rail" id="-R4.13" row="-4" col="13"/>
         <rail type="rail" id="-R4.14" row="-4" col="14"/>
         <rail type="rail" id="-R4.15" row="-4" col="15"/>
@@ -110,13 +111,13 @@
         <rail type="rail" id="-R4.25" row="-4" col="25"/>
         <rail type="rail" id="-R4.27" row="-4" col="27"/>
         <rail type="rail" id="-R4.30" row="-4" col="30"/>
-        <rail type="rail" id="-R4.31" row="-4" col="31"/>
+        <rail type="rail" id="-R4.33" row="-4" col="33"/>
         <rail type="rail" id="-R4.32" row="-4" col="32"/>
-        <rail type="rail" id="-R4.34" row="-4" col="34"/>
 
 
         <rail type="rail_sklon1" id="-R3.8" row="-3" col="8"/>
-        <rail type="rail" id="-R3.10" row="-3" col="10"/>
+        <rail type="rail_sklon3" id="-R3.9" row="-3" col="9"/>
+        <rail type="rail_sklon1" id="-R3.10" row="-3" col="10"/>
         <rail type="rail" id="-R3.11" row="-3" col="11"/>
         <rail type="rail" id="-R3.13" row="-3" col="13"/>
         <rail type="rail" id="-R3.14" row="-3" col="14"/>
@@ -136,9 +137,8 @@
         <rail type="rail_sklon2" id="-R3.30" row="-3" col="30"/>
 
 
-        <rail type="rail" id="-R2.9" row="-2" col="9"/>
         <rail type="rail_sklon1" id="-R2.7" row="-2" col="7"/>
-        <rail type="rail" id="-R2.10" row="-2" col="10"/>
+        <rail type="rail" id="-R2.9" row="-2" col="9"/>
         <rail type="rail" id="-R2.11" row="-2" col="11"/>
         <rail type="rail" id="-R2.13" row="-2" col="13"/>
         <rail type="rail" id="-R2.14" row="-2" col="14"/>
@@ -154,16 +154,19 @@
         <rail type="rail" id="-R2.25" row="-2" col="25"/>
         <rail type="rail" id="-R2.27" row="-2" col="27"/>
         <rail type="rail" id="-R2.31" row="-2" col="31"/>
-        <rail type="rail" id="-R2.32" row="-2" col="32"/>
-        <rail type="rail" id="-R2.34" row="-2" col="34"/>
+        <rail type="rail" id="-R2.33" row="-2" col="33"/>
+        <rail type="rail" id="-R2.35" row="-2" col="35"/>
         <rail type="rail" id="-R2.36" row="-2" col="36"/>
+        <rail type="rail" id="-R2.37" row="-2" col="37"/>
+        <rail type="rail" id="-R2.38" row="-2" col="38"/>
 
 
-
-        <rail type="rail" id="-R1.1" row="-1" col="1"/>
-        <rail type="rail" id="-R1.2" row="-1" col="3"/>
+        <rail type="rail" id="-R1.-2" row="-1" col="-2"/>
+        <rail type="rail" id="-R1.0" row="-1" col="0"/>
+        <rail type="rail" id="-R1.2" row="-1" col="2"/>
+        <rail type="rail" id="-R1.4" row="-1" col="4"/>
         <rail type="rail" id="-R1.8" row="-1" col="8"/>
-        <rail type="rail" id="-R1.9" row="-1" col="9"/>
+        <rail type="rail" id="-R1.12" row="-1" col="12"/>
         <rail type="rail" id="-R1.10" row="-1" col="10"/>
         <rail type="rail" id="-R1.11" row="-1" col="11"/>
         <rail type="rail" id="-R1.13" row="-1" col="13"/>
@@ -178,17 +181,20 @@
         <rail type="rail" id="-R1.23" row="-1" col="23"/>
         <rail type="rail" id="-R1.24" row="-1" col="24"/>
         <rail type="rail" id="-R1.25" row="-1" col="25"/>
-        <rail type="rail" id="-R1.27" row="-1" col="27"/>
+        <rail type="rail" id="-R1.26" row="-1" col="26"/>
         <rail type="rail" id="-R1.28" row="-1" col="28"/>
         <rail type="rail" id="-R1.30" row="-1" col="30"/>
-        <rail type="rail" id="-R1.34" row="-1" col="34"/>
-        <rail type="rail" id="-R1.36" row="-1" col="36"/>
+        <rail type="rail" id="-R1.33" row="-1" col="33"/>
+        <rail type="rail" id="-R1.35" row="-1" col="35"/>
+        <rail type="rail" id="-R1.37" row="-1" col="37"/>
+        <rail type="rail" id="-R1.39" row="-1" col="39"/>
 
-
-        <rail type="rail" id="R1.0" row="1" col="1"/>
-        <rail type="rail" id="R1.2" row="1" col="3"/>
+        <rail type="rail" id="R1.-2" row="1" col="-2"/>
+        <rail type="rail" id="R1.0" row="1" col="0"/>
+        <rail type="rail" id="R1.2" row="1" col="2"/>
+        <rail type="rail" id="R1.4" row="1" col="4"/>
         <rail type="rail" id="R1.8" row="1" col="8"/>
-        <rail type="rail" id="R1.9" row="1" col="9"/>
+        <rail type="rail" id="R1.12" row="1" col="12"/>
         <rail type="rail" id="R1.10" row="1" col="10"/>
         <rail type="rail" id="R1.11" row="1" col="11"/>
         <rail type="rail" id="R1.13" row="1" col="13"/>
@@ -204,15 +210,17 @@
         <rail type="rail" id="R1.24" row="1" col="24"/>
         <rail type="rail" id="R1.25" row="1" col="25"/>
         <rail type="rail" id="R1.27" row="1" col="27"/>
-        <rail type="rail" id="R1.28" row="1" col="28"/>
+        <rail type="rail" id="R1.26" row="1" col="26"/>
         <rail type="rail" id="R1.29" row="1" col="29"/>
-        <rail type="rail" id="R1.34" row="1" col="34"/>
-        <rail type="rail" id="R1.36" row="1" col="36"/>
+        <rail type="rail" id="R1.33" row="1" col="33"/>
+        <rail type="rail" id="R1.35" row="1" col="35"/>
+        <rail type="rail" id="R1.37" row="1" col="37"/>
+        <rail type="rail" id="R1.39" row="1" col="39"/>
 
 
         <rail type="rail" id="R2.9" row="2" col="9"/>
         <rail type="rail_sklon4" id="R2.7" row="2" col="7"/>
-        <rail type="rail" id="R2.10" row="2" col="10"/>
+        <rail type="rail" id="R2.12" row="2" col="12"/>
         <rail type="rail" id="R2.11" row="2" col="11"/>
         <rail type="rail" id="R2.13" row="2" col="13"/>
         <rail type="rail" id="R2.14" row="2" col="14"/>
@@ -226,15 +234,15 @@
         <rail type="rail" id="R2.23" row="2" col="23"/>
         <rail type="rail" id="R2.24" row="2" col="24"/>
         <rail type="rail" id="R2.25" row="2" col="25"/>
-        <rail type="rail" id="R2.27" row="2" col="27"/>
+        <rail type="rail" id="R2.26" row="2" col="26"/>
         <rail type="rail" id="R2.28" row="2" col="28"/>
         <rail type="rail_sklon3" id="R2.30" row="2" col="30"/>
 
 
 
-        <rail type="rail" id="R3.2" row="3" col="3"/>
-        <rail type="rail" id="R3.3" row="3" col="4"/>
-        <rail type="rail" id="R3.5" row="3" col="6"/>
+        <rail type="rail" id="R3.3" row="3" col="3"/>
+        <rail type="rail" id="R3.4" row="3" col="4"/>
+        <rail type="rail" id="R3.5" row="3" col="5"/>
         <rail type="rail" id="R3.7" row="3" col="7"/>
         <rail type="rail" id="R3.10" row="3" col="10"/>
         <rail type="rail" id="R3.13" row="3" col="13"/>
@@ -255,7 +263,7 @@
 
         <rail type="rail_sklon2" id="R4.10" row="4" col="10"/>
         <rail type="rail_sklon4" id="R4.11" row="4" col="11"/>
-        <rail type="rail" id="R4.13" row="4" col="13"/>
+        <rail type="rail" id="R4.12" row="4" col="12"/>
         <rail type="rail" id="R4.14" row="4" col="14"/>
         <rail type="rail" id="R4.15" row="4" col="15"/>
         <rail type="rail" id="R4.16" row="4" col="16"/>
@@ -266,15 +274,15 @@
         <rail type="rail" id="R4.22" row="4" col="22"/>
         <rail type="rail" id="R4.23" row="4" col="23"/>
         <rail type="rail" id="R4.24" row="4" col="24"/>
-        <rail type="rail" id="R4.25" row="4" col="25"/>
-        <rail type="rail" id="R4.3" row="4" col="4"/>
-        <rail type="rail" id="R4.5" row="4" col="6"/>
+        <rail type="rail" id="R4.26" row="4" col="26"/>
+        <rail type="rail" id="R4.4" row="4" col="4"/>
+        <rail type="rail" id="R4.5" row="4" col="5"/>
         <rail type="rail" id="R4.7" row="4" col="7"/>
         <rail type="rail" id="R4.29" row="4" col="29"/>
         <rail type="rail" id="R4.31" row="4" col="31"/>
 
-        <rail type="rail" id="R5.3" row="5" col="4"/>
-        <rail type="rail" id="R5.5" row="5" col="6"/>
+        <rail type="rail" id="R5.4" row="5" col="4"/>
+        <rail type="rail" id="R5.5" row="5" col="5"/>
         <rail type="rail" id="R5.7" row="5" col="7"/>
         <rail type="rail_sklon3" id="R5.8" row="5" col="8"/>
         <rail type="rail_sklon4" id="R5.10" row="5" col="10"/>
@@ -290,7 +298,7 @@
         <rail type="rail" id="R5.22" row="5" col="22"/>
         <rail type="rail" id="R5.23" row="5" col="23"/>
         <rail type="rail" id="R5.24" row="5" col="24"/>
-        <rail type="rail" id="R5.25" row="5" col="25"/>
+        <rail type="rail" id="R5.26" row="5" col="26"/>
         <rail type="rail_sklon3" id="R5.27" row="5" col="27"/>
 
 
@@ -300,56 +308,60 @@
         <zarazadlo type="zarazadlo2" id="Z1" row="4" col="3"/>
         <zarazadlo type="zarazadlo2" id="Z2" row="5" col="3"/>
         <zarazadlo type="zarazadlo1" id="Z3" row="4" col="32"/>
-        <zarazadlo type="zarazadlo2" id="Z4" row="-5" col="23"/>
-        <zarazadlo type="zarazadlo2" id="Z5" row="-6" col="23"/>
+        <zarazadlo type="zarazadlo2" id="Z4" row="-5" col="22"/>
+        <zarazadlo type="zarazadlo2" id="Z5" row="-6" col="22"/>
         <zarazadlo type="zarazadlo2" id="Z6" row="3" col="2"/>
     </zarazadlo>
 
     <navestidla>
         <!-- stanične navestidlo -->
-        <navestidlo type="hlavne_navestidlo2" id="HN1" row="4" col="12"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN1" row="4" col="13"/>
         <navestidlo type="hlavne_navestidlo2" id="HN2" row="5" col="12"/>
         <navestidlo type="hlavne_navestidlo2" id="HN3" row="3" col="12"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN4" row="2" col="12"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN5" row="1" col="12"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN6" row="-1" col="12"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN4" row="2" col="10"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN5" row="1" col="9"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN6" row="-1" col="9"/>
         <navestidlo type="hlavne_navestidlo2" id="HN7" row="-2" col="12"/>
         <navestidlo type="hlavne_navestidlo2" id="HN8" row="-3" col="12"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN9" row="-4" col="12"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN9" row="-4" col="11"/>
 
-        <navestidlo type="hlavne_navestidlo1" id="HN10" row="5" col="26"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN11" row="4" col="26"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN10" row="5" col="25"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN11" row="4" col="25"/>
         <navestidlo type="hlavne_navestidlo1" id="HN12" row="3" col="26"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN13" row="2" col="26"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN14" row="1" col="26"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN15" row="-1" col="26"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN13" row="2" col="27"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN14" row="1" col="28"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN15" row="-1" col="27"/>
         <navestidlo type="hlavne_navestidlo1" id="HN16" row="-2" col="26"/>
         <navestidlo type="hlavne_navestidlo1" id="HN17" row="-3" col="26"/>
         <navestidlo type="hlavne_navestidlo1" id="HN18" row="-4" col="26"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN24" row="-5" col="26"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN25" row="-6" col="26"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN19" row="-5" col="26"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN20" row="-6" col="25"/>
 
 
         <!-- vchodove naveštidlá -->
 
-        <navestidlo type="hlavne_navestidlo1" id="HN19" row="-1" col="2"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN20" row="1" col="2"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="ZN1" row="1" col="4"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="ZN2" row="-1" col="4"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN21" row="-1" col="-1"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN22" row="-1" col="1"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN23" row="1" col="-1"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN24" row="1" col="1"/>
+        <navestidlo type="zriadovacie_navestidlo1" id="ZN1" row="1" col="3"/>
+        <navestidlo type="zriadovacie_navestidlo1" id="ZN2" row="-1" col="3"/>
 
-        <navestidlo type="hlavne_navestidlo2" id="HN21" row="-1" col="35"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN22" row="1" col="35"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN23" row="-2" col="35"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="HN26" row="-1" col="33"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="HN27" row="1" col="33"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="HN28" row="-2" col="33"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN25" row="-1" col="38"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN26" row="-1" col="36"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN27" row="1" col="36"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN28" row="1" col="38"/>
+        <navestidlo type="hlavne_navestidlo2" id="HN29" row="-2" col="34"/>
+        <navestidlo type="zriadovacie_navestidlo2" id="ZN3" row="-1" col="34"/>
+        <navestidlo type="zriadovacie_navestidlo2" id="ZN4" row="1" col="34"/>
+        <navestidlo type="zriadovacie_navestidlo2" id="ZN5" row="-2" col="32"/>
 
         <!-- depove navestidla -->
-        <navestidlo type="zriadovacie_navestidlo2" id="HN29" row="-4" col="33"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="HN30" row="4" col="30"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="HN31" row="5" col="5"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="HN32" row="4" col="5"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="HN33" row="3" col="5"/>
+        <navestidlo type="zriadovacie_navestidlo2" id="ZN6" row="-4" col="31"/>
+        <navestidlo type="zriadovacie_navestidlo2" id="ZN7" row="4" col="30"/>
+        <navestidlo type="zriadovacie_navestidlo1" id="ZN8" row="5" col="6"/>
+        <navestidlo type="zriadovacie_navestidlo1" id="ZN9" row="4" col="6"/>
+        <navestidlo type="zriadovacie_navestidlo1" id="ZN10" row="3" col="6"/>
 
     </navestidla>
 
@@ -359,8 +371,8 @@
         <cislo type="styri" id="-C4" row="-2" col="19"/>
         <cislo type="sest" id="-C6" row="-3" col="19"/>
         <cislo type="osem" id="-C8" row="-4" col="19"/>
-        <cislo type="desat" id="-C10" row="-5" col="24"/>
-        <cislo type="dvanast" id="-C12" row="-6" col="24"/>
+        <cislo type="desat" id="-C10" row="-5" col="23"/>
+        <cislo type="dvanast" id="-C12" row="-6" col="23"/>
 
         <cislo type="jedna" id="C1" row="1" col="19"/>
         <cislo type="tri" id="C3" row="2" col="19"/>
@@ -372,8 +384,8 @@
     <text>
         <text type="ZILINA" id="ZILINA" row="-6" col="17"/>
         <text type="depo" id="depo" row="-5" col="33"/>
-        <text type="KOSICE" id="KOSICE" row="2" col="33"/>
-        <text type="BRATISLAVA" id="BRATISLAVA" row="-2" col="2"/>
+        <text type="KOSICE" id="KOSICE" row="0" col="36"/>
+        <text type="BRATISLAVA" id="BRATISLAVA" row="0" col="-1"/>
         <text type="LIETAVSKA_LUCKA" id="LIETAVSKA_LUCKA" row="-3" col="33"/>
     </text>
 

@@ -1,6 +1,5 @@
 <svg height="12" width="44" xmlns="http://www.w3.org/2000/svg">
-    <text x="0.6" y="11" font-family="Arial" font-size="6" fill="gray">Lietavska Lucka</text>
+    <text x="0.6" y="8" font-family="Arial" font-size="6" fill="gray">Lietavska Lucka</text>
 
-    <path d="M23,0 25,3 23,6 " stroke="gray" fill="none"/>
-    <path d="M12,3 25,3 " stroke="gray" fill="none"/>
+
 </svg>

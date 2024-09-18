@@ -114,7 +114,7 @@ void MainWindow::toggleTabShow() const {
     if (watched == this && event->type() == QEvent::HoverMove) {
         auto *mouseEvent = dynamic_cast<QHoverEvent*>(event);
         // Check if the mouse is within 5px from the top if not hide the tabWidget and also check if I am not on the tabWidget
-        if (mouseEvent->position().y() >= 20 && !ui->tabWidget->underMouse()) {
+        if (mouseEvent->position().y() >= 10 && !ui->tabWidget->underMouse()) {
             ui->tabWidget->setVisible(false);
             // qDebug() << "Tab widget hidden";
         } else
