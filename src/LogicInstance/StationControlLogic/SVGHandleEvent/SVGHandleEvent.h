@@ -40,7 +40,9 @@ private:
 
     void reloadSVG();
 
-    void changeColor();
+    void changeColor(bool rightClick, bool middleClick);
+
+    bool rightclicked, middleclicked;
 
 
 };

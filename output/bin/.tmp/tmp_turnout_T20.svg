@@ -1,5 +1,5 @@
 <svg height="12" overflow="visible" viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
- <g id="turnout" stroke="gray" transform="scale(-1, 1) translate(-8,0) rotate(0)">
+ <g fill="gray" id="turnout" stroke="gray" transform="scale(-1, 1) translate(-8,0) rotate(0)">
   <!-- Straight State -->
   <path d="M8,6 L0,6 M4,0,L3,1.5" id="_straight" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
   <!-- Diverging State -->

@@ -38,7 +38,11 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
         return;
     }
     if(event->button() == Qt::RightButton) {
-        changeColor();
+        changeColor(true, false);
+        return;
+    }
+    if(event->button() == Qt::MiddleButton) {
+        changeColor(false, true);
         return;
     }
 }
@@ -172,7 +176,10 @@ void SVGHandleEvent::updateTransform(const QString &transformStr) {
     reloadSVG();
 }
 
-void SVGHandleEvent::changeColor() {
+void SVGHandleEvent::changeColor(bool m_rightclicked, bool m_middleclicked) {
+    rightclicked = m_rightclicked;
+    middleclicked = m_middleclicked;
+
     QFile file(svgFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file:" << svgFilePath;
@@ -189,17 +196,50 @@ void SVGHandleEvent::changeColor() {
 
     QDomElement root = doc.documentElement();
     QDomNodeList elements = root.elementsByTagName("g");
+    QString currentColor;
 
-    for (int i = 0; i < elements.count(); ++i) {
-        QDomElement element = elements.at(i).toElement();
-        if (element.hasAttribute("stroke")) {
-            QString currentColor = element.attribute("stroke");
-            if (currentColor == "gray") {
-                element.setAttribute("stroke", "#00FF00");
-            } else if (currentColor == "#00FF00") {
-                element.setAttribute("stroke", "red");
-            } else if (currentColor == "red") {
-                element.setAttribute("stroke", "gray");
+
+    if(rightclicked) {
+        for (int i = 0; i < elements.count(); ++i) {
+            QDomElement element = elements.at(i).toElement();
+            if (element.hasAttribute("stroke")) {
+                currentColor = element.attribute("stroke");
+                if (currentColor == "gray") {
+                    element.setAttribute("stroke", "#00FF00");
+                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
+                        element.setAttribute("fill", "#00FF00");
+                    }
+                } else if (currentColor == "#00FF00") {
+                    element.setAttribute("stroke", "red");
+                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
+                        element.setAttribute("fill", "red");
+                    }
+                } else if (currentColor == "red") {
+                    element.setAttribute("stroke", "gray");
+                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
+                        element.setAttribute("fill", "gray");
+                    }
+                }
+            }
+        }
+
+    }
+    else if(middleclicked) {
+        for (int i = 0; i < elements.count(); ++i) {
+            QDomElement element = elements.at(i).toElement();
+            if (element.hasAttribute("stroke")) {
+                currentColor = element.attribute("stroke");
+                if (currentColor == "gray") {
+                    element.setAttribute("stroke", "white");
+                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
+                        element.setAttribute("fill", "white");
+                    }
+                } else if (currentColor == "white") {
+                    element.setAttribute("stroke", "gray");
+                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
+                        element.setAttribute("fill", "gray");
+                    }
+                }
             }
         }
     }
@@ -214,6 +254,7 @@ void SVGHandleEvent::changeColor() {
     file.close();
 
     reloadSVG();
+
 }
 
 void SVGHandleEvent::reloadSVG() {
