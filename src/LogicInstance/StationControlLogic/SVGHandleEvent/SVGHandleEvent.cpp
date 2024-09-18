@@ -47,8 +47,7 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
             return;
         }
         else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
-            //toggleVisibility(true,false);
-            threadVyhybkaMenu(event->screenPos(), elementId);
+            vyhybkaMenu(event->screenPos(), elementId);
             return;
         }
         return;
@@ -352,8 +351,6 @@ void SVGHandleEvent::reloadSVG() {
 }
 
 void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
-    std::lock_guard<std::mutex> lock(mtx_vyhybka_menu);
-
     QString m_value;
     QMenu contextMenu;
     contextMenu.addAction(id);
@@ -476,10 +473,6 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     }
 
     contextMenu.exec(pos);
-}
-
-void SVGHandleEvent::threadVyhybkaMenu(const QPoint &pos, const QString &id) {
-    std::thread(&SVGHandleEvent::vyhybkaMenu, this, pos, id).detach();
 }
 
 void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging) {
