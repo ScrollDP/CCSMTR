@@ -1,9 +1,11 @@
 <svg height="12" overflow="visible" viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
  <g id="turnout" stroke="gray" transform="scale(1, 1) translate(0,0) rotate(0)">
   <!-- Straight State -->
-  <path d="M8,6 L0,6 M4,0,L3,1.5" id="_straight" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
+  <path d="M8,6 L0,6 M4,0,L3,1.5" id="_straight" stroke-linecap="round" stroke-width="1.1" visibility="hidden"/>
+  <!-- between -->
+  <path d="M4,0,L0,6 M8,6 L0,6" id="_between" stroke-dasharray="1,0.5" stroke-width="1.1" visibility="hidden"/>
   <!-- Diverging State -->
-  <path d="M4,0,L0,6" id="_diverging" stroke-linecap="round" stroke-width="1.1" visibility="hidden"/>
+  <path d="M4,0,L0,6" id="_diverging" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
   <!-- both states -->
   <path d="M4,0,L0,6 M8,6 L0,6" id="_both" stroke-linecap="round" stroke-width="1.1" visibility="hidden"/>
   <!-- show box-->

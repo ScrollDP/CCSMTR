@@ -36,18 +36,20 @@ private:
     int rotate;
 
 
-    void toggleVisibility();
+    void toggleVisibility(bool straight, bool diverging);
 
     void reloadSVG();
 
     void changeColor(bool rightClick, bool middleClick);
 
-    bool rightclicked, middleclicked;
+    bool rightclicked{}, middleclicked{};
 
+    void vyhybkaMenu(const QPoint &pos, const QString &id);
     static void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
     static void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
 
 
+    void saveAndReload(const QDomDocument& doc);
 };
 
 #endif // CLICKABLESVGITEM_H

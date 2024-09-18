@@ -5,6 +5,9 @@
 #include <QGraphicsSceneMouseEvent>
 #include <utility>
 #include <QMenu>
+#include <QTimer>
+#include <iostream>
+#include <QEventLoop>
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
@@ -42,18 +45,19 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
             hlavneNavestidloMenu(event->screenPos(), elementId);
             return;
         }
-        else if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
-            zriadovacieNavestidloMenu(event->screenPos(), elementId);
-            return;
-        }
         else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
-            toggleVisibility();
+            //toggleVisibility(true,false);
+            vyhybkaMenu(event->screenPos(), elementId);
             return;
         }
         return;
+
     }
     if(event->button() == Qt::RightButton) {
-        changeColor(true, false);
+        if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
+            zriadovacieNavestidloMenu(event->screenPos(), elementId);
+            return;
+        }
         return;
     }
     if(event->button() == Qt::MiddleButton) {
@@ -117,7 +121,7 @@ QStringList SVGHandleEvent::getElementIdsFromSvg(const QString &filePath) {
 }
 
 
-void SVGHandleEvent::toggleVisibility() {
+void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
     QFile file(svgFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file:" << svgFilePath;
@@ -135,16 +139,68 @@ void SVGHandleEvent::toggleVisibility() {
     QDomElement root = doc.documentElement();
     QDomNodeList elements = root.elementsByTagName("path");
 
+    if (elements.isEmpty()) {
+        qWarning() << "No path elements found in SVG file.";
+        return;
+    }
+
+    QString currentState;
     for (int i = 0; i < elements.count(); ++i) {
         QDomElement element = elements.at(i).toElement();
+        if (element.isNull()) {
+            continue;
+        }
         QString id = element.attribute("id");
 
         if (id == "_straight" || id == "_diverging") {
             QString visibility = element.attribute("visibility");
-            element.setAttribute("visibility", visibility == "visible" ? "hidden" : "visible");
+            if (visibility == "visible") {
+                currentState = id;
+                element.setAttribute("visibility", "hidden");
+            }
         }
     }
 
+    auto setVisibility = [&](const QString &id, const QString &visibility) {
+        for (int i = 0; i < elements.count(); ++i) {
+            QDomElement element = elements.at(i).toElement();
+            if (element.isNull()) {
+                continue;
+            }
+            if (element.attribute("id") == id) {
+                element.setAttribute("visibility", visibility);
+            }
+        }
+    };
+
+    if (straight) {
+        qDebug() << "Switching to straight";
+        setVisibility("_between", "visible");
+        saveAndReload(doc);
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        setVisibility("_between", "hidden");
+        setVisibility("_straight", "visible");
+        saveAndReload(doc);
+    } else if (diverging) {
+        qDebug() << "Switching to diverging";
+        setVisibility("_between", "visible");
+        saveAndReload(doc);
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        setVisibility("_between", "hidden");
+        setVisibility("_diverging", "visible");
+        saveAndReload(doc);
+    }
+
+    saveAndReload(doc);
+}
+
+void SVGHandleEvent::saveAndReload(const QDomDocument& doc) {
+
+    QFile file(svgFilePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
         return;
@@ -277,6 +333,57 @@ void SVGHandleEvent::reloadSVG() {
     this->update();
 }
 
+void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
+    QString m_value;
+    QMenu contextMenu;
+    contextMenu.addAction(id);
+    contextMenu.addSeparator();
+
+    QFile file("../layout/menu_vyhybky/vyhybky.xml");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open vyhybky.xml";
+        return;
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse vyhybky.xml";
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomNodeList parameters = root.childNodes();
+
+    if (parameters.isEmpty()) {
+        qWarning() << "No parameters found in vyhybky.xml.";
+        return;
+    }
+
+    for (int i = 0; i < parameters.count(); ++i) {
+        QDomElement element = parameters.at(i).toElement();
+        if (element.isNull()) {
+            continue;
+        }
+        QString value = element.text();
+        contextMenu.addAction(value);
+
+    }
+    QAction* selectedAction = contextMenu.exec(pos);
+    if (selectedAction) {
+        m_value = selectedAction->text();
+    }
+
+    if (m_value == "S+") {
+        toggleVisibility(true, false);
+        qDebug() << "S+";
+    } else if (m_value == "S-") {
+        qDebug() << "S-";
+        toggleVisibility(false, true);
+    }
+}
+
 
 void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) {
     QMenu contextMenu;
@@ -299,10 +406,10 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
     file.close();
 
     QDomElement root = doc.documentElement();
-    QDomNodeList defaultValues = root.elementsByTagName("default");
+    QDomNodeList parameters = root.childNodes();
 
-    for (int i = 0; i < defaultValues.count(); ++i) {
-        QDomElement element = defaultValues.at(i).toElement();
+    for (int i = 0; i < parameters.count(); ++i) {
+        QDomElement element = parameters.at(i).toElement();
         QString value = element.text();
         contextMenu.addAction(value);
     }
@@ -315,10 +422,10 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     contextMenu.addAction(id);
     contextMenu.addSeparator();
 
-    // Load default values from zriadovacie_navestidlo.xml
+    // Load default values from hlavne_navestidlo.xml
     QFile file("../layout/menu_navestidla/zriadovacie_navestidlo.xml");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open zriadovacie_navestidlo.xml";
+        qWarning() << "Failed to open hlavne_navestidlo.xml";
         return;
     }
 
@@ -331,10 +438,10 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     file.close();
 
     QDomElement root = doc.documentElement();
-    QDomNodeList defaultValues = root.elementsByTagName("default");
+    QDomNodeList parameters = root.childNodes();
 
-    for (int i = 0; i < defaultValues.count(); ++i) {
-        QDomElement element = defaultValues.at(i).toElement();
+    for (int i = 0; i < parameters.count(); ++i) {
+        QDomElement element = parameters.at(i).toElement();
         QString value = element.text();
         contextMenu.addAction(value);
     }
