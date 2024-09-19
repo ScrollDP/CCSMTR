@@ -6,9 +6,9 @@
 #include <utility>
 #include <QMenu>
 #include <QTimer>
-#include <iostream>
-#include <QEventLoop>
 #include <thread>
+#include <mutex>
+
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
@@ -27,6 +27,18 @@ SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, in
     }
     this->setSharedRenderer(renderer);
 
+}
+SVGHandleEvent::~SVGHandleEvent() {
+    if (vyhybkaThread.joinable()) {
+        vyhybkaThread.join();
+    }
+}
+
+void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging) {
+    if (vyhybkaThread.joinable()) {
+        vyhybkaThread.join();
+    }
+    vyhybkaThread = std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging);
 }
 
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
@@ -145,6 +157,15 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
         return;
     }
 
+    auto extractNumber = [&](const QString &elementId) {
+        QRegularExpression re("\\d+");
+        QRegularExpressionMatch match = re.match(elementId);
+        if (match.hasMatch()) {
+            return match.captured(0);
+        }
+        return QString();
+    };
+
     for (int i = 0; i < elements.count(); ++i) {
         QDomElement element = elements.at(i).toElement();
         if (element.isNull()) {
@@ -173,46 +194,33 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
     };
 
     if (straight) {
-        //qDebug() << "Switching to straight";
         setVisibility("_between", "visible");
         saveAndReload(doc);
-        QRegularExpression re("\\d+");
-        QRegularExpressionMatch match = re.match(elementId);
-        if (match.hasMatch()) {
-            QString number = match.captured(0);
-            QString command = QString("<T %1 1>").arg(number);
-            //qDebug() << "command: " << command;
-            sendToArduino(command);
 
-        }
-        QEventLoop loop;
-        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
-        loop.exec();
+        QString number = extractNumber(elementId);
+        QString command = QString("<T %1 1>").arg(number);
+        qDebug() << "command: " << command;
+        sendToArduino(command);
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_straight", "visible");
         saveAndReload(doc);
+
     } else if (diverging) {
-        //qDebug() << "Switching to diverging";
         setVisibility("_between", "visible");
         saveAndReload(doc);
-        QRegularExpression re("\\d+");
-        QRegularExpressionMatch match = re.match(elementId);
-        if (match.hasMatch()) {
-            QString number = match.captured(0);
-            QString command = QString("<T %1 0>").arg(number);
-            //qDebug() << "command: " << command;
-            sendToArduino(command);
 
-        }
-        QEventLoop loop;
-        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
-        loop.exec();
+        QString number = extractNumber(elementId);
+        QString command = QString("<T %1 0>").arg(number);
+        qDebug() << "command: " << command;
+        sendToArduino(command);
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_diverging", "visible");
         saveAndReload(doc);
     }
 
-    saveAndReload(doc);
+    qDebug() << "Exiting toggleVisibility method";
 }
 
 void SVGHandleEvent::saveAndReload(const QDomDocument& doc) {
@@ -475,9 +483,6 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     contextMenu.exec(pos);
 }
 
-void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging) {
-    std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging).detach();
-}
 
 void SVGHandleEvent::sendToArduino(const QString &dataList) {
     //qDebug() << "Adding command to queue: " << dataList;

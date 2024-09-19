@@ -9,13 +9,18 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QStringList>
+#include <thread>
 #include "../../../MainScreen/TabFolder/ConnectionTab/DCC-EX/CommandQueue.h"
 
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
+    std::thread vyhybkaThread;
+    std::mutex mtx_toggle_vyhybka;
+
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
+    ~SVGHandleEvent();
     void setScaleAndPosition(qreal scale, qreal x, qreal y);
 
     void updateTransform(const QString &transformStr);
@@ -35,11 +40,9 @@ private:
     int col;
     bool flipped;
     int rotate;
-    std::mutex mtx_toggle_vyhybka;
 
 
     void toggleVisibility(bool straight, bool diverging);
-    void threadVyhybkaMenu(const QPoint &pos, const QString &id);
     void threadToggleVyhybka(bool straight, bool diverging);
 
     void reloadSVG();

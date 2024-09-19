@@ -1,6 +1,7 @@
 <routes>
     <route name="">
-        <start point="HN19"/>
+        <start point="HN9"/>
+        <end point="HN1"/>
         <waypoints>
             <waypoint id="1" name="Waypoint1" row="1" col="1"/>
             <waypoint id="2" name="Waypoint2" row="2" col="2"/>
