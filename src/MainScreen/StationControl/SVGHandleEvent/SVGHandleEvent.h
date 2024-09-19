@@ -26,16 +26,12 @@ public:
 
     void updateTransform(const QString &transformStr);
 
-    void setSomeBoolean(bool newValue);
-
-signals:
-    void booleanChanged(bool newValue);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    [[maybe_unused]] QString getElementIdAtPosition(const QPointF &position);
+    QString getElementIdAtPosition(const QPointF &position);
     QStringList getElementIdsFromSvg(const QString &filePath);
 
     QString svgFilePath;
@@ -68,7 +64,9 @@ private:
     QStringList endpoints;
     QString startPointElementId;
 
-    bool someBoolean;
+
+    void checkIDwithEndpoint(const QString &id);
+
 };
 
 #endif // CLICKABLESVGITEM_H

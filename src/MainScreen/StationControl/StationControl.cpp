@@ -130,12 +130,6 @@ void StationControl::LoadingSvgFile() {
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col,flipped,rotate);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
-
-            connect(svgItem, &SVGHandleEvent::booleanChanged, [](bool newValue) {
-                qDebug() << "Boolean changed to: " << newValue;
-                // Optionally trigger additional actions here
-            });
-
             ApplyTransformation(flipped, rotate, svgItem, type);
 
             scene->addItem(svgItem);

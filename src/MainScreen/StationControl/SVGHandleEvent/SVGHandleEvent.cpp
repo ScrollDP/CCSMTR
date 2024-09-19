@@ -18,8 +18,7 @@ SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, in
         col(col),
         flipped(flipped),
         rotate(rotate),
-        renderer(new QSvgRenderer(svgFilePath)),
-        someBoolean(false) {
+        renderer(new QSvgRenderer(svgFilePath)){
     if (!renderer->isValid()) {
         qWarning() << "Failed to load SVG file:" << svgFilePath;
         delete renderer;
@@ -32,14 +31,6 @@ SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, in
 SVGHandleEvent::~SVGHandleEvent() {
     if (vyhybkaThread.joinable()) {
         vyhybkaThread.join();
-    }
-}
-
-void SVGHandleEvent::setSomeBoolean(bool newValue) {
-    if (someBoolean != newValue) {
-        someBoolean = newValue;
-        qDebug() <<"Boolean changed, emmitting signal";
-        emit booleanChanged(newValue);  // Emit signal when boolean changes
     }
 }
 
@@ -199,7 +190,7 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
         saveAndReload(doc);
     }
 
-    qDebug() << "Exiting toggleVisibility method";
+   // qDebug() << "Exiting toggleVisibility method";
 }
 
 void SVGHandleEvent::saveAndReload(const QDomDocument& doc) {
@@ -502,18 +493,10 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
                 qDebug() << "End point:" << endPointId;
                 endpoints.append(endPointId); // Store the endpoint
                 qDebug() << "endpoints" << endpoints;
-
-                setSomeBoolean(true);
-
+                checkIDwithEndpoint(endPointId);
 
             }
         }
-
-        // Set the flag to wait for endpoint click
-        qDebug() << "elementId after endpoints" << elementId;
-        startPointElementId = elementId; // Store the start point element ID
-        qDebug() << "pretipovanie" << startPointElementId;
-
 
     }
 }
@@ -557,19 +540,10 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
 }
 
 
-[[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
 
-    qDebug() << "someBoolean MOuse" << someBoolean;
     if(event->button() == Qt::LeftButton) {
-        if (someBoolean) {
-            qDebug() << "Boolean is true, taking action";
-            // Take action when true
-        } else {
-            qDebug() << "Boolean is false, taking another action";
-            // Take a different action
-        }
-
         qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
                  "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
 
@@ -581,7 +555,8 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
             vyhybkaMenu(event->screenPos(), elementId);
             return;
         }
-        return;
+        checkIDwithEndpoint(elementId);
+
 
     }
     if(event->button() == Qt::RightButton) {
@@ -595,8 +570,17 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
         changeColor(false, true);
         return;
     }
+}
 
-    this->update();
+
+void SVGHandleEvent::checkIDwithEndpoint(const QString &endPointId) {
+    if (elementId == endPointId) {
+        qDebug() << "Match found: " << "elementID" << elementId << "endpoint"<<endPointId;
+        // Display it settle
+    } else {
+        qDebug() << "No match found for elementID: " << elementId <<" endpoint "<< endPointId;
+        // Not match
+    }
 }
 
 
