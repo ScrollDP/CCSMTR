@@ -422,48 +422,7 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
     if (selectedAction && selectedAction->text() == "VC") {
         // Setting background color of that element to Lightgreen
         // Updating parameter in SVG file visibility with id back_color
-        QFile afile(svgFilePath);
-        if (!afile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open SVG file:" << svgFilePath;
-            return;
-        }
-
-        QDomDocument adoc;
-        if (!adoc.setContent(&afile)) {
-            qWarning() << "Failed to parse SVG file:" << svgFilePath;
-            afile.close();
-            return;
-        }
-        afile.close();
-
-        QDomElement aroot = adoc.documentElement();
-        QDomNodeList elements = aroot.elementsByTagName("g");
-
-        for (int i = 0; i < elements.count(); ++i) {
-            QDomElement element = elements.at(i).toElement();
-            if (element.isNull()) {
-                continue;
-            }
-            QString Id = element.attribute("id");
-
-            if (Id == "back_color") {
-                element.setAttribute("visibility", "visible");
-                qDebug() << "color changing";
-            }
-        }
-
-        // Save the changes back to the SVG file
-        if (!afile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
-            return;
-        }
-
-        QTextStream stream(&afile);
-        stream << adoc.toString();
-        afile.close();
-
-        // Reload the SVG to apply changes
-        reloadSVG();
+        changeColorbackground();
 
         // Read routes.xml to find the end point
         QFile routesFile("../layout/routes.xml");
@@ -483,7 +442,6 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
         QDomElement routesRoot = routesDoc.documentElement();
         QDomNodeList routes = routesRoot.elementsByTagName("route");
 
-        endpoints.clear(); // Clear previous endpoints
         for (int i = 0; i < routes.count(); ++i) {
             QDomElement route = routes.at(i).toElement();
             QDomElement start = route.firstChildElement("start");
@@ -491,13 +449,23 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
                 QDomElement end = route.firstChildElement("end");
                 QString endPointId = end.attribute("point");
                 qDebug() << "End point:" << endPointId;
-                endpoints.append(endPointId); // Store the endpoint
-                qDebug() << "endpoints" << endpoints;
-                checkIDwithEndpoint(endPointId);
 
+                // Update onDemand parameter to true
+                QDomElement status = route.firstChildElement("status");
+                QDomElement onDemand = status.firstChildElement("onDemand");
+                onDemand.firstChild().setNodeValue("true");
+
+                // Save the changes back to the routes.xml file
+                if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                    qWarning() << "Failed to open routes.xml for writing";
+                    return;
+                }
+
+                QTextStream routesStream(&routesFile);
+                routesStream << routesDoc.toString();
+                routesFile.close();
             }
         }
-
     }
 }
 
@@ -549,38 +517,99 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
             hlavneNavestidloMenu(event->screenPos(), elementId);
-            return;
         }
         else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
             vyhybkaMenu(event->screenPos(), elementId);
-            return;
         }
         checkIDwithEndpoint(elementId);
-
-
     }
     if(event->button() == Qt::RightButton) {
         if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
             zriadovacieNavestidloMenu(event->screenPos(), elementId);
-            return;
         }
-        return;
     }
     if(event->button() == Qt::MiddleButton) {
         changeColor(false, true);
-        return;
     }
 }
 
 
-void SVGHandleEvent::checkIDwithEndpoint(const QString &endPointId) {
-    if (elementId == endPointId) {
-        qDebug() << "Match found: " << "elementID" << elementId << "endpoint"<<endPointId;
-        // Display it settle
-    } else {
-        qDebug() << "No match found for elementID: " << elementId <<" endpoint "<< endPointId;
-        // Not match
+void SVGHandleEvent::checkIDwithEndpoint(const QString &elementid) {
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
     }
+
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement end = route.firstChildElement("end");
+        if (end.attribute("point") == elementid) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement onDemand = status.firstChildElement("onDemand");
+            if (onDemand.text() == "true") {
+                changeColorbackground();
+
+                break;
+            }
+        }
+    }
+}
+
+void SVGHandleEvent::changeColorbackground() {
+    QFile file(svgFilePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file:" << svgFilePath;
+        return;
+    }
+
+    QDomDocument adoc;
+    if (!adoc.setContent(&file)) {
+        qWarning() << "Failed to parse SVG file:" << svgFilePath;
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement aroot = adoc.documentElement();
+    QDomNodeList elements = aroot.elementsByTagName("g");
+
+    for (int i = 0; i < elements.count(); ++i) {
+        QDomElement element = elements.at(i).toElement();
+        if (element.isNull()) {
+            continue;
+        }
+        QString Id = element.attribute("id");
+
+        if (Id == "back_color") {
+            element.setAttribute("visibility", "visible");
+            //qDebug() << "color changing";
+        }
+    }
+
+    // Save the changes back to the SVG file
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream << adoc.toString();
+    file.close();
+
+    // Reload the SVG to apply changes
+    reloadSVG();
 }
 
 

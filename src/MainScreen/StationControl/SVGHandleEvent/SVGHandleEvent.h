@@ -61,11 +61,11 @@ private:
 
     static void sendToArduino(const QString &dataList);
 
-    QStringList endpoints;
     QString startPointElementId;
 
+    void checkIDwithEndpoint(const QString &elementid);
 
-    void checkIDwithEndpoint(const QString &id);
+    void changeColorbackground();
 
 };
 
