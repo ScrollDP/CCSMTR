@@ -18,7 +18,8 @@ SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, in
         col(col),
         flipped(flipped),
         rotate(rotate),
-        renderer(new QSvgRenderer(svgFilePath)){
+        renderer(new QSvgRenderer(svgFilePath)),
+        someBoolean(false) {
     if (!renderer->isValid()) {
         qWarning() << "Failed to load SVG file:" << svgFilePath;
         delete renderer;
@@ -34,6 +35,14 @@ SVGHandleEvent::~SVGHandleEvent() {
     }
 }
 
+void SVGHandleEvent::setSomeBoolean(bool newValue) {
+    if (someBoolean != newValue) {
+        someBoolean = newValue;
+        qDebug() <<"Boolean changed, emmitting signal";
+        emit booleanChanged(newValue);  // Emit signal when boolean changes
+    }
+}
+
 void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging) {
     if (vyhybkaThread.joinable()) {
         vyhybkaThread.join();
@@ -46,38 +55,7 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
     this->setPos(x * scale, y * scale);
 }
 
-[[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    QGraphicsSvgItem::mousePressEvent(event);
 
-
-    if(event->button() == Qt::LeftButton) {
-
-        qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
-        "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
-
-        if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
-            hlavneNavestidloMenu(event->screenPos(), elementId);
-            return;
-        }
-        else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
-            vyhybkaMenu(event->screenPos(), elementId);
-            return;
-        }
-        return;
-
-    }
-    if(event->button() == Qt::RightButton) {
-        if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
-            zriadovacieNavestidloMenu(event->screenPos(), elementId);
-            return;
-        }
-        return;
-    }
-    if(event->button() == Qt::MiddleButton) {
-        changeColor(false, true);
-        return;
-    }
-}
 
 [[maybe_unused]] QString SVGHandleEvent::getElementIdAtPosition(const QPointF &position) {
     QStringList elementIds = getElementIdsFromSvg(QString());
@@ -525,6 +503,8 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
                 endpoints.append(endPointId); // Store the endpoint
                 qDebug() << "endpoints" << endpoints;
 
+                setSomeBoolean(true);
+
 
             }
         }
@@ -575,3 +555,48 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
     //qDebug() << "Adding command to queue: " << dataList;
     commandQueue.enqueue(dataList);
 }
+
+
+[[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    QGraphicsSvgItem::mousePressEvent(event);
+
+    qDebug() << "someBoolean MOuse" << someBoolean;
+    if(event->button() == Qt::LeftButton) {
+        if (someBoolean) {
+            qDebug() << "Boolean is true, taking action";
+            // Take action when true
+        } else {
+            qDebug() << "Boolean is false, taking another action";
+            // Take a different action
+        }
+
+        qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
+                 "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
+
+        if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
+            hlavneNavestidloMenu(event->screenPos(), elementId);
+            return;
+        }
+        else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
+            vyhybkaMenu(event->screenPos(), elementId);
+            return;
+        }
+        return;
+
+    }
+    if(event->button() == Qt::RightButton) {
+        if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
+            zriadovacieNavestidloMenu(event->screenPos(), elementId);
+            return;
+        }
+        return;
+    }
+    if(event->button() == Qt::MiddleButton) {
+        changeColor(false, true);
+        return;
+    }
+
+    this->update();
+}
+
+

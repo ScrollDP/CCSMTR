@@ -105,11 +105,11 @@ void StationControl::LoadingSvgFile() {
                 qWarning() << "Invalid type:" << type;
                 continue;
             }
-            QString svgFilePath = it->second;
+            QString m_svgFilePath = it->second;
 
-            QFileInfo svgFileInfo(svgFilePath);
+            QFileInfo svgFileInfo(m_svgFilePath);
             if (!svgFileInfo.exists()) {
-                qWarning() << "SVG file does not exist at:" << svgFilePath;
+                qWarning() << "SVG file does not exist at:" << m_svgFilePath;
                 continue;
             }
 
@@ -123,12 +123,18 @@ void StationControl::LoadingSvgFile() {
             QFile tmpFile(tmpFilePath);
             if (!tmpFile.exists()) {
                 //tmpFile.remove(); // Delete the temporary file if it exists
-                QFile::copy(svgFilePath, tmpFilePath); // Copy the original file to the temporary location
+                QFile::copy(m_svgFilePath, tmpFilePath); // Copy the original file to the temporary location
             }
 
             // Load the temporary SVG file
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col,flipped,rotate);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
+
+
+            connect(svgItem, &SVGHandleEvent::booleanChanged, [](bool newValue) {
+                qDebug() << "Boolean changed to: " << newValue;
+                // Optionally trigger additional actions here
+            });
 
             ApplyTransformation(flipped, rotate, svgItem, type);
 
@@ -139,10 +145,10 @@ void StationControl::LoadingSvgFile() {
     }
 }
 
-void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEvent *svgItem, QString type) {
+void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEvent *svgItem, const QString& m_type) {
     QString transformStr;
 
-    if(type == "turnout"){
+    if(m_type == "turnout"){
         if (rotate == 0) {
             if (flipped) {
                 transformStr = "scale(-1, 1) translate(-8,0) rotate(0)";

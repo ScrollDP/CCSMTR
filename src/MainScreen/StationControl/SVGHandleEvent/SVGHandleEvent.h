@@ -10,7 +10,7 @@
 #include <QDomDocument>
 #include <QStringList>
 #include <thread>
-#include "../../../MainScreen/TabFolder/ConnectionTab/DCC-EX/CommandQueue.h"
+#include "../../TabFolder/ConnectionTab/DCC-EX/CommandQueue.h"
 
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
@@ -26,9 +26,13 @@ public:
 
     void updateTransform(const QString &transformStr);
 
+    void setSomeBoolean(bool newValue);
+
+signals:
+    void booleanChanged(bool newValue);
 
 protected:
-    [[maybe_unused]] void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     [[maybe_unused]] QString getElementIdAtPosition(const QPointF &position);
@@ -63,6 +67,8 @@ private:
 
     QStringList endpoints;
     QString startPointElementId;
+
+    bool someBoolean;
 };
 
 #endif // CLICKABLESVGITEM_H

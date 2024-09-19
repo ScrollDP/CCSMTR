@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QDomDocument>
 #include <QGraphicsSvgItem>
-#include "../../LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.h"
+#include "SVGHandleEvent/SVGHandleEvent.h"
 
 class StationControl : public QWidget {
     Q_OBJECT
@@ -24,7 +24,7 @@ private:
     int Position_Col = 8;
     int Position_Row = 12;
 
-    static void ApplyTransformation(bool mirror, int rotate, SVGHandleEvent* svgHandleEvent, QString type);
+    static void ApplyTransformation(bool mirror, int rotate, SVGHandleEvent* svgHandleEvent, const QString& type);
     QSvgRenderer *renderer;
     QString svgFilePath;
 };

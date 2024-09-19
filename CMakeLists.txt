@@ -23,8 +23,8 @@ set(SOURCES
         src/MainScreen/TabFolder/ConnectionTab/Power/PowerWindow.h
         src/LogicInstance/StationControlLogic/RightClick/RightClick.cpp
         src/LogicInstance/StationControlLogic/RightClick/RightClick.h
-        src/LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.cpp
-        src/LogicInstance/StationControlLogic/SVGHandleEvent/SVGHandleEvent.h
+        src/MainScreen/StationControl/SVGHandleEvent/SVGHandleEvent.cpp
+        src/MainScreen/StationControl/SVGHandleEvent/SVGHandleEvent.h
         src/MainScreen/TabFolder/ConnectionTab/DCC-EX/CommandQueue.h
 
 
