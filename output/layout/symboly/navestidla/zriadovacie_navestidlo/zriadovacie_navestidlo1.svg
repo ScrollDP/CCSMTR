@@ -1,4 +1,8 @@
 <svg height="12"  viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
+    <g id="back_color" visibility="hidden">
+        <!-- Background rectangle -->
+        <rect  width="8" height="12" fill="#00FF00" stroke="none"  opacity="0.7"/>
+    </g>
     <g fill="none" stroke="gray" id="zriadovacie_navestidlo" stroke-width="1.1" >
         <polyline points="1.5,2 6.4,6 1.5,10"/>
         <!--<rect x="0" y="0" width="8" height="12" fill="none" stroke="green" stroke-width="0.4" visibility="visible"/>-->

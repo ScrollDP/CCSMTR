@@ -10,7 +10,7 @@
 #include <mutex>
 
 
-SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
+SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QString aaa, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
         svgFilePath(svgFilePath),
         elementId(std::move(elementId)),
@@ -18,7 +18,8 @@ SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, in
         col(col),
         flipped(flipped),
         rotate(rotate),
-        renderer(new QSvgRenderer(svgFilePath)) {
+        renderer(new QSvgRenderer(svgFilePath)),
+        aaa(std::move(aaa)){
     if (!renderer->isValid()) {
         qWarning() << "Failed to load SVG file:" << svgFilePath;
         delete renderer;
@@ -48,11 +49,24 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
 
 [[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
+
+    if (aaa == "WaitingForEndpointClick" && event->button() == Qt::LeftButton) {
+        qDebug() << "Waiting for endpoint click";
+        QString clickedElementId = getElementIdAtPosition(event->pos());
+        qDebug() << "Clicked element ID:" << clickedElementId;
+        if (endpoints.contains(clickedElementId)) {
+            qDebug() << "Clicked on this endpoint that starts from element:" << startPointElementId;
+            //currentState = "Idle2"; // Reset the state
+        } else {
+            qDebug() << "Clicked element is not an endpoint.";
+        }
+        return;
+    }
+
     if(event->button() == Qt::LeftButton) {
 
         qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
         "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
-
 
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
             hlavneNavestidloMenu(event->screenPos(), elementId);
@@ -448,7 +462,94 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
         contextMenu.addAction(value);
     }
 
-    contextMenu.exec(pos);
+    QAction* selectedAction = contextMenu.exec(pos);
+    if (selectedAction && selectedAction->text() == "VC") {
+        // Setting background color of that element to Lightgreen
+        // Updating parameter in SVG file visibility with id back_color
+        QFile afile(svgFilePath);
+        if (!afile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qWarning() << "Failed to open SVG file:" << svgFilePath;
+            return;
+        }
+
+        QDomDocument adoc;
+        if (!adoc.setContent(&afile)) {
+            qWarning() << "Failed to parse SVG file:" << svgFilePath;
+            afile.close();
+            return;
+        }
+        afile.close();
+
+        QDomElement aroot = adoc.documentElement();
+        QDomNodeList elements = aroot.elementsByTagName("g");
+
+        for (int i = 0; i < elements.count(); ++i) {
+            QDomElement element = elements.at(i).toElement();
+            if (element.isNull()) {
+                continue;
+            }
+            QString Id = element.attribute("id");
+
+            if (Id == "back_color") {
+                element.setAttribute("visibility", "visible");
+                qDebug() << "color changing";
+            }
+        }
+
+        // Save the changes back to the SVG file
+        if (!afile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
+            return;
+        }
+
+        QTextStream stream(&afile);
+        stream << adoc.toString();
+        afile.close();
+
+        // Reload the SVG to apply changes
+        reloadSVG();
+
+        // Read routes.xml to find the end point
+        QFile routesFile("../layout/routes.xml");
+        if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qWarning() << "Failed to open routes.xml";
+            return;
+        }
+
+        QDomDocument routesDoc;
+        if (!routesDoc.setContent(&routesFile)) {
+            qWarning() << "Failed to parse routes.xml";
+            routesFile.close();
+            return;
+        }
+        routesFile.close();
+
+        QDomElement routesRoot = routesDoc.documentElement();
+        QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+        endpoints.clear(); // Clear previous endpoints
+        for (int i = 0; i < routes.count(); ++i) {
+            QDomElement route = routes.at(i).toElement();
+            QDomElement start = route.firstChildElement("start");
+            if (start.attribute("point") == elementId) {
+                QDomElement end = route.firstChildElement("end");
+                QString endPointId = end.attribute("point");
+                qDebug() << "End point:" << endPointId;
+                endpoints.append(endPointId); // Store the endpoint
+                qDebug() << "endpoints" << endpoints;
+                aaa = "WaitingForEndpointClick";
+                qDebug() << "currentState" << aaa;
+
+            }
+        }
+
+        // Set the flag to wait for endpoint click
+        qDebug() << "elementId after endpoints" << elementId;
+        startPointElementId = elementId; // Store the start point element ID
+        qDebug() << "pretipovanie" << startPointElementId;
+
+
+    }
 }
 
 void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString &id){

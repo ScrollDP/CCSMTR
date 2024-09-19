@@ -1,5 +1,9 @@
 <svg height="12" viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
- <g fill="gray" id="hlavne_navestidlo" stroke="gray" stroke-width="1.1" transform="">
+ <g id="back_color" transform="" visibility="hidden">
+  <!-- Background rectangle -->
+  <rect fill="#00FF00" height="12" opacity="0.7" stroke="none" width="8"/>
+ </g>
+ <g fill="gray" id="hlavne_navestidlo" stroke="gray" stroke-width="1.1">
   <polygon points="2,6 6.5,3 6.5,9"/>
   <!--<rect x="0" y="0" width="8" height="12" fill="none" stroke="green" stroke-width="0.4" visibility="visible"/>-->
  </g>

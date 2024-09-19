@@ -1,11 +1,22 @@
 <routes>
-    <route name="">
+    <route name="prva">
         <start point="HN9"/>
-        <end point="HN1"/>
-        <waypoints>
-            <waypoint id="1" name="Waypoint1" row="1" col="1"/>
-            <waypoint id="2" name="Waypoint2" row="2" col="2"/>
-            <waypoint id="3" name="Waypoint3" row="3" col="3"/>
-        </waypoints>
+        <end point="-R1.0"/>
+        <!--elements for route by id-->
+        <elements>
+            <element id="HN9"/>
+            <element id="-R4.10"/>
+            <element id="-R4.9"/>
+            <element id="-R3.9"/>
+            <element id="-R3.8"/>
+            <element id="T8"/>
+            <element id="-R2.7"/>
+            <element id="T6"/>
+            <element id="T4"/>
+            <element id="T2"/>
+            <element id="-R1.4"/>
+            <element id="-R1.2"/>
+            <element id="-R1.0"/>
+        </elements>
     </route>
 </routes>
