@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <thread>
 #include <mutex>
+#include <QDir>
 
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
@@ -32,13 +33,23 @@ SVGHandleEvent::~SVGHandleEvent() {
     if (vyhybkaThread.joinable()) {
         vyhybkaThread.join();
     }
+    if (hlavneNavestidloThread.joinable()) {
+        hlavneNavestidloThread.join();
+    }
 }
 
-void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging) {
+void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QString &path, const QString &elementId) {
     if (vyhybkaThread.joinable()) {
         vyhybkaThread.join();
     }
-    vyhybkaThread = std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging);
+    vyhybkaThread = std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging, path, elementId);
+}
+
+void SVGHandleEvent::threadHlavneNavestidloMenu() {
+    if (hlavneNavestidloThread.joinable()) {
+        hlavneNavestidloThread.join();
+    }
+    hlavneNavestidloThread = std::thread(&SVGHandleEvent::changingPositionOfTurnouts, this);
 }
 
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
@@ -103,17 +114,17 @@ QStringList SVGHandleEvent::getElementIdsFromSvg(const QString &filePath) {
 }
 
 
-void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
+void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QString &path, const QString &turnoutID) {
     std::lock_guard<std::mutex> lock(mtx_toggle_vyhybka);
-    QFile file(svgFilePath);
+    QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open SVG file:" << svgFilePath;
+        qWarning() << "Failed to open SVG file:" << path;
         return;
     }
 
     QDomDocument doc;
     if (!doc.setContent(&file)) {
-        qWarning() << "Failed to parse SVG file:" << svgFilePath;
+        qWarning() << "Failed to parse SVG file:" << path;
         file.close();
         return;
     }
@@ -127,9 +138,9 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
         return;
     }
 
-    auto extractNumber = [&](const QString &elementId) {
+    auto extractNumber = [&](const QString &turnoutId) {
         QRegularExpression re("\\d+");
-        QRegularExpressionMatch match = re.match(elementId);
+        QRegularExpressionMatch match = re.match(turnoutId);
         if (match.hasMatch()) {
             return match.captured(0);
         }
@@ -165,47 +176,48 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging) {
 
     if (straight) {
         setVisibility("_between", "visible");
-        saveAndReload(doc);
+        saveAndReload(doc,path,turnoutID);
 
-        QString number = extractNumber(elementId);
+        QString number = extractNumber(turnoutID);
         QString command = QString("<T %1 1>").arg(number);
         qDebug() << "command: " << command;
         sendToArduino(command);
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_straight", "visible");
-        saveAndReload(doc);
+        saveAndReload(doc,path,turnoutID);
 
     } else if (diverging) {
         setVisibility("_between", "visible");
-        saveAndReload(doc);
+        saveAndReload(doc,path,turnoutID);
 
-        QString number = extractNumber(elementId);
+        QString number = extractNumber(turnoutID);
         QString command = QString("<T %1 0>").arg(number);
         qDebug() << "command: " << command;
         sendToArduino(command);
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_diverging", "visible");
-        saveAndReload(doc);
+        saveAndReload(doc,path,turnoutID);
     }
 
    // qDebug() << "Exiting toggleVisibility method";
 }
 
-void SVGHandleEvent::saveAndReload(const QDomDocument& doc) {
+void SVGHandleEvent::saveAndReload(const QDomDocument& doc, const QString &path, const QString &elemID) {
 
-    QFile file(svgFilePath);
+    QFile file(path);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
+        qWarning() << "Failed to open SVG file for writing:" << path;
         return;
     }
 
     QTextStream stream(&file);
     stream << doc.toString();
     file.close();
+    qDebug() << "SVG file saved:" << path;
 
-    reloadSVG();
+    reloadSVG(path,elemID);
 }
 
 void SVGHandleEvent::updateTransform(const QString &transformStr) {
@@ -239,92 +251,15 @@ void SVGHandleEvent::updateTransform(const QString &transformStr) {
     stream << doc.toString();
     file.close();
 
-    reloadSVG();
-}
-
-void SVGHandleEvent::changeColor(bool m_rightclicked, bool m_middleclicked) {
-    rightclicked = m_rightclicked;
-    middleclicked = m_middleclicked;
-
-    QFile file(svgFilePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open SVG file:" << svgFilePath;
-        return;
-    }
-
-    QDomDocument doc;
-    if (!doc.setContent(&file)) {
-        qWarning() << "Failed to parse SVG file:" << svgFilePath;
-        file.close();
-        return;
-    }
-    file.close();
-
-    QDomElement root = doc.documentElement();
-    QDomNodeList elements = root.elementsByTagName("g");
-    QString currentColor;
-
-
-    if(rightclicked) {
-        for (int i = 0; i < elements.count(); ++i) {
-            QDomElement element = elements.at(i).toElement();
-            if (element.hasAttribute("stroke")) {
-                currentColor = element.attribute("stroke");
-                if (currentColor == "gray") {
-                    element.setAttribute("stroke", "#00FF00");
-                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
-                        element.setAttribute("fill", "#00FF00");
-                    }
-                } else if (currentColor == "#00FF00") {
-                    element.setAttribute("stroke", "red");
-                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
-                        element.setAttribute("fill", "red");
-                    }
-                } else if (currentColor == "red") {
-                    element.setAttribute("stroke", "gray");
-                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
-                        element.setAttribute("fill", "gray");
-                    }
-                }
-            }
-        }
-
-    }
-    else if(middleclicked) {
-        for (int i = 0; i < elements.count(); ++i) {
-            QDomElement element = elements.at(i).toElement();
-            if (element.hasAttribute("stroke")) {
-                currentColor = element.attribute("stroke");
-                if (currentColor == "gray") {
-                    element.setAttribute("stroke", "white");
-                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
-                        element.setAttribute("fill", "white");
-                    }
-                } else if (currentColor == "white") {
-                    element.setAttribute("stroke", "gray");
-                    if (element.hasAttribute("id") && element.attribute("id") != "zriadovacie_navestidlo") {
-                        element.setAttribute("fill", "gray");
-                    }
-                }
-            }
-        }
-    }
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
-        return;
-    }
-
-    QTextStream stream(&file);
-    stream << doc.toString();
-    file.close();
-
-    reloadSVG();
-
-}
-
-void SVGHandleEvent::reloadSVG() {
     this->renderer->load(svgFilePath);
+    this->update();
+}
+
+void SVGHandleEvent::reloadSVG(const QString &reloadPath, const QString &elemID) {
+    qDebug() << "Reloading SVG file:" << reloadPath;
+
+
+    this->renderer->load(reloadPath);
     this->update();
 }
 
@@ -380,16 +315,18 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
     }
 
     if (m_value == "S+") {
-        threadToggleVyhybka(true, false);
+        threadToggleVyhybka(true, false,svgFilePath, id);
         //qDebug() << "S+";
     } else if (m_value == "S-") {
         //qDebug() << "S-";
-        threadToggleVyhybka(false, true);
+        threadToggleVyhybka(false, true,svgFilePath,id);
     }
 }
 
 
+
 void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) {
+
     QMenu contextMenu;
     contextMenu.addAction(id);
     contextMenu.addSeparator();
@@ -422,7 +359,7 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
     if (selectedAction && selectedAction->text() == "VC") {
         // Setting background color of that element to Lightgreen
         // Updating parameter in SVG file visibility with id back_color
-        changeColorbackground();
+        changeColorbackground(svgFilePath,elementId);
 
         // Read routes.xml to find the end point
         QFile routesFile("../layout/routes.xml");
@@ -520,6 +457,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         }
         else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
             vyhybkaMenu(event->screenPos(), elementId);
+            qDebug()<<"pos"<<event->screenPos();
         }
         checkIDwithEndpoint(elementId);
     }
@@ -528,13 +466,11 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             zriadovacieNavestidloMenu(event->screenPos(), elementId);
         }
     }
-    if(event->button() == Qt::MiddleButton) {
-        changeColor(false, true);
-    }
 }
 
 
 void SVGHandleEvent::checkIDwithEndpoint(const QString &elementid) {
+
     QFile routesFile("../layout/routes.xml");
     if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open routes.xml";
@@ -559,7 +495,10 @@ void SVGHandleEvent::checkIDwithEndpoint(const QString &elementid) {
             QDomElement status = route.firstChildElement("status");
             QDomElement onDemand = status.firstChildElement("onDemand");
             if (onDemand.text() == "true") {
-                changeColorbackground();
+                changeColorbackground(svgFilePath,elementId);
+
+                threadHlavneNavestidloMenu();
+
 
                 break;
             }
@@ -567,16 +506,16 @@ void SVGHandleEvent::checkIDwithEndpoint(const QString &elementid) {
     }
 }
 
-void SVGHandleEvent::changeColorbackground() {
-    QFile file(svgFilePath);
+void SVGHandleEvent::changeColorbackground(const QString &path, const QString &elemID) {
+    QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open SVG file:" << svgFilePath;
+        qWarning() << "Failed to open SVG file:" << path;
         return;
     }
 
     QDomDocument adoc;
     if (!adoc.setContent(&file)) {
-        qWarning() << "Failed to parse SVG file:" << svgFilePath;
+        qWarning() << "Failed to parse SVG file:" << path;
         file.close();
         return;
     }
@@ -600,7 +539,7 @@ void SVGHandleEvent::changeColorbackground() {
 
     // Save the changes back to the SVG file
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open SVG file for writing:" << svgFilePath;
+        qWarning() << "Failed to open SVG file for writing:" << path;
         return;
     }
 
@@ -609,7 +548,68 @@ void SVGHandleEvent::changeColorbackground() {
     file.close();
 
     // Reload the SVG to apply changes
-    reloadSVG();
+    reloadSVG(path,elemID);
 }
+
+QString SVGHandleEvent::getTurnoutFilePath(const QString &turnoutId) {
+    QDir tmpDir(".tmp");
+    if (!tmpDir.exists()) {
+        qWarning() << "Directory .tmp does not exist";
+        return QString();
+    }
+
+    QFileInfoList fileList = tmpDir.entryInfoList(QDir::Files);
+    for (const QFileInfo &fileInfo : fileList) {
+        if (fileInfo.fileName().contains(turnoutId)) {
+            return fileInfo.filePath();
+        }
+    }
+
+    qWarning() << "File for turnout ID" << turnoutId << "not found in .tmp directory";
+    return QString();
+}
+
+void SVGHandleEvent::changingPositionOfTurnouts() {
+    std::lock_guard<std::mutex> lock(mtx_toggle_hlavne_navestidlo);
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
+    }
+
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomNodeList elements = route.elementsByTagName("element");
+
+        for (int j = 0; j < elements.count(); ++j) {
+            QDomElement element = elements.at(j).toElement();
+            QString id = element.attribute("id");
+            QString position = element.attribute("position");
+
+            if (id.startsWith("T")) {
+                QString turnoutLocation = getTurnoutFilePath(id);
+
+                if (position == "S+") {
+                    threadToggleVyhybka(true, false, turnoutLocation,id);
+
+                } else if (position == "S-") {
+                    threadToggleVyhybka(false, true, turnoutLocation, id);
+                }
+            }
+        }
+    }
+}
+
 
 

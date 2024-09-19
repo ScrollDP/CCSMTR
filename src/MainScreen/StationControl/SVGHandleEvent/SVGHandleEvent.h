@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread;
-    std::mutex mtx_toggle_vyhybka;
+    std::thread vyhybkaThread, hlavneNavestidloThread;
+    std::mutex mtx_toggle_vyhybka, mtx_toggle_hlavne_navestidlo;
 
 
 public:
@@ -43,30 +43,36 @@ private:
     int rotate;
 
 
-    void toggleVisibility(bool straight, bool diverging);
-    void threadToggleVyhybka(bool straight, bool diverging);
+    void toggleVisibility(bool straight, bool diverging, const QString &path, const QString &elementId);
+    void threadToggleVyhybka(bool straight, bool diverging, const QString &path, const QString &elementId);
 
-    void reloadSVG();
-
-    void changeColor(bool rightClick, bool middleClick);
+    void reloadSVG(const QString &reloadPath,const QString &elemID);
 
     bool rightclicked{}, middleclicked{};
 
     void vyhybkaMenu(const QPoint &pos, const QString &id);
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
+
     static void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
 
 
-    void saveAndReload(const QDomDocument& doc);
+    void saveAndReload(const QDomDocument& doc, const QString& path, const QString& elementId);
 
     static void sendToArduino(const QString &dataList);
 
     QString startPointElementId;
 
     void checkIDwithEndpoint(const QString &elementid);
+    void threadHlavneNavestidloMenu();
 
-    void changeColorbackground();
+    void changeColorbackground(const QString &path, const QString &elementId);
 
+    void changingPositionOfTurnouts();
+
+    static QString getTurnoutFilePath(const QString &turnoutId);
+
+
+    void updateElementById(const QString &elementId);
 };
 
 #endif // CLICKABLESVGITEM_H

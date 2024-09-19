@@ -24,7 +24,7 @@ private:
     int Position_Col = 8;
     int Position_Row = 12;
 
-    static void ApplyTransformation(bool mirror, int rotate, SVGHandleEvent* svgHandleEvent, const QString& type);
+    void ApplyTransformation(bool mirror, int rotate, SVGHandleEvent* svgHandleEvent, const QString& type);
     QSvgRenderer *renderer;
     QString svgFilePath;
 };
