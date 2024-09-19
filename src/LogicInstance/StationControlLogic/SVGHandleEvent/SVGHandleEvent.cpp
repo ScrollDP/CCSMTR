@@ -10,7 +10,7 @@
 #include <mutex>
 
 
-SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QString aaa, QGraphicsItem* parent)
+SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
         svgFilePath(svgFilePath),
         elementId(std::move(elementId)),
@@ -18,8 +18,7 @@ SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, in
         col(col),
         flipped(flipped),
         rotate(rotate),
-        renderer(new QSvgRenderer(svgFilePath)),
-        aaa(std::move(aaa)){
+        renderer(new QSvgRenderer(svgFilePath)){
     if (!renderer->isValid()) {
         qWarning() << "Failed to load SVG file:" << svgFilePath;
         delete renderer;
@@ -50,18 +49,6 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
 [[maybe_unused]] void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
 
-    if (aaa == "WaitingForEndpointClick" && event->button() == Qt::LeftButton) {
-        qDebug() << "Waiting for endpoint click";
-        QString clickedElementId = getElementIdAtPosition(event->pos());
-        qDebug() << "Clicked element ID:" << clickedElementId;
-        if (endpoints.contains(clickedElementId)) {
-            qDebug() << "Clicked on this endpoint that starts from element:" << startPointElementId;
-            //currentState = "Idle2"; // Reset the state
-        } else {
-            qDebug() << "Clicked element is not an endpoint.";
-        }
-        return;
-    }
 
     if(event->button() == Qt::LeftButton) {
 
@@ -537,8 +524,7 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
                 qDebug() << "End point:" << endPointId;
                 endpoints.append(endPointId); // Store the endpoint
                 qDebug() << "endpoints" << endpoints;
-                aaa = "WaitingForEndpointClick";
-                qDebug() << "currentState" << aaa;
+
 
             }
         }

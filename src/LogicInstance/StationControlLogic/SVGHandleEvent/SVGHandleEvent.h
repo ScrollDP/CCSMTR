@@ -18,13 +18,9 @@ Q_OBJECT
     std::thread vyhybkaThread;
     std::mutex mtx_toggle_vyhybka;
 
-    enum class State {
-        Idle,
-        WaitingForEndpointClick
-    };
 
 public:
-    explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QString aaa,QGraphicsItem* parent = nullptr);
+    explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
     ~SVGHandleEvent();
     void setScaleAndPosition(qreal scale, qreal x, qreal y);
 
@@ -67,9 +63,6 @@ private:
 
     QStringList endpoints;
     QString startPointElementId;
-
-    QString aaa = "Idle";
-
 };
 
 #endif // CLICKABLESVGITEM_H
