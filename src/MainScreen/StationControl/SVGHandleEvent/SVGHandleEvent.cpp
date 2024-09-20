@@ -53,7 +53,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
             hlavneNavestidloMenu(event->screenPos(), elementId);
         }
-        else if(QRegularExpression("^T\\d+$").match(elementId).hasMatch()) {
+        else if(QRegularExpression("^T\\d+( \\d+)?$").match(elementId).hasMatch()) {
             vyhybkaMenu(event->screenPos(), elementId);
             qDebug()<<"pos"<<event->screenPos();
         }
@@ -294,7 +294,8 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
     }
 
     auto extractNumber = [&](const QString &turnoutId) {
-        QRegularExpression re("\\d+");
+        QRegularExpression re("\\d+( \\d+)");
+        qDebug() << "extractNumber: " << turnoutId;
         QRegularExpressionMatch match = re.match(turnoutId);
         if (match.hasMatch()) {
             return match.captured(0);
@@ -334,7 +335,8 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         saveAndReload(doc,path,turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 1>").arg(number);
+        //QString command = QString("<T %1 1>").arg(number);
+        QString command = QString("<a %1 1>").arg(number);
         qDebug() << "command: " << command;
         sendToArduino(command);
         std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -347,7 +349,8 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         saveAndReload(doc,path,turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 0>").arg(number);
+        //QString command = QString("<T %1 0>").arg(number);
+        QString command = QString("<a %1 0>").arg(number);
         qDebug() << "command: " << command;
         sendToArduino(command);
         std::this_thread::sleep_for(std::chrono::seconds(3));
