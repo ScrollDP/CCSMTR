@@ -38,41 +38,41 @@
     </locations_symbols>
 
     <turnouts>
-        <turnout type="turnout" id="T2" row="-1" col="5" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T4" row="-1" col="6" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T6 0" row="-1" col="7" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T8" row="-2" col="8" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T10" row="-2" col="10" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T1 0" row="-1" col="5" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T1 2" row="-1" col="6" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T1 0" row="-1" col="7" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T2 0" row="-2" col="8" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T2 2" row="-2" col="10" flipped="false" rotate="0"  status="standby"/>
 
-        <turnout type="turnout" id="T12" row="-1" col="31" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T14" row="-1" col="32" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T16" row="-1" col="29" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T18" row="-2" col="28" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T20" row="-2" col="30" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T22" row="-2" col="29" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T24" row="-4" col="28" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T26" row="-4" col="29" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T28" row="-5" col="27" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T7 3" row="-1" col="31" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T7 3" row="-1" col="32" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T7 0" row="-1" col="29" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T6 0" row="-2" col="28" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T7 1" row="-2" col="30" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T6 1" row="-2" col="29" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T5 2" row="-4" col="28" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T5 3" row="-4" col="29" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T8 3" row="-5" col="27" flipped="true" rotate="0"  status="standby"/>
 
 
 
-        <turnout type="turnout" id="T1" row="1" col="5" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T3" row="1" col="6" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T5" row="1" col="7" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T7 0" row="2" col="8" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T9" row="3" col="9" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T11" row="3" col="8" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T13" row="3" col="11" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T15" row="4" col="9" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T17" row="4" col="8" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T1 1" row="1" col="5" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T1 3" row="1" col="6" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T1 1" row="1" col="7" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T2 1" row="2" col="8" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T3 0" row="3" col="9" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T2 3" row="3" col="8" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T3 2" row="3" col="11" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T3 3" row="4" col="9" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T3 1" row="4" col="8" flipped="false" rotate="180"  status="standby"/>
 
-        <turnout type="turnout" id="T19" row="4" col="27" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T21" row="3" col="28" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T23" row="4" col="28" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T25 0" row="2" col="29" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T27" row="1" col="30" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T29 0" row="1" col="31" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T31" row="1" col="32" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T5 0" row="4" col="27" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T6 2" row="3" col="28" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T6" row="4" col="28" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T6 3" row="1" col="28" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T7 2" row="1" col="30" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T8 0" row="1" col="31" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T8 0" row="1" col="32" flipped="true" rotate="0"  status="standby"/>
 
 
     </turnouts>
@@ -209,8 +209,8 @@
         <rail type="rail" id="R1.24" row="1" col="24"  status="standby"/>
         <rail type="rail" id="R1.25" row="1" col="25"  status="standby"/>
         <rail type="rail" id="R1.27" row="1" col="27"  status="standby"/>
-        <rail type="rail" id="R1.26" row="1" col="26"  status="standby"/>
         <rail type="rail" id="R1.29" row="1" col="29"  status="standby"/>
+        <!--<rail type="rail" id="R1.29" row="1" col="29"  status="standby"/>-->
         <rail type="rail" id="R1.33" row="1" col="33"  status="standby"/>
         <rail type="rail" id="R1.35" row="1" col="35"  status="standby"/>
         <rail type="rail" id="R1.37" row="1" col="37"  status="standby"/>
@@ -233,8 +233,9 @@
         <rail type="rail" id="R2.23" row="2" col="23"  status="standby"/>
         <rail type="rail" id="R2.24" row="2" col="24"  status="standby"/>
         <rail type="rail" id="R2.25" row="2" col="25"  status="standby"/>
-        <rail type="rail" id="R2.26" row="2" col="26"  status="standby"/>
-        <rail type="rail" id="R2.28" row="2" col="28"  status="standby"/>
+        <rail type="rail" id="R2.27" row="2" col="27"  status="standby"/>
+        <rail type="rail_sklon3" id="R2.28" row="2" col="28" status="stanby"/>
+        <rail type="rail_sklon1" id="R2.29" row="2" col="29"  status="standby"/>
         <rail type="rail_sklon3" id="R2.30" row="2" col="30"  status="standby"/>
 
 
@@ -327,8 +328,8 @@
         <navestidlo type="hlavne_navestidlo1" id="HN10" row="5" col="25"  status="standby"/>
         <navestidlo type="hlavne_navestidlo1" id="HN11" row="4" col="25"  status="standby"/>
         <navestidlo type="hlavne_navestidlo1" id="HN12" row="3" col="26"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN13" row="2" col="27"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN14" row="1" col="28"  status="standby"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN13" row="2" col="26"  status="standby"/>
+        <navestidlo type="hlavne_navestidlo1" id="HN14" row="1" col="26"  status="standby"/>
         <navestidlo type="hlavne_navestidlo1" id="HN15" row="-1" col="27"  status="standby"/>
         <navestidlo type="hlavne_navestidlo1" id="HN16" row="-2" col="26"  status="standby"/>
         <navestidlo type="hlavne_navestidlo1" id="HN17" row="-3" col="26"  status="standby"/>

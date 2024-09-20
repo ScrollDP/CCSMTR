@@ -404,6 +404,8 @@ public:
         speedSlider->setObjectName("speedSlider");
         speedSlider->setMinimumSize(QSize(100, 0));
         speedSlider->setMaximumSize(QSize(100, 16777215));
+        speedSlider->setMaximum(128);
+        speedSlider->setValue(0);
         speedSlider->setOrientation(Qt::Orientation::Vertical);
 
         verticalLayout_3->addWidget(speedSlider);

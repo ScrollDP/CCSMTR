@@ -813,6 +813,12 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="maximum">
+           <number>128</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Orientation::Vertical</enum>
           </property>

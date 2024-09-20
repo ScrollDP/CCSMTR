@@ -1,0 +1,82 @@
+<turnouts>
+        <turnout type="turnout" id="T1 0" row="-1" col="5" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T3 2" row="-1" col="6" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T1 0" row="-1" col="7" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T5 0" row="-2" col="8" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T7 2" row="-2" col="10" flipped="false" rotate="0"  status="standby"/>
+
+        <turnout type="turnout" id="T28 3" row="-1" col="31" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T28 3" row="-1" col="32" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T25 0" row="-1" col="29" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T21 0" row="-2" col="28" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T26 1" row="-2" col="30" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T22 1" row="-2" col="29" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T19 2" row="-4" col="28" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T20 3" row="-4" col="29" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T32 3" row="-5" col="27" flipped="true" rotate="0"  status="standby"/>
+
+
+
+        <turnout type="turnout" id="T2 1" row="1" col="5" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T4 3" row="1" col="6" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T2 1" row="1" col="7" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T6 1" row="2" col="8" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T9 0" row="3" col="9" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T8 3" row="3" col="8" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T11 2" row="3" col="11" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T12 3" row="4" col="9" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T10 1" row="4" col="8" flipped="false" rotate="180"  status="standby"/>
+
+        <turnout type="turnout" id="T17 0" row="4" col="27" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T23 2" row="3" col="28" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T23" row="4" col="28" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T24 3" row="1" col="28" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T27 2" row="1" col="30" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T29 0" row="1" col="31" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T29 0" row="1" col="32" flipped="true" rotate="0"  status="standby"/>
+
+
+    </turnouts>
+
+
+
+
+<turnouts>
+        <turnout type="turnout" id="T1 0" row="-1" col="5" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T1 2" row="-1" col="6" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T1 0" row="-1" col="7" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T2 0" row="-2" col="8" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T2 2" row="-2" col="10" flipped="false" rotate="0"  status="standby"/>
+
+        <turnout type="turnout" id="T7 3" row="-1" col="31" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T7 3" row="-1" col="32" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T7 0" row="-1" col="29" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T6 0" row="-2" col="28" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T7 1" row="-2" col="30" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T6 1" row="-2" col="29" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T5 2" row="-4" col="28" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T5 3" row="-4" col="29" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T8 3" row="-5" col="27" flipped="true" rotate="0"  status="standby"/>
+
+
+
+        <turnout type="turnout" id="T1 1" row="1" col="5" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T1 3" row="1" col="6" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T1 1" row="1" col="7" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T2 1" row="2" col="8" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T3 0" row="3" col="9" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T2 3" row="3" col="8" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T3 2" row="3" col="11" flipped="true" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T3 3" row="4" col="9" flipped="true" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T3 1" row="4" col="8" flipped="false" rotate="180"  status="standby"/>
+
+        <turnout type="turnout" id="T5 0" row="4" col="27" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T6 2" row="3" col="28" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T6" row="4" col="28" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T6 3" row="1" col="28" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T7 2" row="1" col="30" flipped="false" rotate="180"  status="standby"/>
+        <turnout type="turnout" id="T8 0" row="1" col="31" flipped="false" rotate="0"  status="standby"/>
+        <turnout type="turnout" id="T8 0" row="1" col="32" flipped="true" rotate="0"  status="standby"/>
+
+
+    </turnouts>
