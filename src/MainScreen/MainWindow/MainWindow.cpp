@@ -9,13 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    /*hideTimer = new QTimer(this);
-    hideTimer->setInterval(5000); // Set the interval
-    connect(hideTimer, &QTimer::timeout, [this]() {
-        ui->tabWidget->setVisible(false);
-    });*/
-
-
     //loading StationControl class to automatically load the ui
     ui->verticalLayout_3->addWidget(stationControllWindow);
 
@@ -49,14 +42,16 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::editMenuEnabled);
+
+
     //this->showFullScreen();
 }
 
 bool MainWindow::isAnyConnected = false;
 
 MainWindow::~MainWindow() {
-    delete dccExWindow; // Delete the dccEx window
-    delete powerWindow; // Delete the PowerWindow window
+    delete dccExWindow;
+    delete powerWindow;
 }
 
 void MainWindow::onActionDCC_EXTriggered() {
@@ -67,7 +62,7 @@ void MainWindow::onActionPowerTriggered() {
     powerWindow->show();
 }
 
-[[maybe_unused]] void MainWindow::closeEvent(QCloseEvent *event) {
+void MainWindow::closeEvent(QCloseEvent *event) {
     dccExWindow->close();
     powerWindow->close();
     event->accept();
@@ -97,7 +92,7 @@ void MainWindow::toggleTabShow() const {
     }
 }
 
-[[maybe_unused]] void MainWindow::keyPressEvent(QKeyEvent *event) {
+void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_F11) {
         toggleFullScreen();
     } else {
@@ -110,7 +105,7 @@ void MainWindow::toggleTabShow() const {
     }
 }
 
-[[maybe_unused]] bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
+bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     if (watched == this && event->type() == QEvent::HoverMove) {
         auto *mouseEvent = dynamic_cast<QHoverEvent*>(event);
         // Check if the mouse is within 5px from the top if not hide the tabWidget and also check if I am not on the tabWidget

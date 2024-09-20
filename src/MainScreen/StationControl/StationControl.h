@@ -10,11 +10,9 @@
 class StationControl : public QWidget {
     Q_OBJECT
 
-
-
 public:
     explicit StationControl(QWidget *parent = nullptr, const QString &svgFilePath = "../layout/layout.xml");
-    ~StationControl() override;  // Ensure the destructor is declared here
+    ~StationControl() override;
     Ui::StationControl *ui;
 
 private:
