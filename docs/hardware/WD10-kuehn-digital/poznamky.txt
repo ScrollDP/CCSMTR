@@ -18,6 +18,9 @@ Ked chceme používať expressnet/roco zariadenia, použijeme roco rezim:
 
 
 Potom je tu možnosť priamo odoslať príkaz na odoslanie vyhybky
+Poznamka:
+"This general command simply sends the appropriate DCC instruction packet to the main tracks to operate connected accessories.
+It does not store or retain any information regarding the current status of that accessory."
 <a address subaddress 1/0>
 <a 6 0 1/0> -> aktivuje vyhybku s adresou 6 a podadresou 0
 
