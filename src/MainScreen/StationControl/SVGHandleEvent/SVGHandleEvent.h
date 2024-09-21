@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread;
-    std::mutex mtx_toggle_vyhybka;
+    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout;
+    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout;
 
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
@@ -68,6 +68,11 @@ private:
     bool flipped;
     int rotate;
 
+    QString getTurnoutSvgPath(const QString &turnoutId);
+
+    void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID);
+
+    void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId);
 };
 
 #endif // CLICKABLESVGITEM_H

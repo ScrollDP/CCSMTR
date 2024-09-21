@@ -18,7 +18,7 @@
    <element id="-R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
+   <locked>true</locked>
    <onDemand>true</onDemand>
   </status>
  </route>
@@ -41,7 +41,7 @@
    <element id="R1.2"/>
   </elements>
   <status>
-   <locked>true</locked>
+   <locked>false</locked>
    <onDemand>true</onDemand>
   </status>
  </route>

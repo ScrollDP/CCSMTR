@@ -57,7 +57,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
             hlavneNavestidloMenu(event->screenPos(), elementId);
         }
-        else if(QRegularExpression("^T\\d+?$").match(elementId).hasMatch()) {
+        else if(QRegularExpression("^T\\d+(_\\d+)?$").match(elementId).hasMatch()) {
             vyhybkaMenu(event->screenPos(), elementId);
         }
         else if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
@@ -74,6 +74,13 @@ void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QS
         vyhybkaThread.join();
     }
     vyhybkaThread = std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging, path, elementId);
+}
+
+void SVGHandleEvent::threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId) {
+    if (vyhybkaThreadGroupTurnout.joinable()) {
+        vyhybkaThreadGroupTurnout.join();
+    }
+    vyhybkaThreadGroupTurnout = std::thread(&SVGHandleEvent::toggleVyhybkaInGroup, this, straight, diverging, path, elementId);
 }
 
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
@@ -293,13 +300,123 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
 
     auto extractNumber = [&](const QString &turnoutId) {
         QRegularExpression re("\\d+");
-       // qDebug() << "extractNumber: " << turnoutId;
         QRegularExpressionMatch match = re.match(turnoutId);
         if (match.hasMatch()) {
             return match.captured(0);
         }
         return QString();
     };
+
+    // Load and parse layout.xml
+    QFile layoutFile("../layout/layout.xml");
+    if (!layoutFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open layout.xml";
+        return;
+    }
+
+    QDomDocument layoutDoc;
+    if (!layoutDoc.setContent(&layoutFile)) {
+        qWarning() << "Failed to parse layout.xml";
+        layoutFile.close();
+        return;
+    }
+    layoutFile.close();
+
+    QDomElement layoutRoot = layoutDoc.documentElement();
+    QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
+    bool pared = false;
+    for (int i = 0; i < turnoutElements.count(); ++i) {
+        QDomElement turnoutElement = turnoutElements.at(i).toElement();
+        if (turnoutElement.attribute("id") == turnoutID && turnoutElement.attribute("pared") == "true") {
+            pared = true;
+            break;
+        }
+    }
+
+    if (pared) {
+        qDebug() << "pared parameter is true";
+        QDomNodeList paredTurnouts = layoutRoot.elementsByTagName("paredTurnout");
+        for (int i = 0; i < paredTurnouts.count(); ++i) {
+            QDomElement paredTurnout = paredTurnouts.at(i).toElement();
+            QStringList turnoutIDs;
+            QDomNamedNodeMap attributes = paredTurnout.attributes();
+            for (int j = 0; j < attributes.count(); ++j) {
+                QDomAttr attr = attributes.item(j).toAttr();
+                if (attr.name().startsWith("turnout")) {
+                    turnoutIDs << attr.value();
+                }
+            }
+            // Display also path of that turnouts
+            qDebug() << "Pared Turnout IDs:" << turnoutIDs.join(", ");
+
+            for (const QString &id : turnoutIDs) {
+                QString m_value;
+
+                // Retrieve the correct svgFilePath for each turnout ID
+                QString turnoutSvgFilePath = getTurnoutSvgPath(id);
+
+                QFile file(turnoutSvgFilePath);
+                if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                    qWarning() << "Failed to open SVG file:" << turnoutSvgFilePath;
+                    return;
+                }
+
+                QDomDocument doc;
+                if (!doc.setContent(&file)) {
+                    qWarning() << "Failed to parse SVG file:" << turnoutSvgFilePath;
+                    file.close();
+                    return;
+                }
+                file.close();
+
+                QDomElement root = doc.documentElement();
+                QDomNodeList elements = root.elementsByTagName("path");
+
+                QString currentState;
+                for (int i = 0; i < elements.count(); ++i) {
+                    QDomElement element = elements.at(i).toElement();
+                    if (element.isNull()) {
+                        continue;
+                    }
+                    QString Id = element.attribute("id");
+
+                    if (Id == "_basic" || Id == "_reverse") {
+                        QString visibility = element.attribute("visibility");
+                        if (visibility == "visible") {
+                            currentState = Id;
+                            break;
+                        }
+                    }
+                }
+
+                if (currentState == "_basic") {
+                    m_value = "S-";
+                    qDebug() << "S-" << id << " " << currentState << " file" << turnoutSvgFilePath;
+                } else if (currentState == "_reverse") {
+                    m_value = "S+";
+                    qDebug() << "S+" << id << " " << currentState << " file" << turnoutSvgFilePath;
+                }
+
+                SVGHandleEvent *turnoutItem = nullptr;
+                for (QGraphicsItem *item : this->scene()->items()) {
+                    SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
+                    if (svgItem && svgItem->elementId == id) {
+                        turnoutItem = svgItem;
+                        break;
+                    }
+                }
+
+                if (m_value == "S+") {
+                    turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id);
+                } else if (m_value == "S-") {
+                    turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id);
+                }
+            }
+        }
+        return;
+    } else {
+        qDebug() << "pared parameter is false or not set" << turnoutID;
+    }
 
     for (int i = 0; i < elements.count(); ++i) {
         QDomElement element = elements.at(i).toElement();
@@ -330,32 +447,48 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
 
     if (straight) {
         setVisibility("_between", "visible");
-        saveAndReload(doc,path,turnoutID);
+        saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
         QString command = QString("<T %1 1>").arg(number);
-       // qDebug() << "command: " << command;
         sendToArduino(command);
+        qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_basic", "visible");
-        saveAndReload(doc,path,turnoutID);
+        saveAndReload(doc, path, turnoutID);
 
     } else if (diverging) {
         setVisibility("_between", "visible");
-        saveAndReload(doc,path,turnoutID);
+        saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
         QString command = QString("<T %1 0>").arg(number);
-        //qDebug() << "command: " << command;
         sendToArduino(command);
+        qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_reverse", "visible");
-        saveAndReload(doc,path,turnoutID);
+        saveAndReload(doc, path, turnoutID);
+    }
+}
+
+QString SVGHandleEvent::getTurnoutSvgPath(const QString &turnoutId) {
+    QDir tmpDir(".tmp");
+    if (!tmpDir.exists()) {
+        qWarning() << "Directory .tmp does not exist";
+        return QString();
     }
 
-    // qDebug() << "Exiting toggleVisibility method";
+    QFileInfoList fileList = tmpDir.entryInfoList(QDir::Files);
+    for (const QFileInfo &fileInfo : fileList) {
+        if (fileInfo.fileName().contains(turnoutId)) {
+            return fileInfo.filePath();
+        }
+    }
+
+    qWarning() << "File for turnout ID" << turnoutId << "not found in .tmp directory";
+    return QString();
 }
 
 
@@ -634,6 +767,7 @@ void SVGHandleEvent::checkIDwithEndpoint(const QString &elementId) {
                         } else {
                             qWarning() << "Unknown desired position for ID:" << id;
                         }
+
                     }
                 }
 
@@ -657,110 +791,91 @@ void SVGHandleEvent::checkIDwithEndpoint(const QString &elementId) {
     }
 }
 
-/*
-void SVGHandleEvent::changingPositionOfTurnouts(const QString &m_elementId) {
-    qDebug() << "I get this endpoint" << m_elementId;
-    QFile routesFile("../layout/routes.xml");
-    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml";
+void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID){
+    std::lock_guard<std::mutex> lock(mtx_toggle_vyhybka_group_turnout);
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file:" << path;
         return;
     }
 
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
-        routesFile.close();
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse SVG file:" << path;
+        file.close();
         return;
     }
-    routesFile.close();
+    file.close();
 
-    QDomElement routesRoot = routesDoc.documentElement();
-    QDomNodeList routes = routesRoot.elementsByTagName("route");
+    QDomElement root = doc.documentElement();
+    QDomNodeList elements = root.elementsByTagName("path");
 
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement end = route.firstChildElement("end");
+    if (elements.isEmpty()) {
+        qWarning() << "No path elements found in SVG file.";
+        return;
+    }
 
-        // Check if the endpoint matches the desired endpoint
-        if (end.attribute("point") == m_elementId) {
-            QDomNodeList elements = route.elementsByTagName("element");
+    auto extractNumber = [&](const QString &turnoutId) {
+        QRegularExpression re("\\d+");
+        QRegularExpressionMatch match = re.match(turnoutId);
+        if (match.hasMatch()) {
+            return match.captured(0);
+        }
+        return QString();
+    };
 
-            for (int j = 0; j < elements.count(); ++j) {
-                QDomElement element = elements.at(j).toElement();
-                QString id = element.attribute("id");
-                QString desiredPosition = element.attribute("position");
 
-                if (id.startsWith("T")) {
-                    // Find the existing SVGHandleEvent item for the specific turnout
-                    SVGHandleEvent *turnoutItem = nullptr;
-                    for (QGraphicsItem *item : this->scene()->items()) {
-                        SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
-                        if (svgItem && svgItem->elementId == id) {
-                            turnoutItem = svgItem;
-                            break;
-                        }
-                    }
+    for (int i = 0; i < elements.count(); ++i) {
+        QDomElement element = elements.at(i).toElement();
+        if (element.isNull()) {
+            continue;
+        }
+        QString id = element.attribute("id");
 
-                    if (!turnoutItem) {
-                        qWarning() << "Turnout item not found for ID:" << id;
-                        continue;
-                    }
-
-                    // Load the SVG file and parse it to get the current state of the turnout
-                    QFile file(turnoutItem->svgFilePath);
-                    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                        qWarning() << "Failed to open SVG file:" << turnoutItem->svgFilePath;
-                        continue;
-                    }
-
-                    QDomDocument doc;
-                    if (!doc.setContent(&file)) {
-                        qWarning() << "Failed to parse SVG file:" << turnoutItem->svgFilePath;
-                        file.close();
-                        continue;
-                    }
-                    file.close();
-
-                    QDomElement root = doc.documentElement();
-                    QDomNodeList paths = root.elementsByTagName("path");
-
-                    QString currentState;
-                    for (int k = 0; k < paths.count(); ++k) {
-                        QDomElement path = paths.at(k).toElement();
-                        if (path.isNull()) {
-                            continue;
-                        }
-                        QString pathId = path.attribute("id");
-
-                        if (pathId == "_basic" || pathId == "_reverse") {
-                            QString visibility = path.attribute("visibility");
-                            if (visibility == "visible") {
-                                currentState = pathId;
-                                break;
-                            }
-                        }
-                    }
-
-                    // Determine the switch state and call threadToggleVyhybka with the appropriate parameters if needed
-                    if ((currentState == "_basic" && desiredPosition == "S+") ||
-                        (currentState == "_reverse" && desiredPosition == "S-")) {
-                        qDebug() << "Turnout ID:" << id << "needs to be in the position:" << desiredPosition << "and is already in that position.";
-                        // No action needed, already in the desired position
-                        continue;
-                    } else if (desiredPosition == "S-") {
-                        turnoutItem->threadToggleVyhybka(false, true, turnoutItem->svgFilePath, id);
-                    } else if (desiredPosition == "S+") {
-                        turnoutItem->threadToggleVyhybka(true, false, turnoutItem->svgFilePath, id);
-                    } else {
-                        qWarning() << "Unknown desired position for ID:" << id;
-                    }
-                }
+        if (id == "_basic" || id == "_reverse") {
+            QString visibility = element.attribute("visibility");
+            if (visibility == "visible") {
+                element.setAttribute("visibility", "hidden");
             }
         }
     }
+
+    auto setVisibility = [&](const QString &id, const QString &visibility) {
+        for (int i = 0; i < elements.count(); ++i) {
+            QDomElement element = elements.at(i).toElement();
+            if (element.isNull()) {
+                continue;
+            }
+            if (element.attribute("id") == id) {
+                element.setAttribute("visibility", visibility);
+            }
+        }
+    };
+
+    if (straight) {
+        setVisibility("_between", "visible");
+        saveAndReload(doc, path, turnoutID);
+
+        QString number = extractNumber(turnoutID);
+        QString command = QString("<T %1 1>").arg(number);
+        sendToArduino(command);
+        qDebug() << "Command sent to Arduino:" << command.toStdString();
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        setVisibility("_between", "hidden");
+        setVisibility("_basic", "visible");
+        saveAndReload(doc, path, turnoutID);
+
+    } else if (diverging) {
+        setVisibility("_between", "visible");
+        saveAndReload(doc, path, turnoutID);
+
+        QString number = extractNumber(turnoutID);
+        QString command = QString("<T %1 0>").arg(number);
+        sendToArduino(command);
+        qDebug() << "Command sent to Arduino:" << command.toStdString();
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        setVisibility("_between", "hidden");
+        setVisibility("_reverse", "visible");
+        saveAndReload(doc, path, turnoutID);
+    }
 }
-
-*/
-
-
-
