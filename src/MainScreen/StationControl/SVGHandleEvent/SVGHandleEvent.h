@@ -36,8 +36,7 @@ private:
 
 
     void checkIDwithEndpoint(const QString &elementid);
-    static QString getTurnoutFilePath(const QString &turnoutId);
-    void changingPositionOfTurnouts();
+    void changingPositionOfTurnouts(const QString &m_elementId);
 
 
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);

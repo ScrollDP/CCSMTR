@@ -97,6 +97,7 @@ void StationControl::LoadingSvgFile() {
             int col = element.attribute("col").toInt();
             bool flipped = element.attribute("flipped").toLower() == "true";
             int rotate = element.attribute("rotate").toInt();
+            QString status = element.attribute("status");
 
             qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
@@ -125,6 +126,42 @@ void StationControl::LoadingSvgFile() {
                 //tmpFile.remove(); // Delete the temporary file if it exists
                 QFile::copy(m_svgFilePath, tmpFilePath); // Copy the original file to the temporary location
             }
+
+           // Edit the temporary SVG file based on the status
+            if (type == "turnout") {
+                QFile tmpFile(tmpFilePath);
+                if (!tmpFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+                    qWarning() << "Failed to open temporary SVG file:" << tmpFilePath;
+                    continue;
+                }
+
+                QDomDocument svgDoc;
+                if (!svgDoc.setContent(&tmpFile)) {
+                    qWarning() << "Failed to parse temporary SVG file:" << tmpFilePath;
+                    tmpFile.close();
+                    continue;
+                }
+
+                QDomElement svgRoot = svgDoc.documentElement();
+                QDomNodeList paths = svgRoot.elementsByTagName("path");
+
+                for (int k = 0; k < paths.count(); ++k) {
+                    QDomElement path = paths.at(k).toElement();
+                    QString pathId = path.attribute("id");
+
+                    if (pathId == "_basic") {
+                        path.setAttribute("visibility", (status == "S+") ? "visible" : "hidden");
+                    } else if (pathId == "_reverse") {
+                        path.setAttribute("visibility", (status == "S-") ? "visible" : "hidden");
+                    }
+                }
+
+                tmpFile.resize(0); // Clear the file content
+                QTextStream stream(&tmpFile);
+                stream << svgDoc.toString();
+                tmpFile.close();
+            }
+
 
             // Load the temporary SVG file
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col,flipped,rotate);
