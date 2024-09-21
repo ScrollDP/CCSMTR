@@ -1,4 +1,50 @@
 <routes>
+ <route name="prva">
+  <start point="HN9"/>
+  <end point="-R1.0"/>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN9"/>
+   <element id="-R4.10"/>
+   <element id="-R4.9"/>
+   <element id="-R3.9"/>
+   <element id="-R3.8"/>
+   <element id="T5" position="S-"/>
+   <element id="-R2.7"/>
+   <element id="T1" position="S-"/>
+   <element id="T3" position="S+"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <onDemand>true</onDemand>
+  </status>
+ </route>
+ <route name="druha">
+  <start point="HN9"/>
+  <end point="R1.0"/>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN9"/>
+   <element id="-R4.10"/>
+   <element id="-R4.9"/>
+   <element id="-R3.9"/>
+   <element id="-R3.8"/>
+   <element id="T5" position="S-"/>
+   <element id="-R2.7"/>
+   <element id="T1" position="S-"/>
+   <element id="T3" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+  </elements>
+  <status>
+   <locked>true</locked>
+   <onDemand>true</onDemand>
+  </status>
+ </route>
  <route name="tretia">
   <start point="HN8"/>
   <end point="-R1.0"/>

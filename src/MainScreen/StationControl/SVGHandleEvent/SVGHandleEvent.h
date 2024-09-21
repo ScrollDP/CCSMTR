@@ -36,7 +36,7 @@ private:
 
 
     void checkIDwithEndpoint(const QString &elementid);
-    void changingPositionOfTurnouts(const QString &m_elementId);
+    //void changingPositionOfTurnouts(const QString &m_elementId);
 
 
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
