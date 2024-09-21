@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread, hlavneNavestidloThread;
-    std::mutex mtx_toggle_vyhybka, mtx_toggle_hlavne_navestidlo;
+    std::thread vyhybkaThread;
+    std::mutex mtx_toggle_vyhybka;
 
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
@@ -41,7 +41,7 @@ private:
 
 
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
-    void threadHlavneNavestidloMenu();
+    void vlakovaCestaRoute();
 
 
     static void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);

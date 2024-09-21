@@ -8,7 +8,7 @@
 #include "SVGHandleEvent/SVGHandleEvent.h"
 
 class StationControl : public QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit StationControl(QWidget *parent = nullptr, const QString &svgFilePath = "../layout/layout.xml");

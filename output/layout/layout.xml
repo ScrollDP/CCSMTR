@@ -1,392 +1,345 @@
 <layout>
-
-    <locations_symbols>
-        <location id="turnout"       path="../layout/symboly/turnouts/turnout.svg"  status="standby"/>
-        <location id="cross_turnout" path="../layout/symboly/turnouts/cross_turnout.svg"  status="standby"/>
-        <location id="rail"          path="../layout/symboly/rails/rail.svg"  status="standby"/>
-        <location id="rail_sklon1"   path="../layout/symboly/rails/rail_sklon1.svg"  status="standby"/>
-        <location id="rail_sklon2"   path="../layout/symboly/rails/rail_sklon2.svg"  status="standby"/>
-        <location id="rail_sklon3"   path="../layout/symboly/rails/rail_sklon3.svg"  status="standby"/>
-        <location id="rail_sklon4"   path="../layout/symboly/rails/rail_sklon4.svg"  status="standby"/>
-        <location id="zarazadlo1"    path="../layout/symboly/zarazadlo/zarazadlo1.svg"  status="standby"/>
-        <location id="zarazadlo2"    path="../layout/symboly/zarazadlo/zarazadlo2.svg"  status="standby"/>
-        <location id="hlavne_navestidlo1"   path="../layout/symboly/navestidla/hlavne_navestidlo/hlavne_navestidlo1.svg"  status="standby"/>
-        <location id="hlavne_navestidlo2"   path="../layout/symboly/navestidla/hlavne_navestidlo/hlavne_navestidlo2.svg"  status="standby"/>
-        <location id="zriadovacie_navestidlo1"   path="../layout/symboly/navestidla/zriadovacie_navestidlo/zriadovacie_navestidlo1.svg"  status="standby"/>
-        <location id="zriadovacie_navestidlo2"   path="../layout/symboly/navestidla/zriadovacie_navestidlo/zriadovacie_navestidlo2.svg"  status="standby"/>
-        <!--cisla-->
-        <location id="nula"   path="../layout/symboly/cisla/nula.svg"  status="standby"/>
-        <location id="jedna"   path="../layout/symboly/cisla/jedna.svg"  status="standby"/>
-        <location id="dva"   path="../layout/symboly/cisla/dva.svg"  status="standby"/>
-        <location id="tri"   path="../layout/symboly/cisla/tri.svg"  status="standby"/>
-        <location id="styri"   path="../layout/symboly/cisla/styri.svg"  status="standby"/>
-        <location id="pat"   path="../layout/symboly/cisla/pat.svg"  status="standby"/>
-        <location id="sest"   path="../layout/symboly/cisla/sest.svg"  status="standby"/>
-        <location id="sedem"   path="../layout/symboly/cisla/sedem.svg"  status="standby"/>
-        <location id="osem"   path="../layout/symboly/cisla/osem.svg"  status="standby"/>
-        <location id="devat"   path="../layout/symboly/cisla/devat.svg"  status="standby"/>
-        <location id="desat"   path="../layout/symboly/cisla/desat.svg"  status="standby"/>
-        <location id="dvanast"   path="../layout/symboly/cisla/dvanast.svg"  status="standby"/>
-
-        <!--text-->
-        <location id="ZILINA"   path="../layout/symboly/text/ZILINA.svg"  status="standby"/>
-        <location id="depo"   path="../layout/symboly/text/DEPO.svg"  status="standby"/>
-        <location id="KOSICE"   path="../layout/symboly/text/KOSICE.svg"  status="standby"/>
-        <location id="BRATISLAVA"   path="../layout/symboly/text/BRATISLAVA.svg"  status="standby"/>
-        <location id="LIETAVSKA_LUCKA"   path="../layout/symboly/text/LIETAVSKA_LUCKA.svg"  status="standby"/>
-
-    </locations_symbols>
-
-    <turnouts>
-        <turnout type="turnout" id="T1 0" row="-1" col="5" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T1 2" row="-1" col="6" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T1 0" row="-1" col="7" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T2 0" row="-2" col="8" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T2 2" row="-2" col="10" flipped="false" rotate="0"  status="standby"/>
-
-        <turnout type="turnout" id="T7 3" row="-1" col="31" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T7 3" row="-1" col="32" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T7 0" row="-1" col="29" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T6 0" row="-2" col="28" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T7 1" row="-2" col="30" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T6 1" row="-2" col="29" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T5 2" row="-4" col="28" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T5 3" row="-4" col="29" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T8 3" row="-5" col="27" flipped="true" rotate="0"  status="standby"/>
-
-
-
-        <turnout type="turnout" id="T1 1" row="1" col="5" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T1 3" row="1" col="6" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T1 1" row="1" col="7" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T2 1" row="2" col="8" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T3 0" row="3" col="9" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T2 3" row="3" col="8" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T3 2" row="3" col="11" flipped="true" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T3 3" row="4" col="9" flipped="true" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T3 1" row="4" col="8" flipped="false" rotate="180"  status="standby"/>
-
-        <turnout type="turnout" id="T5 0" row="4" col="27" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T6 2" row="3" col="28" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T6" row="4" col="28" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T6 3" row="1" col="28" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T7 2" row="1" col="30" flipped="false" rotate="180"  status="standby"/>
-        <turnout type="turnout" id="T8 0" row="1" col="31" flipped="false" rotate="0"  status="standby"/>
-        <turnout type="turnout" id="T8 0" row="1" col="32" flipped="true" rotate="0"  status="standby"/>
-
-
-    </turnouts>
-
-    <cross_turnouts>
-        <cross_turnout type="cross_turnout" id="CT1" row="0" col="5" rotate="0"  status="standby"/>
-        <cross_turnout type="cross_turnout" id="CT1" row="0" col="31" rotate="0"  status="standby"/>
-    </cross_turnouts>
-
-    <rails>
-
-        <rail type="rail_sklon2" id="-R6.27" row="-6" col="27"  status="standby"/>
-        <rail type="rail" id="-R6.26" row="-6" col="26"  status="standby"/>
-        <rail type="rail" id="-R6.24" row="-6" col="24"  status="standby"/>
-
-        <rail type="rail_sklon2" id="-R5.28" row="-5" col="28"  status="standby"/>
-        <rail type="rail" id="-R5.26" row="-5" col="26"  status="standby"/>
-        <rail type="rail" id="-R5.24" row="-5" col="24"  status="standby"/>
-
-
-        <rail type="rail_sklon1" id="-R4.9" row="-4" col="9"  status="standby"/>
-        <rail type="rail" id="-R4.10" row="-4" col="10"  status="standby"/>
-        <rail type="rail" id="-R4.12" row="-4" col="12"  status="standby"/>
-        <rail type="rail" id="-R4.13" row="-4" col="13"  status="standby"/>
-        <rail type="rail" id="-R4.14" row="-4" col="14"  status="standby"/>
-        <rail type="rail" id="-R4.15" row="-4" col="15"  status="standby"/>
-        <rail type="rail" id="-R4.16" row="-4" col="16"  status="standby"/>
-        <rail type="rail" id="-R4.17" row="-4" col="17"  status="standby"/>
-        <rail type="rail" id="-R4.18" row="-4" col="18"  status="standby"/>
-        <rail type="rail" id="-R4.20" row="-4" col="20"  status="standby"/>
-        <rail type="rail" id="-R4.21" row="-4" col="21"  status="standby"/>
-        <rail type="rail" id="-R4.22" row="-4" col="22"  status="standby"/>
-        <rail type="rail" id="-R4.23" row="-4" col="23"  status="standby"/>
-        <rail type="rail" id="-R4.24" row="-4" col="24"  status="standby"/>
-        <rail type="rail" id="-R4.25" row="-4" col="25"  status="standby"/>
-        <rail type="rail" id="-R4.27" row="-4" col="27"  status="standby"/>
-        <rail type="rail" id="-R4.30" row="-4" col="30"  status="standby"/>
-        <rail type="rail" id="-R4.33" row="-4" col="33"  status="standby"/>
-        <rail type="rail" id="-R4.32" row="-4" col="32"  status="standby"/>
-
-
-        <rail type="rail_sklon1" id="-R3.8" row="-3" col="8"  status="standby"/>
-        <rail type="rail_sklon3" id="-R3.9" row="-3" col="9"  status="standby"/>
-        <rail type="rail_sklon1" id="-R3.10" row="-3" col="10"  status="standby"/>
-        <rail type="rail" id="-R3.11" row="-3" col="11"  status="standby"/>
-        <rail type="rail" id="-R3.13" row="-3" col="13"  status="standby"/>
-        <rail type="rail" id="-R3.14" row="-3" col="14"  status="standby"/>
-        <rail type="rail" id="-R3.15" row="-3" col="15"  status="standby"/>
-        <rail type="rail" id="-R3.16" row="-3" col="16"  status="standby"/>
-        <rail type="rail" id="-R3.17" row="-3" col="17"  status="standby"/>
-        <rail type="rail" id="-R3.18" row="-3" col="18"  status="standby"/>
-        <rail type="rail" id="-R3.20" row="-3" col="20"  status="standby"/>
-        <rail type="rail" id="-R3.21" row="-3" col="21"  status="standby"/>
-        <rail type="rail" id="-R3.22" row="-3" col="22"  status="standby"/>
-        <rail type="rail" id="-R3.23" row="-3" col="23"  status="standby"/>
-        <rail type="rail" id="-R3.24" row="-3" col="24"  status="standby"/>
-        <rail type="rail" id="-R3.25" row="-3" col="25"  status="standby"/>
-        <rail type="rail" id="-R3.27" row="-3" col="27"  status="standby"/>
-        <rail type="rail_sklon2" id="-R3.28" row="-3" col="28"  status="standby"/>
-        <rail type="rail_sklon4" id="-R3.29" row="-3" col="29"  status="standby"/>
-        <rail type="rail_sklon2" id="-R3.30" row="-3" col="30"  status="standby"/>
-
-
-        <rail type="rail_sklon1" id="-R2.7" row="-2" col="7"  status="standby"/>
-        <rail type="rail" id="-R2.9" row="-2" col="9"  status="standby"/>
-        <rail type="rail" id="-R2.11" row="-2" col="11"  status="standby"/>
-        <rail type="rail" id="-R2.13" row="-2" col="13"  status="standby"/>
-        <rail type="rail" id="-R2.14" row="-2" col="14"  status="standby"/>
-        <rail type="rail" id="-R2.15" row="-2" col="15"  status="standby"/>
-        <rail type="rail" id="-R2.16" row="-2" col="16"  status="standby"/>
-        <rail type="rail" id="-R2.17" row="-2" col="17"  status="standby"/>
-        <rail type="rail" id="-R2.18" row="-2" col="18"  status="standby"/>
-        <rail type="rail" id="-R2.20" row="-2" col="20"  status="standby"/>
-        <rail type="rail" id="-R2.21" row="-2" col="21"  status="standby"/>
-        <rail type="rail" id="-R2.22" row="-2" col="22"  status="standby"/>
-        <rail type="rail" id="-R2.23" row="-2" col="23"  status="standby"/>
-        <rail type="rail" id="-R2.24" row="-2" col="24"  status="standby"/>
-        <rail type="rail" id="-R2.25" row="-2" col="25"  status="standby"/>
-        <rail type="rail" id="-R2.27" row="-2" col="27"  status="standby"/>
-        <rail type="rail" id="-R2.31" row="-2" col="31"  status="standby"/>
-        <rail type="rail" id="-R2.33" row="-2" col="33"  status="standby"/>
-        <rail type="rail" id="-R2.35" row="-2" col="35"  status="standby"/>
-        <rail type="rail" id="-R2.36" row="-2" col="36"  status="standby"/>
-        <rail type="rail" id="-R2.37" row="-2" col="37"  status="standby"/>
-        <rail type="rail" id="-R2.38" row="-2" col="38"  status="standby"/>
-
-
-        <rail type="rail" id="-R1.-2" row="-1" col="-2"  status="standby"/>
-        <rail type="rail" id="-R1.0" row="-1" col="0"  status="standby"/>
-        <rail type="rail" id="-R1.2" row="-1" col="2"  status="standby"/>
-        <rail type="rail" id="-R1.4" row="-1" col="4"  status="standby"/>
-        <rail type="rail" id="-R1.8" row="-1" col="8"  status="standby"/>
-        <rail type="rail" id="-R1.12" row="-1" col="12"  status="standby"/>
-        <rail type="rail" id="-R1.10" row="-1" col="10"  status="standby"/>
-        <rail type="rail" id="-R1.11" row="-1" col="11"  status="standby"/>
-        <rail type="rail" id="-R1.13" row="-1" col="13"  status="standby"/>
-        <rail type="rail" id="-R1.14" row="-1" col="14"  status="standby"/>
-        <rail type="rail" id="-R1.15" row="-1" col="15"  status="standby"/>
-        <rail type="rail" id="-R1.16" row="-1" col="16"  status="standby"/>
-        <rail type="rail" id="-R1.17" row="-1" col="17"  status="standby"/>
-        <rail type="rail" id="-R1.18" row="-1" col="18"  status="standby"/>
-        <rail type="rail" id="-R1.20" row="-1" col="20"  status="standby"/>
-        <rail type="rail" id="-R1.21" row="-1" col="21"  status="standby"/>
-        <rail type="rail" id="-R1.22" row="-1" col="22"  status="standby"/>
-        <rail type="rail" id="-R1.23" row="-1" col="23"  status="standby"/>
-        <rail type="rail" id="-R1.24" row="-1" col="24"  status="standby"/>
-        <rail type="rail" id="-R1.25" row="-1" col="25"  status="standby"/>
-        <rail type="rail" id="-R1.26" row="-1" col="26"  status="standby"/>
-        <rail type="rail" id="-R1.28" row="-1" col="28"  status="standby"/>
-        <rail type="rail" id="-R1.30" row="-1" col="30"  status="standby"/>
-        <rail type="rail" id="-R1.33" row="-1" col="33"  status="standby"/>
-        <rail type="rail" id="-R1.35" row="-1" col="35"  status="standby"/>
-        <rail type="rail" id="-R1.37" row="-1" col="37"  status="standby"/>
-        <rail type="rail" id="-R1.39" row="-1" col="39"  status="standby"/>
-
-        <rail type="rail" id="R1.-2" row="1" col="-2"  status="standby"/>
-        <rail type="rail" id="R1.0" row="1" col="0"  status="standby"/>
-        <rail type="rail" id="R1.2" row="1" col="2"  status="standby"/>
-        <rail type="rail" id="R1.4" row="1" col="4"  status="standby"/>
-        <rail type="rail" id="R1.8" row="1" col="8"  status="standby"/>
-        <rail type="rail" id="R1.12" row="1" col="12"  status="standby"/>
-        <rail type="rail" id="R1.10" row="1" col="10"  status="standby"/>
-        <rail type="rail" id="R1.11" row="1" col="11"  status="standby"/>
-        <rail type="rail" id="R1.13" row="1" col="13"  status="standby"/>
-        <rail type="rail" id="R1.14" row="1" col="14"  status="standby"/>
-        <rail type="rail" id="R1.15" row="1" col="15"  status="standby"/>
-        <rail type="rail" id="R1.16" row="1" col="16"  status="standby"/>
-        <rail type="rail" id="R1.17" row="1" col="17"  status="standby"/>
-        <rail type="rail" id="R1.18" row="1" col="18"  status="standby"/>
-        <rail type="rail" id="R1.20" row="1" col="20"  status="standby"/>
-        <rail type="rail" id="R1.21" row="1" col="21"  status="standby"/>
-        <rail type="rail" id="R1.22" row="1" col="22"  status="standby"/>
-        <rail type="rail" id="R1.23" row="1" col="23"  status="standby"/>
-        <rail type="rail" id="R1.24" row="1" col="24"  status="standby"/>
-        <rail type="rail" id="R1.25" row="1" col="25"  status="standby"/>
-        <rail type="rail" id="R1.27" row="1" col="27"  status="standby"/>
-        <rail type="rail" id="R1.29" row="1" col="29"  status="standby"/>
-        <!--<rail type="rail" id="R1.29" row="1" col="29"  status="standby"/>-->
-        <rail type="rail" id="R1.33" row="1" col="33"  status="standby"/>
-        <rail type="rail" id="R1.35" row="1" col="35"  status="standby"/>
-        <rail type="rail" id="R1.37" row="1" col="37"  status="standby"/>
-        <rail type="rail" id="R1.39" row="1" col="39"  status="standby"/>
-
-
-        <rail type="rail" id="R2.9" row="2" col="9"  status="standby"/>
-        <rail type="rail_sklon4" id="R2.7" row="2" col="7"  status="standby"/>
-        <rail type="rail" id="R2.12" row="2" col="12"  status="standby"/>
-        <rail type="rail" id="R2.11" row="2" col="11"  status="standby"/>
-        <rail type="rail" id="R2.13" row="2" col="13"  status="standby"/>
-        <rail type="rail" id="R2.14" row="2" col="14"  status="standby"/>
-        <rail type="rail" id="R2.15" row="2" col="15"  status="standby"/>
-        <rail type="rail" id="R2.16" row="2" col="16"  status="standby"/>
-        <rail type="rail" id="R2.17" row="2" col="17"  status="standby"/>
-        <rail type="rail" id="R2.18" row="2" col="18"  status="standby"/>
-        <rail type="rail" id="R2.20" row="2" col="20"  status="standby"/>
-        <rail type="rail" id="R2.21" row="2" col="21"  status="standby"/>
-        <rail type="rail" id="R2.22" row="2" col="22"  status="standby"/>
-        <rail type="rail" id="R2.23" row="2" col="23"  status="standby"/>
-        <rail type="rail" id="R2.24" row="2" col="24"  status="standby"/>
-        <rail type="rail" id="R2.25" row="2" col="25"  status="standby"/>
-        <rail type="rail" id="R2.27" row="2" col="27"  status="standby"/>
-        <rail type="rail_sklon3" id="R2.28" row="2" col="28" status="stanby"/>
-        <rail type="rail_sklon1" id="R2.29" row="2" col="29"  status="standby"/>
-        <rail type="rail_sklon3" id="R2.30" row="2" col="30"  status="standby"/>
-
-
-
-        <rail type="rail" id="R3.3" row="3" col="3"  status="standby"/>
-        <rail type="rail" id="R3.4" row="3" col="4"  status="standby"/>
-        <rail type="rail" id="R3.5" row="3" col="5"  status="standby"/>
-        <rail type="rail" id="R3.7" row="3" col="7"  status="standby"/>
-        <rail type="rail" id="R3.10" row="3" col="10"  status="standby"/>
-        <rail type="rail" id="R3.13" row="3" col="13"  status="standby"/>
-        <rail type="rail" id="R3.14" row="3" col="14"  status="standby"/>
-        <rail type="rail" id="R3.15" row="3" col="15"  status="standby"/>
-        <rail type="rail" id="R3.16" row="3" col="16"  status="standby"/>
-        <rail type="rail" id="R3.17" row="3" col="17"  status="standby"/>
-        <rail type="rail" id="R3.18" row="3" col="18"  status="standby"/>
-        <rail type="rail" id="R3.20" row="3" col="20"  status="standby"/>
-        <rail type="rail" id="R3.21" row="3" col="21"  status="standby"/>
-        <rail type="rail" id="R3.22" row="3" col="22"  status="standby"/>
-        <rail type="rail" id="R3.23" row="3" col="23"  status="standby"/>
-        <rail type="rail" id="R3.24" row="3" col="24"  status="standby"/>
-        <rail type="rail" id="R3.25" row="3" col="25"  status="standby"/>
-        <rail type="rail" id="R3.27" row="3" col="27"  status="standby"/>
-        <rail type="rail_sklon3" id="R3.29" row="3" col="29"  status="standby"/>
-
-
-        <rail type="rail_sklon2" id="R4.10" row="4" col="10"  status="standby"/>
-        <rail type="rail_sklon4" id="R4.11" row="4" col="11"  status="standby"/>
-        <rail type="rail" id="R4.12" row="4" col="12"  status="standby"/>
-        <rail type="rail" id="R4.14" row="4" col="14"  status="standby"/>
-        <rail type="rail" id="R4.15" row="4" col="15"  status="standby"/>
-        <rail type="rail" id="R4.16" row="4" col="16"  status="standby"/>
-        <rail type="rail" id="R4.17" row="4" col="17"  status="standby"/>
-        <rail type="rail" id="R4.18" row="4" col="18"  status="standby"/>
-        <rail type="rail" id="R4.20" row="4" col="20"  status="standby"/>
-        <rail type="rail" id="R4.21" row="4" col="21"  status="standby"/>
-        <rail type="rail" id="R4.22" row="4" col="22"  status="standby"/>
-        <rail type="rail" id="R4.23" row="4" col="23"  status="standby"/>
-        <rail type="rail" id="R4.24" row="4" col="24"  status="standby"/>
-        <rail type="rail" id="R4.26" row="4" col="26"  status="standby"/>
-        <rail type="rail" id="R4.4" row="4" col="4"  status="standby"/>
-        <rail type="rail" id="R4.5" row="4" col="5"  status="standby"/>
-        <rail type="rail" id="R4.7" row="4" col="7"  status="standby"/>
-        <rail type="rail" id="R4.29" row="4" col="29"  status="standby"/>
-        <rail type="rail" id="R4.31" row="4" col="31"  status="standby"/>
-
-        <rail type="rail" id="R5.4" row="5" col="4"  status="standby"/>
-        <rail type="rail" id="R5.5" row="5" col="5"  status="standby"/>
-        <rail type="rail" id="R5.7" row="5" col="7"  status="standby"/>
-        <rail type="rail_sklon3" id="R5.8" row="5" col="8"  status="standby"/>
-        <rail type="rail_sklon4" id="R5.10" row="5" col="10"  status="standby"/>
-        <rail type="rail" id="R5.11" row="5" col="11"  status="standby"/>
-        <rail type="rail" id="R5.13" row="5" col="13"  status="standby"/>
-        <rail type="rail" id="R5.14" row="5" col="14"  status="standby"/>
-        <rail type="rail" id="R5.15" row="5" col="15"  status="standby"/>
-        <rail type="rail" id="R5.16" row="5" col="16"  status="standby"/>
-        <rail type="rail" id="R5.17" row="5" col="17"  status="standby"/>
-        <rail type="rail" id="R5.18" row="5" col="18"  status="standby"/>
-        <rail type="rail" id="R5.20" row="5" col="20"  status="standby"/>
-        <rail type="rail" id="R5.21" row="5" col="21"  status="standby"/>
-        <rail type="rail" id="R5.22" row="5" col="22"  status="standby"/>
-        <rail type="rail" id="R5.23" row="5" col="23"  status="standby"/>
-        <rail type="rail" id="R5.24" row="5" col="24"  status="standby"/>
-        <rail type="rail" id="R5.26" row="5" col="26"  status="standby"/>
-        <rail type="rail_sklon3" id="R5.27" row="5" col="27"  status="standby"/>
-
-
-    </rails>
-
-    <zarazadlo>
-        <zarazadlo type="zarazadlo2" id="Z1" row="4" col="3"  status="standby"/>
-        <zarazadlo type="zarazadlo2" id="Z2" row="5" col="3"  status="standby"/>
-        <zarazadlo type="zarazadlo1" id="Z3" row="4" col="32"  status="standby"/>
-        <zarazadlo type="zarazadlo2" id="Z4" row="-5" col="22"  status="standby"/>
-        <zarazadlo type="zarazadlo2" id="Z5" row="-6" col="22"  status="standby"/>
-        <zarazadlo type="zarazadlo2" id="Z6" row="3" col="2"  status="standby"/>
-    </zarazadlo>
-
-    <navestidla>
-        <!-- stanične navestidlo -->
-        <navestidlo type="hlavne_navestidlo2" id="HN1" row="4" col="13"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN2" row="5" col="12"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN3" row="3" col="12"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN4" row="2" col="10"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN5" row="1" col="9"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN6" row="-1" col="9"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN7" row="-2" col="12"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN8" row="-3" col="12"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN9" row="-4" col="11"  status="standby"/>
-
-        <navestidlo type="hlavne_navestidlo1" id="HN10" row="5" col="25"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN11" row="4" col="25"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN12" row="3" col="26"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN13" row="2" col="26"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN14" row="1" col="26"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN15" row="-1" col="27"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN16" row="-2" col="26"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN17" row="-3" col="26"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN18" row="-4" col="26"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN19" row="-5" col="25"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN20" row="-6" col="25"  status="standby"/>
-
-
-        <!-- vchodove naveštidlá -->
-
-        <navestidlo type="hlavne_navestidlo1" id="HN21" row="-1" col="-1"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN22" row="-1" col="1"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN23" row="1" col="-1"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN24" row="1" col="1"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="ZN1" row="1" col="3"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="ZN2" row="-1" col="3"  status="standby"/>
-
-        <navestidlo type="hlavne_navestidlo2" id="HN25" row="-1" col="38"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN26" row="-1" col="36"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo1" id="HN27" row="1" col="36"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN28" row="1" col="38"  status="standby"/>
-        <navestidlo type="hlavne_navestidlo2" id="HN29" row="-2" col="34"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="ZN3" row="-1" col="34"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="ZN4" row="1" col="34"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="ZN5" row="-2" col="32"  status="standby"/>
-
-        <!-- depove navestidla -->
-        <navestidlo type="zriadovacie_navestidlo2" id="ZN6" row="-4" col="31"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo2" id="ZN7" row="4" col="30"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="ZN8" row="5" col="6"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="ZN9" row="4" col="6"  status="standby"/>
-        <navestidlo type="zriadovacie_navestidlo1" id="ZN10" row="3" col="6"  status="standby"/>
-
-    </navestidla>
-
-    <cisla>
-
-        <cislo type="dva" id="-C2" row="-1" col="19"/>
-        <cislo type="styri" id="-C4" row="-2" col="19"/>
-        <cislo type="sest" id="-C6" row="-3" col="19"/>
-        <cislo type="osem" id="-C8" row="-4" col="19"/>
-        <cislo type="desat" id="-C10" row="-5" col="23"/>
-        <cislo type="dvanast" id="-C12" row="-6" col="23"/>
-
-        <cislo type="jedna" id="C1" row="1" col="19"/>
-        <cislo type="tri" id="C3" row="2" col="19"/>
-        <cislo type="pat" id="C5" row="3" col="19"/>
-        <cislo type="sedem" id="C7" row="4" col="19"/>
-        <cislo type="devat" id="C9" row="5" col="19"/>
-    </cisla>
-
-    <text>
-        <text type="ZILINA" id="ZILINA" row="-6" col="17"/>
-        <text type="depo" id="depo" row="-5" col="33"/>
-        <text type="KOSICE" id="KOSICE" row="0" col="36"/>
-        <text type="BRATISLAVA" id="BRATISLAVA" row="0" col="-1"/>
-        <text type="LIETAVSKA_LUCKA" id="LIETAVSKA_LUCKA" row="-3" col="33"/>
-    </text>
-
+ <locations_symbols>
+  <location id="turnout" path="../layout/symboly/turnouts/turnout.svg" status="standby"/>
+  <location id="cross_turnout" path="../layout/symboly/turnouts/cross_turnout.svg" status="standby"/>
+  <location id="rail" path="../layout/symboly/rails/rail.svg" status="standby"/>
+  <location id="rail_sklon1" path="../layout/symboly/rails/rail_sklon1.svg" status="standby"/>
+  <location id="rail_sklon2" path="../layout/symboly/rails/rail_sklon2.svg" status="standby"/>
+  <location id="rail_sklon3" path="../layout/symboly/rails/rail_sklon3.svg" status="standby"/>
+  <location id="rail_sklon4" path="../layout/symboly/rails/rail_sklon4.svg" status="standby"/>
+  <location id="zarazadlo1" path="../layout/symboly/zarazadlo/zarazadlo1.svg" status="standby"/>
+  <location id="zarazadlo2" path="../layout/symboly/zarazadlo/zarazadlo2.svg" status="standby"/>
+  <location id="hlavne_navestidlo1" path="../layout/symboly/navestidla/hlavne_navestidlo/hlavne_navestidlo1.svg" status="standby"/>
+  <location id="hlavne_navestidlo2" path="../layout/symboly/navestidla/hlavne_navestidlo/hlavne_navestidlo2.svg" status="standby"/>
+  <location id="zriadovacie_navestidlo1" path="../layout/symboly/navestidla/zriadovacie_navestidlo/zriadovacie_navestidlo1.svg" status="standby"/>
+  <location id="zriadovacie_navestidlo2" path="../layout/symboly/navestidla/zriadovacie_navestidlo/zriadovacie_navestidlo2.svg" status="standby"/>
+  <!--cisla-->
+  <location id="nula" path="../layout/symboly/cisla/nula.svg" status="standby"/>
+  <location id="jedna" path="../layout/symboly/cisla/jedna.svg" status="standby"/>
+  <location id="dva" path="../layout/symboly/cisla/dva.svg" status="standby"/>
+  <location id="tri" path="../layout/symboly/cisla/tri.svg" status="standby"/>
+  <location id="styri" path="../layout/symboly/cisla/styri.svg" status="standby"/>
+  <location id="pat" path="../layout/symboly/cisla/pat.svg" status="standby"/>
+  <location id="sest" path="../layout/symboly/cisla/sest.svg" status="standby"/>
+  <location id="sedem" path="../layout/symboly/cisla/sedem.svg" status="standby"/>
+  <location id="osem" path="../layout/symboly/cisla/osem.svg" status="standby"/>
+  <location id="devat" path="../layout/symboly/cisla/devat.svg" status="standby"/>
+  <location id="desat" path="../layout/symboly/cisla/desat.svg" status="standby"/>
+  <location id="dvanast" path="../layout/symboly/cisla/dvanast.svg" status="standby"/>
+  <!--text-->
+  <location id="ZILINA" path="../layout/symboly/text/ZILINA.svg" status="standby"/>
+  <location id="depo" path="../layout/symboly/text/DEPO.svg" status="standby"/>
+  <location id="KOSICE" path="../layout/symboly/text/KOSICE.svg" status="standby"/>
+  <location id="BRATISLAVA" path="../layout/symboly/text/BRATISLAVA.svg" status="standby"/>
+  <location id="LIETAVSKA_LUCKA" path="../layout/symboly/text/LIETAVSKA_LUCKA.svg" status="standby"/>
+ </locations_symbols>
+ <turnouts>
+  <turnout col="5" flipped="true" id="T1_2" rotate="180" row="-1" status="standby" type="turnout"/>
+  <turnout col="6" flipped="false" id="T3" rotate="180" row="-1" status="standby" type="turnout"/>
+  <turnout col="7" flipped="false" id="T1" rotate="0" row="-1" status="standby" type="turnout"/>
+  <turnout col="8" flipped="false" id="T5" rotate="0" row="-2" status="standby" type="turnout"/>
+  <turnout col="10" flipped="false" id="T7" rotate="0" row="-2" status="standby" type="turnout"/>
+  <turnout col="31" flipped="true" id="T28" rotate="180" row="-1" status="standby" type="turnout"/>
+  <turnout col="32" flipped="false" id="T28_2" rotate="180" row="-1" status="standby" type="turnout"/>
+  <turnout col="29" flipped="true" id="T25" rotate="0" row="-1" status="standby" type="turnout"/>
+  <turnout col="28" flipped="true" id="T32" rotate="0" row="-2" status="standby" type="turnout"/>
+  <turnout col="30" flipped="true" id="T36" rotate="0" row="-2" status="standby" type="turnout"/>
+  <turnout col="29" flipped="true" id="T22" rotate="180" row="-2" status="standby" type="turnout"/>
+  <turnout col="28" flipped="true" id="T19" rotate="0" row="-4" status="standby" type="turnout"/>
+  <turnout col="29" flipped="true" id="T20" rotate="180" row="-4" status="standby" type="turnout"/>
+  <turnout col="27" flipped="true" id="T32" rotate="0" row="-5" status="standby" type="turnout"/>
+  <turnout col="5" flipped="false" id="T2_2" rotate="0" row="1" status="standby" type="turnout"/>
+  <turnout col="6" flipped="true" id="T4" rotate="0" row="1" status="standby" type="turnout"/>
+  <turnout col="7" flipped="true" id="T2" rotate="180" row="1" status="standby" type="turnout"/>
+  <turnout col="8" flipped="true" id="T6" rotate="180" row="2" status="standby" type="turnout"/>
+  <turnout col="9" flipped="true" id="T9" rotate="180" row="3" status="standby" type="turnout"/>
+  <turnout col="8" flipped="true" id="T8" rotate="0" row="3" status="standby" type="turnout"/>
+  <turnout col="11" flipped="true" id="T11" rotate="180" row="3" status="standby" type="turnout"/>
+  <turnout col="9" flipped="true" id="T12" rotate="0" row="4" status="standby" type="turnout"/>
+  <turnout col="8" flipped="false" id="T10" rotate="180" row="4" status="standby" type="turnout"/>
+  <turnout col="27" flipped="false" id="T17" rotate="180" row="4" status="standby" type="turnout"/>
+  <turnout col="28" flipped="false" id="T23" rotate="180" row="3" status="standby" type="turnout"/>
+  <turnout col="28" flipped="false" id="T18" rotate="0" row="4" status="standby" type="turnout"/>
+  <!--overit id vyhybky bolanefunkčna-->
+  <turnout col="28" flipped="false" id="T24" rotate="180" row="1" status="standby" type="turnout"/>
+  <turnout col="30" flipped="false" id="T27" rotate="180" row="1" status="standby" type="turnout"/>
+  <turnout col="31" flipped="false" id="T29" rotate="0" row="1" status="standby" type="turnout"/>
+  <turnout col="32" flipped="true" id="T29_2" rotate="0" row="1" status="standby" type="turnout"/>
+ </turnouts>
+ <cross_turnouts>
+  <cross_turnout col="5" id="CT1" rotate="0" row="0" status="standby" type="cross_turnout"/>
+  <cross_turnout col="31" id="CT1" rotate="0" row="0" status="standby" type="cross_turnout"/>
+ </cross_turnouts>
+ <rails>
+  <rail col="27" id="-R6.27" row="-6" status="standby" type="rail_sklon2"/>
+  <rail col="26" id="-R6.26" row="-6" status="standby" type="rail"/>
+  <rail col="24" id="-R6.24" row="-6" status="standby" type="rail"/>
+  <rail col="28" id="-R5.28" row="-5" status="standby" type="rail_sklon2"/>
+  <rail col="26" id="-R5.26" row="-5" status="standby" type="rail"/>
+  <rail col="24" id="-R5.24" row="-5" status="standby" type="rail"/>
+  <rail col="9" id="-R4.9" row="-4" status="standby" type="rail_sklon1"/>
+  <rail col="10" id="-R4.10" row="-4" status="standby" type="rail"/>
+  <rail col="12" id="-R4.12" row="-4" status="standby" type="rail"/>
+  <rail col="13" id="-R4.13" row="-4" status="standby" type="rail"/>
+  <rail col="14" id="-R4.14" row="-4" status="standby" type="rail"/>
+  <rail col="15" id="-R4.15" row="-4" status="standby" type="rail"/>
+  <rail col="16" id="-R4.16" row="-4" status="standby" type="rail"/>
+  <rail col="17" id="-R4.17" row="-4" status="standby" type="rail"/>
+  <rail col="18" id="-R4.18" row="-4" status="standby" type="rail"/>
+  <rail col="20" id="-R4.20" row="-4" status="standby" type="rail"/>
+  <rail col="21" id="-R4.21" row="-4" status="standby" type="rail"/>
+  <rail col="22" id="-R4.22" row="-4" status="standby" type="rail"/>
+  <rail col="23" id="-R4.23" row="-4" status="standby" type="rail"/>
+  <rail col="24" id="-R4.24" row="-4" status="standby" type="rail"/>
+  <rail col="25" id="-R4.25" row="-4" status="standby" type="rail"/>
+  <rail col="27" id="-R4.27" row="-4" status="standby" type="rail"/>
+  <rail col="30" id="-R4.30" row="-4" status="standby" type="rail"/>
+  <rail col="33" id="-R4.33" row="-4" status="standby" type="rail"/>
+  <rail col="32" id="-R4.32" row="-4" status="standby" type="rail"/>
+  <rail col="8" id="-R3.8" row="-3" status="standby" type="rail_sklon1"/>
+  <rail col="9" id="-R3.9" row="-3" status="standby" type="rail_sklon3"/>
+  <rail col="10" id="-R3.10" row="-3" status="standby" type="rail_sklon1"/>
+  <rail col="11" id="-R3.11" row="-3" status="standby" type="rail"/>
+  <rail col="13" id="-R3.13" row="-3" status="standby" type="rail"/>
+  <rail col="14" id="-R3.14" row="-3" status="standby" type="rail"/>
+  <rail col="15" id="-R3.15" row="-3" status="standby" type="rail"/>
+  <rail col="16" id="-R3.16" row="-3" status="standby" type="rail"/>
+  <rail col="17" id="-R3.17" row="-3" status="standby" type="rail"/>
+  <rail col="18" id="-R3.18" row="-3" status="standby" type="rail"/>
+  <rail col="20" id="-R3.20" row="-3" status="standby" type="rail"/>
+  <rail col="21" id="-R3.21" row="-3" status="standby" type="rail"/>
+  <rail col="22" id="-R3.22" row="-3" status="standby" type="rail"/>
+  <rail col="23" id="-R3.23" row="-3" status="standby" type="rail"/>
+  <rail col="24" id="-R3.24" row="-3" status="standby" type="rail"/>
+  <rail col="25" id="-R3.25" row="-3" status="standby" type="rail"/>
+  <rail col="27" id="-R3.27" row="-3" status="standby" type="rail"/>
+  <rail col="28" id="-R3.28" row="-3" status="standby" type="rail_sklon2"/>
+  <rail col="29" id="-R3.29" row="-3" status="standby" type="rail_sklon4"/>
+  <rail col="30" id="-R3.30" row="-3" status="standby" type="rail_sklon2"/>
+  <rail col="7" id="-R2.7" row="-2" status="standby" type="rail_sklon1"/>
+  <rail col="9" id="-R2.9" row="-2" status="standby" type="rail"/>
+  <rail col="11" id="-R2.11" row="-2" status="standby" type="rail"/>
+  <rail col="13" id="-R2.13" row="-2" status="standby" type="rail"/>
+  <rail col="14" id="-R2.14" row="-2" status="standby" type="rail"/>
+  <rail col="15" id="-R2.15" row="-2" status="standby" type="rail"/>
+  <rail col="16" id="-R2.16" row="-2" status="standby" type="rail"/>
+  <rail col="17" id="-R2.17" row="-2" status="standby" type="rail"/>
+  <rail col="18" id="-R2.18" row="-2" status="standby" type="rail"/>
+  <rail col="20" id="-R2.20" row="-2" status="standby" type="rail"/>
+  <rail col="21" id="-R2.21" row="-2" status="standby" type="rail"/>
+  <rail col="22" id="-R2.22" row="-2" status="standby" type="rail"/>
+  <rail col="23" id="-R2.23" row="-2" status="standby" type="rail"/>
+  <rail col="24" id="-R2.24" row="-2" status="standby" type="rail"/>
+  <rail col="25" id="-R2.25" row="-2" status="standby" type="rail"/>
+  <rail col="27" id="-R2.27" row="-2" status="standby" type="rail"/>
+  <rail col="31" id="-R2.31" row="-2" status="standby" type="rail"/>
+  <rail col="33" id="-R2.33" row="-2" status="standby" type="rail"/>
+  <rail col="35" id="-R2.35" row="-2" status="standby" type="rail"/>
+  <rail col="36" id="-R2.36" row="-2" status="standby" type="rail"/>
+  <rail col="37" id="-R2.37" row="-2" status="standby" type="rail"/>
+  <rail col="38" id="-R2.38" row="-2" status="standby" type="rail"/>
+  <rail col="-2" id="-R1.-2" row="-1" status="standby" type="rail"/>
+  <rail col="0" id="-R1.0" row="-1" status="standby" type="rail"/>
+  <rail col="2" id="-R1.2" row="-1" status="standby" type="rail"/>
+  <rail col="4" id="-R1.4" row="-1" status="standby" type="rail"/>
+  <rail col="8" id="-R1.8" row="-1" status="standby" type="rail"/>
+  <rail col="12" id="-R1.12" row="-1" status="standby" type="rail"/>
+  <rail col="10" id="-R1.10" row="-1" status="standby" type="rail"/>
+  <rail col="11" id="-R1.11" row="-1" status="standby" type="rail"/>
+  <rail col="13" id="-R1.13" row="-1" status="standby" type="rail"/>
+  <rail col="14" id="-R1.14" row="-1" status="standby" type="rail"/>
+  <rail col="15" id="-R1.15" row="-1" status="standby" type="rail"/>
+  <rail col="16" id="-R1.16" row="-1" status="standby" type="rail"/>
+  <rail col="17" id="-R1.17" row="-1" status="standby" type="rail"/>
+  <rail col="18" id="-R1.18" row="-1" status="standby" type="rail"/>
+  <rail col="20" id="-R1.20" row="-1" status="standby" type="rail"/>
+  <rail col="21" id="-R1.21" row="-1" status="standby" type="rail"/>
+  <rail col="22" id="-R1.22" row="-1" status="standby" type="rail"/>
+  <rail col="23" id="-R1.23" row="-1" status="standby" type="rail"/>
+  <rail col="24" id="-R1.24" row="-1" status="standby" type="rail"/>
+  <rail col="25" id="-R1.25" row="-1" status="standby" type="rail"/>
+  <rail col="26" id="-R1.26" row="-1" status="standby" type="rail"/>
+  <rail col="28" id="-R1.28" row="-1" status="standby" type="rail"/>
+  <rail col="30" id="-R1.30" row="-1" status="standby" type="rail"/>
+  <rail col="33" id="-R1.33" row="-1" status="standby" type="rail"/>
+  <rail col="35" id="-R1.35" row="-1" status="standby" type="rail"/>
+  <rail col="37" id="-R1.37" row="-1" status="standby" type="rail"/>
+  <rail col="39" id="-R1.39" row="-1" status="standby" type="rail"/>
+  <rail col="-2" id="R1.-2" row="1" status="standby" type="rail"/>
+  <rail col="0" id="R1.0" row="1" status="standby" type="rail"/>
+  <rail col="2" id="R1.2" row="1" status="standby" type="rail"/>
+  <rail col="4" id="R1.4" row="1" status="standby" type="rail"/>
+  <rail col="8" id="R1.8" row="1" status="standby" type="rail"/>
+  <rail col="12" id="R1.12" row="1" status="standby" type="rail"/>
+  <rail col="10" id="R1.10" row="1" status="standby" type="rail"/>
+  <rail col="11" id="R1.11" row="1" status="standby" type="rail"/>
+  <rail col="13" id="R1.13" row="1" status="standby" type="rail"/>
+  <rail col="14" id="R1.14" row="1" status="standby" type="rail"/>
+  <rail col="15" id="R1.15" row="1" status="standby" type="rail"/>
+  <rail col="16" id="R1.16" row="1" status="standby" type="rail"/>
+  <rail col="17" id="R1.17" row="1" status="standby" type="rail"/>
+  <rail col="18" id="R1.18" row="1" status="standby" type="rail"/>
+  <rail col="20" id="R1.20" row="1" status="standby" type="rail"/>
+  <rail col="21" id="R1.21" row="1" status="standby" type="rail"/>
+  <rail col="22" id="R1.22" row="1" status="standby" type="rail"/>
+  <rail col="23" id="R1.23" row="1" status="standby" type="rail"/>
+  <rail col="24" id="R1.24" row="1" status="standby" type="rail"/>
+  <rail col="25" id="R1.25" row="1" status="standby" type="rail"/>
+  <rail col="27" id="R1.27" row="1" status="standby" type="rail"/>
+  <rail col="29" id="R1.29" row="1" status="standby" type="rail"/>
+  <!--<rail type="rail" id="R1.29" row="1" col="29"  status="standby"/>-->
+  <rail col="33" id="R1.33" row="1" status="standby" type="rail"/>
+  <rail col="35" id="R1.35" row="1" status="standby" type="rail"/>
+  <rail col="37" id="R1.37" row="1" status="standby" type="rail"/>
+  <rail col="39" id="R1.39" row="1" status="standby" type="rail"/>
+  <rail col="9" id="R2.9" row="2" status="standby" type="rail"/>
+  <rail col="7" id="R2.7" row="2" status="standby" type="rail_sklon4"/>
+  <rail col="12" id="R2.12" row="2" status="standby" type="rail"/>
+  <rail col="11" id="R2.11" row="2" status="standby" type="rail"/>
+  <rail col="13" id="R2.13" row="2" status="standby" type="rail"/>
+  <rail col="14" id="R2.14" row="2" status="standby" type="rail"/>
+  <rail col="15" id="R2.15" row="2" status="standby" type="rail"/>
+  <rail col="16" id="R2.16" row="2" status="standby" type="rail"/>
+  <rail col="17" id="R2.17" row="2" status="standby" type="rail"/>
+  <rail col="18" id="R2.18" row="2" status="standby" type="rail"/>
+  <rail col="20" id="R2.20" row="2" status="standby" type="rail"/>
+  <rail col="21" id="R2.21" row="2" status="standby" type="rail"/>
+  <rail col="22" id="R2.22" row="2" status="standby" type="rail"/>
+  <rail col="23" id="R2.23" row="2" status="standby" type="rail"/>
+  <rail col="24" id="R2.24" row="2" status="standby" type="rail"/>
+  <rail col="25" id="R2.25" row="2" status="standby" type="rail"/>
+  <rail col="27" id="R2.27" row="2" status="standby" type="rail"/>
+  <rail col="28" id="R2.28" row="2" status="stanby" type="rail_sklon3"/>
+  <rail col="29" id="R2.29" row="2" status="standby" type="rail_sklon1"/>
+  <rail col="30" id="R2.30" row="2" status="standby" type="rail_sklon3"/>
+  <rail col="3" id="R3.3" row="3" status="standby" type="rail"/>
+  <rail col="4" id="R3.4" row="3" status="standby" type="rail"/>
+  <rail col="5" id="R3.5" row="3" status="standby" type="rail"/>
+  <rail col="7" id="R3.7" row="3" status="standby" type="rail"/>
+  <rail col="10" id="R3.10" row="3" status="standby" type="rail"/>
+  <rail col="13" id="R3.13" row="3" status="standby" type="rail"/>
+  <rail col="14" id="R3.14" row="3" status="standby" type="rail"/>
+  <rail col="15" id="R3.15" row="3" status="standby" type="rail"/>
+  <rail col="16" id="R3.16" row="3" status="standby" type="rail"/>
+  <rail col="17" id="R3.17" row="3" status="standby" type="rail"/>
+  <rail col="18" id="R3.18" row="3" status="standby" type="rail"/>
+  <rail col="20" id="R3.20" row="3" status="standby" type="rail"/>
+  <rail col="21" id="R3.21" row="3" status="standby" type="rail"/>
+  <rail col="22" id="R3.22" row="3" status="standby" type="rail"/>
+  <rail col="23" id="R3.23" row="3" status="standby" type="rail"/>
+  <rail col="24" id="R3.24" row="3" status="standby" type="rail"/>
+  <rail col="25" id="R3.25" row="3" status="standby" type="rail"/>
+  <rail col="27" id="R3.27" row="3" status="standby" type="rail"/>
+  <rail col="29" id="R3.29" row="3" status="standby" type="rail_sklon3"/>
+  <rail col="10" id="R4.10" row="4" status="standby" type="rail_sklon2"/>
+  <rail col="11" id="R4.11" row="4" status="standby" type="rail_sklon4"/>
+  <rail col="12" id="R4.12" row="4" status="standby" type="rail"/>
+  <rail col="14" id="R4.14" row="4" status="standby" type="rail"/>
+  <rail col="15" id="R4.15" row="4" status="standby" type="rail"/>
+  <rail col="16" id="R4.16" row="4" status="standby" type="rail"/>
+  <rail col="17" id="R4.17" row="4" status="standby" type="rail"/>
+  <rail col="18" id="R4.18" row="4" status="standby" type="rail"/>
+  <rail col="20" id="R4.20" row="4" status="standby" type="rail"/>
+  <rail col="21" id="R4.21" row="4" status="standby" type="rail"/>
+  <rail col="22" id="R4.22" row="4" status="standby" type="rail"/>
+  <rail col="23" id="R4.23" row="4" status="standby" type="rail"/>
+  <rail col="24" id="R4.24" row="4" status="standby" type="rail"/>
+  <rail col="26" id="R4.26" row="4" status="standby" type="rail"/>
+  <rail col="4" id="R4.4" row="4" status="standby" type="rail"/>
+  <rail col="5" id="R4.5" row="4" status="standby" type="rail"/>
+  <rail col="7" id="R4.7" row="4" status="standby" type="rail"/>
+  <rail col="29" id="R4.29" row="4" status="standby" type="rail"/>
+  <rail col="31" id="R4.31" row="4" status="standby" type="rail"/>
+  <rail col="4" id="R5.4" row="5" status="standby" type="rail"/>
+  <rail col="5" id="R5.5" row="5" status="standby" type="rail"/>
+  <rail col="7" id="R5.7" row="5" status="standby" type="rail"/>
+  <rail col="8" id="R5.8" row="5" status="standby" type="rail_sklon3"/>
+  <rail col="10" id="R5.10" row="5" status="standby" type="rail_sklon4"/>
+  <rail col="11" id="R5.11" row="5" status="standby" type="rail"/>
+  <rail col="13" id="R5.13" row="5" status="standby" type="rail"/>
+  <rail col="14" id="R5.14" row="5" status="standby" type="rail"/>
+  <rail col="15" id="R5.15" row="5" status="standby" type="rail"/>
+  <rail col="16" id="R5.16" row="5" status="standby" type="rail"/>
+  <rail col="17" id="R5.17" row="5" status="standby" type="rail"/>
+  <rail col="18" id="R5.18" row="5" status="standby" type="rail"/>
+  <rail col="20" id="R5.20" row="5" status="standby" type="rail"/>
+  <rail col="21" id="R5.21" row="5" status="standby" type="rail"/>
+  <rail col="22" id="R5.22" row="5" status="standby" type="rail"/>
+  <rail col="23" id="R5.23" row="5" status="standby" type="rail"/>
+  <rail col="24" id="R5.24" row="5" status="standby" type="rail"/>
+  <rail col="26" id="R5.26" row="5" status="standby" type="rail"/>
+  <rail col="27" id="R5.27" row="5" status="standby" type="rail_sklon3"/>
+ </rails>
+ <zarazadlo>
+  <zarazadlo col="3" id="Z1" row="4" status="standby" type="zarazadlo2"/>
+  <zarazadlo col="3" id="Z2" row="5" status="standby" type="zarazadlo2"/>
+  <zarazadlo col="32" id="Z3" row="4" status="standby" type="zarazadlo1"/>
+  <zarazadlo col="22" id="Z4" row="-5" status="standby" type="zarazadlo2"/>
+  <zarazadlo col="22" id="Z5" row="-6" status="standby" type="zarazadlo2"/>
+  <zarazadlo col="2" id="Z6" row="3" status="standby" type="zarazadlo2"/>
+ </zarazadlo>
+ <navestidla>
+  <!-- stanične navestidlo -->
+  <navestidlo col="13" id="HN1" row="4" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="12" id="HN2" row="5" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="12" id="HN3" row="3" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="10" id="HN4" row="2" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="9" id="HN5" row="1" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="9" id="HN6" row="-1" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="12" id="HN7" row="-2" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="12" id="HN8" row="-3" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="11" id="HN9" row="-4" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="25" id="HN10" row="5" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="25" id="HN11" row="4" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="26" id="HN12" row="3" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="26" id="HN13" row="2" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="26" id="HN14" row="1" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="27" id="HN15" row="-1" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="26" id="HN16" row="-2" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="26" id="HN17" row="-3" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="26" id="HN18" row="-4" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="25" id="HN19" row="-5" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="25" id="HN20" row="-6" status="standby" type="hlavne_navestidlo1"/>
+  <!-- vchodove naveštidlá -->
+  <navestidlo col="-1" id="HN21" row="-1" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="1" id="HN22" row="-1" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="-1" id="HN23" row="1" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="1" id="HN24" row="1" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="3" id="ZN1" row="1" status="standby" type="zriadovacie_navestidlo1"/>
+  <navestidlo col="3" id="ZN2" row="-1" status="standby" type="zriadovacie_navestidlo1"/>
+  <navestidlo col="38" id="HN25" row="-1" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="36" id="HN26" row="-1" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="36" id="HN27" row="1" status="standby" type="hlavne_navestidlo1"/>
+  <navestidlo col="38" id="HN28" row="1" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="34" id="HN29" row="-2" status="standby" type="hlavne_navestidlo2"/>
+  <navestidlo col="34" id="ZN3" row="-1" status="standby" type="zriadovacie_navestidlo2"/>
+  <navestidlo col="34" id="ZN4" row="1" status="standby" type="zriadovacie_navestidlo2"/>
+  <navestidlo col="32" id="ZN5" row="-2" status="standby" type="zriadovacie_navestidlo2"/>
+  <!-- depove navestidla -->
+  <navestidlo col="31" id="ZN6" row="-4" status="standby" type="zriadovacie_navestidlo2"/>
+  <navestidlo col="30" id="ZN7" row="4" status="standby" type="zriadovacie_navestidlo2"/>
+  <navestidlo col="6" id="ZN8" row="5" status="standby" type="zriadovacie_navestidlo1"/>
+  <navestidlo col="6" id="ZN9" row="4" status="standby" type="zriadovacie_navestidlo1"/>
+  <navestidlo col="6" id="ZN10" row="3" status="standby" type="zriadovacie_navestidlo1"/>
+ </navestidla>
+ <cisla>
+  <cislo col="19" id="-C2" row="-1" type="dva"/>
+  <cislo col="19" id="-C4" row="-2" type="styri"/>
+  <cislo col="19" id="-C6" row="-3" type="sest"/>
+  <cislo col="19" id="-C8" row="-4" type="osem"/>
+  <cislo col="23" id="-C10" row="-5" type="desat"/>
+  <cislo col="23" id="-C12" row="-6" type="dvanast"/>
+  <cislo col="19" id="C1" row="1" type="jedna"/>
+  <cislo col="19" id="C3" row="2" type="tri"/>
+  <cislo col="19" id="C5" row="3" type="pat"/>
+  <cislo col="19" id="C7" row="4" type="sedem"/>
+  <cislo col="19" id="C9" row="5" type="devat"/>
+ </cisla>
+ <text>
+  <text col="17" id="ZILINA" row="-6" type="ZILINA"/>
+  <text col="33" id="depo" row="-5" type="depo"/>
+  <text col="36" id="KOSICE" row="0" type="KOSICE"/>
+  <text col="-1" id="BRATISLAVA" row="0" type="BRATISLAVA"/>
+  <text col="33" id="LIETAVSKA_LUCKA" row="-3" type="LIETAVSKA_LUCKA"/>
+ </text>
 </layout>

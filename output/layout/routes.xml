@@ -9,11 +9,10 @@
    <element id="-R4.9"/>
    <element id="-R3.9"/>
    <element id="-R3.8"/>
-   <element id="T8" position="S-"/>
+   <element id="T5" position="S-"/>
    <element id="-R2.7"/>
-   <element id="T6" position="S-"/>
-   <element id="T4" position="S+"/>
-   <element id="T2" position="S+"/>
+   <element id="T1" position="S+"/>
+   <element id="T3" position="S+"/>
    <element id="-R1.4"/>
    <element id="-R1.2"/>
    <element id="-R1.0"/>

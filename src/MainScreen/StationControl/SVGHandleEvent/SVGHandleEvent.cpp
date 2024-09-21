@@ -13,13 +13,13 @@
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
         : QGraphicsSvgItem(parent),
-        svgFilePath(svgFilePath),
-        elementId(std::move(elementId)),
-        row(row),
-        col(col),
-        flipped(flipped),
-        rotate(rotate),
-        renderer(new QSvgRenderer(svgFilePath)){
+          svgFilePath(svgFilePath),
+          elementId(std::move(elementId)),
+          row(row),
+          col(col),
+          flipped(flipped),
+          rotate(rotate),
+          renderer(new QSvgRenderer(svgFilePath)){
     if (!renderer->isValid()) {
         qWarning() << "Failed to load SVG file:" << svgFilePath;
         delete renderer;
@@ -33,9 +33,6 @@ SVGHandleEvent::~SVGHandleEvent() {
     if (vyhybkaThread.joinable()) {
         vyhybkaThread.join();
     }
-    if (hlavneNavestidloThread.joinable()) {
-        hlavneNavestidloThread.join();
-    }
 }
 
 void SVGHandleEvent::sendToArduino(const QString &dataList) {
@@ -47,17 +44,18 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
 
     if(event->button() == Qt::LeftButton) {
-        qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
-                 "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
-
+        /*qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
+                 "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;*/
+        vlakovaCestaRoute();
+        checkIDwithEndpoint(elementId);
+    }
+    if(event->button() == Qt::MiddleButton) {
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
             hlavneNavestidloMenu(event->screenPos(), elementId);
         }
         else if(QRegularExpression("^T\\d+( \\d+)?$").match(elementId).hasMatch()) {
             vyhybkaMenu(event->screenPos(), elementId);
-            qDebug()<<"pos"<<event->screenPos();
         }
-        checkIDwithEndpoint(elementId);
     }
     if(event->button() == Qt::RightButton) {
         if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
@@ -71,13 +69,6 @@ void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QS
         vyhybkaThread.join();
     }
     vyhybkaThread = std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging, path, elementId);
-}
-
-void SVGHandleEvent::threadHlavneNavestidloMenu() {
-    if (hlavneNavestidloThread.joinable()) {
-        hlavneNavestidloThread.join();
-    }
-    hlavneNavestidloThread = std::thread(&SVGHandleEvent::changingPositionOfTurnouts, this);
 }
 
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
@@ -399,6 +390,54 @@ void SVGHandleEvent::updateTransform(const QString &transformStr) {
     this->update();
 }
 
+void SVGHandleEvent::vlakovaCestaRoute() {
+    // Setting background color of that element to Lightgreen
+    // Updating parameter in SVG file visibility with id back_color
+    changeColorbackground(svgFilePath,elementId);
+
+    // Read routes.xml to find the end point
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
+    }
+
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement start = route.firstChildElement("start");
+        if (start.attribute("point") == elementId) {
+            QDomElement end = route.firstChildElement("end");
+            QString endPointId = end.attribute("point");
+            qDebug() << "End point:" << endPointId;
+
+            // Update onDemand parameter to true
+            QDomElement status = route.firstChildElement("status");
+            QDomElement onDemand = status.firstChildElement("onDemand");
+            onDemand.firstChild().setNodeValue("true");
+
+            // Save the changes back to the routes.xml file
+            if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                qWarning() << "Failed to open routes.xml for writing";
+                return;
+            }
+
+            QTextStream routesStream(&routesFile);
+            routesStream << routesDoc.toString();
+            routesFile.close();
+        }
+    }
+}
 
 
 void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) {
@@ -433,52 +472,7 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
 
     QAction* selectedAction = contextMenu.exec(pos);
     if (selectedAction && selectedAction->text() == "VC") {
-        // Setting background color of that element to Lightgreen
-        // Updating parameter in SVG file visibility with id back_color
-        changeColorbackground(svgFilePath,elementId);
-
-        // Read routes.xml to find the end point
-        QFile routesFile("../layout/routes.xml");
-        if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open routes.xml";
-            return;
-        }
-
-        QDomDocument routesDoc;
-        if (!routesDoc.setContent(&routesFile)) {
-            qWarning() << "Failed to parse routes.xml";
-            routesFile.close();
-            return;
-        }
-        routesFile.close();
-
-        QDomElement routesRoot = routesDoc.documentElement();
-        QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-        for (int i = 0; i < routes.count(); ++i) {
-            QDomElement route = routes.at(i).toElement();
-            QDomElement start = route.firstChildElement("start");
-            if (start.attribute("point") == elementId) {
-                QDomElement end = route.firstChildElement("end");
-                QString endPointId = end.attribute("point");
-                qDebug() << "End point:" << endPointId;
-
-                // Update onDemand parameter to true
-                QDomElement status = route.firstChildElement("status");
-                QDomElement onDemand = status.firstChildElement("onDemand");
-                onDemand.firstChild().setNodeValue("true");
-
-                // Save the changes back to the routes.xml file
-                if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                    qWarning() << "Failed to open routes.xml for writing";
-                    return;
-                }
-
-                QTextStream routesStream(&routesFile);
-                routesStream << routesDoc.toString();
-                routesFile.close();
-            }
-        }
+        vlakovaCestaRoute();
     }
 }
 
@@ -543,7 +537,7 @@ void SVGHandleEvent::checkIDwithEndpoint(const QString &elementid) {
             QDomElement onDemand = status.firstChildElement("onDemand");
             if (onDemand.text() == "true") {
                 changeColorbackground(svgFilePath,elementId);
-                threadHlavneNavestidloMenu();
+                changingPositionOfTurnouts();
                 break;
             }
         }
@@ -571,7 +565,6 @@ QString SVGHandleEvent::getTurnoutFilePath(const QString &turnoutId) {
 }
 
 void SVGHandleEvent::changingPositionOfTurnouts() {
-    std::lock_guard<std::mutex> lock(mtx_toggle_hlavne_navestidlo);
     QFile routesFile("../layout/routes.xml");
     if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open routes.xml";
@@ -599,19 +592,68 @@ void SVGHandleEvent::changingPositionOfTurnouts() {
             QString position = element.attribute("position");
 
             if (id.startsWith("T")) {
-                QString turnoutLocation = getTurnoutFilePath(id);
+                // Find the existing SVGHandleEvent item for the specific turnout
+                SVGHandleEvent *turnoutItem = nullptr;
+                for (QGraphicsItem *item : this->scene()->items()) {
+                    SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
+                    if (svgItem && svgItem->elementId == id) {
+                        turnoutItem = svgItem;
+                        break;
+                    }
+                }
 
-                if (position == "S+") {
-                    threadToggleVyhybka(true, false, turnoutLocation,id);
+                if (!turnoutItem) {
+                    qWarning() << "Turnout item not found for ID:" << id;
+                    continue;
+                }
 
-                } else if (position == "S-") {
-                    threadToggleVyhybka(false, true, turnoutLocation, id);
+                // Load the SVG file and parse it to get the current state of the turnout
+                QFile file(turnoutItem->svgFilePath);
+                if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                    qWarning() << "Failed to open SVG file:" << turnoutItem->svgFilePath;
+                    continue;
+                }
+
+                QDomDocument doc;
+                if (!doc.setContent(&file)) {
+                    qWarning() << "Failed to parse SVG file:" << turnoutItem->svgFilePath;
+                    file.close();
+                    continue;
+                }
+                file.close();
+
+                QDomElement root = doc.documentElement();
+                QDomNodeList elements = root.elementsByTagName("path");
+
+                QString currentState;
+                for (int k = 0; k < elements.count(); ++k) {
+                    QDomElement element = elements.at(k).toElement();
+                    if (element.isNull()) {
+                        continue;
+                    }
+                    QString Id = element.attribute("id");
+
+                    if (Id == "_straight" || Id == "_diverging") {
+                        QString visibility = element.attribute("visibility");
+                        if (visibility == "visible") {
+                            currentState = Id;
+                            break;
+                        }
+                    }
+                }
+
+                // Determine the switch state and call threadToggleVyhybka with the appropriate parameters
+                if (currentState == "_straight") {
+                    turnoutItem->threadToggleVyhybka(false, true, turnoutItem->svgFilePath, id);
+                } else if (currentState == "_diverging") {
+                    turnoutItem->threadToggleVyhybka(true, false, turnoutItem->svgFilePath, id);
+                } else {
+                    qWarning() << "Unknown turnout state for ID:" << id;
                 }
             }
         }
     }
 }
-
 
 
 
