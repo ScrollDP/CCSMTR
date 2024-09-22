@@ -754,11 +754,13 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     bool isLocked = false;
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
-        QDomElement start = route.firstChildElement("start");
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
         QDomElement status = route.firstChildElement("status");
         QDomElement locked = status.firstChildElement("locked");
 
-        if (start.attribute("point") == id && locked.text() == "true") {
+        if ((start.attribute("point") == id || end.attribute("point") == id) && locked.text() == "true") {
             isLocked = true;
             break;
         }
@@ -767,41 +769,49 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     if (isLocked) {
         contextMenu.addAction("RC");
     } else {
-        // Load default values from hlavne_navestidlo.xml
-        QFile file("../layout/menu_navestidla/zriadovacie_navestidlo.xml");
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open zriadovacie_navestidlo.xml";
+        // Open and parse hlavne-navestidlo.xml
+        QFile navestidloFile("../layout/menu_navestidla/zriadovacie_navestidlo.xml");
+        if (!navestidloFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qWarning() << "Failed to open hlavne-zriadovacie_navestidlo.xml";
             return;
         }
 
-        QDomDocument doc;
-        if (!doc.setContent(&file)) {
-            qWarning() << "Failed to parse zriadovacie_navestidlo.xml";
-            file.close();
+        QDomDocument navestidloDoc;
+        if (!navestidloDoc.setContent(&navestidloFile)) {
+            qWarning() << "Failed to parse zriadovacie_navestidlo-navestidlo.xml";
+            navestidloFile.close();
             return;
         }
-        file.close();
+        navestidloFile.close();
 
-        QDomElement root = doc.documentElement();
-        QDomNodeList parameters = root.childNodes();
+        QDomElement navestidloRoot = navestidloDoc.documentElement();
+        QDomNodeList parameterNodes = navestidloRoot.childNodes();
+        QStringList parameters;
 
-        for (int i = 0; i < parameters.count(); ++i) {
-            QDomElement element = parameters.at(i).toElement();
-            QString value = element.text();
-            if (value != "RC") {
-                contextMenu.addAction(value);
+        for (int i = 0; i < parameterNodes.count(); ++i) {
+            QDomElement paramElement = parameterNodes.at(i).toElement();
+            if (!paramElement.isNull()) {
+                parameters.append(paramElement.tagName());
+            }
+        }
+
+        for (const QString &param : parameters) {
+            QDomElement element = navestidloRoot.firstChildElement(param);
+            if (!element.isNull() && element.text() != "RC") {
+                contextMenu.addAction(element.text());
             }
         }
     }
 
-    QAction* selectedAction = contextMenu.exec(pos);
-    if (selectedAction && selectedAction->text() == "PC") {
-        vlakovaCestaRoutePC();
-        qDebug() << "PC";
-    }
-    if (selectedAction && selectedAction->text() == "RC") {
-        rusenieCesty(id);
-        qDebug() << "RC";
+    QAction* selectedAction = contextMenu.exec(QCursor::pos());
+    if (selectedAction) {
+        if (selectedAction->text() == "PC") {
+            vlakovaCestaRoutePC();
+            qDebug() << "PC";
+        } else if (selectedAction->text() == "RC") {
+            rusenieCesty(id);
+            qDebug() << "RC";
+        }
     }
 }
 

@@ -128,4 +128,42 @@
    <PC>false</PC>
   </status>
  </route>
+
+ <route name="osma">
+  <marks>
+   <start point="ZN2"/>
+   <end point="-R1.26"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="ZN2"/>
+   <element id="-R1.4"/>
+   <element id="T1_2" position="S+"/>
+    <element id="T3" position="S+"/>
+    <element id="-R1.8"/>
+    <element id="-R1.9"/>
+    <element id="-R1.10"/>
+    <element id="-R1.11"/>
+    <element id="-R1.12"/>
+    <element id="-R1.13"/>
+    <element id="-R1.14"/>
+    <element id="-R1.15"/>
+    <element id="-R1.16"/>
+    <element id="-R1.17"/>
+    <element id="-R1.18"/>
+    <element id="-R1.19"/>
+    <element id="-R1.20"/>
+    <element id="-R1.21"/>
+    <element id="-R1.22"/>
+    <element id="-R1.23"/>
+    <element id="-R1.24"/>
+    <element id="-R1.25"/>
+    <element id="-R1.26"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>fakse</PC>
+  </status>
+ </route>
 </routes>
