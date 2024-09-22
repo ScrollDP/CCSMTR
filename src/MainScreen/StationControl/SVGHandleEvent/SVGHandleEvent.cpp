@@ -1080,11 +1080,19 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
         if (start.attribute("point") == id) {
             QDomElement status = route.firstChildElement("status");
             QDomElement locked = status.firstChildElement("locked");
+            QDomElement VC = status.firstChildElement("VC");
+            QDomElement inUse = status.firstChildElement("inUse");
 
+            // Set locked to false, VC to false, and inUse to blank
             if (locked.text() == "true") {
                 locked.firstChild().setNodeValue("false");
-                qDebug() << "Route" << route.attribute("name") << "is now unlocked";
             }
+            if (VC.text() == "true") {
+                VC.firstChild().setNodeValue("false");
+            }
+            inUse.setAttribute("name", "");
+
+            qDebug() << "Route" << route.attribute("name") << "is now unlocked and VC, inUse are reset";
         }
     }
 
