@@ -35,8 +35,8 @@
  </locations_symbols>
  <turnouts>
   <turnout col="5" flipped="true" id="T1_2" rotate="180" row="-1" status="S-" type="turnout" pared="1"/>
-  <turnout col="6" flipped="false" id="T3" rotate="180" row="-1" status="S-" type="turnout"/>
-  <turnout col="7" flipped="false" id="T1_1" rotate="0" row="-1" status="S+" type="turnout" pared="1"/>
+  <turnout col="6" flipped="false" id="T1_1" rotate="180" row="-1" status="S-" type="turnout" pared="1"/>
+  <turnout col="7" flipped="false" id="T3" rotate="0" row="-1" status="S-" type="turnout"/>
   <turnout col="8" flipped="false" id="T5" rotate="0" row="-2" status="S-" type="turnout"/>
   <turnout col="10" flipped="false" id="T7" rotate="0" row="-2" status="S-" type="turnout"/>
   <turnout col="31" flipped="true" id="T28_1" rotate="180" row="-1" status="S-" type="turnout" pared="2"/>
@@ -49,8 +49,8 @@
   <turnout col="29" flipped="true" id="T20" rotate="180" row="-4" status="S-" type="turnout"/>
   <turnout col="27" flipped="true" id="T32" rotate="0" row="-5" status="S-" type="turnout"/>
   <turnout col="5" flipped="false" id="T2_2" rotate="0" row="1" status="S-" type="turnout" pared="1"/>
-  <turnout col="6" flipped="true" id="T4" rotate="0" row="1" status="S-" type="turnout"/>
-  <turnout col="7" flipped="true" id="T2_1" rotate="180" row="1" status="S-" type="turnout" pared="1"/>
+  <turnout col="6" flipped="true" id="T2_1" rotate="0" row="1" status="S-" type="turnout" pared="1"/>
+  <turnout col="7" flipped="true" id="T4" rotate="180" row="1" status="S-" type="turnout"/>
   <turnout col="8" flipped="true" id="T6" rotate="180" row="2" status="S-" type="turnout"/>
   <turnout col="9" flipped="true" id="T9" rotate="180" row="3" status="S-" type="turnout"/>
   <turnout col="8" flipped="true" id="T8" rotate="0" row="3" status="S-" type="turnout"/>
@@ -223,7 +223,7 @@
   <rail col="5" id="R3.5" row="3"  type="rail"/>
   <rail col="7" id="R3.7" row="3"  type="rail"/>
   <rail col="10" id="R3.10" row="3"  type="rail"/>
-  <rail col="13" id="R3.13" row="3"  type="rail"/>
+  <rail col="12" id="R3.12" row="3"  type="rail"/>
   <rail col="14" id="R3.14" row="3"  type="rail"/>
   <rail col="15" id="R3.15" row="3"  type="rail"/>
   <rail col="16" id="R3.16" row="3"  type="rail"/>
@@ -288,7 +288,7 @@
   <!-- stanične navestidlo -->
   <navestidlo col="13" id="HN1" row="4"  type="hlavne_navestidlo2"/>
   <navestidlo col="12" id="HN2" row="5"  type="hlavne_navestidlo2"/>
-  <navestidlo col="12" id="HN3" row="3"  type="hlavne_navestidlo2"/>
+  <navestidlo col="13" id="HN3" row="3"  type="hlavne_navestidlo2"/>
   <navestidlo col="10" id="HN4" row="2"  type="hlavne_navestidlo2"/>
   <navestidlo col="9" id="HN5" row="1"  type="hlavne_navestidlo2"/>
   <navestidlo col="9" id="HN6" row="-1"  type="hlavne_navestidlo2"/>

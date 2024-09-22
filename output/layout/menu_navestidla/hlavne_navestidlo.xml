@@ -1,7 +1,9 @@
 <root>
-    <par1>STOJ</par1>
-    <par2>VC</par2>
-    <par3>KC</par3>
-    <par4>RC</par4>
-    <par5>PC</par5>
+    <par1>VC</par1>
+    <par2>PC</par2>
+    <par3>RC</par3>
 </root>
+
+        <!--<par1>STOJ</par1>-->
+
+        <!--<par3>KC</par3>-->

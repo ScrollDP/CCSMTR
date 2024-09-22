@@ -1,7 +1,11 @@
 <svg height="12" viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
- <g id="back_color" transform="" visibility="hidden">
+ <g id="back_color_VC" transform="" visibility="hidden">
   <!-- Background rectangle -->
   <rect fill="#00FF00" height="12" opacity="0.7" stroke="none" width="8"/>
+ </g>
+ <g id="back_color_PC" visibility="hidden">
+  <!-- Background rectangle -->
+  <rect fill="white" height="12" opacity="0.7" stroke="none" width="8"/>
  </g>
  <g fill="none" id="rail" stroke="gray" stroke-width="1.1">
   <line stroke-linecap="round" x1="0" x2="8" y1="6" y2="6"/>

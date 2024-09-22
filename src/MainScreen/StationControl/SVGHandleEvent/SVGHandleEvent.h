@@ -35,15 +35,13 @@ private:
     void toggleVisibility(bool straight, bool diverging, const QString &path, const QString &elementId);
 
 
-    void checkIDwithEndpoint(const QString &elementid);
-    //void changingPositionOfTurnouts(const QString &m_elementId);
-
-
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
-    void vlakovaCestaRoute();
+    void vlakovaCestaRouteVC();
+    void stavanieVCCesty(const QString &elementid);
 
-
-    static void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
+    void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
+    void vlakovaCestaRoutePC();
+    void stavaniePCCesty(const QString &elementid);
 
 
     QString getElementIdAtPosition(const QPointF &position);
@@ -52,7 +50,7 @@ private:
 
     void saveAndReload(const QDomDocument& doc, const QString& path, const QString& elementId);
     void reloadSVG(const QString &reloadPath,const QString &elemID);
-    void changeColorbackground(const QString &path, const QString &elementId);
+    void changeBackgroundColor(const QString &path, const QString &elementId);
 
 
     static void sendToArduino(const QString &dataList);
@@ -73,6 +71,8 @@ private:
     void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID);
 
     void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId);
+
+    void rusenieCesty(const QString &elementid);
 };
 
 #endif // CLICKABLESVGITEM_H

@@ -1,5 +1,5 @@
 <svg height="12"  viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
-    <g id="back_color" visibility="hidden">
+    <g id="back_color_PC" visibility="hidden">
         <!-- Background rectangle -->
         <rect  width="8" height="12" fill="#00FF00" stroke="none"  opacity="0.7"/>
     </g>
