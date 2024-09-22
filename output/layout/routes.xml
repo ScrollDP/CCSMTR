@@ -20,14 +20,16 @@
    <element id="-R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
+   <locked>true</locked>
    <VC>false</VC>
    <PC>false</PC>
   </status>
  </route>
  <route name="druha">
-  <start point="HN9"/>
-  <end point="R1.0"/>
+   <marks>
+     <start point="HN9"/>
+     <end point="R1.0"/>
+   </marks>
   <!--elements for route by id-->
   <elements>
    <element id="HN9"/>
@@ -51,8 +53,10 @@
   </status>
  </route>
  <route name="tretia">
-  <start point="HN8"/>
-  <end point="-R1.0"/>
+  <marks>
+   <start point="HN8"/>
+   <end point="-R1.0"/>
+  </marks>
   <!--elements for route by id-->
   <elements>
    <element id="HN8"/>
@@ -75,8 +79,10 @@
   </status>
  </route>
  <route name="stvrta">
-  <start point="HN2"/>
-  <end point="R1.0"/>
+  <marks>
+   <start point="HN2"/>
+   <end point="R1.0"/>
+  </marks>
   <!--elements for route by id-->
   <elements>
    <element id="HN2"/>
@@ -95,14 +101,16 @@
    <element id="R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
+   <locked>true</locked>
    <VC>false</VC>
    <PC>false</PC>
   </status>
  </route>
  <route name="piata">
-  <start point="HN2"/>
-  <end point="R5.7"/>
+  <marks>
+   <start point="HN2"/>
+   <end point="R5.7"/>
+  </marks>
   <!--elements for route by id-->
   <elements>
    <element id="HN2"/>

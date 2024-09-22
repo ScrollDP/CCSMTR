@@ -9,6 +9,7 @@
 #include <thread>
 #include <mutex>
 #include <QDir>
+#include <QDebug>
 
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
@@ -52,7 +53,6 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
 void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
 
-
     if(event->button() == Qt::LeftButton) {
         qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
                  "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
@@ -60,8 +60,9 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             vlakovaCestaRouteVC();
         }
 
-        stavanieVCCesty(elementId);
-        stavaniePCCesty(elementId);
+        stavanieVCCesty(elementId); //musia byť takto aby sa vôbec zavolali
+        stavaniePCCesty(elementId); //musia byť takto aby sa vôbec zavolali
+
     }
     if(event->button() == Qt::MiddleButton) {
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
@@ -663,12 +664,13 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
     bool isLocked = false;
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
-        QDomElement start = route.firstChildElement("start");
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
         QDomElement status = route.firstChildElement("status");
         QDomElement locked = status.firstChildElement("locked");
 
-        if (start.attribute("point") == id && locked.text() == "true") {
-            qDebug() << "Locked route found"<< id<< " " << locked.text();
+        if ((start.attribute("point") == id || end.attribute("point") == id) && locked.text() == "true") {
             isLocked = true;
             break;
         }
@@ -677,44 +679,52 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
     if (isLocked) {
         contextMenu.addAction("RC");
     } else {
-        // Load default values from hlavne_navestidlo.xml
-        QFile file("../layout/menu_navestidla/hlavne_navestidlo.xml");
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open hlavne_navestidlo.xml";
+        // Open and parse hlavne-navestidlo.xml
+        QFile navestidloFile("../layout/menu_navestidla/hlavne_navestidlo.xml");
+        if (!navestidloFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qWarning() << "Failed to open hlavne-navestidlo.xml";
             return;
         }
 
-        QDomDocument doc;
-        if (!doc.setContent(&file)) {
-            qWarning() << "Failed to parse hlavne_navestidlo.xml";
-            file.close();
+        QDomDocument navestidloDoc;
+        if (!navestidloDoc.setContent(&navestidloFile)) {
+            qWarning() << "Failed to parse hlavne-navestidlo.xml";
+            navestidloFile.close();
             return;
         }
-        file.close();
+        navestidloFile.close();
 
-        QDomElement root = doc.documentElement();
-        QDomNodeList parameters = root.childNodes();
+        QDomElement navestidloRoot = navestidloDoc.documentElement();
+        QDomNodeList parameterNodes = navestidloRoot.childNodes();
+        QStringList parameters;
 
-        for (int i = 0; i < parameters.count(); ++i) {
-            QDomElement element = parameters.at(i).toElement();
-            QString value = element.text();
-            if (value != "RC") {
-                contextMenu.addAction(value);
+        for (int i = 0; i < parameterNodes.count(); ++i) {
+            QDomElement paramElement = parameterNodes.at(i).toElement();
+            if (!paramElement.isNull()) {
+                parameters.append(paramElement.tagName());
+            }
+        }
+
+        for (const QString &param : parameters) {
+            QDomElement element = navestidloRoot.firstChildElement(param);
+            if (!element.isNull() && element.text() != "RC") {
+                contextMenu.addAction(element.text());
             }
         }
     }
 
-    QAction* selectedAction = contextMenu.exec(pos);
-    if (selectedAction && selectedAction->text() == "VC") {
-        vlakovaCestaRouteVC();
-    }
-    if (selectedAction && selectedAction->text() == "PC") {
-        vlakovaCestaRoutePC();
-        qDebug() << "PC";
-    }
-    if (selectedAction && selectedAction->text() == "RC") {
-        rusenieCesty(id);
-        qDebug() << "RC";
+    QAction* selectedAction = contextMenu.exec(QCursor::pos());
+    if (selectedAction) {
+        if (selectedAction->text() == "VC") {
+            vlakovaCestaRouteVC();
+            qDebug() << "VC";
+        } else if (selectedAction->text() == "PC") {
+            //vlakovaCestaRoutePC();
+            qDebug() << "PC";
+        } else if (selectedAction->text() == "RC") {
+            rusenieCesty(id);
+            qDebug() << "RC";
+        }
     }
 }
 
@@ -798,6 +808,7 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
 
 
 void SVGHandleEvent::stavanieVCCesty(const QString &m_id) {
+    qDebug() << "I click on VC" << m_id;
 
 
 }
@@ -812,6 +823,7 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
 }
 
 void SVGHandleEvent::stavaniePCCesty(const QString &m_id) {
+    qDebug() << "I click on PC" << m_id;
 
 }
 

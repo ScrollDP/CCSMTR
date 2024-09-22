@@ -79,6 +79,7 @@ private:
     void checkTurnouts(const QString &routeName, const QString &m_id);
 
     void threadCheckTurnouts(const QString &routeName, const QString &m_id);
+
 };
 
 #endif // CLICKABLESVGITEM_H
