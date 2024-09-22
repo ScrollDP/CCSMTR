@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout;
-    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout;
+    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread;
+    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background;
 
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
@@ -51,11 +51,11 @@ private:
     void saveAndReload(const QDomDocument& doc, const QString& path, const QString& elementId);
     void reloadSVG(const QString &reloadPath,const QString &elemID);
     void changeBackgroundColor(const QString &path, const QString &elementId);
+    void changeElementColor(const QString &path, const QString &elementId);
 
+    void threadChangeBackgroundColor(const QString &path, const QString &elementId);
 
     static void sendToArduino(const QString &dataList);
-
-    bool rightclicked{}, middleclicked{};
 
     QString startPointElementId;
     QString svgFilePath;
@@ -66,13 +66,19 @@ private:
     bool flipped;
     int rotate;
 
-    QString getTurnoutSvgPath(const QString &turnoutId);
+    static QString getTurnoutSvgPath(const QString &turnoutId);
 
     void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID);
 
     void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId);
 
-    void rusenieCesty(const QString &elementid);
+    static void rusenieCesty(const QString &elementid);
+
+
+
+    void checkTurnouts(const QString &routeName, const QString &m_id);
+
+    void threadCheckTurnouts(const QString &routeName, const QString &m_id);
 };
 
 #endif // CLICKABLESVGITEM_H
