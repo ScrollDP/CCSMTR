@@ -325,95 +325,108 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
     QDomElement layoutRoot = layoutDoc.documentElement();
     QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
     bool pared = false;
+    int paredGroup = -1;
+
     for (int i = 0; i < turnoutElements.count(); ++i) {
         QDomElement turnoutElement = turnoutElements.at(i).toElement();
-        if (turnoutElement.attribute("id") == turnoutID && turnoutElement.attribute("pared") == "true") {
+        if (turnoutElement.attribute("id") == turnoutID && turnoutElement.hasAttribute("pared")) {
             pared = true;
+            paredGroup = turnoutElement.attribute("pared").toInt();
             break;
         }
     }
 
+    for (int i = 0; i < turnoutElements.count(); ++i) {
+        QDomElement turnoutElement = turnoutElements.at(i).toElement();
+        if (turnoutElement.attribute("id") == turnoutID && turnoutElement.hasAttribute("pared")) {
+            pared = true;
+            paredGroup = turnoutElement.attribute("pared").toInt();
+            break;
+        }
+    }
     if (pared) {
-        qDebug() << "pared parameter is true";
         QDomNodeList paredTurnouts = layoutRoot.elementsByTagName("paredTurnout");
         for (int i = 0; i < paredTurnouts.count(); ++i) {
             QDomElement paredTurnout = paredTurnouts.at(i).toElement();
-            QStringList turnoutIDs;
-            QDomNamedNodeMap attributes = paredTurnout.attributes();
-            for (int j = 0; j < attributes.count(); ++j) {
-                QDomAttr attr = attributes.item(j).toAttr();
-                if (attr.name().startsWith("turnout")) {
-                    turnoutIDs << attr.value();
-                }
-            }
-            // Display also path of that turnouts
-            qDebug() << "Pared Turnout IDs:" << turnoutIDs.join(", ");
-
-            for (const QString &id : turnoutIDs) {
-                QString m_value;
-
-                // Retrieve the correct svgFilePath for each turnout ID
-                QString turnoutSvgFilePath = getTurnoutSvgPath(id);
-
-                QFile file(turnoutSvgFilePath);
-                if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                    qWarning() << "Failed to open SVG file:" << turnoutSvgFilePath;
-                    return;
-                }
-
-                QDomDocument doc;
-                if (!doc.setContent(&file)) {
-                    qWarning() << "Failed to parse SVG file:" << turnoutSvgFilePath;
-                    file.close();
-                    return;
-                }
-                file.close();
-
-                QDomElement root = doc.documentElement();
-                QDomNodeList elements = root.elementsByTagName("path");
-
-                QString currentState;
-                for (int i = 0; i < elements.count(); ++i) {
-                    QDomElement element = elements.at(i).toElement();
-                    if (element.isNull()) {
-                        continue;
+            if (paredTurnout.attribute("pared").toInt() == paredGroup) {
+                QStringList turnoutIDs;
+                QDomNamedNodeMap attributes = paredTurnout.attributes();
+                for (int j = 0; j < attributes.count(); ++j) {
+                    QDomAttr attr = attributes.item(j).toAttr();
+                    if (attr.name().startsWith("turnout")) {
+                        turnoutIDs << attr.value();
                     }
-                    QString Id = element.attribute("id");
+                }
+                // Display also path of that turnouts
+                qDebug() << "Pared Turnout IDs:" << turnoutIDs.join(", ");
 
-                    if (Id == "_basic" || Id == "_reverse") {
-                        QString visibility = element.attribute("visibility");
-                        if (visibility == "visible") {
-                            currentState = Id;
+
+                for (const QString &id : turnoutIDs) {
+                    QString m_value;
+
+                    // Retrieve the correct svgFilePath for each turnout ID
+                    QString turnoutSvgFilePath = getTurnoutSvgPath(id);
+
+                    QFile file(turnoutSvgFilePath);
+                    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                        qWarning() << "Failed to open SVG file:" << turnoutSvgFilePath;
+                        return;
+                    }
+
+                    QDomDocument doc;
+                    if (!doc.setContent(&file)) {
+                        qWarning() << "Failed to parse SVG file:" << turnoutSvgFilePath;
+                        file.close();
+                        return;
+                    }
+                    file.close();
+
+                    QDomElement root = doc.documentElement();
+                    QDomNodeList elements = root.elementsByTagName("path");
+
+                    QString currentState;
+                    for (int i = 0; i < elements.count(); ++i) {
+                        QDomElement element = elements.at(i).toElement();
+                        if (element.isNull()) {
+                            continue;
+                        }
+                        QString Id = element.attribute("id");
+
+                        if (Id == "_basic" || Id == "_reverse") {
+                            QString visibility = element.attribute("visibility");
+                            if (visibility == "visible") {
+                                currentState = Id;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (currentState == "_basic") {
+                        m_value = "S-";
+                        qDebug() << "S-" << id << " " << currentState << " file" << turnoutSvgFilePath;
+                    } else if (currentState == "_reverse") {
+                        m_value = "S+";
+                        qDebug() << "S+" << id << " " << currentState << " file" << turnoutSvgFilePath;
+                    }
+
+                    SVGHandleEvent *turnoutItem = nullptr;
+                    for (QGraphicsItem *item : this->scene()->items()) {
+                        SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
+                        if (svgItem && svgItem->elementId == id) {
+                            turnoutItem = svgItem;
                             break;
                         }
                     }
-                }
 
-                if (currentState == "_basic") {
-                    m_value = "S-";
-                    qDebug() << "S-" << id << " " << currentState << " file" << turnoutSvgFilePath;
-                } else if (currentState == "_reverse") {
-                    m_value = "S+";
-                    qDebug() << "S+" << id << " " << currentState << " file" << turnoutSvgFilePath;
-                }
-
-                SVGHandleEvent *turnoutItem = nullptr;
-                for (QGraphicsItem *item : this->scene()->items()) {
-                    SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
-                    if (svgItem && svgItem->elementId == id) {
-                        turnoutItem = svgItem;
-                        break;
+                    if (m_value == "S+") {
+                        turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id);
+                    } else if (m_value == "S-") {
+                        turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id);
                     }
                 }
-
-                if (m_value == "S+") {
-                    turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id);
-                } else if (m_value == "S-") {
-                    turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id);
-                }
+                return;
             }
         }
-        return;
     } else {
         qDebug() << "pared parameter is false or not set" << turnoutID;
     }
