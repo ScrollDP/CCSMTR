@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread;
-    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background;
+    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread, updateTurnoutStatusInLayoutThread;
+    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background, mtx_update_turnout_status_in_layout;
 
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
@@ -72,6 +72,8 @@ private:
 
     void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId);
 
+    void threadUpdateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
+
     static void rusenieCesty(const QString &elementid);
 
 
@@ -80,6 +82,9 @@ private:
 
     bool threadCheckTurnouts(const QString &routeName, const QString &m_id);
 
+    void updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
+
+    void toggleSingleTurnout(bool straight, bool diverging, const QString &path, const QString &turnoutID);
 };
 
 #endif // CLICKABLESVGITEM_H

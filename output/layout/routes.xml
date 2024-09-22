@@ -20,8 +20,8 @@
    <element id="-R1.0"/>
   </elements>
   <status>
-   <locked>true</locked>
-   <VC>true</VC>
+   <locked>false</locked>
+   <VC>false</VC>
    <PC>false</PC>
   </status>
  </route>
@@ -48,7 +48,7 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>true</VC>
+   <VC>false</VC>
    <PC>false</PC>
   </status>
  </route>

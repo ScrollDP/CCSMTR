@@ -122,6 +122,13 @@ void SVGHandleEvent::threadChangeBackgroundColor(const QString &path, const QStr
     colorBackgroundThread = std::thread(&SVGHandleEvent::changeBackgroundColor, this, path, m_ID);
 }
 
+void SVGHandleEvent::threadUpdateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus) {
+    if (updateTurnoutStatusInLayoutThread.joinable()) {
+        updateTurnoutStatusInLayoutThread.join();
+    }
+    updateTurnoutStatusInLayoutThread = std::thread(&SVGHandleEvent::updateTurnoutStatusInLayout, this, turnoutID, newStatus);
+}
+
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
     this->setScale(scale);
     this->setPos(x * scale, y * scale);
@@ -519,8 +526,10 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
 
                     if (m_value == "S+") {
                         turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id);
+                        threadUpdateTurnoutStatusInLayout(id, "S+");
                     } else if (m_value == "S-") {
                         turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id);
+                        threadUpdateTurnoutStatusInLayout(id, "S-");
                     }
                 }
                 return;
@@ -570,6 +579,8 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         setVisibility("_basic", "visible");
         saveAndReload(doc, path, turnoutID);
 
+        threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
+
     } else if (diverging) {
         setVisibility("_between", "visible");
         saveAndReload(doc, path, turnoutID);
@@ -582,6 +593,8 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         setVisibility("_between", "hidden");
         setVisibility("_reverse", "visible");
         saveAndReload(doc, path, turnoutID);
+
+        threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
     }
 }
 
@@ -1206,4 +1219,40 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
         setVisibility("_reverse", "visible");
         saveAndReload(doc, path, turnoutID);
     }
+}
+
+void SVGHandleEvent::updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus) {
+    QFile layoutFile("../layout/layout.xml");
+    if (!layoutFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open layout.xml";
+        return;
+    }
+
+    QDomDocument layoutDoc;
+    if (!layoutDoc.setContent(&layoutFile)) {
+        qWarning() << "Failed to parse layout.xml";
+        layoutFile.close();
+        return;
+    }
+    layoutFile.close();
+
+    QDomElement layoutRoot = layoutDoc.documentElement();
+    QDomNodeList turnouts = layoutRoot.elementsByTagName("turnout");
+
+    for (int i = 0; i < turnouts.count(); ++i) {
+        QDomElement turnout = turnouts.at(i).toElement();
+        if (turnout.attribute("id") == turnoutID) {
+            turnout.setAttribute("status", newStatus);
+            break;
+        }
+    }
+
+    if (!layoutFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open layout.xml for writing";
+        return;
+    }
+
+    QTextStream stream(&layoutFile);
+    stream << layoutDoc.toString();
+    layoutFile.close();
 }
