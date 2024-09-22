@@ -60,51 +60,8 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             vlakovaCestaRouteVC();
         }
 
-        // Open and parse routes.xml
-        QFile routesFile("../layout/routes.xml");
-        if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open routes.xml";
-            return;
-        }
-
-        QDomDocument routesDoc;
-        if (!routesDoc.setContent(&routesFile)) {
-            qWarning() << "Failed to parse routes.xml";
-            routesFile.close();
-            return;
-        }
-        routesFile.close();
-
-        QDomElement routesRoot = routesDoc.documentElement();
-        QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-        bool isVC = false;
-        bool isPC = false;
-
-        for (int i = 0; i < routes.count(); ++i) {
-            QDomElement route = routes.at(i).toElement();
-            QDomElement end = route.firstChildElement("end");
-            if (end.attribute("point") == elementId) {
-                QDomElement status = route.firstChildElement("status");
-                QDomElement VC = status.firstChildElement("VC");
-                QDomElement PC = status.firstChildElement("PC");
-
-                if (VC.text() == "true") {
-                    isVC = true;
-                }
-                if (PC.text() == "true") {
-                    isPC = true;
-                }
-                break;
-            }
-        }
-
-        if (isVC) {
-            stavanieVCCesty(elementId);
-        }
-        if (isPC) {
-            stavaniePCCesty(elementId);
-        }
+        stavanieVCCesty(elementId);
+        stavaniePCCesty(elementId);
     }
     if(event->button() == Qt::MiddleButton) {
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
@@ -163,7 +120,7 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
 }
 
 void SVGHandleEvent::changeBackgroundColor(const QString &path, const QString &elemID) {
-    //std::lock_guard<std::mutex> lock(mtx_color_background);
+    std::lock_guard<std::mutex> lock(mtx_color_background);
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file:" << path;
@@ -202,8 +159,9 @@ void SVGHandleEvent::changeBackgroundColor(const QString &path, const QString &e
     QString backColorId = "back_color";
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
-        QDomElement start = route.firstChildElement("start");
-        QDomElement end = route.firstChildElement("end");
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
         if (start.attribute("point") == elemID) {
             qDebug() << "1End point color change:" << elemID;
             QDomElement status = route.firstChildElement("status");
@@ -218,7 +176,7 @@ void SVGHandleEvent::changeBackgroundColor(const QString &path, const QString &e
             }
             break;
         }
-        if(end.attribute("point") == elemID) {
+        if (end.attribute("point") == elemID) {
             qDebug() << "2End point color change:" << elemID;
             QDomElement status = route.firstChildElement("status");
             QDomElement VC = status.firstChildElement("VC");
@@ -266,12 +224,6 @@ void SVGHandleEvent::changeBackgroundColor(const QString &path, const QString &e
     // Reload the SVG to apply changes
     reloadSVG(path, elemID);
 }
-
-void SVGHandleEvent::changeElementColor(const QString &path, const QString &m_elementID) {
-
-
-}
-
 
 QString SVGHandleEvent::getElementIdAtPosition(const QPointF &position) {
     QStringList elementIds = getElementIdsFromSvg(QString());
@@ -681,56 +633,6 @@ void SVGHandleEvent::updateTransform(const QString &transformStr) {
 }
 
 void SVGHandleEvent::vlakovaCestaRouteVC() {
-    // Setting background color of that element to Lightgreen
-    // Updating parameter in SVG file visibility with id back_color
-    changeBackgroundColor(svgFilePath,elementId);
-    qDebug() << "color chhhhhhh" << svgFilePath <<"my id" << elementId;
-
-
-    // Read routes.xml to find the end point
-    QFile routesFile("../layout/routes.xml");
-    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml";
-        return;
-    }
-
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
-        routesFile.close();
-        return;
-    }
-    routesFile.close();
-
-    QDomElement routesRoot = routesDoc.documentElement();
-    QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement start = route.firstChildElement("start");
-        if (start.attribute("point") == elementId) {
-            QDomElement end = route.firstChildElement("end");
-            //QString endPointId = end.attribute("point");
-            //qDebug() << "End point:" << endPointId;
-
-            // Update parameters to true
-            QDomElement status = route.firstChildElement("status");
-            QDomElement onDemand = status.firstChildElement("onDemand");
-            QDomElement VC = status.firstChildElement("VC");
-            onDemand.firstChild().setNodeValue("true");
-            VC.firstChild().setNodeValue("true");
-
-            // Save the changes back to the routes.xml file
-            if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                qWarning() << "Failed to open routes.xml for writing";
-                return;
-            }
-
-            QTextStream routesStream(&routesFile);
-            routesStream << routesDoc.toString();
-            routesFile.close();
-        }
-    }
 
 }
 
@@ -766,6 +668,7 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
         QDomElement locked = status.firstChildElement("locked");
 
         if (start.attribute("point") == id && locked.text() == "true") {
+            qDebug() << "Locked route found"<< id<< " " << locked.text();
             isLocked = true;
             break;
         }
@@ -895,453 +798,20 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
 
 
 void SVGHandleEvent::stavanieVCCesty(const QString &m_id) {
-    // qDebug() << "Checking endpoint" << elementId;
-
-    qDebug() << "colot changed" << svgFilePath <<"my id" << m_id;
-    QFile routesFile("../layout/routes.xml");
-    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml";
-        return;
-    }
-
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
-        routesFile.close();
-        return;
-    }
-    routesFile.close();
-
-    QDomElement routesRoot = routesDoc.documentElement();
-    QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-    QString routeName;
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement end = route.firstChildElement("end");
-        QDomElement status = route.firstChildElement("status");
-        QDomElement onDemand = status.firstChildElement("onDemand");
-        QDomElement VC = status.firstChildElement("VC");
-
-        // Check if the endpoint matches the desired endpoint and onDemand is true
-        if (end.attribute("point") == m_id && onDemand.text() == "true" && VC.text() == "true") {
-            routeName = route.attribute("name");
-            break;
-        }
-    }
-
-    if (routeName.isEmpty()) {
-        qWarning() << "No route found for endpoint:" << m_id << "with onDemand set to true in VC";
-        return;
-    }
-
-    qDebug() << "Route name for endpoint" << m_id << "is" << routeName;
 
 
-    // Proceed with the existing logic using the routeName
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        if (route.attribute("name") == routeName) {
-            QDomElement end = route.firstChildElement("end");
-
-            // Check if the endpoint matches the desired endpoint
-            if (end.attribute("point") == m_id) {
-                QDomNodeList elements = route.elementsByTagName("element");
-
-                changeBackgroundColor(svgFilePath, m_id);
-
-                for (int j = 0; j < elements.count(); ++j) {
-                    QDomElement element = elements.at(j).toElement();
-                    QString id = element.attribute("id");
-                    QString desiredPosition = element.attribute("position");
-
-
-
-                    if (id.startsWith("T")) {
-                        // Find the existing SVGHandleEvent item for the specific turnout
-                        SVGHandleEvent *turnoutItem = nullptr;
-                        for (QGraphicsItem *item : this->scene()->items()) {
-                            SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
-                            if (svgItem && svgItem->elementId == id) {
-                                turnoutItem = svgItem;
-                                break;
-                            }
-                        }
-
-                        if (!turnoutItem) {
-                            qWarning() << "Turnout item not found for ID:" << id;
-                            continue;
-                        }
-
-                        // Load the SVG file and parse it to get the current state of the turnout
-                        QFile file(turnoutItem->svgFilePath);
-                        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                            qWarning() << "Failed to open SVG file:" << turnoutItem->svgFilePath;
-                            continue;
-                        }
-
-                        QDomDocument doc;
-                        if (!doc.setContent(&file)) {
-                            qWarning() << "Failed to parse SVG file:" << turnoutItem->svgFilePath;
-                            file.close();
-                            continue;
-                        }
-                        file.close();
-
-                        QDomElement root = doc.documentElement();
-                        QDomNodeList paths = root.elementsByTagName("path");
-
-                        QString currentState;
-                        for (int k = 0; k < paths.count(); ++k) {
-                            QDomElement path = paths.at(k).toElement();
-                            if (path.isNull()) {
-                                continue;
-                            }
-                            QString pathId = path.attribute("id");
-
-                            if (pathId == "_basic" || pathId == "_reverse") {
-                                QString visibility = path.attribute("visibility");
-                                if (visibility == "visible") {
-                                    currentState = pathId;
-                                    break;
-                                }
-                            }
-                        }
-
-                        // Determine the switch state and call threadToggleVyhybka with the appropriate parameters if needed
-                        if ((currentState == "_basic" && desiredPosition == "S+") ||
-                            (currentState == "_reverse" && desiredPosition == "S-")) {
-                            // No action needed, already in the desired position
-                            continue;
-                        } else if (desiredPosition == "S-") {
-                            turnoutItem->threadToggleVyhybka(false, true, turnoutItem->svgFilePath, id);
-                        } else if (desiredPosition == "S+") {
-                            turnoutItem->threadToggleVyhybka(true, false, turnoutItem->svgFilePath, id);
-                        } else {
-                            qWarning() << "Unknown desired position for ID:" << id;
-                        }
-                    }
-                }
-
-                // Change the locked parameter to true
-                QDomElement status = route.firstChildElement("status");
-                QDomElement locked = status.firstChildElement("locked");
-                locked.firstChild().setNodeValue("true");
-
-                // Save the changes back to the routes.xml file
-                if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                    qWarning() << "Failed to open routes.xml for writing";
-                    return;
-                }
-
-                QTextStream routesStream(&routesFile);
-                routesStream << routesDoc.toString();
-                routesFile.close();
-                break;
-            }
-        }
-    }
-
-    // Check and toggle turnouts until they are in the correct position
-
-    threadCheckTurnouts(routeName, m_id);
 }
 
 void SVGHandleEvent::vlakovaCestaRoutePC() {
-    // Setting background color of that element to Lightgreen
-    // Updating parameter in SVG file visibility with id back_color
-    changeBackgroundColor(svgFilePath,elementId);
-    // Read routes.xml to find the end point
-    QFile routesFile("../layout/routes.xml");
-    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml";
-        return;
-    }
 
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
-        routesFile.close();
-        return;
-    }
-    routesFile.close();
-
-    QDomElement routesRoot = routesDoc.documentElement();
-    QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement start = route.firstChildElement("start");
-        if (start.attribute("point") == elementId) {
-            QDomElement end = route.firstChildElement("end");
-            QString endPointId = end.attribute("point");
-            qDebug() << "End point:" << endPointId;
-
-            // Update parameters to true
-            QDomElement status = route.firstChildElement("status");
-            QDomElement onDemand = status.firstChildElement("onDemand");
-            QDomElement PC = status.firstChildElement("PC");
-            onDemand.firstChild().setNodeValue("true");
-            PC.firstChild().setNodeValue("true");
-
-            // Save the changes back to the routes.xml file
-            if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                qWarning() << "Failed to open routes.xml for writing";
-                return;
-            }
-
-            QTextStream routesStream(&routesFile);
-            routesStream << routesDoc.toString();
-            routesFile.close();
-        }
-    }
 
 }
 
 void SVGHandleEvent::rusenieCesty(const QString &id) {
-    // Open and parse routes.xml
-    QFile routesFile("../layout/routes.xml");
-    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml";
-        return;
-    }
 
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
-        routesFile.close();
-        return;
-    }
-    routesFile.close();
-
-    QDomElement routesRoot = routesDoc.documentElement();
-    QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-    QString routeName;
-    QString startPointId;
-
-    // Find the route with the given id and get its name and start point
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement start = route.firstChildElement("start");
-        if (start.attribute("point") == id) {
-            routeName = route.attribute("name");
-            startPointId = start.attribute("point");
-            break;
-        }
-    }
-
-    if (routeName.isEmpty()) {
-        qWarning() << "No route found with start point:" << id;
-        return;
-    }
-
-    // Change the color of all parameters in the route to gray and set locked and onDemand to false
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        if (route.attribute("name") == routeName) {
-            QDomNodeList elements = route.elementsByTagName("element");
-
-            for (int j = 0; j < elements.count(); ++j) {
-                QDomElement element = elements.at(j).toElement();
-                // Change color to gray (implementation not shown)
-            }
-
-            QDomElement status = route.firstChildElement("status");
-            QDomElement locked = status.firstChildElement("locked");
-            QDomElement onDemand = status.firstChildElement("onDemand");
-            QDomElement VC = status.firstChildElement("VC");
-            QDomElement PC = status.firstChildElement("PC");
-
-            locked.firstChild().setNodeValue("false");
-            onDemand.firstChild().setNodeValue("false");
-            if (VC.text() == "true") {
-                VC.firstChild().setNodeValue("false");
-            }
-            if (PC.text() == "true") {
-                PC.firstChild().setNodeValue("false");
-            }
-        }
-    }
-
-    // Change locked and onDemand to false for all routes that have the same start point
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement start = route.firstChildElement("start");
-        if (start.attribute("point") == startPointId) {
-            QDomElement status = route.firstChildElement("status");
-            QDomElement locked = status.firstChildElement("locked");
-            QDomElement onDemand = status.firstChildElement("onDemand");
-            QDomElement VC = status.firstChildElement("VC");
-            QDomElement PC = status.firstChildElement("PC");
-
-            locked.firstChild().setNodeValue("false");
-            onDemand.firstChild().setNodeValue("false");
-            if (VC.text() == "true") {
-                VC.firstChild().setNodeValue("false");
-            }
-            if (PC.text() == "true") {
-                PC.firstChild().setNodeValue("false");
-            }
-        }
-    }
-
-    // Save the changes back to the routes.xml file
-    if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml for writing";
-        return;
-    }
-
-    QTextStream routesStream(&routesFile);
-    routesStream << routesDoc.toString();
-    routesFile.close();
 }
 
 void SVGHandleEvent::stavaniePCCesty(const QString &m_id) {
-    QFile routesFile("../layout/routes.xml");
-    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml";
-        return;
-    }
-
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
-        routesFile.close();
-        return;
-    }
-    routesFile.close();
-
-    QDomElement routesRoot = routesDoc.documentElement();
-    QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-    QString routeName;
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement end = route.firstChildElement("end");
-        QDomElement status = route.firstChildElement("status");
-        QDomElement onDemand = status.firstChildElement("onDemand");
-        QDomElement PC = status.firstChildElement("PC");
-
-        // Check if the endpoint matches the desired endpoint and onDemand is true
-        if (end.attribute("point") == m_id && onDemand.text() == "true" && PC.text() == "true") {
-            routeName = route.attribute("name");
-            break;
-        }
-    }
-
-    if (routeName.isEmpty()) {
-        qWarning() << "No route found for endpoint:" << m_id << "with onDemand set to true in PC";
-        return;
-    }
-
-    qDebug() << "Route name for endpoint" << m_id << "is" << routeName;
-
-
-    // Proceed with the existing logic using the routeName
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        if (route.attribute("name") == routeName) {
-            QDomElement end = route.firstChildElement("end");
-
-            // Check if the endpoint matches the desired endpoint
-            if (end.attribute("point") == m_id) {
-                QDomNodeList elements = route.elementsByTagName("element");
-
-                for (int j = 0; j < elements.count(); ++j) {
-                    QDomElement element = elements.at(j).toElement();
-                    QString id = element.attribute("id");
-                    QString desiredPosition = element.attribute("position");
-
-                    changeBackgroundColor(svgFilePath, m_id);
-
-                    if (id.startsWith("T")) {
-                        // Find the existing SVGHandleEvent item for the specific turnout
-                        SVGHandleEvent *turnoutItem = nullptr;
-                        for (QGraphicsItem *item : this->scene()->items()) {
-                            SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
-                            if (svgItem && svgItem->elementId == id) {
-                                turnoutItem = svgItem;
-                                break;
-                            }
-                        }
-
-                        if (!turnoutItem) {
-                            qWarning() << "Turnout item not found for ID:" << id;
-                            continue;
-                        }
-
-                        // Load the SVG file and parse it to get the current state of the turnout
-                        QFile file(turnoutItem->svgFilePath);
-                        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                            qWarning() << "Failed to open SVG file:" << turnoutItem->svgFilePath;
-                            continue;
-                        }
-
-                        QDomDocument doc;
-                        if (!doc.setContent(&file)) {
-                            qWarning() << "Failed to parse SVG file:" << turnoutItem->svgFilePath;
-                            file.close();
-                            continue;
-                        }
-                        file.close();
-
-                        QDomElement root = doc.documentElement();
-                        QDomNodeList paths = root.elementsByTagName("path");
-
-                        QString currentState;
-                        for (int k = 0; k < paths.count(); ++k) {
-                            QDomElement path = paths.at(k).toElement();
-                            if (path.isNull()) {
-                                continue;
-                            }
-                            QString pathId = path.attribute("id");
-
-                            if (pathId == "_basic" || pathId == "_reverse") {
-                                QString visibility = path.attribute("visibility");
-                                if (visibility == "visible") {
-                                    currentState = pathId;
-                                    break;
-                                }
-                            }
-                        }
-
-                        // Determine the switch state and call threadToggleVyhybka with the appropriate parameters if needed
-                        if ((currentState == "_basic" && desiredPosition == "S+") ||
-                            (currentState == "_reverse" && desiredPosition == "S-")) {
-                            // No action needed, already in the desired position
-                            continue;
-                        } else if (desiredPosition == "S-") {
-                            turnoutItem->threadToggleVyhybka(false, true, turnoutItem->svgFilePath, id);
-                        } else if (desiredPosition == "S+") {
-                            turnoutItem->threadToggleVyhybka(true, false, turnoutItem->svgFilePath, id);
-                        } else {
-                            qWarning() << "Unknown desired position for ID:" << id;
-                        }
-                    }
-                }
-
-                // Change the locked parameter to true
-                QDomElement status = route.firstChildElement("status");
-                QDomElement locked = status.firstChildElement("locked");
-                locked.firstChild().setNodeValue("true");
-
-                // Save the changes back to the routes.xml file
-                if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                    qWarning() << "Failed to open routes.xml for writing";
-                    return;
-                }
-
-                QTextStream routesStream(&routesFile);
-                routesStream << routesDoc.toString();
-                routesFile.close();
-                break;
-            }
-        }
-    }
-    // Check and toggle turnouts until they are in the correct position
-
-    threadCheckTurnouts(routeName, m_id);
 
 }
 
@@ -1373,6 +843,8 @@ void SVGHandleEvent::checkTurnouts(const QString &routeName, const QString &m_id
         for (int i = 0; i < routes.count(); ++i) {
             QDomElement route = routes.at(i).toElement();
             if (route.attribute("name") == routeName) {
+                QDomElement marks = route.firstChildElement("marks");
+                QDomElement end = marks.firstChildElement("end");
                 QDomNodeList elements = route.elementsByTagName("element");
 
                 for (int j = 0; j < elements.count(); ++j) {

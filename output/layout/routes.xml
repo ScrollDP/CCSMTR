@@ -1,7 +1,9 @@
 <routes>
  <route name="prva">
-  <start point="HN9"/>
-  <end point="-R1.0"/>
+  <marks>
+   <start point="HN9"/>
+   <end point="-R1.0"/>
+  </marks>
   <!--elements for route by id-->
   <elements>
    <element id="HN9"/>
@@ -19,7 +21,6 @@
   </elements>
   <status>
    <locked>false</locked>
-   <onDemand>false</onDemand>
    <VC>false</VC>
    <PC>false</PC>
   </status>
@@ -41,10 +42,10 @@
    <element id="CT1"/>
    <element id="R1.4"/>
    <element id="R1.2"/>
+   <element id="R1.0"/>
   </elements>
   <status>
    <locked>false</locked>
-   <onDemand>false</onDemand>
    <VC>false</VC>
    <PC>false</PC>
   </status>
@@ -69,7 +70,6 @@
   </elements>
   <status>
    <locked>false</locked>
-   <onDemand>false</onDemand>
    <VC>false</VC>
    <PC>false</PC>
   </status>
@@ -86,16 +86,17 @@
    <element id="T12" position="S-"/>
    <element id="T9" position="S-"/>
    <element id="T8" position="S-"/>
-   <element id="T7" position="S-"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
    <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
   </elements>
   <status>
    <locked>false</locked>
-   <onDemand>true</onDemand>
-   <VC>true</VC>
+   <VC>false</VC>
    <PC>false</PC>
   </status>
  </route>
@@ -112,14 +113,10 @@
    <element id="T10" position="S-"/>
    <element id="R5.8"/>
    <element id="R5.7"/>
-   <element id="R5.5"/>
-   <element id="R5.4"/>
-   <element id="Z2"/>
   </elements>
   <status>
    <locked>false</locked>
-   <onDemand>true</onDemand>
-   <VC>true</VC>
+   <VC>false</VC>
    <PC>false</PC>
   </status>
  </route>
