@@ -20,9 +20,10 @@
    <element id="-R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
-   <VC>false</VC>
+   <locked>true</locked>
+   <VC>true</VC>
    <PC>false</PC>
+   <inUse name="HN9"/>
   </status>
  </route>
  <route name="druha">
@@ -48,8 +49,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>false</VC>
+   <VC>true</VC>
    <PC>false</PC>
+   <inUse name="HN9"/>
   </status>
  </route>
  <route name="tretia">
@@ -74,8 +76,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>true</VC>
+   <VC>false</VC>
    <PC>false</PC>
+   <inUse name=""/>
   </status>
  </route>
  <route name="stvrta">
@@ -101,9 +104,10 @@
    <element id="R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
-   <VC>false</VC>
+   <locked>true</locked>
+   <VC>true</VC>
    <PC>false</PC>
+   <inUse name="HN2"/>
   </status>
  </route>
  <route name="piata">
@@ -124,8 +128,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>false</VC>
+   <VC>true</VC>
    <PC>false</PC>
+   <inUse name="HN2"/>
   </status>
  </route>
  <route name="osma">
@@ -162,7 +167,8 @@
   <status>
    <locked>false</locked>
    <VC>false</VC>
-   <PC>fakse</PC>
+   <PC>false</PC>
+   <inUse name=""/>
   </status>
  </route>
 </routes>

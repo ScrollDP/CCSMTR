@@ -676,35 +676,15 @@ void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
         QDomElement route = routes.at(i).toElement();
         QDomElement marks = route.firstChildElement("marks");
         QDomElement start = marks.firstChildElement("start");
-        QDomElement end = marks.firstChildElement("end");
-        QDomElement status = route.firstChildElement("status");
-        QDomElement locked = status.firstChildElement("locked");
 
-        if ((start.attribute("point") == m_elementID || end.attribute("point") == m_elementID) && locked.text() == "true") {
-            qDebug() << "Route is locked";
-            return; // If locked status is already true, return immediately
-
-        }
-    }
-
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement marks = route.firstChildElement("marks");
-        QDomElement start = marks.firstChildElement("start");
-        QDomElement end = marks.firstChildElement("end");
-
-        if (start.attribute("point") == m_elementID || end.attribute("point") == m_elementID) {
+        if (start.attribute("point") == m_elementID) {
             QDomElement status = route.firstChildElement("status");
             QDomElement VC = status.firstChildElement("VC");
-            VC.firstChild().setNodeValue("true");
-        }
+            QDomElement inUse = status.firstChildElement("inUse");
 
-        QDomNodeList elements = route.firstChildElement("elements").childNodes();
-        for (int j = 0; j < elements.count(); ++j) {
-            QDomElement element = elements.at(j).toElement();
-            if (element.attribute("id") == m_elementID) {
-                // Additional logic if needed
-            }
+            // Update VC status and inUse parameter
+            VC.firstChild().setNodeValue("true");
+            inUse.setAttribute("name", m_elementID);
         }
     }
 
@@ -918,12 +898,36 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
     QDomElement routesRoot = routesDoc.documentElement();
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
+    QString startPoint;
+    QString endPoint = m_elementId;
+
+    // Find the start point from the inUse parameter
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
         QDomElement marks = route.firstChildElement("marks");
         QDomElement end = marks.firstChildElement("end");
+        QDomElement status = route.firstChildElement("status");
+        QDomElement inUse = status.firstChildElement("inUse");
 
-        if (end.attribute("point") == m_elementId) {
+        if (end.attribute("point") == m_elementId && !inUse.attribute("name").isEmpty()) {
+            startPoint = inUse.attribute("name");
+            break;
+        }
+    }
+
+    if (startPoint.isEmpty()) {
+        qWarning() << "Start point not found for element ID:" << m_elementId;
+        return;
+    }
+
+    // Continue with the rest of the existing code
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
+
+        if (start.attribute("point") == startPoint && end.attribute("point") == endPoint) {
             QDomElement status = route.firstChildElement("status");
             QDomElement VC = status.firstChildElement("VC");
             QDomElement locked = status.firstChildElement("locked");
@@ -933,10 +937,8 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                 for (int j = 0; j < elements.count(); ++j) {
                     QDomElement element = elements.at(j).toElement();
                     QString id = element.attribute("id");
-                    //qDebug() << "Element ID:" << id;
 
                     if (id.startsWith("T")) {
-                        // Find the existing SVGHandleEvent item for the specific turnout
                         SVGHandleEvent *turnoutItem = nullptr;
                         for (QGraphicsItem *item : this->scene()->items()) {
                             SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
@@ -951,7 +953,6 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                             continue;
                         }
 
-                        // Load the SVG file and parse it to get the current state of the turnout
                         QFile file(turnoutItem->svgFilePath);
                         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
                             qWarning() << "Failed to open SVG file:" << turnoutItem->svgFilePath;
@@ -986,11 +987,9 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                             }
                         }
 
-                        // Determine the switch state and call threadToggleVyhybka with the appropriate parameters if needed
                         QString desiredPosition = element.attribute("position");
                         if ((currentState == "_basic" && desiredPosition == "S+") ||
                             (currentState == "_reverse" && desiredPosition == "S-")) {
-                            // No action needed, already in the desired position
                             continue;
                         } else if (desiredPosition == "S-") {
                             turnoutItem->threadToggleVyhybka(false, true, turnoutItem->svgFilePath, id);
@@ -1002,41 +1001,37 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                     }
                 }
 
-                // Extract the start point of the current route
-                QString startPoint;
                 for (int i = 0; i < routes.count(); ++i) {
                     QDomElement route = routes.at(i).toElement();
                     QDomElement marks = route.firstChildElement("marks");
                     QDomElement end = marks.firstChildElement("end");
+                    QDomElement status = route.firstChildElement("status");
+                    QDomElement inUse = status.firstChildElement("inUse");
 
-                    if (end.attribute("point") == m_elementId) {
-                        QDomElement start = marks.firstChildElement("start");
-                        startPoint = start.attribute("point");
-                        break;
-                    }
-                }
+                    if (end.attribute("point") == m_elementId && !inUse.attribute("name").isEmpty()) {
+                        QString startPoint = inUse.attribute("name");
 
-// Iterate through all routes and set locked status to true where start point matches
-                for (int i = 0; i < routes.count(); ++i) {
-                    QDomElement route = routes.at(i).toElement();
-                    QDomElement marks = route.firstChildElement("marks");
-                    QDomElement start = marks.firstChildElement("start");
+                        for (int j = 0; j < routes.count(); ++j) {
+                            QDomElement routeToCheck = routes.at(j).toElement();
+                            QDomElement marksToCheck = routeToCheck.firstChildElement("marks");
+                            QDomElement startToCheck = marksToCheck.firstChildElement("start");
+                            QDomElement endToCheck = marksToCheck.firstChildElement("end");
 
-                    if (start.attribute("point") == startPoint) {
-                        if (threadCheckTurnouts(route.attribute("name"), m_elementId)) {
-                            // Change status locked to true
-                            QDomElement status = route.firstChildElement("status");
-                            QDomElement locked = status.firstChildElement("locked");
-                            locked.firstChild().setNodeValue("true");
-                            qDebug() << "Route" << route.attribute("name") << "is locked";
+                            if (startToCheck.attribute("point") == startPoint && endToCheck.attribute("point") == m_elementId) {
+                                QDomElement statusToCheck = routeToCheck.firstChildElement("status");
+                                QDomElement lockedToCheck = statusToCheck.firstChildElement("locked");
+
+                                if (lockedToCheck.text() == "true") {
+                                    qDebug() << "Route" << routeToCheck.attribute("name") << "is locked";
+                                } else if (threadCheckTurnouts(routeToCheck.attribute("name"), m_elementId)) {
+                                    lockedToCheck.firstChild().setNodeValue("true");
+                                    qDebug() << "Route" << routeToCheck.attribute("name") << "is now locked";
+                                }
+                            }
                         }
                     }
                 }
-                //if locked status is true, return immediately
 
-
-
-// Save the changes back to routes.xml
                 if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
                     qWarning() << "Failed to open routes.xml for writing";
                     return;
@@ -1045,9 +1040,9 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                 QTextStream stream(&routesFile);
                 stream << routesDoc.toString();
                 routesFile.close();
-            }
-            else {
+            } else {
                 qDebug() << "Route is locked";
+                qDebug() << "VC.text():" << VC.text() << "locked.text():" << locked.text() << "m_elementId:" << m_elementId;
             }
         }
     }
@@ -1081,26 +1076,14 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
         QDomElement route = routes.at(i).toElement();
         QDomElement marks = route.firstChildElement("marks");
         QDomElement start = marks.firstChildElement("start");
-        QDomElement end = marks.firstChildElement("end");
-        QDomElement status = route.firstChildElement("status");
-        QDomElement locked = status.firstChildElement("locked");
-        QDomElement VC = status.firstChildElement("VC");
 
-        if (start.attribute("point") == id || end.attribute("point") == id) {
-            // Unlock the route
-            locked.firstChild().setNodeValue("false");
-            VC.firstChild().setNodeValue("false");
-            qDebug() << "Route" << route.attribute("name") << "is unlocked";
-        }
+        if (start.attribute("point") == id) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement locked = status.firstChildElement("locked");
 
-        // Iterate through all elements and unlock them if they match the id
-        QDomNodeList elements = route.firstChildElement("elements").childNodes();
-        for (int j = 0; j < elements.count(); ++j) {
-            QDomElement element = elements.at(j).toElement();
-            if (element.attribute("id") == id) {
+            if (locked.text() == "true") {
                 locked.firstChild().setNodeValue("false");
-                VC.firstChild().setNodeValue("false");
-                qDebug() << "Element" << element.attribute("id") << "is unlocked";
+                qDebug() << "Route" << route.attribute("name") << "is now unlocked";
             }
         }
     }
