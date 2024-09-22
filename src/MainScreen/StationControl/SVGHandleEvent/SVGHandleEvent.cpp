@@ -1059,7 +1059,61 @@ void SVGHandleEvent::vlakovaCestaRoutePC() {
 }
 
 void SVGHandleEvent::rusenieCesty(const QString &id) {
+    // Open and parse routes.xml
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
+    }
 
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
+        QDomElement status = route.firstChildElement("status");
+        QDomElement locked = status.firstChildElement("locked");
+        QDomElement VC = status.firstChildElement("VC");
+
+        if (start.attribute("point") == id || end.attribute("point") == id) {
+            // Unlock the route
+            locked.firstChild().setNodeValue("false");
+            VC.firstChild().setNodeValue("false");
+            qDebug() << "Route" << route.attribute("name") << "is unlocked";
+        }
+
+        // Iterate through all elements and unlock them if they match the id
+        QDomNodeList elements = route.firstChildElement("elements").childNodes();
+        for (int j = 0; j < elements.count(); ++j) {
+            QDomElement element = elements.at(j).toElement();
+            if (element.attribute("id") == id) {
+                locked.firstChild().setNodeValue("false");
+                VC.firstChild().setNodeValue("false");
+                qDebug() << "Element" << element.attribute("id") << "is unlocked";
+            }
+        }
+    }
+
+    // Save the changes back to routes.xml
+    if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml for writing";
+        return;
+    }
+
+    QTextStream stream(&routesFile);
+    stream << routesDoc.toString();
+    routesFile.close();
 }
 
 void SVGHandleEvent::stavaniePCCesty(const QString &m_id) {
