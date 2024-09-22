@@ -677,6 +677,21 @@ void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
         QDomElement marks = route.firstChildElement("marks");
         QDomElement start = marks.firstChildElement("start");
         QDomElement end = marks.firstChildElement("end");
+        QDomElement status = route.firstChildElement("status");
+        QDomElement locked = status.firstChildElement("locked");
+
+        if ((start.attribute("point") == m_elementID || end.attribute("point") == m_elementID) && locked.text() == "true") {
+            qDebug() << "Route is locked";
+            return; // If locked status is already true, return immediately
+
+        }
+    }
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
 
         if (start.attribute("point") == m_elementID || end.attribute("point") == m_elementID) {
             QDomElement status = route.firstChildElement("status");
@@ -688,9 +703,7 @@ void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
         for (int j = 0; j < elements.count(); ++j) {
             QDomElement element = elements.at(j).toElement();
             if (element.attribute("id") == m_elementID) {
-                QDomElement status = route.firstChildElement("status");
-                QDomElement VC = status.firstChildElement("VC");
-                VC.firstChild().setNodeValue("true");
+                // Additional logic if needed
             }
         }
     }
@@ -989,23 +1002,52 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                     }
                 }
 
-                // Verify turnouts via threadCheckTurnouts
-                if(threadCheckTurnouts(route.attribute("name"), m_elementId)){
-                    // Change status locked to true
-                    //std::this_thread::sleep_for(std::chrono::seconds(2));
-                    locked.firstChild().setNodeValue("true");
-                    qDebug() << "Route" << route.attribute("name") << "is locked";
+                // Extract the start point of the current route
+                QString startPoint;
+                for (int i = 0; i < routes.count(); ++i) {
+                    QDomElement route = routes.at(i).toElement();
+                    QDomElement marks = route.firstChildElement("marks");
+                    QDomElement end = marks.firstChildElement("end");
 
-                    // Save the changes back to routes.xml
-                    if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                        qWarning() << "Failed to open routes.xml for writing";
-                        return;
+                    if (end.attribute("point") == m_elementId) {
+                        QDomElement start = marks.firstChildElement("start");
+                        startPoint = start.attribute("point");
+                        break;
                     }
-
-                    QTextStream stream(&routesFile);
-                    stream << routesDoc.toString();
-                    routesFile.close();
                 }
+
+// Iterate through all routes and set locked status to true where start point matches
+                for (int i = 0; i < routes.count(); ++i) {
+                    QDomElement route = routes.at(i).toElement();
+                    QDomElement marks = route.firstChildElement("marks");
+                    QDomElement start = marks.firstChildElement("start");
+
+                    if (start.attribute("point") == startPoint) {
+                        if (threadCheckTurnouts(route.attribute("name"), m_elementId)) {
+                            // Change status locked to true
+                            QDomElement status = route.firstChildElement("status");
+                            QDomElement locked = status.firstChildElement("locked");
+                            locked.firstChild().setNodeValue("true");
+                            qDebug() << "Route" << route.attribute("name") << "is locked";
+                        }
+                    }
+                }
+                //if locked status is true, return immediately
+
+
+
+// Save the changes back to routes.xml
+                if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                    qWarning() << "Failed to open routes.xml for writing";
+                    return;
+                }
+
+                QTextStream stream(&routesFile);
+                stream << routesDoc.toString();
+                routesFile.close();
+            }
+            else {
+                qDebug() << "Route is locked";
             }
         }
     }
