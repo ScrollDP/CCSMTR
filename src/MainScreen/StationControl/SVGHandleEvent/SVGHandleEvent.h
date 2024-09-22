@@ -36,7 +36,7 @@ private:
 
 
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
-    void vlakovaCestaRouteVC();
+    void vlakovaCestaRouteVC(const QString &elementid);
     void stavanieVCCesty(const QString &elementid);
 
     void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
@@ -76,9 +76,9 @@ private:
 
 
 
-    void checkTurnouts(const QString &routeName, const QString &m_id);
+    bool checkTurnouts(const QString &routeName, const QString &m_id);
 
-    void threadCheckTurnouts(const QString &routeName, const QString &m_id);
+    bool threadCheckTurnouts(const QString &routeName, const QString &m_id);
 
 };
 
