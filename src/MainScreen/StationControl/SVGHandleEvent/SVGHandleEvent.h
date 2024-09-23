@@ -11,6 +11,7 @@
 #include <QStringList>
 #include <thread>
 #include "../../TabFolder/ConnectionTab/DCC-EX/CommandQueue.h"
+#include "MouseEventHandler.h"
 
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
@@ -26,7 +27,7 @@ public:
     void updateTransform(const QString &transformStr);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
 
@@ -56,7 +57,7 @@ private:
 
     void threadChangeBackgroundColor(const QString &path, const QString &elementId);
 
-    static void sendToArduino(const QString &dataList);
+    void sendToArduino(const QString &dataList);
 
     QString startPointElementId;
     QString svgFilePath;
@@ -67,7 +68,7 @@ private:
     bool flipped;
     int rotate;
 
-    static QString getTurnoutSvgPath(const QString &turnoutId);
+    QString getTurnoutSvgPath(const QString &turnoutId);
 
     void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID);
 
@@ -75,7 +76,7 @@ private:
 
     void threadUpdateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
 
-    static void rusenieCesty(const QString &elementid);
+    void rusenieCesty(const QString &elementid);
 
 
 
@@ -85,7 +86,9 @@ private:
 
     void updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
 
-    static bool checkRouteBeforeStavanie(const QString &elementid);
+    bool checkRouteBeforeStavanie(const QString &elementid);
+
+    MouseEventHandler mouseEventHandler;
 };
 
 #endif // CLICKABLESVGITEM_H

@@ -26,6 +26,8 @@ set(SOURCES
         src/MainScreen/TabFolder/ConnectionTab/DCC-EX/CommandQueue.h
         src/MainScreen/StationControl/SVGHandleEvent/SVGHandleEvent.cpp
         src/MainScreen/StationControl/SVGHandleEvent/SVGHandleEvent.h
+        src/MainScreen/StationControl/SVGHandleEvent/MouseEventHandler.cpp
+        src/MainScreen/StationControl/SVGHandleEvent/MouseEventHandler.h
 
 
 )

@@ -105,9 +105,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>true</VC>
+   <VC>false</VC>
    <PC>false</PC>
-   <inUse name="HN2"/>
+   <inUse name=""/>
   </status>
  </route>
  <route name="piata">
@@ -127,10 +127,10 @@
    <element id="R5.7"/>
   </elements>
   <status>
-   <locked>true</locked>
-   <VC>true</VC>
+   <locked>false</locked>
+   <VC>false</VC>
    <PC>false</PC>
-   <inUse name="HN2"/>
+   <inUse name=""/>
   </status>
  </route>
  <route name="osma">
