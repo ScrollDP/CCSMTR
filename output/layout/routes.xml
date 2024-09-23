@@ -21,9 +21,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>true</VC>
+   <VC>false</VC>
    <PC>false</PC>
-   <inUse name="HN9"/>
+   <inUse name=""/>
   </status>
  </route>
  <route name="druha">
@@ -48,10 +48,10 @@
    <element id="R1.0"/>
   </elements>
   <status>
-   <locked>true</locked>
-   <VC>true</VC>
+   <locked>false</locked>
+   <VC>false</VC>
    <PC>false</PC>
-   <inUse name="HN9"/>
+   <inUse name=""/>
   </status>
  </route>
  <route name="tretia">
@@ -98,7 +98,7 @@
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
-   <element id="T2_1" position="S+"/>
+   <element id="T1_1" position="S+"/>
    <element id="R1.4"/>
    <element id="R1.2"/>
    <element id="R1.0"/>

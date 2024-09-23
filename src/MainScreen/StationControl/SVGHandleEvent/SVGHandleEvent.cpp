@@ -701,6 +701,23 @@ void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
     QDomElement routesRoot = routesDoc.documentElement();
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
+    // Check if any route with the same start point is locked
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+
+        if (start.attribute("point") == m_elementID) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement locked = status.firstChildElement("locked");
+
+            if (locked.text() == "true") {
+                qWarning() << "Route with start point" << m_elementID << "is locked, cannot proceed with vlakovaCestaRouteVC";
+                return;
+            }
+        }
+    }
+
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
         QDomElement marks = route.firstChildElement("marks");
@@ -929,12 +946,19 @@ bool SVGHandleEvent::checkRouteBeforeStavanie(const QString &elementid) {
         QDomElement route = routes.at(i).toElement();
         QDomElement marks = route.firstChildElement("marks");
         QDomElement end = marks.firstChildElement("end");
-
+        QDomElement status = route.firstChildElement("status");
+        QDomElement locked = status.firstChildElement("locked");
         if (end.attribute("point") == elementid) {
-            QDomElement status = route.firstChildElement("status");
-            QDomElement locked = status.firstChildElement("locked");
-
             if (locked.text() == "true") {
+                return true;
+            }
+        }
+
+        // Check if any element in the route to be built is part of a locked route
+        QDomNodeList elements = route.firstChildElement("elements").elementsByTagName("element");
+        for (int j = 0; j < elements.count(); ++j) {
+            QDomElement element = elements.at(j).toElement();
+            if (element.attribute("id") == elementid && locked.text() == "true") {
                 return true;
             }
         }
@@ -1101,6 +1125,21 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                     }
                 }
 
+
+                // Set inUse attribute to blank for all routes with the same start point
+                for (int i = 0; i < routes.count(); ++i) {
+                    QDomElement route = routes.at(i).toElement();
+                    QDomElement marks = route.firstChildElement("marks");
+                    QDomElement start = marks.firstChildElement("start");
+
+                    if (start.attribute("point") == startPoint) {
+                        QDomElement status = route.firstChildElement("status");
+                        QDomElement inUse = status.firstChildElement("inUse");
+                        inUse.setAttribute("name", "");
+                    }
+                }
+
+                // Save the changes back to routes.xml
                 if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
                     qWarning() << "Failed to open routes.xml for writing";
                     return;
