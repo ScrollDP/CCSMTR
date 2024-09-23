@@ -43,6 +43,12 @@ SVGHandleEvent::~SVGHandleEvent() {
     if (colorBackgroundThread.joinable()) {
         colorBackgroundThread.join();
     }
+    if (stavanieVCCestyThread.joinable()) {
+        stavanieVCCestyThread.join();
+    }
+    if (stavaniePCCestyThread.joinable()) {
+        stavaniePCCestyThread.join();
+    }
 }
 
 void SVGHandleEvent::sendToArduino(const QString &dataList) {
@@ -61,8 +67,8 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             return;
         }
 
-        stavanieVCCesty(elementId); //musia byť takto aby sa vôbec zavolali
-        stavaniePCCesty(elementId); //musia byť takto aby sa vôbec zavolali
+        threadStavanieVCCesty(elementId); //musia byť takto aby sa vôbec zavolali
+        threadStavaniePCCesty(elementId); //musia byť takto aby sa vôbec zavolali
 
     }
     if(event->button() == Qt::MiddleButton) {
@@ -85,6 +91,10 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         }
 
 
+    }
+    //left ctrl + left click
+    if(event->button() == Qt::LeftButton && event->modifiers() == Qt::ControlModifier) {
+        rusenieCesty(elementId);
     }
 }
 
@@ -127,6 +137,20 @@ void SVGHandleEvent::threadUpdateTurnoutStatusInLayout(const QString &turnoutID,
         updateTurnoutStatusInLayoutThread.join();
     }
     updateTurnoutStatusInLayoutThread = std::thread(&SVGHandleEvent::updateTurnoutStatusInLayout, this, turnoutID, newStatus);
+}
+
+void SVGHandleEvent::threadStavanieVCCesty(const QString &elementid) {
+    if (stavanieVCCestyThread.joinable()) {
+        stavanieVCCestyThread.join();
+    }
+    stavanieVCCestyThread = std::thread(&SVGHandleEvent::stavanieVCCesty, this, elementid);
+}
+
+void SVGHandleEvent::threadStavaniePCCesty(const QString &elementid) {
+    if (stavaniePCCestyThread.joinable()) {
+        stavaniePCCestyThread.join();
+    }
+    stavaniePCCestyThread = std::thread(&SVGHandleEvent::stavaniePCCesty, this, elementid);
 }
 
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
@@ -877,9 +901,49 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     }
 }
 
+bool SVGHandleEvent::checkRouteBeforeStavanie(const QString &elementid) {
+    // Open and parse routes.xml
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return false;
+    }
 
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return false;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement end = marks.firstChildElement("end");
+
+        if (end.attribute("point") == elementid) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement locked = status.firstChildElement("locked");
+
+            if (locked.text() == "true") {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
 
 void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
+    std::lock_guard<std::mutex> lock(mtx_stavanie_vc_cesty);
+    if (checkRouteBeforeStavanie(m_elementId)) {
+        qWarning() << "Route is locked, cannot proceed with stavanieVCCesty";
+        return;
+    }
     // Open and parse routes.xml
     QFile routesFile("../layout/routes.xml");
     if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -1108,6 +1172,7 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
 }
 
 void SVGHandleEvent::stavaniePCCesty(const QString &m_id) {
+    std::lock_guard<std::mutex> lock(mtx_stavanie_pc_cesty);
     qDebug() << "I click on PC" << m_id;
 
 }

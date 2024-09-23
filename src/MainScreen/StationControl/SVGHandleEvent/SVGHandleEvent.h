@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread, updateTurnoutStatusInLayoutThread;
-    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background, mtx_update_turnout_status_in_layout;
+    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread, updateTurnoutStatusInLayoutThread, stavanieVCCestyThread, stavaniePCCestyThread;
+    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background, mtx_stavanie_vc_cesty, mtx_stavanie_pc_cesty;
 
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
@@ -38,10 +38,12 @@ private:
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);
     void vlakovaCestaRouteVC(const QString &elementid);
     void stavanieVCCesty(const QString &elementid);
+    void threadStavanieVCCesty(const QString &elementid);
 
     void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
     void vlakovaCestaRoutePC();
     void stavaniePCCesty(const QString &elementid);
+    void threadStavaniePCCesty(const QString &elementid);
 
 
     QString getElementIdAtPosition(const QPointF &position);
@@ -51,7 +53,6 @@ private:
     void saveAndReload(const QDomDocument& doc, const QString& path, const QString& elementId);
     void reloadSVG(const QString &reloadPath,const QString &elemID);
     void changeBackgroundColor(const QString &path, const QString &elementId);
-    void changeElementColor(const QString &path, const QString &elementId);
 
     void threadChangeBackgroundColor(const QString &path, const QString &elementId);
 
@@ -84,7 +85,7 @@ private:
 
     void updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
 
-    void toggleSingleTurnout(bool straight, bool diverging, const QString &path, const QString &turnoutID);
+    static bool checkRouteBeforeStavanie(const QString &elementid);
 };
 
 #endif // CLICKABLESVGITEM_H

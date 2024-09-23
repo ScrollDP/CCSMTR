@@ -5,7 +5,7 @@
    <end point="-R1.0"/>
   </marks>
   <!--elements for route by id-->
-  <elements>
+  <elements active="false">
    <element id="HN9"/>
    <element id="-R4.10"/>
    <element id="-R4.9"/>
@@ -21,9 +21,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>false</VC>
+   <VC>true</VC>
    <PC>false</PC>
-   <inUse name=""/>
+   <inUse name="HN9"/>
   </status>
  </route>
  <route name="druha">
@@ -32,7 +32,7 @@
    <end point="R1.0"/>
   </marks>
   <!--elements for route by id-->
-  <elements>
+  <elements active="false">
    <element id="HN9"/>
    <element id="-R4.10"/>
    <element id="-R4.9"/>
@@ -48,10 +48,10 @@
    <element id="R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
-   <VC>false</VC>
+   <locked>true</locked>
+   <VC>true</VC>
    <PC>false</PC>
-   <inUse name=""/>
+   <inUse name="HN9"/>
   </status>
  </route>
  <route name="tretia">
@@ -60,7 +60,7 @@
    <end point="-R1.0"/>
   </marks>
   <!--elements for route by id-->
-  <elements>
+  <elements active="false">
    <element id="HN8"/>
    <element id="-R3.11"/>
    <element id="-R3.10"/>
@@ -87,7 +87,7 @@
    <end point="R1.0"/>
   </marks>
   <!--elements for route by id-->
-  <elements>
+  <elements active="false">
    <element id="HN2"/>
    <element id="R5.11"/>
    <element id="R5.10"/>
@@ -105,9 +105,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>false</VC>
+   <VC>true</VC>
    <PC>false</PC>
-   <inUse name=""/>
+   <inUse name="HN2"/>
   </status>
  </route>
  <route name="piata">
@@ -116,7 +116,7 @@
    <end point="R5.7"/>
   </marks>
   <!--elements for route by id-->
-  <elements>
+  <elements active="false">
    <element id="HN2"/>
    <element id="R5.11"/>
    <element id="R5.10"/>
@@ -127,10 +127,10 @@
    <element id="R5.7"/>
   </elements>
   <status>
-   <locked>false</locked>
-   <VC>false</VC>
+   <locked>true</locked>
+   <VC>true</VC>
    <PC>false</PC>
-   <inUse name=""/>
+   <inUse name="HN2"/>
   </status>
  </route>
  <route name="osma">
@@ -139,7 +139,7 @@
    <end point="-R1.26"/>
   </marks>
   <!--elements for route by id-->
-  <elements>
+  <elements active="false">
    <element id="ZN2"/>
    <element id="-R1.4"/>
    <element id="T1_2" position="S+"/>
