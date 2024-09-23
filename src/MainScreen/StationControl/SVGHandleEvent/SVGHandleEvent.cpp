@@ -55,12 +55,7 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
     //qDebug() << "Adding command to queue: " << dataList;
     commandQueue.enqueue(dataList);
 }
-void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    QGraphicsSvgItem::mousePressEvent(event);
-    MouseEventHandler::handleMousePressEvent(event, elementId);
-}
 
-/*
 void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
 
@@ -101,7 +96,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if(event->button() == Qt::LeftButton && event->modifiers() == Qt::ControlModifier) {
         rusenieCesty(elementId);
     }
-}*/
+}
 
 void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QString &path, const QString &m_elementID) {
     if (vyhybkaThread.joinable()) {

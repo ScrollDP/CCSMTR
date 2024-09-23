@@ -11,7 +11,6 @@
 #include <QStringList>
 #include <thread>
 #include "../../TabFolder/ConnectionTab/DCC-EX/CommandQueue.h"
-#include "MouseEventHandler.h"
 
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
@@ -87,8 +86,6 @@ private:
     void updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
 
     bool checkRouteBeforeStavanie(const QString &elementid);
-
-    MouseEventHandler mouseEventHandler;
 };
 
 #endif // CLICKABLESVGITEM_H
