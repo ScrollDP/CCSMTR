@@ -10,6 +10,7 @@
 #include <mutex>
 #include <QDir>
 #include <QDebug>
+#include <QVector>
 
 
 SVGHandleEvent::SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent)
@@ -949,14 +950,7 @@ bool SVGHandleEvent::checkRouteBeforeStavanie(const QString &elementid) {
             }
         }
 
-        // Check if any element in the route to be built is part of a locked route
-        QDomNodeList elements = route.firstChildElement("elements").elementsByTagName("element");
-        for (int j = 0; j < elements.count(); ++j) {
-            QDomElement element = elements.at(j).toElement();
-            if (element.attribute("id") == elementid && locked.text() == "true") {
-                return true;
-            }
-        }
+
     }
 
     return false;
@@ -1008,6 +1002,68 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
         return;
     }
 
+
+// Extract all elements from the route to be used
+    QDomElement targetRoute;
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
+
+        if (start.attribute("point") == startPoint && end.attribute("point") == endPoint) {
+            qDebug() << "Route found for start point:" << startPoint << "and end point:" << endPoint;
+            targetRoute = route;
+            break;
+        }
+    }
+
+    if (targetRoute.isNull()) {
+        qWarning() << "Target route not found for start point:" << startPoint << "and end point:" << endPoint;
+        return;
+    }
+
+    QDomNodeList targetElements = targetRoute.firstChildElement("elements").elementsByTagName("element");
+
+// Store elements in an array
+    QVector<QDomElement> elementsArray;
+    for (int i = 0; i < targetElements.count(); ++i) {
+        QDomElement element = targetElements.at(i).toElement();
+        elementsArray.append(element);
+    }
+
+// Check each route's status for locked elements
+    for (int j = 0; j < routes.count(); ++j) {
+        QDomElement route = routes.at(j).toElement();
+        if (route == targetRoute) {
+            continue; // Skip the target route
+        }
+
+        QDomElement status = route.firstChildElement("status");
+        if (!status.isNull() && status.firstChildElement("locked").text() == "true") {
+            qDebug() << "Checking locked route:" << route.attribute("name");
+
+            QDomNodeList elements = route.firstChildElement("elements").elementsByTagName("element");
+            for (int k = 0; k < elements.count(); ++k) {
+                QDomElement element = elements.at(k).toElement();
+                for (const QDomElement &targetElement : elementsArray) {
+                    if (element.attribute("id") == targetElement.attribute("id")) {
+                        qDebug() << "Match found in route:" << route.attribute("name");
+                        qDebug() << "Original route elements:";
+                        for (const QDomElement &origElement : elementsArray) {
+                            qDebug() << "Element ID:" << origElement.attribute("id");
+                        }
+                        qDebug() << "Matching route elements:";
+                        for (int l = 0; l < elements.count(); ++l) {
+                            QDomElement matchElement = elements.at(l).toElement();
+                            qDebug() << "Element ID:" << matchElement.attribute("id");
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
     // Continue with the rest of the existing code
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
