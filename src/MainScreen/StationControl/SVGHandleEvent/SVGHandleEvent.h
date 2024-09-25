@@ -41,7 +41,7 @@ private:
     void threadStavanieVCCesty(const QString &elementid);
 
     void zriadovacieNavestidloMenu(const QPoint &pos, const QString &id);
-    void vlakovaCestaRoutePC();
+    void vlakovaCestaRoutePC(const QString &elementid);
     void stavaniePCCesty(const QString &elementid);
     void threadStavaniePCCesty(const QString &elementid);
 

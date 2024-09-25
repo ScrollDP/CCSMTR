@@ -85,10 +85,10 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
     if(event->button() == Qt::RightButton) {
         if(QRegularExpression("^ZN\\d+?$").match(elementId).hasMatch()) {
-            vlakovaCestaRoutePC();
+            vlakovaCestaRoutePC(elementId);
         }
         else if(QRegularExpression("^HN\\d+?$").match(elementId).hasMatch()) {
-            vlakovaCestaRoutePC();
+            vlakovaCestaRoutePC(elementId);
         }
 
 
@@ -823,7 +823,7 @@ void SVGHandleEvent::hlavneNavestidloMenu(const QPoint &pos, const QString &id) 
             vlakovaCestaRouteVC(id);
             qDebug() << "VC";
         } else if (selectedAction->text() == "PC") {
-            //vlakovaCestaRoutePC(id);
+            vlakovaCestaRoutePC(id);
             qDebug() << "PC";
         } else if (selectedAction->text() == "RC") {
             rusenieCesty(id);
@@ -910,7 +910,7 @@ void SVGHandleEvent::zriadovacieNavestidloMenu(const QPoint &pos, const QString 
     QAction* selectedAction = contextMenu.exec(QCursor::pos());
     if (selectedAction) {
         if (selectedAction->text() == "PC") {
-            vlakovaCestaRoutePC();
+            vlakovaCestaRoutePC(id);
             qDebug() << "PC";
         } else if (selectedAction->text() == "RC") {
             rusenieCesty(id);
@@ -1207,8 +1207,67 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
     }
 }
 
-void SVGHandleEvent::vlakovaCestaRoutePC() {
+void SVGHandleEvent::vlakovaCestaRoutePC(const QString &m_elementID) {
+// Open and parse routes.xml
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
+    }
 
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    // Check if any route with the same start point is locked
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+
+        if (start.attribute("point") == m_elementID) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement locked = status.firstChildElement("locked");
+
+            if (locked.text() == "true") {
+                qWarning() << "Route with start point" << m_elementID << "is locked, cannot proceed with vlakovaCestaRoutePC";
+                return;
+            }
+        }
+    }
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+
+        if (start.attribute("point") == m_elementID) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement PC = status.firstChildElement("PC");
+            QDomElement inUse = status.firstChildElement("inUse");
+
+            // Update PC status and inUse parameter
+            PC.firstChild().setNodeValue("true");
+            inUse.setAttribute("name", m_elementID);
+        }
+    }
+
+    // Save the changes back to routes.xml
+    if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml for writing";
+        return;
+    }
+
+    QTextStream stream(&routesFile);
+    stream << routesDoc.toString();
+    routesFile.close();
 
 }
 
@@ -1240,6 +1299,7 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
             QDomElement status = route.firstChildElement("status");
             QDomElement locked = status.firstChildElement("locked");
             QDomElement VC = status.firstChildElement("VC");
+            QDomElement PC = status.firstChildElement("PC");
             QDomElement inUse = status.firstChildElement("inUse");
 
             // Set locked to false, VC to false, and inUse to blank
@@ -1249,9 +1309,12 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
             if (VC.text() == "true") {
                 VC.firstChild().setNodeValue("false");
             }
-            inUse.setAttribute("name", "");
+            if (PC.text() == "true") {
+                PC.firstChild().setNodeValue("false");
+            }
+            //inUse.setAttribute("name", "");
 
-            qDebug() << "Route" << route.attribute("name") << "is now unlocked and VC, inUse are reset";
+            qDebug() << "Route" << route.attribute("name") << "is now unlocked";
         }
     }
 
@@ -1266,9 +1329,255 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
     routesFile.close();
 }
 
-void SVGHandleEvent::stavaniePCCesty(const QString &m_id) {
+void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
     std::lock_guard<std::mutex> lock(mtx_stavanie_pc_cesty);
-    qDebug() << "I click on PC" << m_id;
+    if (checkRouteBeforeStavanie(m_elementId)) {
+        qWarning() << "Route is locked, cannot proceed with stavanieVCCesty";
+        return;
+    }
+    // Open and parse routes.xml
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
+    }
+
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    QString startPoint;
+    QString endPoint = m_elementId;
+
+    // Find the start point from the inUse parameter
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement end = marks.firstChildElement("end");
+        QDomElement status = route.firstChildElement("status");
+        QDomElement inUse = status.firstChildElement("inUse");
+
+        if (end.attribute("point") == m_elementId && !inUse.attribute("name").isEmpty()) {
+            startPoint = inUse.attribute("name");
+            break;
+        }
+    }
+
+    if (startPoint.isEmpty()) {
+        qWarning() << "Start point not found for element ID:" << m_elementId;
+        return;
+    }
+
+
+// Extract all elements from the route to be used
+    QDomElement targetRoute;
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
+
+        if (start.attribute("point") == startPoint && end.attribute("point") == endPoint) {
+            qDebug() << "Route found for start point:" << startPoint << "and end point:" << endPoint;
+            targetRoute = route;
+            break;
+        }
+    }
+
+    if (targetRoute.isNull()) {
+        qWarning() << "Target route not found for start point:" << startPoint << "and end point:" << endPoint;
+        return;
+    }
+
+    QDomNodeList targetElements = targetRoute.firstChildElement("elements").elementsByTagName("element");
+
+// Store elements in an array
+    QVector<QDomElement> elementsArray;
+    for (int i = 0; i < targetElements.count(); ++i) {
+        QDomElement element = targetElements.at(i).toElement();
+        elementsArray.append(element);
+    }
+
+// Check each route's status for locked elements
+    for (int j = 0; j < routes.count(); ++j) {
+        QDomElement route = routes.at(j).toElement();
+        if (route == targetRoute) {
+            continue; // Skip the target route
+        }
+
+        QDomElement status = route.firstChildElement("status");
+        if (!status.isNull() && status.firstChildElement("locked").text() == "true") {
+            qDebug() << "Checking locked route:" << route.attribute("name");
+
+            QDomNodeList elements = route.firstChildElement("elements").elementsByTagName("element");
+            for (int k = 0; k < elements.count(); ++k) {
+                QDomElement element = elements.at(k).toElement();
+                for (const QDomElement &targetElement : elementsArray) {
+                    if (element.attribute("id") == targetElement.attribute("id")) {
+                        qDebug() << "Match found in route:" << route.attribute("name");
+                        qDebug() << "Original route elements:";
+                        for (const QDomElement &origElement : elementsArray) {
+                            qDebug() << "Element ID:" << origElement.attribute("id");
+                        }
+                        qDebug() << "Matching route elements:";
+                        for (int l = 0; l < elements.count(); ++l) {
+                            QDomElement matchElement = elements.at(l).toElement();
+                            qDebug() << "Element ID:" << matchElement.attribute("id");
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    // Continue with the rest of the existing code
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+        QDomElement end = marks.firstChildElement("end");
+
+        if (start.attribute("point") == startPoint && end.attribute("point") == endPoint) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement PC = status.firstChildElement("PC");
+            QDomElement locked = status.firstChildElement("locked");
+
+            if (PC.text() == "true" && locked.text() == "false") {
+                QDomNodeList elements = route.firstChildElement("elements").childNodes();
+                for (int j = 0; j < elements.count(); ++j) {
+                    QDomElement element = elements.at(j).toElement();
+                    QString id = element.attribute("id");
+
+                    if (id.startsWith("T")) {
+                        SVGHandleEvent *turnoutItem = nullptr;
+                        for (QGraphicsItem *item : this->scene()->items()) {
+                            SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
+                            if (svgItem && svgItem->elementId == id) {
+                                turnoutItem = svgItem;
+                                break;
+                            }
+                        }
+
+                        if (!turnoutItem) {
+                            qWarning() << "Turnout item not found for ID:" << id;
+                            continue;
+                        }
+
+                        QFile file(turnoutItem->svgFilePath);
+                        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                            qWarning() << "Failed to open SVG file:" << turnoutItem->svgFilePath;
+                            continue;
+                        }
+
+                        QDomDocument doc;
+                        if (!doc.setContent(&file)) {
+                            qWarning() << "Failed to parse SVG file:" << turnoutItem->svgFilePath;
+                            file.close();
+                            continue;
+                        }
+                        file.close();
+
+                        QDomElement root = doc.documentElement();
+                        QDomNodeList paths = root.elementsByTagName("path");
+
+                        QString currentState;
+                        for (int k = 0; k < paths.count(); ++k) {
+                            QDomElement path = paths.at(k).toElement();
+                            if (path.isNull()) {
+                                continue;
+                            }
+                            QString pathId = path.attribute("id");
+
+                            if (pathId == "_basic" || pathId == "_reverse") {
+                                QString visibility = path.attribute("visibility");
+                                if (visibility == "visible") {
+                                    currentState = pathId;
+                                    break;
+                                }
+                            }
+                        }
+
+                        QString desiredPosition = element.attribute("position");
+                        if ((currentState == "_basic" && desiredPosition == "S+") ||
+                            (currentState == "_reverse" && desiredPosition == "S-")) {
+                            continue;
+                        } else if (desiredPosition == "S-") {
+                            turnoutItem->threadToggleVyhybka(false, true, turnoutItem->svgFilePath, id);
+                        } else if (desiredPosition == "S+") {
+                            turnoutItem->threadToggleVyhybka(true, false, turnoutItem->svgFilePath, id);
+                        } else {
+                            qWarning() << "Unknown desired position for ID:" << id;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < routes.count(); ++i) {
+                    QDomElement route = routes.at(i).toElement();
+                    QDomElement marks = route.firstChildElement("marks");
+                    QDomElement end = marks.firstChildElement("end");
+                    QDomElement status = route.firstChildElement("status");
+                    QDomElement inUse = status.firstChildElement("inUse");
+
+                    if (end.attribute("point") == m_elementId && !inUse.attribute("name").isEmpty()) {
+                        QString startPoint = inUse.attribute("name");
+
+                        for (int j = 0; j < routes.count(); ++j) {
+                            QDomElement routeToCheck = routes.at(j).toElement();
+                            QDomElement marksToCheck = routeToCheck.firstChildElement("marks");
+                            QDomElement startToCheck = marksToCheck.firstChildElement("start");
+                            QDomElement endToCheck = marksToCheck.firstChildElement("end");
+
+                            if (startToCheck.attribute("point") == startPoint && endToCheck.attribute("point") == m_elementId) {
+                                QDomElement statusToCheck = routeToCheck.firstChildElement("status");
+                                QDomElement lockedToCheck = statusToCheck.firstChildElement("locked");
+
+                                if (lockedToCheck.text() == "true") {
+                                    qDebug() << "Route" << routeToCheck.attribute("name") << "is locked";
+                                } else if (threadCheckTurnouts(routeToCheck.attribute("name"), m_elementId)) {
+                                    lockedToCheck.firstChild().setNodeValue("true");
+                                    qDebug() << "Route" << routeToCheck.attribute("name") << "is now locked";
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                // Set inUse attribute to blank for all routes with the same start point
+                for (int i = 0; i < routes.count(); ++i) {
+                    QDomElement route = routes.at(i).toElement();
+                    QDomElement marks = route.firstChildElement("marks");
+                    QDomElement start = marks.firstChildElement("start");
+
+                    if (start.attribute("point") == startPoint) {
+                        QDomElement status = route.firstChildElement("status");
+                        QDomElement inUse = status.firstChildElement("inUse");
+                        inUse.setAttribute("name", "");
+                    }
+                }
+
+                // Save the changes back to routes.xml
+                if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                    qWarning() << "Failed to open routes.xml for writing";
+                    return;
+                }
+
+                QTextStream stream(&routesFile);
+                stream << routesDoc.toString();
+                routesFile.close();
+            } else {
+                qDebug() << "Route is locked";
+                qDebug() << "PC.text():" << PC.text() << "locked.text():" << locked.text() << "m_elementId:" << m_elementId;
+            }
+        }
+    }
 
 }
 
