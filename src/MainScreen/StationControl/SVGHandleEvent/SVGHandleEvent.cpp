@@ -159,19 +159,20 @@ void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
     this->setPos(x * scale, y * scale);
 }
 
-void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QString &typeRoute,bool stateOfStavanie) {
+void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QString &typeRoute, bool stateOfStavanie) {
     std::lock_guard<std::mutex> lock(mtx_color_background);
 
     // Open and parse routes.xml
+    QDomDocument routesDoc;
     QFile routesFile("../layout/routes.xml");
     if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open routes.xml";
         return;
     }
 
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
+    QXmlStreamReader xmlReader(&routesFile);
+    if (!routesDoc.setContent(&routesFile, &xmlReader)) {
+        qWarning() << "Failed to parse routes.xml. Error at line" << xmlReader.lineNumber() << ", column" << xmlReader.columnNumber() << ":" << xmlReader.errorString();
         routesFile.close();
         return;
     }
@@ -231,8 +232,12 @@ void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QSt
         for (int i = 0; i < elements.count(); ++i) {
             QDomElement element = elements.at(i).toElement();
             if (element.attribute("id") == targetId) {
-                element.setAttribute("visibility", "visible");
-                break;
+
+                if (stateOfStavanie) {
+                    element.setAttribute("visibility", "hidden");
+                } else {
+                    element.setAttribute("visibility", "visible");
+                }
             }
         }
     } else {
@@ -669,6 +674,42 @@ void SVGHandleEvent::updateTransform(const QString &transformStr) {
 }
 
 void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
+
+
+    // Open and parse routes.xml
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
+    }
+
+    QDomDocument routesDoc;
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    // Check if any route with the same start point is locked
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement marks = route.firstChildElement("marks");
+        QDomElement start = marks.firstChildElement("start");
+
+        if (start.attribute("point") == m_elementID) {
+            QDomElement status = route.firstChildElement("status");
+            QDomElement locked = status.firstChildElement("locked");
+
+            if (locked.text() == "true") {
+                qWarning() << "Route with start point" << m_elementID << "is locked, cannot proceed with vlakovaCestaRouteVC";
+                return;
+            }
+        }
+    }
     // Get the SVG file path for the clicked element
     QString m_svgFilePath = getElementSvgPath(m_elementID);
     qDebug() << "SVG file path vlakovaCestaRouteVC:" << m_svgFilePath;
@@ -716,41 +757,6 @@ void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
 
     // Reload the SVG to apply changes
     reloadSVG(m_svgFilePath);
-
-    // Open and parse routes.xml
-    QFile routesFile("../layout/routes.xml");
-    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open routes.xml";
-        return;
-    }
-
-    QDomDocument routesDoc;
-    if (!routesDoc.setContent(&routesFile)) {
-        qWarning() << "Failed to parse routes.xml";
-        routesFile.close();
-        return;
-    }
-    routesFile.close();
-
-    QDomElement routesRoot = routesDoc.documentElement();
-    QDomNodeList routes = routesRoot.elementsByTagName("route");
-
-    // Check if any route with the same start point is locked
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement marks = route.firstChildElement("marks");
-        QDomElement start = marks.firstChildElement("start");
-
-        if (start.attribute("point") == m_elementID) {
-            QDomElement status = route.firstChildElement("status");
-            QDomElement locked = status.firstChildElement("locked");
-
-            if (locked.text() == "true") {
-                qWarning() << "Route with start point" << m_elementID << "is locked, cannot proceed with vlakovaCestaRouteVC";
-                return;
-            }
-        }
-    }
 
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
@@ -1230,6 +1236,8 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                     }
                 }
 
+                threadChangeBackgroundColor(targetRoute.attribute("name"), "VC", true);
+
 
                 // Set inUse attribute to blank for all routes with the same start point
                 for (int i = 0; i < routes.count(); ++i) {
@@ -1243,6 +1251,7 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                         inUse.setAttribute("name", "");
                     }
                 }
+
 
                 // Save the changes back to routes.xml
                 if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
