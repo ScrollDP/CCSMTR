@@ -551,10 +551,10 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
 
                     if (m_value == "S+") {
                         turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id);
-                        threadUpdateTurnoutStatusInLayout(id, "S+");
+                        //threadUpdateTurnoutStatusInLayout(id, "S+");
                     } else if (m_value == "S-") {
                         turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id);
-                        threadUpdateTurnoutStatusInLayout(id, "S-");
+                        //threadUpdateTurnoutStatusInLayout(id, "S-");
                     }
                 }
                 return;
@@ -604,7 +604,7 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         setVisibility("_basic", "visible");
         saveAndReload(doc, path, turnoutID);
 
-        threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
+        //  threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
 
     } else if (diverging) {
         setVisibility("_between", "visible");
@@ -619,7 +619,7 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         setVisibility("_reverse", "visible");
         saveAndReload(doc, path, turnoutID);
 
-        threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
+        //threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
     }
 }
 
@@ -980,6 +980,20 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
     QDomElement routesRoot = routesDoc.documentElement();
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement status = route.firstChildElement("status");
+        QDomElement VC = status.firstChildElement("VC");
+        QDomElement PC = status.firstChildElement("PC");
+
+        if (VC.text() == "true" && PC.text() == "false") {
+            //qDebug() << "VC is true and PC is false";
+        } else if (VC.text() == "false" && PC.text() == "true") {
+            qDebug() << "VC is false and PC is true (VC cesta)";
+            return;
+        }
+    }
+
     QString startPoint;
     QString endPoint = m_elementId;
 
@@ -1049,7 +1063,7 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                 for (const QDomElement &targetElement : elementsArray) {
                     if (element.attribute("id") == targetElement.attribute("id")) {
                         qDebug() << "Match found in route:" << route.attribute("name");
-                        qDebug() << "Original route elements:";
+                        /*qDebug() << "Original route elements:";
                         for (const QDomElement &origElement : elementsArray) {
                             qDebug() << "Element ID:" << origElement.attribute("id");
                         }
@@ -1057,7 +1071,7 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                         for (int l = 0; l < elements.count(); ++l) {
                             QDomElement matchElement = elements.at(l).toElement();
                             qDebug() << "Element ID:" << matchElement.attribute("id");
-                        }
+                        }*/
                         return;
                     }
                 }
@@ -1353,6 +1367,21 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
     QDomElement routesRoot = routesDoc.documentElement();
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
+
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement status = route.firstChildElement("status");
+        QDomElement VC = status.firstChildElement("VC");
+        QDomElement PC = status.firstChildElement("PC");
+
+        if (VC.text() == "true" && PC.text() == "false") {
+            qDebug() << "VC is true and PC is false (PC cesta)";
+            return;
+        } else if (VC.text() == "false" && PC.text() == "true") {
+            //qDebug() << "VC is false and PC is true";
+        }
+    }
+
     QString startPoint;
     QString endPoint = m_elementId;
 
@@ -1422,7 +1451,7 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
                 for (const QDomElement &targetElement : elementsArray) {
                     if (element.attribute("id") == targetElement.attribute("id")) {
                         qDebug() << "Match found in route:" << route.attribute("name");
-                        qDebug() << "Original route elements:";
+                        /*qDebug() << "Original route elements:";
                         for (const QDomElement &origElement : elementsArray) {
                             qDebug() << "Element ID:" << origElement.attribute("id");
                         }
@@ -1430,7 +1459,7 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
                         for (int l = 0; l < elements.count(); ++l) {
                             QDomElement matchElement = elements.at(l).toElement();
                             qDebug() << "Element ID:" << matchElement.attribute("id");
-                        }
+                        }*/
                         return;
                     }
                 }

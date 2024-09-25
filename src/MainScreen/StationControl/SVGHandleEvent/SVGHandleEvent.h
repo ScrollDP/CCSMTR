@@ -56,6 +56,7 @@ private:
 
     void threadChangeBackgroundColor(const QString &path, const QString &elementId);
 
+
     void sendToArduino(const QString &dataList);
 
     QString startPointElementId;

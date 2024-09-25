@@ -34,10 +34,10 @@
   <location id="LIETAVSKA_LUCKA" path="../layout/symboly/text/LIETAVSKA_LUCKA.svg"/>
  </locations_symbols>
  <turnouts>
-  <turnout col="5" flipped="true" id="T1_2" pared="1" rotate="180" row="-1" status="S+" type="turnout"/>
-  <turnout col="6" flipped="false" id="T1_1" pared="1" rotate="180" row="-1" status="S+" type="turnout"/>
+  <turnout col="5" flipped="true" id="T1_2" pared="1" rotate="180" row="-1" status="S-" type="turnout"/>
+  <turnout col="6" flipped="false" id="T1_1" pared="1" rotate="180" row="-1" status="S-" type="turnout"/>
   <turnout col="7" flipped="false" id="T3" rotate="0" row="-1" status="S-" type="turnout"/>
-  <turnout col="8" flipped="false" id="T5" rotate="0" row="-2" status="S-" type="turnout"/>
+  <turnout col="8" flipped="false" id="T5" rotate="0" row="-2" status="S+" type="turnout"/>
   <turnout col="10" flipped="false" id="T7" rotate="0" row="-2" status="S-" type="turnout"/>
   <turnout col="31" flipped="true" id="T28_1" pared="2" rotate="180" row="-1" status="S+" type="turnout"/>
   <turnout col="32" flipped="false" id="T28_2" pared="2" rotate="180" row="-1" status="S+" type="turnout"/>
@@ -48,14 +48,14 @@
   <turnout col="28" flipped="true" id="T19" rotate="0" row="-4" status="S-" type="turnout"/>
   <turnout col="29" flipped="true" id="T20" rotate="180" row="-4" status="S-" type="turnout"/>
   <turnout col="27" flipped="true" id="T32" rotate="0" row="-5" status="S-" type="turnout"/>
-  <turnout col="5" flipped="false" id="T2_2" pared="1" rotate="0" row="1" status="S+" type="turnout"/>
-  <turnout col="6" flipped="true" id="T2_1" pared="1" rotate="0" row="1" status="S+" type="turnout"/>
-  <turnout col="7" flipped="true" id="T4" rotate="180" row="1" status="S-" type="turnout"/>
-  <turnout col="8" flipped="true" id="T6" rotate="180" row="2" status="S-" type="turnout"/>
-  <turnout col="9" flipped="true" id="T9" rotate="180" row="3" status="S-" type="turnout"/>
-  <turnout col="8" flipped="true" id="T8" rotate="0" row="3" status="S-" type="turnout"/>
+  <turnout col="5" flipped="false" id="T2_2" pared="1" rotate="0" row="1" status="S-" type="turnout"/>
+  <turnout col="6" flipped="true" id="T2_1" pared="1" rotate="0" row="1" status="S-" type="turnout"/>
+  <turnout col="7" flipped="true" id="T4" rotate="180" row="1" status="S+" type="turnout"/>
+  <turnout col="8" flipped="true" id="T6" rotate="180" row="2" status="S+" type="turnout"/>
+  <turnout col="9" flipped="true" id="T9" rotate="180" row="3" status="S+" type="turnout"/>
+  <turnout col="8" flipped="true" id="T8" rotate="0" row="3" status="S+" type="turnout"/>
   <turnout col="11" flipped="true" id="T11" rotate="180" row="3" status="S-" type="turnout"/>
-  <turnout col="9" flipped="true" id="T12" rotate="0" row="4" status="S-" type="turnout"/>
+  <turnout col="9" flipped="true" id="T12" rotate="0" row="4" status="S+" type="turnout"/>
   <turnout col="8" flipped="false" id="T10" rotate="180" row="4" status="S-" type="turnout"/>
   <turnout col="27" flipped="false" id="T17" rotate="180" row="4" status="S-" type="turnout"/>
   <turnout col="28" flipped="false" id="T23" rotate="180" row="3" status="S-" type="turnout"/>

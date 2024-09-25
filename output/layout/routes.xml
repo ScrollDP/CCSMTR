@@ -101,7 +101,7 @@
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
-   <element id="T1_1" position="S+"/>
+   <element id="T2_1" position="S+"/>
    <element id="R1.4"/>
    <element id="R1.2"/>
    <element id="R1.0"/>
@@ -109,7 +109,7 @@
   <status>
    <locked>false</locked>
    <VC>false</VC>
-   <PC>false</PC>
+   <PC>true</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
   </status>
@@ -131,9 +131,9 @@
    <element id="R5.7"/>
   </elements>
   <status>
-   <locked>false</locked>
+   <locked>true</locked>
    <VC>false</VC>
-   <PC>false</PC>
+   <PC>true</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
   </status>
