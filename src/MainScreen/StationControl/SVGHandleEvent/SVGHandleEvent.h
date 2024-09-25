@@ -26,7 +26,7 @@ public:
     void updateTransform(const QString &transformStr);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
 
@@ -51,10 +51,10 @@ private:
 
 
     void saveAndReload(const QDomDocument& doc, const QString& path, const QString& elementId);
-    void reloadSVG(const QString &reloadPath,const QString &elemID);
-    void changeBackgroundColor(const QString &path, const QString &elementId);
+    void reloadSVG(const QString &reloadPath);
+    void changeBackgroundColor(const QString &m_routeName, const QString &typeRoute, bool stateOfStavanie);
 
-    void threadChangeBackgroundColor(const QString &path, const QString &elementId);
+    void threadChangeBackgroundColor(const QString &m_routeName, const QString &typeRoute,bool stateOfStavanie);
 
 
     void sendToArduino(const QString &dataList);
@@ -68,7 +68,7 @@ private:
     bool flipped;
     int rotate;
 
-    QString getTurnoutSvgPath(const QString &turnoutId);
+    QString getElementSvgPath(const QString &m_elementId);
 
     void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID);
 
