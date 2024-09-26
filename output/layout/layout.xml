@@ -55,7 +55,7 @@
   <turnout col="9" flipped="true" id="T9" rotate="180" row="3" status="S-" type="turnout"/>
   <turnout col="8" flipped="true" id="T8" rotate="0" row="3" status="S-" type="turnout"/>
   <turnout col="11" flipped="true" id="T11" rotate="180" row="3" status="S-" type="turnout"/>
-  <turnout col="9" flipped="true" id="T12" rotate="0" row="4" status="S-" type="turnout"/>
+  <turnout col="9" flipped="true" id="T12" rotate="0" row="4" status="S+" type="turnout"/>
   <turnout col="8" flipped="false" id="T10" rotate="180" row="4" status="S-" type="turnout"/>
   <turnout col="27" flipped="false" id="T17" rotate="180" row="4" status="S-" type="turnout"/>
   <turnout col="28" flipped="false" id="T23" rotate="180" row="3" status="S-" type="turnout"/>

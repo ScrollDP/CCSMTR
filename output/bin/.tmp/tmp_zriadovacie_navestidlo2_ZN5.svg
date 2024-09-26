@@ -1,7 +1,7 @@
 <svg height="12" viewBox="0 0 8 12" width="8" xmlns="http://www.w3.org/2000/svg">
  <g id="back_color_PC" transform="" visibility="hidden">
   <!-- Background rectangle -->
-  <rect fill="#00FF00" height="12" opacity="0.7" stroke="none" width="8"/>
+  <rect fill="white" height="12" opacity="0.7" stroke="none" width="8"/>
  </g>
  <g fill="none" id="zriadovacie_navestidlo" stroke="gray" stroke-width="1.1">
   <polyline points="6.5,2 1.4,6 6.5,10" visibility="visible"/>

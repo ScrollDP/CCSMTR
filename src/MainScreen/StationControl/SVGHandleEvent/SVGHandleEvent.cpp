@@ -86,9 +86,11 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if(event->button() == Qt::RightButton) {
         if(QRegularExpression("^ZN\\d+?$").match(elementId).hasMatch()) {
             vlakovaCestaRoutePC(elementId);
+            return;
         }
         else if(QRegularExpression("^HN\\d+?$").match(elementId).hasMatch()) {
             vlakovaCestaRoutePC(elementId);
+            return;
         }
 
 
@@ -1385,6 +1387,53 @@ void SVGHandleEvent::vlakovaCestaRoutePC(const QString &m_elementID) {
             }
         }
     }
+    // Get the SVG file path for the clicked element
+    QString m_svgFilePath = getElementSvgPath(m_elementID);
+    qDebug() << "SVG file path vlakovaCestaRoutePC:" << m_svgFilePath;
+    if (m_svgFilePath.isEmpty()) {
+        qWarning() << "SVG file not found for element:" << m_elementID;
+        return;
+    }
+
+    // Open and parse the SVG file
+    QFile svgFile(m_svgFilePath);
+    if (!svgFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file:" << m_svgFilePath;
+        return;
+    }
+
+    QDomDocument svgDoc;
+    if (!svgDoc.setContent(&svgFile)) {
+        qWarning() << "Failed to parse SVG file:" << m_svgFilePath;
+        svgFile.close();
+        return;
+    }
+    svgFile.close();
+
+    // Find the group element and change its visibility
+    QDomElement root = svgDoc.documentElement();
+    QDomNodeList elements = root.elementsByTagName("g");
+
+    for (int i = 0; i < elements.count(); ++i) {
+        QDomElement element = elements.at(i).toElement();
+        if (element.attribute("id") == "back_color_PC") {
+            element.setAttribute("visibility", "visible");
+            break;
+        }
+    }
+
+    // Save the changes back to the SVG file
+    if (!svgFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file for writing:" << m_svgFilePath;
+        return;
+    }
+
+    QTextStream m_stream(&svgFile);
+    m_stream << svgDoc.toString();
+    svgFile.close();
+
+    // Reload the SVG to apply changes
+    threadReloadSVG(m_svgFilePath);
 
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
@@ -1396,7 +1445,7 @@ void SVGHandleEvent::vlakovaCestaRoutePC(const QString &m_elementID) {
             QDomElement PC = status.firstChildElement("PC");
             QDomElement inUse = status.firstChildElement("inUse");
 
-            // Update PC status and inUse parameter
+            // Update VC status and inUse parameter
             PC.firstChild().setNodeValue("true");
             inUse.setAttribute("name", m_elementID);
         }
@@ -1722,7 +1771,7 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
                     }
                 }
 
-                threadChangeBackgroundColor(targetRoute.attribute("name"), "PC", true);
+
 
                 // Save the changes back to routes.xml
                 if (!routesFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -1733,6 +1782,8 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
                 QTextStream stream(&routesFile);
                 stream << routesDoc.toString();
                 routesFile.close();
+
+                threadChangeBackgroundColor(targetRoute.attribute("name"), "PC", true);
             } else {
                 qDebug() << "Route is locked";
                 qDebug() << "PC.text():" << PC.text() << "locked.text():" << locked.text() << "m_elementId:" << m_elementId;
