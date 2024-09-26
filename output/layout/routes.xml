@@ -77,9 +77,9 @@
    <element id="-R1.0"/>
   </elements>
   <status>
-   <locked>true</locked>
+   <locked>false</locked>
    <VC>false</VC>
-   <PC>true</PC>
+   <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
   </status>

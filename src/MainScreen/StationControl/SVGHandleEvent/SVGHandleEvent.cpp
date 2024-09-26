@@ -50,6 +50,12 @@ SVGHandleEvent::~SVGHandleEvent() {
     if (stavaniePCCestyThread.joinable()) {
         stavaniePCCestyThread.join();
     }
+    if (reloadSVGThread.joinable()) {
+        reloadSVGThread.join();
+    }
+    if (updateTurnoutStatusInLayoutThread.joinable()) {
+        updateTurnoutStatusInLayoutThread.join();
+    }
 }
 
 void SVGHandleEvent::sendToArduino(const QString &dataList) {
