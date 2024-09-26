@@ -77,8 +77,8 @@
    <element id="-R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
-   <VC>false</VC>
+   <locked>true</locked>
+   <VC>true</VC>
    <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
@@ -107,7 +107,7 @@
    <element id="R1.0"/>
   </elements>
   <status>
-   <locked>false</locked>
+   <locked>true</locked>
    <VC>true</VC>
    <PC>false</PC>
    <inUse name=""/>
@@ -131,7 +131,7 @@
    <element id="R5.7"/>
   </elements>
   <status>
-   <locked>true</locked>
+   <locked>false</locked>
    <VC>true</VC>
    <PC>false</PC>
    <inUse name=""/>

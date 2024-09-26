@@ -154,6 +154,13 @@ void SVGHandleEvent::threadStavaniePCCesty(const QString &elementid) {
     stavaniePCCestyThread = std::thread(&SVGHandleEvent::stavaniePCCesty, this, elementid);
 }
 
+void SVGHandleEvent::threadReloadSVG(const QString &reloadPath) {
+    if (reloadSVGThread.joinable()) {
+        reloadSVGThread.join();
+    }
+    reloadSVGThread = std::thread(&SVGHandleEvent::reloadSVG, this, reloadPath);
+}
+
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
     this->setScale(scale);
     this->setPos(x * scale, y * scale);
@@ -181,13 +188,15 @@ void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QSt
     QDomElement routesRoot = routesDoc.documentElement();
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
-    QString endPoint;
+    QString endPoint,startPoint;
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
         if (route.attribute("name") == m_routeName) {
             QDomElement marks = route.firstChildElement("marks");
             QDomElement end = marks.firstChildElement("end");
+            QDomElement start = marks.firstChildElement("start");
             endPoint = end.attribute("point");
+            startPoint = start.attribute("point");
             break;
         }
     }
@@ -196,30 +205,57 @@ void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QSt
         qWarning() << "End point not found for route name:" << m_routeName;
         return;
     }
+    if (startPoint.isEmpty()) {
+        qWarning() << "Start point not found for route name:" << m_routeName;
+        return;
+    }
+
+    qDebug() << "CCEnd point:" << endPoint << "Start point:" << startPoint;
 
     // Load the SVG file of the endpoint
     QString endpointSvgPath = getElementSvgPath(endPoint);
+    QString startpointSvgPath = getElementSvgPath(startPoint);
     if (endpointSvgPath.isEmpty()) {
         qWarning() << "SVG file not found for endpoint:" << endPoint;
         return;
     }
+    if (startpointSvgPath.isEmpty()) {
+        qWarning() << "SVG file not found for endpoint:" << startPoint;
+        return;
+    }
 
     QFile svgFile(endpointSvgPath);
+
     if (!svgFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file:" << endpointSvgPath;
         return;
     }
+    QFile m_svgFile(startpointSvgPath);
+    if(!m_svgFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file:" << startpointSvgPath;
+        return;
+    }
 
     QDomDocument svgDoc;
+
     if (!svgDoc.setContent(&svgFile)) {
         qWarning() << "Failed to parse SVG file:" << endpointSvgPath;
         svgFile.close();
         return;
     }
     svgFile.close();
+    QDomDocument m_svgDoc;
+    if (!m_svgDoc.setContent(&m_svgFile)) {
+        qWarning() << "Failed to parse SVG file:" << startpointSvgPath;
+        m_svgFile.close();
+        return;
+    }
+    m_svgFile.close();
 
     QDomElement root = svgDoc.documentElement();
+    QDomElement m_root = m_svgDoc.documentElement();
     QDomNodeList elements = root.elementsByTagName("g");
+    QDomNodeList m_elements = m_root.elementsByTagName("g");
 
     QMap<QString, QString> routeToColorMap = {
             {"VC", "back_color_VC"},
@@ -235,6 +271,45 @@ void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QSt
 
                 if (stateOfStavanie) {
                     element.setAttribute("visibility", "hidden");
+
+                    QString m_targetId = routeToColorMap.value(typeRoute, QString());
+                    if (!m_targetId.isEmpty()) {
+                        for (int a = 0; a < m_elements.count(); ++a) {
+                            QDomElement m_element = m_elements.at(a).toElement();
+                            if (m_element.attribute("id") == m_targetId) {
+                                qDebug() << "Target ID Startpoint changeColor" << startPoint << "path of start point svg" << startpointSvgPath;
+                                m_element.setAttribute("visibility", "hidden");
+
+                                // Find the corresponding QGraphicsSvgItem in the scene
+
+                                SVGHandleEvent *HNItem = nullptr;
+                                for (QGraphicsItem *item : this->scene()->items()) {
+                                    SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
+                                    if (svgItem && svgItem->elementId == startPoint) {
+                                        HNItem = svgItem;
+                                        break;
+                                    }
+                                }
+
+                                // Save the changes back to the SVG file
+                                if (!m_svgFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                                    qWarning() << "Failed to open SVG file for writing:" << startpointSvgPath;
+                                }
+
+                                QTextStream m_stream(&m_svgFile);
+                                m_stream << m_svgDoc.toString();
+                                m_svgFile.close();
+
+                                // Reload the SVG to apply changes
+                                HNItem->threadReloadSVG(startpointSvgPath);
+                                qDebug() << "Startpoint SVG file saved:" << startpointSvgPath;
+                            }
+                        }
+                    } else {
+                        qWarning() << "Unknown typeRoute:" << typeRoute;
+                    }
+
+
                 } else {
                     element.setAttribute("visibility", "visible");
                 }
@@ -247,7 +322,6 @@ void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QSt
     // Save the changes back to the SVG file
     if (!svgFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file for writing:" << endpointSvgPath;
-        return;
     }
 
     QTextStream stream(&svgFile);
@@ -255,7 +329,8 @@ void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QSt
     svgFile.close();
 
     // Reload the SVG to apply changes
-    reloadSVG(endpointSvgPath);
+    threadReloadSVG(endpointSvgPath);
+
 }
 
 QString SVGHandleEvent::getElementIdAtPosition(const QPointF &position) {
@@ -325,7 +400,7 @@ void SVGHandleEvent::saveAndReload(const QDomDocument& doc, const QString &path,
     file.close();
     //qDebug() << "SVG file saved:" << path;
 
-    reloadSVG(path);
+    threadReloadSVG(path);
 }
 
 void SVGHandleEvent::reloadSVG(const QString &reloadPath) {
@@ -756,7 +831,7 @@ void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
     svgFile.close();
 
     // Reload the SVG to apply changes
-    reloadSVG(m_svgFilePath);
+    threadReloadSVG(m_svgFilePath);
 
     for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
@@ -1230,13 +1305,13 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                                 } else if (threadCheckTurnouts(routeToCheck.attribute("name"), m_elementId)) {
                                     lockedToCheck.firstChild().setNodeValue("true");
                                     qDebug() << "Route" << routeToCheck.attribute("name") << "is now locked";
+
                                 }
+
                             }
                         }
                     }
                 }
-
-                threadChangeBackgroundColor(targetRoute.attribute("name"), "VC", true);
 
 
                 // Set inUse attribute to blank for all routes with the same start point
@@ -1262,12 +1337,17 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                 QTextStream stream(&routesFile);
                 stream << routesDoc.toString();
                 routesFile.close();
+
+                threadChangeBackgroundColor(targetRoute.attribute("name"), "VC", true);
+
+
             } else {
                 qDebug() << "Route is locked";
                 qDebug() << "VC.text():" << VC.text() << "locked.text():" << locked.text() << "m_elementId:" << m_elementId;
             }
         }
     }
+
 }
 
 void SVGHandleEvent::vlakovaCestaRoutePC(const QString &m_elementID) {
@@ -1762,7 +1842,7 @@ bool SVGHandleEvent::checkTurnouts(const QString &routeName, const QString &m_id
         }
 
         if (!allTurnoutsInPosition) {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1500));
         }
     }
 
