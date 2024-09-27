@@ -1,5 +1,6 @@
 <routes>
- <route name="prva">
+ <!-- zaciatok odchodovych nvestidiel na BA -->
+ <route name="osma_A">
   <marks>
    <start point="HN9"/>
    <end point="-R1.0"/>
@@ -25,9 +26,10 @@
    <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
+   <isPC>no</isPC>
   </status>
  </route>
- <route name="druha">
+ <route name="osma_B">
   <marks>
    <start point="HN9"/>
    <end point="R1.0"/>
@@ -42,6 +44,7 @@
    <element id="T5" position="S-"/>
    <element id="-R2.7"/>
    <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
    <element id="T3" position="S-"/>
    <element id="CT1"/>
    <element id="R1.4"/>
@@ -54,9 +57,10 @@
    <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
+   <isPC>no</isPC>
   </status>
  </route>
- <route name="tretia">
+ <route name="siesta_A">
   <marks>
    <start point="HN8"/>
    <end point="-R1.0"/>
@@ -82,9 +86,404 @@
    <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
+   <isPC>no</isPC>
   </status>
  </route>
- <route name="stvrta">
+ <route name="siesta_B">
+  <marks>
+   <start point="HN8"/>
+   <end point="R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN8"/>
+   <element id="-R3.11"/>
+   <element id="-R3.10"/>
+   <element id="T7" position="S-"/>
+   <element id="-R2.9"/>
+   <element id="T5" position="S+"/>
+   <element id="-R2.7"/>
+   <element id="T3" position="S-"/>
+   <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="stvrta_A">
+  <marks>
+   <start point="HN7"/>
+   <end point="-R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN7"/>
+   <element id="-R2.11"/>
+   <element id="T7" position="S+"/>
+   <element id="-R2.9"/>
+   <element id="T5" position="S+"/>
+   <element id="-R2.7"/>
+   <element id="T3" position="S-"/>
+   <element id="T1_1" position="S+"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="stvrta_B">
+  <marks>
+   <start point="HN7"/>
+   <end point="R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN7"/>
+   <element id="-R2.11"/>
+   <element id="T7" position="S5"/>
+   <element id="-R2.9"/>
+   <element id="T5" position="S+"/>
+   <element id="-R2.7"/>
+   <element id="T3" position="S-"/>
+   <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="druha_A">
+  <marks>
+   <start point="HN6"/>
+   <end point="-R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN6"/>
+   <element id="-R1.8"/>
+   <element id="T3" position="S+"/>
+   <element id="T1_1" position="S+"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="druha_B">
+  <marks>
+   <start point="HN6"/>
+   <end point="R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN6"/>
+   <element id="-R1.8"/>
+   <element id="T3" position="S+"/>
+   <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="prva_A">
+  <marks>
+   <start point="HN5"/>
+   <end point="-R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN6"/>
+   <element id="R1.8"/>
+   <element id="T4" position="S+"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="prva_B">
+  <marks>
+   <start point="HN5"/>
+   <end point="R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN6"/>
+   <element id="R1.8"/>
+   <element id="T4" position="S+"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="tretia_A">
+  <marks>
+   <start point="HN4"/>
+   <end point="-R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN4"/>
+   <element id="R2.9"/>
+   <element id="T6" position="S+"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="tretia_B">
+  <marks>
+   <start point="HN4"/>
+   <end point="R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN4"/>
+   <element id="R2.9"/>
+   <element id="T6" position="S+"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="piata_A">
+  <marks>
+   <start point="HN3"/>
+   <end point="-R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN3"/>
+   <element id="R3.12"/>
+   <element id="T11" position="S+"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="piata_B">
+  <marks>
+   <start point="HN3"/>
+   <end point="R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN3"/>
+   <element id="R3.12"/>
+   <element id="T11" position="S+"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="siedma_A">
+  <marks>
+   <start point="HN1"/>
+   <end point="-R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN1"/>
+   <element id="R4.12"/>
+   <element id="R4.11"/>
+   <element id="T11" position="S-"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="siedma_B">
+  <marks>
+   <start point="HN1"/>
+   <end point="R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN1"/>
+   <element id="R4.12"/>
+   <element id="R4.11"/>
+   <element id="T11" position="S-"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="deviata_A">
+  <marks>
+   <start point="HN2"/>
+   <end point="-R1.0"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN2"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S-"/>
+   <element id="T9" position="S-"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="deviata_B">
   <marks>
    <start point="HN2"/>
    <end point="R1.0"/>
@@ -112,9 +511,886 @@
    <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
+   <isPC>no</isPC>
   </status>
  </route>
- <route name="piata">
+ <!-- koniec odchodovych nvestidiel na BA -->
+ <!-- zaciatok vchodove nvestidiel z BA -->
+ <route name="A_osma">
+  <marks>
+   <start point="HN21"/>
+   <end point="-R4.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R4.25"/>
+   <element id="-R4.24"/>
+   <element id="-R4.23"/>
+   <element id="-R4.22"/>
+   <element id="-R4.21"/>
+   <element id="-R4.20"/>
+   <element id="-R4.19"/>
+   <element id="-R4.18"/>
+   <element id="-R4.17"/>
+   <element id="-R4.16"/>
+   <element id="-R4.15"/>
+   <element id="-R4.14"/>
+   <element id="-R4.13"/>
+   <element id="-R4.12"/>
+   <element id="-R4.10"/>
+   <element id="-R4.9"/>
+   <element id="-R3.9"/>
+   <element id="-R3.8"/>
+   <element id="T5" position="S-"/>
+   <element id="-R2.7"/>
+   <element id="T1_1" position="S+"/>
+   <element id="T3" position="S-"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_osma">
+  <marks>
+   <start point="HN23"/>
+   <end point="-R4.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R4.25"/>
+   <element id="-R4.24"/>
+   <element id="-R4.23"/>
+   <element id="-R4.22"/>
+   <element id="-R4.21"/>
+   <element id="-R4.20"/>
+   <element id="-R4.19"/>
+   <element id="-R4.18"/>
+   <element id="-R4.17"/>
+   <element id="-R4.16"/>
+   <element id="-R4.15"/>
+   <element id="-R4.14"/>
+   <element id="-R4.13"/>
+   <element id="-R4.12"/>
+   <element id="-R4.10"/>
+   <element id="-R4.9"/>
+   <element id="-R3.9"/>
+   <element id="-R3.8"/>
+   <element id="T5" position="S-"/>
+   <element id="-R2.7"/>
+   <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="T3" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_siesta">
+  <marks>
+   <start point="HN21"/>
+   <end point="-R3.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R3.25"/>
+   <element id="-R3.24"/>
+   <element id="-R3.23"/>
+   <element id="-R3.22"/>
+   <element id="-R3.21"/>
+   <element id="-R3.20"/>
+   <element id="-R3.19"/>
+   <element id="-R3.18"/>
+   <element id="-R3.17"/>
+   <element id="-R3.16"/>
+   <element id="-R3.15"/>
+   <element id="-R3.14"/>
+   <element id="-R3.13"/>
+   <element id="-R3.11"/>
+   <element id="-R3.10"/>
+   <element id="T7" position="S-"/>
+   <element id="-R2.9"/>
+   <element id="T5" position="S+"/>
+   <element id="-R2.7"/>
+   <element id="T1_1" position="S+"/>
+   <element id="T3" position="S-"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_siesta">
+  <marks>
+   <start point="HN23"/>
+   <end point="-R3.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R3.25"/>
+   <element id="-R3.24"/>
+   <element id="-R3.23"/>
+   <element id="-R3.22"/>
+   <element id="-R3.21"/>
+   <element id="-R3.20"/>
+   <element id="-R3.19"/>
+   <element id="-R3.18"/>
+   <element id="-R3.17"/>
+   <element id="-R3.16"/>
+   <element id="-R3.15"/>
+   <element id="-R3.14"/>
+   <element id="-R3.13"/>
+   <element id="-R3.11"/>
+   <element id="-R3.10"/>
+   <element id="T7" position="S-"/>
+   <element id="-R2.9"/>
+   <element id="T5" position="S+"/>
+   <element id="-R2.7"/>
+   <element id="T3" position="S-"/>
+   <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_stvrta">
+  <marks>
+   <start point="HN21"/>
+   <end point="-R2.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R2.25"/>
+   <element id="-R2.24"/>
+   <element id="-R2.23"/>
+   <element id="-R2.22"/>
+   <element id="-R2.21"/>
+   <element id="-R2.20"/>
+   <element id="-R2.19"/>
+   <element id="-R2.18"/>
+   <element id="-R2.17"/>
+   <element id="-R2.16"/>
+   <element id="-R2.15"/>
+   <element id="-R2.14"/>
+   <element id="-R2.13"/>
+   <element id="-R2.11"/>
+   <element id="T7" position="S+"/>
+   <element id="-R2.9"/>
+   <element id="T5" position="S+"/>
+   <element id="-R2.7"/>
+   <element id="T3" position="S-"/>
+   <element id="T1_1" position="S+"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_stvrta">
+  <marks>
+   <start point="HN23"/>
+   <end point="-R2.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R2.25"/>
+   <element id="-R2.24"/>
+   <element id="-R2.23"/>
+   <element id="-R2.22"/>
+   <element id="-R2.21"/>
+   <element id="-R2.20"/>
+   <element id="-R2.19"/>
+   <element id="-R2.18"/>
+   <element id="-R2.17"/>
+   <element id="-R2.16"/>
+   <element id="-R2.15"/>
+   <element id="-R2.14"/>
+   <element id="-R2.13"/>
+   <element id="-R2.11"/>
+   <element id="T7" position="S+"/>
+   <element id="-R2.9"/>
+   <element id="T5" position="S+"/>
+   <element id="-R2.7"/>
+   <element id="T3" position="S-"/>
+   <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_druha">
+  <marks>
+   <start point="HN21"/>
+   <end point="-R1.26"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R1.26"/>
+   <element id="-R1.25"/>
+   <element id="-R1.24"/>
+   <element id="-R1.23"/>
+   <element id="-R1.22"/>
+   <element id="-R1.21"/>
+   <element id="-R1.20"/>
+   <element id="-R1.19"/>
+   <element id="-R1.18"/>
+   <element id="-R1.17"/>
+   <element id="-R1.16"/>
+   <element id="-R1.15"/>
+   <element id="-R1.14"/>
+   <element id="-R1.13"/>
+   <element id="-R1.12"/>
+   <element id="-R1.11"/>
+   <element id="-R1.10"/>
+   <element id="-R1.8"/>
+   <element id="T3" position="S+"/>
+   <element id="T1_1" position="S+"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_druha">
+  <marks>
+   <start point="HN23"/>
+   <end point="-R1.26"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R1.26"/>
+   <element id="-R1.25"/>
+   <element id="-R1.24"/>
+   <element id="-R1.23"/>
+   <element id="-R1.22"/>
+   <element id="-R1.21"/>
+   <element id="-R1.20"/>
+   <element id="-R1.19"/>
+   <element id="-R1.18"/>
+   <element id="-R1.17"/>
+   <element id="-R1.16"/>
+   <element id="-R1.15"/>
+   <element id="-R1.14"/>
+   <element id="-R1.13"/>
+   <element id="-R1.12"/>
+   <element id="-R1.11"/>
+   <element id="-R1.10"/>
+   <element id="-R1.8"/>
+   <element id="T3" position="S+"/>
+   <element id="T1_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_prva">
+  <marks>
+   <start point="HN21"/>
+   <end point="R1.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R1.25"/>
+   <element id="R1.24"/>
+   <element id="R1.23"/>
+   <element id="R1.22"/>
+   <element id="R1.21"/>
+   <element id="R1.20"/>
+   <element id="R1.19"/>
+   <element id="R1.18"/>
+   <element id="R1.17"/>
+   <element id="R1.16"/>
+   <element id="R1.15"/>
+   <element id="R1.14"/>
+   <element id="R1.13"/>
+   <element id="R1.12"/>
+   <element id="R1.11"/>
+   <element id="R1.10"/>
+   <element id="R1.8"/>
+   <element id="T4" position="S+"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_prva">
+  <marks>
+   <start point="HN23"/>
+   <end point="R1.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R1.25"/>
+   <element id="R1.24"/>
+   <element id="R1.23"/>
+   <element id="R1.22"/>
+   <element id="R1.21"/>
+   <element id="R1.20"/>
+   <element id="R1.19"/>
+   <element id="R1.18"/>
+   <element id="R1.17"/>
+   <element id="R1.16"/>
+   <element id="R1.15"/>
+   <element id="R1.14"/>
+   <element id="R1.13"/>
+   <element id="R1.12"/>
+   <element id="R1.11"/>
+   <element id="R1.10"/>
+   <element id="R1.8"/>
+   <element id="T4" position="S+"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_tretia">
+  <marks>
+   <start point="HN21"/>
+   <end point="R2.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R2.25"/>
+   <element id="R2.24"/>
+   <element id="R2.23"/>
+   <element id="R2.22"/>
+   <element id="R2.21"/>
+   <element id="R2.20"/>
+   <element id="R2.19"/>
+   <element id="R2.18"/>
+   <element id="R2.17"/>
+   <element id="R2.16"/>
+   <element id="R2.15"/>
+   <element id="R2.14"/>
+   <element id="R2.13"/>
+   <element id="R2.12"/>
+   <element id="R2.11"/>
+   <element id="R2.9"/>
+   <element id="T6" position="S+"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_tretia">
+  <marks>
+   <start point="HN23"/>
+   <end point="R2.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R2.25"/>
+   <element id="R2.24"/>
+   <element id="R2.23"/>
+   <element id="R2.22"/>
+   <element id="R2.21"/>
+   <element id="R2.20"/>
+   <element id="R2.19"/>
+   <element id="R2.18"/>
+   <element id="R2.17"/>
+   <element id="R2.16"/>
+   <element id="R2.15"/>
+   <element id="R2.14"/>
+   <element id="R2.13"/>
+   <element id="R2.12"/>
+   <element id="R2.11"/>
+   <element id="R2.9"/>
+   <element id="T6" position="S+"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_piata">
+  <marks>
+   <start point="HN21"/>
+   <end point="R3.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R3.25"/>
+   <element id="R3.24"/>
+   <element id="R3.23"/>
+   <element id="R3.22"/>
+   <element id="R3.21"/>
+   <element id="R3.20"/>
+   <element id="R3.19"/>
+   <element id="R3.18"/>
+   <element id="R3.17"/>
+   <element id="R3.16"/>
+   <element id="R3.15"/>
+   <element id="R3.14"/>
+   <element id="R3.12"/>
+   <element id="T11" position="S+"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_piata">
+  <marks>
+   <start point="HN23"/>
+   <end point="R3.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R3.25"/>
+   <element id="R3.24"/>
+   <element id="R3.23"/>
+   <element id="R3.22"/>
+   <element id="R3.21"/>
+   <element id="R3.20"/>
+   <element id="R3.19"/>
+   <element id="R3.18"/>
+   <element id="R3.17"/>
+   <element id="R3.16"/>
+   <element id="R3.15"/>
+   <element id="R3.14"/>
+   <element id="R3.12"/>
+   <element id="T11" position="S+"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_siedma">
+  <marks>
+   <start point="HN21"/>
+   <end point="R4.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R4.24"/>
+   <element id="R4.23"/>
+   <element id="R4.22"/>
+   <element id="R4.21"/>
+   <element id="R4.20"/>
+   <element id="R4.19"/>
+   <element id="R4.18"/>
+   <element id="R4.17"/>
+   <element id="R4.16"/>
+   <element id="R4.15"/>
+   <element id="R4.14"/>
+   <element id="R4.12"/>
+   <element id="R4.11"/>
+   <element id="T11" position="S-"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_siedma">
+  <marks>
+   <start point="HN23"/>
+   <end point="R4.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R4.24"/>
+   <element id="R4.23"/>
+   <element id="R4.22"/>
+   <element id="R4.21"/>
+   <element id="R4.20"/>
+   <element id="R4.19"/>
+   <element id="R4.18"/>
+   <element id="R4.17"/>
+   <element id="R4.16"/>
+   <element id="R4.15"/>
+   <element id="R4.14"/>
+   <element id="R4.12"/>
+   <element id="R4.11"/>
+   <element id="T11" position="S-"/>
+   <element id="R3.10"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="A_deviata">
+  <marks>
+   <start point="HN21"/>
+   <end point="R5.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R5.24"/>
+   <element id="R5.23"/>
+   <element id="R5.22"/>
+   <element id="R5.21"/>
+   <element id="R5.20"/>
+   <element id="R5.19"/>
+   <element id="R5.18"/>
+   <element id="R5.17"/>
+   <element id="R5.16"/>
+   <element id="R5.15"/>
+   <element id="R5.14"/>
+   <element id="R5.13"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S-"/>
+   <element id="T9" position="S-"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S-"/>
+   <element id="CT1"/>
+   <element id="-R1.4"/>
+   <element id="-R1.2"/>
+   <element id="-R1.0"/>
+   <element id="HN21"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <route name="B_deviata">
+  <marks>
+   <start point="HN23"/>
+   <end point="R5.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R5.24"/>
+   <element id="R5.23"/>
+   <element id="R5.22"/>
+   <element id="R5.21"/>
+   <element id="R5.20"/>
+   <element id="R5.19"/>
+   <element id="R5.18"/>
+   <element id="R5.17"/>
+   <element id="R5.16"/>
+   <element id="R5.15"/>
+   <element id="R5.14"/>
+   <element id="R5.13"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S-"/>
+   <element id="T9" position="S-"/>
+   <element id="T8" position="S-"/>
+   <element id="T6" position="S-"/>
+   <element id="R2.7"/>
+   <element id="T4" position="S-"/>
+   <element id="T2_1" position="S+"/>
+   <element id="R1.4"/>
+   <element id="R1.2"/>
+   <element id="R1.0"/>
+   <element id="HN23"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>no</isPC>
+  </status>
+ </route>
+ <!-- koniec vchodovych nvestidiel z BA -->
+ <!--zaciatok na posuvne kolaje-->
+ <route name="piata_Se10">
+  <marks>
+   <start point="HN3"/>
+   <end point="R3.7"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN3"/>
+   <element id="R3.12"/>
+   <element id="T11" position="S+"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S+"/>
+   <element id="R3.7"/>
+   <element id="R3.5"/>
+   <element id="R3.4"/>
+   <element id="R3.3"/>
+   <element id="Z6"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="siedma_Se10">
+  <marks>
+   <start point="HN1"/>
+   <end point="R3.7"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN1"/>
+   <element id="R4.12"/>
+   <element id="R4.11"/>
+   <element id="T11" position="S-"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S+"/>
+   <element id="R3.7"/>
+   <element id="R3.5"/>
+   <element id="R3.4"/>
+   <element id="R3.3"/>
+   <element id="Z6"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="deviata_Se10">
+  <marks>
+   <start point="HN2"/>
+   <end point="R3.7"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN2"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S-"/>
+   <element id="T9" position="S-"/>
+   <element id="T8" position="S+"/>
+   <element id="R3.7"/>
+   <element id="R3.5"/>
+   <element id="R3.4"/>
+   <element id="R3.3"/>
+   <element id="Z6"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="deviata_Se9">
+  <marks>
+   <start point="HN2"/>
+   <end point="R4.7"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN2"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S+"/>
+   <element id="T10" position="S+"/>
+   <element id="R4.7"/>
+   <element id="R4.5"/>
+   <element id="R4.4"/>
+   <element id="R4.3"/>
+   <element id="Z1"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="deviata_Se8">
   <marks>
    <start point="HN2"/>
    <end point="R5.7"/>
@@ -129,6 +1405,10 @@
    <element id="T10" position="S-"/>
    <element id="R5.8"/>
    <element id="R5.7"/>
+   <element id="R5.5"/>
+   <element id="R5.4"/>
+   <element id="R5.3"/>
+   <element id="Z2"/>
   </elements>
   <status>
    <locked>false</locked>
@@ -136,38 +1416,24 @@
    <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
+   <isPC>yes</isPC>
   </status>
  </route>
- <route name="osma">
+ <route name="deviata_Se7">
   <marks>
-   <start point="ZN2"/>
-   <end point="-R1.26"/>
+   <start point="HN10"/>
+   <end point="R4.29"/>
   </marks>
   <!--elements for route by id-->
   <elements>
-   <element id="ZN2"/>
-   <element id="-R1.4"/>
-   <element id="T1_2" position="S+"/>
-   <element id="T3" position="S+"/>
-   <element id="-R1.8"/>
-   <element id="-R1.9"/>
-   <element id="-R1.10"/>
-   <element id="-R1.11"/>
-   <element id="-R1.12"/>
-   <element id="-R1.13"/>
-   <element id="-R1.14"/>
-   <element id="-R1.15"/>
-   <element id="-R1.16"/>
-   <element id="-R1.17"/>
-   <element id="-R1.18"/>
-   <element id="-R1.19"/>
-   <element id="-R1.20"/>
-   <element id="-R1.21"/>
-   <element id="-R1.22"/>
-   <element id="-R1.23"/>
-   <element id="-R1.24"/>
-   <element id="-R1.25"/>
-   <element id="-R1.26"/>
+   <element id="HN10"/>
+   <element id="R5.26"/>
+   <element id="R5.27"/>
+   <element id="T17" position="S-"/>
+   <element id="T18" position="S+"/>
+   <element id="R4.29"/>
+   <element id="R4.31"/>
+   <element id="Z3"/>
   </elements>
   <status>
    <locked>false</locked>
@@ -175,6 +1441,448 @@
    <PC>false</PC>
    <inUse name=""/>
    <activeElements>false</activeElements>
+   <isPC>yes</isPC>
   </status>
  </route>
+ <route name="siedma_Se7">
+  <marks>
+   <start point="HN11"/>
+   <end point="R4.29"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN11"/>
+   <element id="R4.26"/>
+   <element id="T17" position="S+"/>
+   <element id="T18" position="S+"/>
+   <element id="R4.29"/>
+   <element id="R4.31"/>
+   <element id="Z3"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="osma_Se6">
+  <marks>
+   <start point="HN18"/>
+   <end point="-R4.30"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN18"/>
+   <element id="-R4.27"/>
+   <element id="T19" position="S+"/>
+   <element id="T20" position="S+"/>
+   <element id="-R4.30"/>
+   <element id="-R4.32"/>
+   <element id="-R4.33"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="desiata_Se6">
+  <marks>
+   <start point="HN19"/>
+   <end point="-R4.30"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN19"/>
+   <element id="-R5.26"/>
+   <element id="T32" position="S+"/>
+   <element id="-R5.28"/>
+   <element id="T19" position="S-"/>
+   <element id="T20" position="S+"/>
+   <element id="-R4.30"/>
+   <element id="-R4.32"/>
+   <element id="-R4.33"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="dvanasta_Se6">
+  <marks>
+   <start point="HN20"/>
+   <end point="-R4.30"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="HN20"/>
+   <element id="-R6.26"/>
+   <element id="-R6.27"/>
+   <element id="T32" position="S-"/>
+   <element id="-R5.28"/>
+   <element id="T19" position="S-"/>
+   <element id="T20" position="S+"/>
+   <element id="-R4.30"/>
+   <element id="-R4.32"/>
+   <element id="-R4.33"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <!--koniec na posuvne kolaje-->
+ <!--zaciatok na posuvne kolaje na kolaje-->
+ <route name="Se10_piata">
+  <marks>
+   <start point="ZN10"/>
+   <end point="R3.25"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R3.25"/>
+   <element id="R3.24"/>
+   <element id="R3.23"/>
+   <element id="R3.22"/>
+   <element id="R3.21"/>
+   <element id="R3.20"/>
+   <element id="R3.19"/>
+   <element id="R3.18"/>
+   <element id="R3.17"/>
+   <element id="R3.16"/>
+   <element id="R3.15"/>
+   <element id="R3.14"/>
+   <element id="R3.13"/>
+   <element id="R3.12"/>
+   <element id="T11" position="S+"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S+"/>
+   <element id="R3.7"/>
+   <element id="ZN10"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se10_siedma">
+  <marks>
+   <start point="ZN10"/>
+   <end point="R4.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R4.24"/>
+   <element id="R4.23"/>
+   <element id="R4.22"/>
+   <element id="R4.21"/>
+   <element id="R4.20"/>
+   <element id="R4.19"/>
+   <element id="R4.18"/>
+   <element id="R4.17"/>
+   <element id="R4.16"/>
+   <element id="R4.15"/>
+   <element id="R4.14"/>
+   <element id="R4.12"/>
+   <element id="R4.11"/>
+   <element id="T11" position="S-"/>
+   <element id="T9" position="S+"/>
+   <element id="T8" position="S+"/>
+   <element id="R3.7"/>
+   <element id="ZN10"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se10_deviata">
+  <marks>
+   <start point="ZN10"/>
+   <end point="R5.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R5.24"/>
+   <element id="R5.23"/>
+   <element id="R5.22"/>
+   <element id="R5.21"/>
+   <element id="R5.20"/>
+   <element id="R5.19"/>
+   <element id="R5.18"/>
+   <element id="R5.17"/>
+   <element id="R5.16"/>
+   <element id="R5.15"/>
+   <element id="R5.14"/>
+   <element id="R5.13"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S-"/>
+   <element id="T9" position="S-"/>
+   <element id="T8" position="S+"/>
+   <element id="R3.7"/>
+   <element id="ZN10"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se9_deviata">
+  <marks>
+   <start point="ZN9"/>
+   <end point="R5.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R5.24"/>
+   <element id="R5.23"/>
+   <element id="R5.22"/>
+   <element id="R5.21"/>
+   <element id="R5.20"/>
+   <element id="R5.19"/>
+   <element id="R5.18"/>
+   <element id="R5.17"/>
+   <element id="R5.16"/>
+   <element id="R5.15"/>
+   <element id="R5.14"/>
+   <element id="R5.13"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S+"/>
+   <element id="T10" position="S+"/>
+   <element id="R4.7"/>
+   <element id="ZN9"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se8_deviata">
+  <marks>
+   <start point="ZN8"/>
+   <end point="R5.24"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R5.24"/>
+   <element id="R5.23"/>
+   <element id="R5.22"/>
+   <element id="R5.21"/>
+   <element id="R5.20"/>
+   <element id="R5.19"/>
+   <element id="R5.18"/>
+   <element id="R5.17"/>
+   <element id="R5.16"/>
+   <element id="R5.15"/>
+   <element id="R5.14"/>
+   <element id="R5.13"/>
+   <element id="R5.11"/>
+   <element id="R5.10"/>
+   <element id="R4.10"/>
+   <element id="T12" position="S+"/>
+   <element id="T10" position="S-"/>
+   <element id="R5.8"/>
+   <element id="R5.7"/>
+   <element id="ZN8"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se7_deviata">
+  <marks>
+   <start point="ZN7"/>
+   <end point="R5.13"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R5.13"/>
+   <element id="R5.14"/>
+   <element id="R5.15"/>
+   <element id="R5.16"/>
+   <element id="R5.17"/>
+   <element id="R5.18"/>
+   <element id="R5.19"/>
+   <element id="R5.20"/>
+   <element id="R5.21"/>
+   <element id="R5.22"/>
+   <element id="R5.23"/>
+   <element id="R5.24"/>
+   <element id="R5.26"/>
+   <element id="R5.27"/>
+   <element id="T17" position="S-"/>
+   <element id="T18" position="S+"/>
+   <element id="R4.29"/>
+   <element id="ZN7"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se7_siedma">
+  <marks>
+   <start point="ZN7"/>
+   <end point="R4.14"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="R4.14"/>
+   <element id="R4.15"/>
+   <element id="R4.16"/>
+   <element id="R4.17"/>
+   <element id="R4.18"/>
+   <element id="R4.19"/>
+   <element id="R4.20"/>
+   <element id="R4.21"/>
+   <element id="R4.22"/>
+   <element id="R4.23"/>
+   <element id="R4.24"/>
+   <element id="R4.26"/>
+   <element id="T17" position="S+"/>
+   <element id="T18" position="S+"/>
+   <element id="R4.29"/>
+   <element id="ZN7"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se6_osma">
+  <marks>
+   <start point="ZN6"/>
+   <end point="-R4.12"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="-R4.12"/>
+   <element id="-R4.13"/>
+   <element id="-R4.14"/>
+   <element id="-R4.15"/>
+   <element id="-R4.16"/>
+   <element id="-R4.17"/>
+   <element id="-R4.18"/>
+   <element id="-R4.19"/>
+   <element id="-R4.20"/>
+   <element id="-R4.21"/>
+   <element id="-R4.22"/>
+   <element id="-R4.23"/>
+   <element id="-R4.24"/>
+   <element id="-R4.25"/>
+   <element id="-R4.27"/>
+   <element id="T19" position="S+"/>
+   <element id="T20" position="S+"/>
+   <element id="-R4.30"/>
+   <element id="ZN6"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se6_desiata">
+  <marks>
+   <start point="ZN6"/>
+   <end point="-R5.26"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="Z4"/>
+   <element id="-R5.26"/>
+   <element id="T32" position="S+"/>
+   <element id="-R5.28"/>
+   <element id="T19" position="S-"/>
+   <element id="T20" position="S+"/>
+   <element id="-R4.30"/>
+   <element id="ZN6"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <route name="Se6_dvanasta">
+  <marks>
+   <start point="ZN6"/>
+   <end point="-R6.26"/>
+  </marks>
+  <!--elements for route by id-->
+  <elements>
+   <element id="Z5"/>
+   <element id="-R6.24"/>
+   <element id="-R6.26"/>
+   <element id="-R6.27"/>
+   <element id="T32" position="S-"/>
+   <element id="-R5.28"/>
+   <element id="T19" position="S-"/>
+   <element id="T20" position="S+"/>
+   <element id="-R4.30"/>
+   <element id="ZN6"/>
+  </elements>
+  <status>
+   <locked>false</locked>
+   <VC>false</VC>
+   <PC>false</PC>
+   <inUse name=""/>
+   <activeElements>false</activeElements>
+   <isPC>yes</isPC>
+  </status>
+ </route>
+ <!--koniec na posuvne kolaje na kolaje-->
 </routes>

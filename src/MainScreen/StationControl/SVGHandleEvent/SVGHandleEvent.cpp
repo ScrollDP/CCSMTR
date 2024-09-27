@@ -66,6 +66,12 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
 void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
 
+    //left ctrl + left click
+    if((event->modifiers() & Qt::ControlModifier) && event->button() == Qt::LeftButton) {
+        rusenieCesty(elementId);
+        return;
+    }
+
     if(event->button() == Qt::LeftButton) {
         qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
                  "|Flipped:" << flipped << "|Rotate:" << rotate << "|File:" << svgFilePath;
@@ -81,30 +87,26 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if(event->button() == Qt::MiddleButton) {
         if (QRegularExpression("^HN\\d+$").match(elementId).hasMatch()) {
             hlavneNavestidloMenu(event->screenPos(), elementId);
+            return;
         }
         else if(QRegularExpression("^T\\d+(_\\d+)?$").match(elementId).hasMatch()) {
             vyhybkaMenu(event->screenPos(), elementId);
+            return;
         }
         else if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
             zriadovacieNavestidloMenu(event->screenPos(), elementId);
+            return;
         }
     }
     if(event->button() == Qt::RightButton) {
-        if(QRegularExpression("^ZN\\d+?$").match(elementId).hasMatch()) {
-            vlakovaCestaRoutePC(elementId);
-            return;
-        }
-        else if(QRegularExpression("^HN\\d+?$").match(elementId).hasMatch()) {
+        if(QRegularExpression("^ZN\\d+?$").match(elementId).hasMatch() || QRegularExpression("^HN\\d+?$").match(elementId).hasMatch()) {
             vlakovaCestaRoutePC(elementId);
             return;
         }
 
 
     }
-    //left ctrl + left click
-    if(event->button() == Qt::LeftButton && event->modifiers() == Qt::ControlModifier) {
-        rusenieCesty(elementId);
-    }
+
 }
 
 void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QString &path, const QString &m_elementID) {
@@ -1157,6 +1159,14 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
             targetRoute = route;
             break;
         }
+    }
+
+    // Check if isPC is true for the identified target route
+    QDomElement status = targetRoute.firstChildElement("status");
+    QDomElement isPC = status.firstChildElement("isPC");
+    if (isPC.text() == "yes") {
+        qWarning() << "Route isPC is true, cannot proceed with stavanieVCCesty";
+        return;
     }
 
 

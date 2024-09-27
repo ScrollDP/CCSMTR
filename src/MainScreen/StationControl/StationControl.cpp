@@ -115,7 +115,6 @@ void StationControl::LoadingSvgFile() {
             }
 
             // Create a temporary file
-            //if folder dont exist create it
             QDir dir;
             if (!dir.exists(".tmp")) {
                 dir.mkpath(".tmp");
@@ -123,13 +122,11 @@ void StationControl::LoadingSvgFile() {
             QString tmpFilePath = QString(".tmp/tmp_%1_%2.svg").arg(type).arg(id);
             QFile tmpFile(tmpFilePath);
             if (!tmpFile.exists()) {
-                //tmpFile.remove(); // Delete the temporary file if it exists
                 QFile::copy(m_svgFilePath, tmpFilePath); // Copy the original file to the temporary location
             }
 
-           // Edit the temporary SVG file based on the status
+            // Edit the temporary SVG file based on the status
             if (type == "turnout") {
-                QFile tmpFile(tmpFilePath);
                 if (!tmpFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
                     qWarning() << "Failed to open temporary SVG file:" << tmpFilePath;
                     continue;
@@ -156,15 +153,25 @@ void StationControl::LoadingSvgFile() {
                     }
                 }
 
+                // Update the text element with the turnout ID
+                QString modifiedId = id;
+                modifiedId.remove('T');
+                QDomNodeList texts = svgRoot.elementsByTagName("text");
+                for (int k = 0; k < texts.count(); ++k) {
+                    QDomElement text = texts.at(k).toElement();
+                    if (text.attribute("id") == "_show_id") {
+                        text.firstChild().setNodeValue(modifiedId);
+                        break;
+                    }
+                }
                 tmpFile.resize(0); // Clear the file content
                 QTextStream stream(&tmpFile);
                 stream << svgDoc.toString();
                 tmpFile.close();
             }
 
-
             // Load the temporary SVG file
-            auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col,flipped,rotate);
+            auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col, flipped, rotate);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
             ApplyTransformation(flipped, rotate, svgItem, type);
