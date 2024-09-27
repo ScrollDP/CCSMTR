@@ -34,13 +34,13 @@
   <location id="LIETAVSKA_LUCKA" path="../layout/symboly/text/LIETAVSKA_LUCKA.svg"/>
  </locations_symbols>
  <turnouts>
-  <turnout col="5" flipped="true" id="T1_2" pared="1" rotate="180" row="-1" status="S-" type="turnout"/>
-  <turnout col="6" flipped="false" id="T3" rotate="180" row="-1" status="S+" type="turnout"/>
-  <turnout col="7" flipped="false" id="T1_1" pared="1" rotate="0" row="-1" status="S-" type="turnout"/>
+  <turnout col="5" flipped="true" id="T1_2" pared="1" rotate="180" row="-1" status="S+" type="turnout"/>
+  <turnout col="6" flipped="false" id="T1_1" pared="1" rotate="180" row="-1" status="S+" type="turnout"/>
+  <turnout col="7" flipped="false" id="T3" rotate="0" row="-1" status="S-" type="turnout"/>
   <turnout col="8" flipped="false" id="T5" rotate="0" row="-2" status="S-" type="turnout"/>
   <turnout col="10" flipped="false" id="T7" rotate="0" row="-2" status="S-" type="turnout"/>
-  <turnout col="31" flipped="true" id="T28_1" pared="3" rotate="180" row="-1" status="S+" type="turnout"/>
-  <turnout col="32" flipped="false" id="T28_2" pared="3" rotate="180" row="-1" status="S+" type="turnout"/>
+  <turnout col="31" flipped="true" id="T28_1" pared="2" rotate="180" row="-1" status="S+" type="turnout"/>
+  <turnout col="32" flipped="false" id="T28_2" pared="2" rotate="180" row="-1" status="S+" type="turnout"/>
   <turnout col="29" flipped="true" id="T25" rotate="0" row="-1" status="S-" type="turnout"/>
   <turnout col="28" flipped="true" id="T21" rotate="0" row="-2" status="S-" type="turnout"/>
   <turnout col="30" flipped="true" id="T26" rotate="0" row="-2" status="S-" type="turnout"/>
@@ -48,29 +48,27 @@
   <turnout col="28" flipped="true" id="T19" rotate="0" row="-4" status="S+" type="turnout"/>
   <turnout col="29" flipped="true" id="T20" rotate="180" row="-4" status="S-" type="turnout"/>
   <turnout col="27" flipped="true" id="T32" rotate="0" row="-5" status="S+" type="turnout"/>
-  <turnout col="5" flipped="false" id="T2_2" pared="2" rotate="0" row="1" status="S+" type="turnout"/>
-  <turnout col="6" flipped="true" id="T4" rotate="0" row="1" status="S-" type="turnout"/>
-  <turnout col="7" flipped="true" id="T2_1" pared="2" rotate="180" row="1" status="S+" type="turnout"/>
-  <turnout col="8" flipped="true" id="T6" rotate="180" row="2" status="S+" type="turnout"/>
+  <turnout col="5" flipped="false" id="T2_2" pared="1" rotate="0" row="1" status="S+" type="turnout"/>
+  <turnout col="6" flipped="true" id="T2_1" pared="1" rotate="0" row="1" status="S+" type="turnout"/>
+  <turnout col="7" flipped="true" id="T4" rotate="180" row="1" status="S+" type="turnout"/>
+  <turnout col="8" flipped="true" id="T6" rotate="180" row="2" status="S-" type="turnout"/>
   <turnout col="9" flipped="true" id="T9" rotate="180" row="3" status="S+" type="turnout"/>
   <turnout col="8" flipped="true" id="T8" rotate="0" row="3" status="S-" type="turnout"/>
   <turnout col="11" flipped="true" id="T11" rotate="180" row="3" status="S-" type="turnout"/>
   <turnout col="9" flipped="true" id="T12" rotate="0" row="4" status="S-" type="turnout"/>
-  <turnout col="8" flipped="false" id="T10" rotate="180" row="4" status="S-" type="turnout"/>
+  <turnout col="8" flipped="false" id="T10" rotate="180" row="4" status="S+" type="turnout"/>
   <turnout col="27" flipped="false" id="T17" rotate="180" row="4" status="S+" type="turnout"/>
   <turnout col="28" flipped="false" id="T23" rotate="180" row="3" status="S+" type="turnout"/>
   <turnout col="28" flipped="false" id="T18" rotate="0" row="4" status="S+" type="turnout"/>
   <!--overit id vyhybky bolanefunkčna-->
   <turnout col="28" flipped="false" id="T24" rotate="180" row="1" status="S+" type="turnout"/>
   <turnout col="30" flipped="false" id="T27" rotate="180" row="1" status="S-" type="turnout"/>
-  <turnout col="31" flipped="false" id="T29_1" pared="4" rotate="0" row="1" status="S-" type="turnout"/>
-  <turnout col="32" flipped="true" id="T29_2" pared="4" rotate="0" row="1" status="S-" type="turnout"/>
+  <turnout col="31" flipped="false" id="T29_1" pared="2" rotate="0" row="1" status="S+" type="turnout"/>
+  <turnout col="32" flipped="true" id="T29_2" pared="2" rotate="0" row="1" status="S+" type="turnout"/>
  </turnouts>
  <paredTurnouts>
-  <paredTurnout id="T29" pared="4" turnout1="T29_1" turnout2="T29_2"/>
-  <paredTurnout id="T28" pared="3" turnout1="T28_1" turnout2="T28_2"/>
-  <paredTurnout id="T2" pared="2" turnout1="T2_1" turnout2="T2_2"/>
-  <paredTurnout id="T1" pared="1" turnout1="T1_1" turnout2="T1_2"/>
+  <paredTurnout id1="T28" id2="T29" pared="2" turnout1="T28_1" turnout2="T28_2" turnout3="T29_1" turnout4="T29_2"/>
+  <paredTurnout id1="T1" id2="T2" pared="1" turnout1="T1_1" turnout2="T1_2" turnout3="T2_1" turnout4="T2_2"/>
  </paredTurnouts>
  <cross_turnouts>
   <cross_turnout col="5" id="CT1" rotate="0" row="0" type="cross_turnout"/>
@@ -308,14 +306,14 @@
   <navestidlo col="25" id="HN20" row="-6" type="hlavne_navestidlo1"/>
   <!-- vchodove naveštidlá -->
   <navestidlo col="-1" id="HN21" row="-1" type="hlavne_navestidlo1"/>
-  <navestidlo col="1" id="HN22" row="-1" type="hlavne_navestidlo2"/>
+  <!--<navestidlo col="1" id="HN22" row="-1" type="hlavne_navestidlo2"/>-->
   <navestidlo col="-1" id="HN23" row="1" type="hlavne_navestidlo1"/>
-  <navestidlo col="1" id="HN24" row="1" type="hlavne_navestidlo2"/>
+  <!--<navestidlo col="1" id="HN24" row="1" type="hlavne_navestidlo2"/>-->
   <navestidlo col="3" id="ZN1" row="1" type="zriadovacie_navestidlo1"/>
   <navestidlo col="3" id="ZN2" row="-1" type="zriadovacie_navestidlo1"/>
   <navestidlo col="38" id="HN25" row="-1" type="hlavne_navestidlo2"/>
-  <navestidlo col="36" id="HN26" row="-1" type="hlavne_navestidlo1"/>
-  <navestidlo col="36" id="HN27" row="1" type="hlavne_navestidlo1"/>
+  <!--<navestidlo col="36" id="HN26" row="-1" type="hlavne_navestidlo1"/>-->
+  <!--<navestidlo col="36" id="HN27" row="1" type="hlavne_navestidlo1"/>-->
   <navestidlo col="38" id="HN28" row="1" type="hlavne_navestidlo2"/>
   <navestidlo col="34" id="HN29" row="-2" type="hlavne_navestidlo2"/>
   <navestidlo col="34" id="ZN3" row="-1" type="zriadovacie_navestidlo2"/>

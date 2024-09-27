@@ -76,9 +76,9 @@ private:
 
     QString getElementSvgPath(const QString &m_elementId);
 
-    void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID);
+    void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID, int m_rotate);
 
-    void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId);
+    void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId, int &m_rotate);
 
     void threadUpdateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
 
@@ -92,7 +92,7 @@ private:
 
     void updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
 
-    bool checkRouteBeforeStavanie(const QString &elementid);
+    bool checkRouteBeforeStavanie(const QString &elementid);;
 };
 
 #endif // CLICKABLESVGITEM_H

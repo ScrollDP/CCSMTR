@@ -7,7 +7,7 @@
   <!-- Background rectangle -->
   <rect fill="white" height="12" opacity="0.7" stroke="none" width="8"/>
  </g>
- <g fill="none" id="rail" stroke="gray" stroke-width="1.1">
+ <g fill="none" id="rail" stroke="white" stroke-width="1.1">
   <line stroke-linecap="round" x1="0" x2="8" y1="6" y2="6"/>
   <!--<rect x="0" y="0" width="8" height="12" fill="none" stroke="green" stroke-width="0.4" visibility="visible"/>-->
  </g>

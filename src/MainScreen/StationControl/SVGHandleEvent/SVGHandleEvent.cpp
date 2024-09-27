@@ -80,7 +80,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         }
 
         threadStavanieVCCesty(elementId); //musia byť takto aby sa vôbec zavolali
-        threadStavaniePCCesty(elementId); //musia byť takto aby sa vôbec zavolali
+
 
     }
     if(event->button() == Qt::MiddleButton) {
@@ -102,7 +102,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             vlakovaCestaRoutePC(elementId);
             return;
         }
-
+        threadStavaniePCCesty(elementId); //musia byť takto aby sa vôbec zavolali
 
     }
 
@@ -124,11 +124,11 @@ void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QS
     vyhybkaThread = std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging, path, m_elementID);
 }
 
-void SVGHandleEvent::threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &m_elementID) {
+void SVGHandleEvent::threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &m_elementID, int &m_rotate) {
     if (vyhybkaThreadGroupTurnout.joinable()) {
         vyhybkaThreadGroupTurnout.join();
     }
-    vyhybkaThreadGroupTurnout = std::thread(&SVGHandleEvent::toggleVyhybkaInGroup, this, straight, diverging, path, m_elementID);
+    vyhybkaThreadGroupTurnout = std::thread(&SVGHandleEvent::toggleVyhybkaInGroup, this, straight, diverging, path, m_elementID, m_rotate);
 }
 
 bool SVGHandleEvent::threadCheckTurnouts(const QString &routeName, const QString &m_id) {
@@ -430,12 +430,16 @@ void SVGHandleEvent::changeColorOfElements(const QString &m_routeName, const QSt
                     if (group.attribute("id") == "turnout") {
                         group.setAttribute("stroke", targetColor);
                     }
-                } else if (elementId.startsWith("HN")) {
+                } else if (elementId.startsWith("ZN")) {
+                    if (group.attribute("id") == "zriadovacie_navestidlo") {
+                        group.setAttribute("stroke", targetColor);
+                    }
+                }else if (elementId.startsWith("HN")) {
                     if (group.attribute("id") == "hlavne_navestidlo") {
                         group.setAttribute("stroke", targetColor);
                         group.setAttribute("fill", targetColor);
                     }
-                } else if (elementId.startsWith("Z")) {
+                }else if (elementId.startsWith("Z")) {
                     if (group.attribute("id") == "zarazadlo") {
                         group.setAttribute("stroke", targetColor);
                     }
@@ -651,6 +655,15 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
 
     QDomElement layoutRoot = layoutDoc.documentElement();
     QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
+    int m_rotate = 0;
+    for (int i = 0; i < turnoutElements.count(); ++i) {
+        QDomElement turnoutElement = turnoutElements.at(i).toElement();
+        if (turnoutElement.hasAttribute("rotate")) {
+            m_rotate = turnoutElement.attribute("rotate").toInt();
+            //qDebug() << "Turnout ID:" << turnoutElement.attribute("id") << "Rotate:" << m_rotate;
+        }
+    }
+
     bool pared = false;
     int paredGroup = -1;
 
@@ -746,10 +759,10 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
                     }
 
                     if (m_value == "S+") {
-                        turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id);
+                        turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id,m_rotate);
                         threadUpdateTurnoutStatusInLayout(id, "S+");
                     } else if (m_value == "S-") {
-                        turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id);
+                        turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id, m_rotate);
                         threadUpdateTurnoutStatusInLayout(id, "S-");
                     }
                 }
@@ -792,7 +805,16 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 1>").arg(number);
+        //check if rotate is 0
+        QString command;
+        if(m_rotate == 0){
+            command = QString("<T %1 0>").arg(number);
+            threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
+        }
+        else{
+            command= QString("<T %1 1>").arg(number);
+            threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
+        }
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -800,22 +822,27 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         setVisibility("_basic", "visible");
         saveAndReload(doc, path, turnoutID);
 
-        threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
-
     } else if (diverging) {
         setVisibility("_between", "visible");
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 0>").arg(number);
+        //check if rotate is 0
+        QString command;
+        if(m_rotate == 0){
+            command = QString("<T %1 1>").arg(number);
+            threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
+        }
+        else{
+            command= QString("<T %1 0>").arg(number);
+            threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
+        }
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_reverse", "visible");
         saveAndReload(doc, path, turnoutID);
-
-        threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
     }
 }
 
@@ -1227,7 +1254,7 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
     QDomElement routesRoot = routesDoc.documentElement();
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
-    for (int i = 0; i < routes.count(); ++i) {
+   /* for (int i = 0; i < routes.count(); ++i) {
         QDomElement route = routes.at(i).toElement();
         QDomElement status = route.firstChildElement("status");
         QDomElement VC = status.firstChildElement("VC");
@@ -1236,10 +1263,10 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
         if (VC.text() == "true" && PC.text() == "false") {
             //qDebug() << "VC is true and PC is false";
         } else if (VC.text() == "false" && PC.text() == "true") {
-            qDebug() << "VC is false and PC is true (VC cesta)";
+            qDebug() << "VC is false and PC is true (VC cesta)" << route.attribute("name");
             return;
         }
-    }
+    }*/
 
     QString startPoint;
     QString endPoint = m_elementId;
@@ -1284,7 +1311,7 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
     QDomElement isPC = status.firstChildElement("isPC");
     if (isPC.text() == "yes") {
         qWarning() << "Route isPC is true, cannot proceed with stavanieVCCesty";
-        return;
+        //return;
     }
 
 
@@ -1474,6 +1501,7 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                 stream << routesDoc.toString();
                 routesFile.close();
 
+                std::this_thread::sleep_for(std::chrono::seconds(4));
                 threadChangeBackgroundColor(targetRoute.attribute("name"), "VC", true);
                 threadChangeColorOfElements(targetRoute.attribute("name"), "#00FF00", false);
 
@@ -1642,8 +1670,9 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
             //inUse.setAttribute("name", "");
 
             qDebug() << "Route" << route.attribute("name") << "is now unlocked";
+            threadChangeColorOfElements(route.attribute("name"), "gray", true);
         }
-        threadChangeColorOfElements(route.attribute("name"), "gray", true);
+
     }
 
     // Save the changes back to routes.xml
@@ -1682,19 +1711,7 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
 
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement status = route.firstChildElement("status");
-        QDomElement VC = status.firstChildElement("VC");
-        QDomElement PC = status.firstChildElement("PC");
 
-        if (VC.text() == "true" && PC.text() == "false") {
-            qDebug() << "VC is true and PC is false (PC cesta)";
-            return;
-        } else if (VC.text() == "false" && PC.text() == "true") {
-            //qDebug() << "VC is false and PC is true";
-        }
-    }
 
     QString startPoint;
     QString endPoint = m_elementId;
@@ -1717,6 +1734,20 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
         qWarning() << "Start point not found for element ID:" << m_elementId;
         return;
     }
+/*
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement status = route.firstChildElement("status");
+        QDomElement VC = status.firstChildElement("VC");
+        QDomElement PC = status.firstChildElement("PC");
+
+        if (VC.text() == "true" && PC.text() == "false") {
+            qDebug() << "VC is true and PC is false (PC cesta)" << route.attribute("name");
+            return;
+        } else if (VC.text() == "false" && PC.text() == "true") {
+            //qDebug() << "VC is false and PC is true";
+        }
+    }*/
 
 
 // Extract all elements from the route to be used
@@ -1919,6 +1950,7 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
                 stream << routesDoc.toString();
                 routesFile.close();
 
+                std::this_thread::sleep_for(std::chrono::seconds(4));
                 threadChangeBackgroundColor(targetRoute.attribute("name"), "PC", true);
                 threadChangeColorOfElements(targetRoute.attribute("name"), "white", false);
             } else {
@@ -2037,7 +2069,7 @@ bool SVGHandleEvent::checkTurnouts(const QString &routeName, const QString &m_id
     return allTurnoutsInPosition;
 }
 
-void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID){
+void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID, int m_rotate) {
     std::lock_guard<std::mutex> lock(mtx_toggle_vyhybka_group_turnout);
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -2055,6 +2087,8 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
 
     QDomElement root = doc.documentElement();
     QDomNodeList elements = root.elementsByTagName("path");
+
+
 
     if (elements.isEmpty()) {
         qWarning() << "No path elements found in SVG file.";
@@ -2103,7 +2137,14 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 1>").arg(number);
+        //check if rotate is 0
+        QString command;
+        if(m_rotate == 0){
+            command = QString("<T %1 0>").arg(number);
+        }
+        else{
+            command= QString("<T %1 1>").arg(number);
+        }
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -2116,7 +2157,14 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 0>").arg(number);
+        //check if rotate is 0
+        QString command;
+        if(m_rotate == 0){
+            command = QString("<T %1 0>").arg(number);
+        }
+        else{
+            command= QString("<T %1 1>").arg(number);
+        }
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
