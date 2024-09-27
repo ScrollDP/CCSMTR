@@ -189,15 +189,15 @@ void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEven
     if(m_type == "turnout"){
         if (rotate == 0) {
             if (flipped) {
-                transformStr = "scale(-1, 1) translate(-8,0) rotate(0)";
+                transformStr = "scale(-1, 1) translate(-8,0) rotate(0)"; //vymenit 0 za 1
             } else {
-                transformStr = "scale(1, 1) translate(0,0) rotate(0)";
+                transformStr = "scale(1, 1) translate(0,0) rotate(0)"; //vymenit 0 za 1
             }
         } else if (rotate == 180) {
             if (flipped) {
-                transformStr = "scale(-1, 1) translate(0,12) rotate(180)";
+                transformStr = "scale(-1, 1) translate(0,12) rotate(180)"; //ok
             } else {
-                transformStr = "scale(1, 1) translate(8,12) rotate(180)";
+                transformStr = "scale(1, 1) translate(8,12) rotate(180)"; //ok
             }
         }
     }

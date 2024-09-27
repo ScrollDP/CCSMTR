@@ -69,11 +69,7 @@ void SVGHandleEvent::sendToArduino(const QString &dataList) {
 void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsSvgItem::mousePressEvent(event);
 
-    //left ctrl + left click
-    if((event->modifiers() & Qt::ControlModifier) && event->button() == Qt::LeftButton) {
-        rusenieCesty(elementId);
-        return;
-    }
+
 
     if(event->button() == Qt::LeftButton) {
         qDebug() << "Element ID:" << elementId << "|Row:" << row <<"|Col:" << col <<
@@ -110,6 +106,15 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
     }
 
+}
+
+void SVGHandleEvent::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event){
+    QGraphicsSvgItem::mouseDoubleClickEvent(event);
+    //left ctrl + left click
+    if(event->button() == Qt::LeftButton) {
+        rusenieCesty(elementId);
+        return;
+    }
 }
 
 void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QString &path, const QString &m_elementID) {
