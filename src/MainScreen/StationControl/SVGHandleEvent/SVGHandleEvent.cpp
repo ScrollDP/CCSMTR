@@ -56,6 +56,9 @@ SVGHandleEvent::~SVGHandleEvent() {
     if (updateTurnoutStatusInLayoutThread.joinable()) {
         updateTurnoutStatusInLayoutThread.join();
     }
+    if (changeColorOfElementsThread.joinable()) {
+        changeColorOfElementsThread.join();
+    }
 }
 
 void SVGHandleEvent::sendToArduino(const QString &dataList) {
@@ -169,6 +172,13 @@ void SVGHandleEvent::threadReloadSVG(const QString &reloadPath) {
         reloadSVGThread.join();
     }
     reloadSVGThread = std::thread(&SVGHandleEvent::reloadSVG, this, reloadPath);
+}
+
+void SVGHandleEvent::threadChangeColorOfElements(const QString &m_routeName, const QString &color, bool stateOfStavanie) {
+    if (colorBackgroundThread.joinable()) {
+        colorBackgroundThread.join();
+    }
+    colorBackgroundThread = std::thread(&SVGHandleEvent::changeColorOfElements, this, m_routeName, color, stateOfStavanie);
 }
 
 void SVGHandleEvent::setScaleAndPosition(qreal scale, qreal x, qreal y) {
@@ -343,6 +353,108 @@ void SVGHandleEvent::changeBackgroundColor(const QString &m_routeName, const QSt
 
 }
 
+void SVGHandleEvent::changeColorOfElements(const QString &m_routeName, const QString &color, bool stateOfStavanie) {
+    std::lock_guard<std::mutex> lock(mtx_change_color_of_elements);
+
+    // Open and parse routes.xml
+    QDomDocument routesDoc;
+    QFile routesFile("../layout/routes.xml");
+    if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes.xml";
+        return;
+    }
+    if (!routesDoc.setContent(&routesFile)) {
+        qWarning() << "Failed to parse routes.xml";
+        routesFile.close();
+        return;
+    }
+    routesFile.close();
+
+    QDomElement routesRoot = routesDoc.documentElement();
+    QDomNodeList routes = routesRoot.elementsByTagName("route");
+
+    QVector<QString> elementsArray;
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        if (route.attribute("name") == m_routeName) {
+            QDomNodeList elements = route.firstChildElement("elements").elementsByTagName("element");
+            for (int j = 0; j < elements.count(); ++j) {
+                QDomElement element = elements.at(j).toElement();
+                elementsArray.append(element.attribute("id"));
+            }
+            break;
+        }
+    }
+
+    QString targetColor = stateOfStavanie ? "gray" : color;
+
+    for (const QString &elementId : elementsArray) {
+        SVGHandleEvent *svgItem = nullptr;
+        for (QGraphicsItem *item : this->scene()->items()) {
+            SVGHandleEvent *tempItem = dynamic_cast<SVGHandleEvent *>(item);
+            if (tempItem && tempItem->elementId == elementId) {
+                svgItem = tempItem;
+                break;
+            }
+        }
+
+        if (svgItem) {
+            QDomDocument svgDoc;
+            QFile svgFile(svgItem->svgFilePath);
+            if (!svgFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                qWarning() << "Failed to open SVG file:" << svgItem->svgFilePath;
+                continue;
+            }
+            if (!svgDoc.setContent(&svgFile)) {
+                qWarning() << "Failed to parse SVG file:" << svgItem->svgFilePath;
+                svgFile.close();
+                continue;
+            }
+            svgFile.close();
+
+            QDomElement root = svgDoc.documentElement();
+            QDomNodeList groups = root.elementsByTagName("g");
+
+            for (int i = 0; i < groups.count(); ++i) {
+                QDomElement group = groups.at(i).toElement();
+                if (elementId.startsWith("R") || elementId.startsWith("-R")) {
+                    if (group.attribute("id") == "rail" || group.attribute("id") == "rail_sklon") {
+                        group.setAttribute("stroke", targetColor);
+                    }
+                } else if (elementId.startsWith("T")) {
+                    if (group.attribute("id") == "turnout") {
+                        group.setAttribute("stroke", targetColor);
+                    }
+                } else if (elementId.startsWith("HN")) {
+                    if (group.attribute("id") == "hlavne_navestidlo") {
+                        group.setAttribute("stroke", targetColor);
+                        group.setAttribute("fill", targetColor);
+                    }
+                } else if (elementId.startsWith("Z")) {
+                    if (group.attribute("id") == "zarazadlo") {
+                        group.setAttribute("stroke", targetColor);
+                    }
+                } else if (elementId.startsWith("CT1")){
+                    if (group.attribute("id") == "cross_turnout") {
+                        group.setAttribute("stroke", targetColor);
+                    }
+                }
+
+            }
+
+            if (!svgFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                qWarning() << "Failed to open SVG file for writing:" << svgItem->svgFilePath;
+                continue;
+            }
+            QTextStream stream(&svgFile);
+            stream << svgDoc.toString();
+            svgFile.close();
+
+            svgItem->threadReloadSVG(svgItem->svgFilePath);
+        }
+    }
+}
+
 QString SVGHandleEvent::getElementIdAtPosition(const QPointF &position) {
     QStringList elementIds = getElementIdsFromSvg(QString());
     for ([[maybe_unused]] const QString &id : elementIds) {
@@ -414,6 +526,7 @@ void SVGHandleEvent::saveAndReload(const QDomDocument& doc, const QString &path,
 }
 
 void SVGHandleEvent::reloadSVG(const QString &reloadPath) {
+    std::lock_guard<std::mutex> lock(mtx_reload_svg);
     //qDebug() << "Reloading SVG file:" << reloadPath;
 
 
@@ -1357,6 +1470,7 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                 routesFile.close();
 
                 threadChangeBackgroundColor(targetRoute.attribute("name"), "VC", true);
+                threadChangeColorOfElements(targetRoute.attribute("name"), "#00FF00", false);
 
 
             } else {
@@ -1524,6 +1638,7 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
 
             qDebug() << "Route" << route.attribute("name") << "is now unlocked";
         }
+        threadChangeColorOfElements(route.attribute("name"), "gray", true);
     }
 
     // Save the changes back to routes.xml
@@ -1800,6 +1915,7 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
                 routesFile.close();
 
                 threadChangeBackgroundColor(targetRoute.attribute("name"), "PC", true);
+                threadChangeColorOfElements(targetRoute.attribute("name"), "white", false);
             } else {
                 qDebug() << "Route is locked";
                 qDebug() << "PC.text():" << PC.text() << "locked.text():" << locked.text() << "m_elementId:" << m_elementId;

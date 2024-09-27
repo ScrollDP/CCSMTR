@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread, updateTurnoutStatusInLayoutThread, stavanieVCCestyThread, stavaniePCCestyThread, reloadSVGThread;
-    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background, mtx_stavanie_vc_cesty, mtx_stavanie_pc_cesty, mtx_reload_svg;
+    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread, updateTurnoutStatusInLayoutThread, stavanieVCCestyThread, stavaniePCCestyThread, reloadSVGThread, changeColorOfElementsThread;
+    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background, mtx_stavanie_vc_cesty, mtx_stavanie_pc_cesty, mtx_reload_svg, mtx_change_color_of_elements;
 
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
@@ -56,8 +56,10 @@ private:
 
 
     void changeBackgroundColor(const QString &m_routeName, const QString &typeRoute, bool stateOfStavanie);
-
     void threadChangeBackgroundColor(const QString &m_routeName, const QString &typeRoute,bool stateOfStavanie);
+
+    void changeColorOfElements(const QString &m_routeName,const QString &color,bool stateOfStavanie);
+    void threadChangeColorOfElements(const QString &m_routeName,const QString &color,bool stateOfStavanie);
 
 
     void sendToArduino(const QString &dataList);
