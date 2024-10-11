@@ -80,7 +80,7 @@ private:
 
     void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId, int &m_rotate);
 
-    void threadUpdateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
+    void threadUpdateTurnoutStatus(const QString &turnoutID, const QString &newStatus);
 
     void rusenieCesty(const QString &elementid);
 
@@ -90,7 +90,7 @@ private:
 
     bool threadCheckTurnouts(const QString &routeName, const QString &m_id);
 
-    void updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus);
+    void updateTurnoutStatus(const QString &turnoutID, const QString &newStatus);
 
     bool checkRouteBeforeStavanie(const QString &elementid);;
 };

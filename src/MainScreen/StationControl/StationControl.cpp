@@ -97,7 +97,6 @@ void StationControl::LoadingSvgFile() {
             int col = element.attribute("col").toInt();
             bool flipped = element.attribute("flipped").toLower() == "true";
             int rotate = element.attribute("rotate").toInt();
-            QString status = element.attribute("status");
 
             qDebug() << "Element type:" << type << "ID:" << id << "Row:" << row << "Col:" << col;
 
@@ -116,17 +115,26 @@ void StationControl::LoadingSvgFile() {
 
             // Create a temporary file
             QDir dir;
-            if (!dir.exists(".tmp")) {
-                dir.mkpath(".tmp");
+            if (!dir.exists(".tmp/svgFiles")) {
+                dir.mkpath(".tmp/svgFiles");
             }
-            QString tmpFilePath = QString(".tmp/tmp_%1_%2.svg").arg(type).arg(id);
-            QFile tmpFile(tmpFilePath);
-            if (!tmpFile.exists()) {
+            QString tmpFilePath = QString(".tmp/svgFiles/tmp_%1_%2.svg").arg(type).arg(id);
+            if (!QFile::exists(tmpFilePath)) {
                 QFile::copy(m_svgFilePath, tmpFilePath); // Copy the original file to the temporary location
             }
 
+            // Create config file if it does not exist
+            QString configFilePath = QString(".tmp/svgConfigFiles/%1.xml").arg(id);
+            if (!QFile::exists(configFilePath) && id.startsWith("T")) {
+                createTurnoutConfigFile(configFilePath, "S-"); // Default status
+            }
+
+            // Load status from the turnout config file
+            QString status = loadTurnoutStatusFromConfigFile(id);
+
             // Edit the temporary SVG file based on the status
             if (type == "turnout") {
+                QFile tmpFile(tmpFilePath);
                 if (!tmpFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
                     qWarning() << "Failed to open temporary SVG file:" << tmpFilePath;
                     continue;
@@ -170,7 +178,7 @@ void StationControl::LoadingSvgFile() {
                 tmpFile.close();
             }
 
-            // Load the temporary SVG file
+            // Create SVG file (existing code)
             auto *svgItem = new SVGHandleEvent(tmpFilePath, id, row, col, flipped, rotate);
             svgItem->setScaleAndPosition(Scale, col * Position_Col, row * Position_Row);
 
@@ -204,3 +212,63 @@ void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEven
 
     svgItem->updateTransform(transformStr);
 }
+
+// Function to create the configuration XML file for a turnout
+void StationControl::createTurnoutConfigFile(const QString &filePath, const QString &status) {
+    // Check if the file already exists
+    QFile file(filePath);
+    if (file.exists()) {
+        qDebug() << "Config file already exists:" << filePath;
+        return;
+    }
+
+    QDomDocument doc;
+    QDomElement root = doc.createElement("turnoutConfig");
+    doc.appendChild(root);
+
+    QDomElement basicElement = doc.createElement("_basic");
+    QDomText basicInt = doc.createTextNode("1");
+    basicElement.appendChild(basicInt);
+    root.appendChild(basicElement);
+
+    QDomElement reverseElement = doc.createElement("_reverse");
+    QDomText reverseInt = doc.createTextNode("0");
+    reverseElement.appendChild(reverseInt);
+    root.appendChild(reverseElement);
+
+    QDomElement statusElement = doc.createElement("status");
+    QDomText statusText = doc.createTextNode(status);
+    statusElement.appendChild(statusText);
+    root.appendChild(statusElement);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open file for writing:" << filePath;
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream << doc.toString();
+    file.close();
+}
+
+QString StationControl::loadTurnoutStatusFromConfigFile(const QString &turnoutID) {
+    QString configFilePath = QString(".tmp/svgConfigFiles/%1.xml").arg(turnoutID);
+    QFile configFile(configFilePath);
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open turnout config file:" << configFilePath;
+        return QString();
+    }
+
+    QDomDocument configDoc;
+    if (!configDoc.setContent(&configFile)) {
+        qWarning() << "Failed to parse turnout config file:" << configFilePath;
+        configFile.close();
+        return QString();
+    }
+    configFile.close();
+
+    QDomElement root = configDoc.documentElement();
+    QDomElement statusElement = root.firstChildElement("status");
+    return statusElement.text();
+}
+

@@ -80,7 +80,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         }
 
         threadStavanieVCCesty(elementId); //musia byť takto aby sa vôbec zavolali
-
+        threadStavaniePCCesty(elementId); //musia byť takto aby sa vôbec zavolali
 
     }
     if(event->button() == Qt::MiddleButton) {
@@ -102,7 +102,7 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             vlakovaCestaRoutePC(elementId);
             return;
         }
-        threadStavaniePCCesty(elementId); //musia byť takto aby sa vôbec zavolali
+
 
     }
 
@@ -124,11 +124,11 @@ void SVGHandleEvent::threadToggleVyhybka(bool straight, bool diverging, const QS
     vyhybkaThread = std::thread(&SVGHandleEvent::toggleVisibility, this, straight, diverging, path, m_elementID);
 }
 
-void SVGHandleEvent::threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &m_elementID, int &m_rotate) {
+void SVGHandleEvent::threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &m_elementID) {
     if (vyhybkaThreadGroupTurnout.joinable()) {
         vyhybkaThreadGroupTurnout.join();
     }
-    vyhybkaThreadGroupTurnout = std::thread(&SVGHandleEvent::toggleVyhybkaInGroup, this, straight, diverging, path, m_elementID, m_rotate);
+    vyhybkaThreadGroupTurnout = std::thread(&SVGHandleEvent::toggleVyhybkaInGroup, this, straight, diverging, path, m_elementID);
 }
 
 bool SVGHandleEvent::threadCheckTurnouts(const QString &routeName, const QString &m_id) {
@@ -151,11 +151,11 @@ void SVGHandleEvent::threadChangeBackgroundColor(const QString &m_routeName, con
     colorBackgroundThread = std::thread(&SVGHandleEvent::changeBackgroundColor, this, m_routeName, typeRoute, stateOfStavanie);
 }
 
-void SVGHandleEvent::threadUpdateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus) {
+void SVGHandleEvent::threadUpdateTurnoutStatus(const QString &turnoutID, const QString &newStatus) {
     if (updateTurnoutStatusInLayoutThread.joinable()) {
         updateTurnoutStatusInLayoutThread.join();
     }
-    updateTurnoutStatusInLayoutThread = std::thread(&SVGHandleEvent::updateTurnoutStatusInLayout, this, turnoutID, newStatus);
+    updateTurnoutStatusInLayoutThread = std::thread(&SVGHandleEvent::updateTurnoutStatus, this, turnoutID, newStatus);
 }
 
 void SVGHandleEvent::threadStavanieVCCesty(const QString &elementid) {
@@ -434,12 +434,12 @@ void SVGHandleEvent::changeColorOfElements(const QString &m_routeName, const QSt
                     if (group.attribute("id") == "zriadovacie_navestidlo") {
                         group.setAttribute("stroke", targetColor);
                     }
-                }else if (elementId.startsWith("HN")) {
+                } else if (elementId.startsWith("HN")) {
                     if (group.attribute("id") == "hlavne_navestidlo") {
                         group.setAttribute("stroke", targetColor);
                         group.setAttribute("fill", targetColor);
                     }
-                }else if (elementId.startsWith("Z")) {
+                } else if (elementId.startsWith("Z")) {
                     if (group.attribute("id") == "zarazadlo") {
                         group.setAttribute("stroke", targetColor);
                     }
@@ -653,17 +653,38 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
     }
     layoutFile.close();
 
-    QDomElement layoutRoot = layoutDoc.documentElement();
-    QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
-    int m_rotate = 0;
-    for (int i = 0; i < turnoutElements.count(); ++i) {
-        QDomElement turnoutElement = turnoutElements.at(i).toElement();
-        if (turnoutElement.hasAttribute("rotate")) {
-            m_rotate = turnoutElement.attribute("rotate").toInt();
-            //qDebug() << "Turnout ID:" << turnoutElement.attribute("id") << "Rotate:" << m_rotate;
-        }
+    int positionTurnout_basic = -1;
+    int positionTurnout_reverse = -1;
+
+    QString configFilePath = QString(".tmp/svgConfigFiles/%1.xml").arg(turnoutID);
+    QFile configFile(configFilePath);
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open turnout config file:" << configFilePath;
+        return;
     }
 
+    QDomDocument configDoc;
+    if (!configDoc.setContent(&configFile)) {
+        qWarning() << "Failed to parse turnout config file:" << configFilePath;
+        configFile.close();
+        return;
+    }
+    configFile.close();
+
+    QDomElement rootTurnout = configDoc.documentElement();
+    QDomElement basicElement = rootTurnout.firstChildElement("_basic");
+    QDomElement reverseElement = rootTurnout.firstChildElement("_reverse");
+
+    if (!basicElement.isNull()) {
+        positionTurnout_basic = basicElement.text().toInt();
+    }
+    if (!reverseElement.isNull()) {
+        positionTurnout_reverse = reverseElement.text().toInt();
+    }
+
+
+    QDomElement layoutRoot = layoutDoc.documentElement();
+    QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
     bool pared = false;
     int paredGroup = -1;
 
@@ -676,14 +697,6 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         }
     }
 
-    for (int i = 0; i < turnoutElements.count(); ++i) {
-        QDomElement turnoutElement = turnoutElements.at(i).toElement();
-        if (turnoutElement.attribute("id") == turnoutID && turnoutElement.hasAttribute("pared")) {
-            pared = true;
-            paredGroup = turnoutElement.attribute("pared").toInt();
-            break;
-        }
-    }
     if (pared) {
         QDomNodeList paredTurnouts = layoutRoot.elementsByTagName("paredTurnout");
         for (int i = 0; i < paredTurnouts.count(); ++i) {
@@ -759,11 +772,11 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
                     }
 
                     if (m_value == "S+") {
-                        turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id,m_rotate);
-                        threadUpdateTurnoutStatusInLayout(id, "S+");
+                        turnoutItem->threadToggleVyhybkaGroupTurnout(true, false, turnoutSvgFilePath, id);
+                        threadUpdateTurnoutStatus(id, "S+");
                     } else if (m_value == "S-") {
-                        turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id, m_rotate);
-                        threadUpdateTurnoutStatusInLayout(id, "S-");
+                        turnoutItem->threadToggleVyhybkaGroupTurnout(false, true, turnoutSvgFilePath, id);
+                        threadUpdateTurnoutStatus(id, "S-");
                     }
                 }
                 return;
@@ -804,17 +817,9 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         setVisibility("_between", "visible");
         saveAndReload(doc, path, turnoutID);
 
-        QString number = extractNumber(turnoutID);
-        //check if rotate is 0
-        QString command;
-        if(m_rotate == 0){
-            command = QString("<T %1 0>").arg(number);
-            threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
-        }
-        else{
-            command= QString("<T %1 1>").arg(number);
-            threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
-        }
+        QString numberID = extractNumber(turnoutID);
+        QString command = QString("<T %1 %2>").arg(numberID).arg(positionTurnout_basic);
+        qDebug() << "positionTurnout_basic" << positionTurnout_basic;
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -822,34 +827,30 @@ void SVGHandleEvent::toggleVisibility(bool straight, bool diverging, const QStri
         setVisibility("_basic", "visible");
         saveAndReload(doc, path, turnoutID);
 
+        threadUpdateTurnoutStatus(turnoutID, "S+");
+
     } else if (diverging) {
         setVisibility("_between", "visible");
         saveAndReload(doc, path, turnoutID);
 
-        QString number = extractNumber(turnoutID);
-        //check if rotate is 0
-        QString command;
-        if(m_rotate == 0){
-            command = QString("<T %1 1>").arg(number);
-            threadUpdateTurnoutStatusInLayout(turnoutID, "S+");
-        }
-        else{
-            command= QString("<T %1 0>").arg(number);
-            threadUpdateTurnoutStatusInLayout(turnoutID, "S-");
-        }
+        QString numberID = extractNumber(turnoutID);
+        QString command = QString("<T %1 %2>").arg(numberID).arg(positionTurnout_reverse);
+        qDebug() << "positionTurnout_reverse" << positionTurnout_reverse;
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("_reverse", "visible");
         saveAndReload(doc, path, turnoutID);
+
+        threadUpdateTurnoutStatus(turnoutID, "S-");
     }
 }
 
 QString SVGHandleEvent::getElementSvgPath(const QString &m_elementId) {
-    QDir tmpDir(".tmp");
+    QDir tmpDir(".tmp/svgFiles");
     if (!tmpDir.exists()) {
-        qWarning() << "Directory .tmp does not exist";
+        qWarning() << "Directory .tmp/svgFiles does not exist";
         return {};
     }
 
@@ -862,7 +863,7 @@ QString SVGHandleEvent::getElementSvgPath(const QString &m_elementId) {
         }
     }
 
-    qWarning() << "File for ID" << m_elementId << "not found in .tmp directory";
+    qWarning() << "File for ID" << m_elementId << "not found in .tmp/svgFiles directory";
     return {};
 }
 
@@ -1711,7 +1712,19 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
     QDomNodeList routes = routesRoot.elementsByTagName("route");
 
 
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement status = route.firstChildElement("status");
+        QDomElement VC = status.firstChildElement("VC");
+        QDomElement PC = status.firstChildElement("PC");
 
+        if (VC.text() == "true" && PC.text() == "false") {
+            qDebug() << "VC is true and PC is false (PC cesta)";
+            return;
+        } else if (VC.text() == "false" && PC.text() == "true") {
+            //qDebug() << "VC is false and PC is true";
+        }
+    }
 
     QString startPoint;
     QString endPoint = m_elementId;
@@ -1734,20 +1747,6 @@ void SVGHandleEvent::stavaniePCCesty(const QString &m_elementId) {
         qWarning() << "Start point not found for element ID:" << m_elementId;
         return;
     }
-/*
-    for (int i = 0; i < routes.count(); ++i) {
-        QDomElement route = routes.at(i).toElement();
-        QDomElement status = route.firstChildElement("status");
-        QDomElement VC = status.firstChildElement("VC");
-        QDomElement PC = status.firstChildElement("PC");
-
-        if (VC.text() == "true" && PC.text() == "false") {
-            qDebug() << "VC is true and PC is false (PC cesta)" << route.attribute("name");
-            return;
-        } else if (VC.text() == "false" && PC.text() == "true") {
-            //qDebug() << "VC is false and PC is true";
-        }
-    }*/
 
 
 // Extract all elements from the route to be used
@@ -2069,7 +2068,7 @@ bool SVGHandleEvent::checkTurnouts(const QString &routeName, const QString &m_id
     return allTurnoutsInPosition;
 }
 
-void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID, int m_rotate) {
+void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID){
     std::lock_guard<std::mutex> lock(mtx_toggle_vyhybka_group_turnout);
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -2137,14 +2136,7 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        //check if rotate is 0
-        QString command;
-        if(m_rotate == 0){
-            command = QString("<T %1 0>").arg(number);
-        }
-        else{
-            command= QString("<T %1 1>").arg(number);
-        }
+        QString command = QString("<T %1 1>").arg(number);
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -2157,14 +2149,7 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        //check if rotate is 0
-        QString command;
-        if(m_rotate == 0){
-            command = QString("<T %1 0>").arg(number);
-        }
-        else{
-            command= QString("<T %1 1>").arg(number);
-        }
+        QString command = QString("<T %1 0>").arg(number);
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -2174,45 +2159,38 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
     }
 }
 
-void SVGHandleEvent::updateTurnoutStatusInLayout(const QString &turnoutID, const QString &newStatus) {
+void SVGHandleEvent::updateTurnoutStatus(const QString &turnoutID, const QString &newStatus) {
     static std::timed_mutex mtx_update_turnout_status;
     if (!mtx_update_turnout_status.try_lock_for(std::chrono::milliseconds(200))) {
-        qWarning() << "Timeout while trying to lock updateTurnoutStatusInLayout";
         return;
     }
     std::lock_guard<std::timed_mutex> lock(mtx_update_turnout_status, std::adopt_lock);
 
-    QFile layoutFile("../layout/layout.xml");
-    if (!layoutFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open layout.xml";
+    QString turnoutConfigPath = QString(".tmp/svgConfigFiles/%1.xml").arg(turnoutID);
+    QFile turnoutConfigFile(turnoutConfigPath);
+    if (!turnoutConfigFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open turnout config file:" << turnoutConfigPath;
         return;
     }
 
-    QDomDocument layoutDoc;
-    if (!layoutDoc.setContent(&layoutFile)) {
-        qWarning() << "Failed to parse layout.xml";
-        layoutFile.close();
+    QDomDocument turnoutConfigDoc;
+    if (!turnoutConfigDoc.setContent(&turnoutConfigFile)) {
+        qWarning() << "Failed to parse turnout config file:" << turnoutConfigPath;
+        turnoutConfigFile.close();
         return;
     }
-    layoutFile.close();
+    turnoutConfigFile.close();
 
-    QDomElement layoutRoot = layoutDoc.documentElement();
-    QDomNodeList turnouts = layoutRoot.elementsByTagName("turnout");
+    QDomElement turnoutConfigRoot = turnoutConfigDoc.documentElement();
+    QDomElement statusElement = turnoutConfigRoot.firstChildElement("status");
+    statusElement.firstChild().setNodeValue(newStatus);
 
-    for (int i = 0; i < turnouts.count(); ++i) {
-        QDomElement turnout = turnouts.at(i).toElement();
-        if (turnout.attribute("id") == turnoutID) {
-            turnout.setAttribute("status", newStatus);
-            break;
-        }
-    }
-
-    if (!layoutFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open layout.xml for writing";
+    if (!turnoutConfigFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open turnout config file for writing:" << turnoutConfigPath;
         return;
     }
 
-    QTextStream stream(&layoutFile);
-    stream << layoutDoc.toString();
-    layoutFile.close();
+    QTextStream stream(&turnoutConfigFile);
+    stream << turnoutConfigDoc.toString();
+    turnoutConfigFile.close();
 }

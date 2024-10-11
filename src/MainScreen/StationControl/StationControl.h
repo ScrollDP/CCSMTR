@@ -25,6 +25,10 @@ private:
     void ApplyTransformation(bool mirror, int rotate, SVGHandleEvent* svgHandleEvent, const QString& type);
     QSvgRenderer *renderer;
     QString svgFilePath;
+
+    void createTurnoutConfigFile(const QString &filePath, const QString &status);
+
+    QString loadTurnoutStatusFromConfigFile(const QString &turnoutID);
 };
 
 
