@@ -2084,6 +2084,37 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
     }
     file.close();
 
+
+    int positionTurnout_basic = -1;
+    int positionTurnout_reverse = -1;
+
+    QString configFilePath = QString(".tmp/svgConfigFiles/%1.xml").arg(turnoutID);
+    QFile configFile(configFilePath);
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open turnout config file:" << configFilePath;
+        return;
+    }
+
+    QDomDocument configDoc;
+    if (!configDoc.setContent(&configFile)) {
+        qWarning() << "Failed to parse turnout config file:" << configFilePath;
+        configFile.close();
+        return;
+    }
+    configFile.close();
+
+    QDomElement rootTurnout = configDoc.documentElement();
+    QDomElement basicElement = rootTurnout.firstChildElement("_basic");
+    QDomElement reverseElement = rootTurnout.firstChildElement("_reverse");
+
+    if (!basicElement.isNull()) {
+        positionTurnout_basic = basicElement.text().toInt();
+    }
+    if (!reverseElement.isNull()) {
+        positionTurnout_reverse = reverseElement.text().toInt();
+    }
+
+
     QDomElement root = doc.documentElement();
     QDomNodeList elements = root.elementsByTagName("path");
 
@@ -2136,7 +2167,7 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 1>").arg(number);
+        QString command = QString("<T %1 %2>").arg(number).arg(positionTurnout_basic);
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -2149,7 +2180,7 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
         saveAndReload(doc, path, turnoutID);
 
         QString number = extractNumber(turnoutID);
-        QString command = QString("<T %1 0>").arg(number);
+        QString command = QString("<T %1 %2>").arg(number).arg(positionTurnout_reverse);
         sendToArduino(command);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
