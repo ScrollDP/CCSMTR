@@ -76,9 +76,9 @@ private:
 
     QString getElementSvgPath(const QString &m_elementId);
 
-    void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID, int m_rotate);
+    void toggleVyhybkaInGroup(bool straight, bool diverging, const QString &path, const QString &turnoutID);
 
-    void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId, int &m_rotate);
+    void threadToggleVyhybkaGroupTurnout(bool straight, bool diverging, const QString &path, const QString &elementId);
 
     void threadUpdateTurnoutStatus(const QString &turnoutID, const QString &newStatus);
 
