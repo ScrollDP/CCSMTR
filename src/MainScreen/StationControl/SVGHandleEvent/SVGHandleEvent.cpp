@@ -607,8 +607,8 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
         }
         contextMenu.addAction("S++");
         contextMenu.addAction("S--");
-        contextMenu.addAction("S+-");
         contextMenu.addAction("S-+");
+        contextMenu.addAction("S+-");
 
 
         QString svgFilePath1 = getSvgFilePathForTurnout(turnout1);
