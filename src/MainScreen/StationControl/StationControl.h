@@ -18,7 +18,7 @@ public:
 private:
     void LoadingSvgFile();
 
-    int Scale = 3;
+    int Scale = 4;
     int Position_Col = 8;
     int Position_Row = 12;
 

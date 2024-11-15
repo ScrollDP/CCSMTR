@@ -53,7 +53,10 @@ private:
 
     void saveAndReload(const QDomDocument& doc, const QString& path, const QString& elementId);
     void reloadSVG(const QString &reloadPath);
-    void threadReloadSVG(const QString &reloadPath);
+
+QString getSvgFilePathForTurnout(const QString &turnoutId);
+
+void threadReloadSVG(const QString &reloadPath);
 
 
     void changeBackgroundColor(const QString &m_routeName, const QString &typeRoute, bool stateOfStavanie);

@@ -52,8 +52,8 @@
   <turnout col="6" flipped="true" id="T4" rotate="0" row="1"   type="turnout"/>
   <turnout col="7" flipped="true" id="T2_1" pared="2" rotate="180" row="1"   type="turnout"/>
   <turnout col="8" flipped="true" id="T6" rotate="180" row="2"   type="turnout"/>
-  <turnout col="9" flipped="true" id="T9" rotate="180" row="3"   type="turnout"/>
-  <turnout col="8" flipped="true" id="T8" rotate="0" row="3"   type="turnout"/>
+  <turnout col="9" flipped="true" id="T9" paredAT="AT1" rotate="180" row="3"   type="turnout"/>
+  <turnout col="8" flipped="true" id="T8" paredAT="AT1" rotate="0" row="3"   type="turnout"/>
   <turnout col="11" flipped="true" id="T11" rotate="180" row="3"   type="turnout"/>
   <turnout col="9" flipped="true" id="T12" rotate="0" row="4"   type="turnout"/>
   <turnout col="8" flipped="false" id="T10" rotate="180" row="4"   type="turnout"/>
@@ -72,6 +72,9 @@
   <paredTurnout id="T2" pared="2" turnout1="T2_1" turnout2="T2_2"/>
   <paredTurnout id="T1" pared="1" turnout1="T1_1" turnout2="T1_2"/>
  </paredTurnouts>
+ <ang_turnouts>
+  <ang_turnout id="AT89" turnout1="T8" turnout2="T9" paredAT="AT1"/>
+ </ang_turnouts>
  <cross_turnouts>
   <cross_turnout col="5" id="CT1" rotate="0" row="0" type="cross_turnout"/>
   <cross_turnout col="31" id="CT2" rotate="0" row="0" type="cross_turnout"/>
