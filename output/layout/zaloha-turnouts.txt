@@ -92,8 +92,8 @@
             <turnout type="turnout" id="T 28 DCC 7 3" row="-1" col="31" flipped="true" rotate="180"  status="standby"/>
             <turnout type="turnout" id="T 28 DCC 7 3" row="-1" col="32" flipped="false" rotate="180"  status="standby"/>
             <turnout type="turnout" id="T 25 DCC 7 0" row="-1" col="29" flipped="true" rotate="0"  status="standby"/>
-            <turnout type="turnout" id="T 32 DCC 6 0" row="-2" col="28" flipped="true" rotate="0"  status="standby"/>
-            <turnout type="turnout" id="T 36 DCC 7 1" row="-2" col="30" flipped="true" rotate="0"  status="standby"/>
+            <turnout type="turnout" id="T 21 DCC 6 0" row="-2" col="28" flipped="true" rotate="0"  status="standby"/>
+            <turnout type="turnout" id="T 26 DCC 7 1" row="-2" col="30" flipped="true" rotate="0"  status="standby"/>
             <turnout type="turnout" id="T 22 DCC 6 1" row="-2" col="29" flipped="true" rotate="180"  status="standby"/>
             <turnout type="turnout" id="T 19 DCC 5 2" row="-4" col="28" flipped="true" rotate="0"  status="standby"/>
             <turnout type="turnout" id="T 20 DCC 5 3" row="-4" col="29" flipped="true" rotate="180"  status="standby"/>
