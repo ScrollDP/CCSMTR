@@ -155,15 +155,35 @@ void StationControl::LoadingSvgFile() {
                 QDomElement svgRoot = svgDoc.documentElement();
                 QDomNodeList paths = svgRoot.elementsByTagName("path");
 
+                //if turnout or ang_turnout
+                if(type == "turnout") {
+                    for (int k = 0; k < paths.count(); ++k) {
+                        QDomElement path = paths.at(k).toElement();
+                        QString pathId = path.attribute("id");
 
-                for (int k = 0; k < paths.count(); ++k) {
-                    QDomElement path = paths.at(k).toElement();
-                    QString pathId = path.attribute("id");
+                        if (pathId == "_basic") {
+                            path.setAttribute("visibility", (status == "S+") ? "visible" : "hidden");
+                        } else if (pathId == "_reverse") {
+                            path.setAttribute("visibility", (status == "S-") ? "visible" : "hidden");
+                        }
+                    }
+                }
+                else if (type == "ang_turnout") {
+                    for (int k = 0; k < paths.count(); ++k) {
+                        QDomElement path = paths.at(k).toElement();
+                        QString pathId = path.attribute("id");
 
-                    if (pathId == "_basic") {
-                        path.setAttribute("visibility", (status == "S+") ? "visible" : "hidden");
-                    } else if (pathId == "_reverse") {
-                        path.setAttribute("visibility", (status == "S-") ? "visible" : "hidden");
+                        if (pathId == "S++") {
+                            path.setAttribute("visibility", (status == "S++") ? "visible" : "hidden");
+                        } else if (pathId == "S--") {
+                            path.setAttribute("visibility", (status == "S--") ? "visible" : "hidden");
+                        } else if (pathId == "S+-") {
+                            path.setAttribute("visibility", (status == "S+-") ? "visible" : "hidden");
+                        } else if (pathId == "S-+") {
+                            path.setAttribute("visibility", (status == "S-+") ? "visible" : "hidden");
+                        } else {
+                            path.setAttribute("visibility", "hidden");
+                        }
                     }
                 }
 
