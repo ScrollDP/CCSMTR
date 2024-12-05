@@ -741,28 +741,6 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
     QDomElement layoutRoot = layoutDoc.documentElement();
     QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
 
-    QString id1, id2;
-    for (int i = 0; i < turnoutElements.count(); ++i) {
-        QDomElement turnoutElement = turnoutElements.at(i).toElement();
-        if (turnoutElement.attribute("id") == elementId) {
-            id1 = turnoutElement.attribute("first");
-            id2 = turnoutElement.attribute("second");
-            break;
-        }
-    }
-
-    if (id1.isEmpty() || id2.isEmpty()) {
-        qWarning() << "Turnout with id" << elementId << "not found or missing first/second attributes";
-        return;
-    }
-
-    qDebug() << "id1:" << id1 << "id2:" << id2;
-
-    //removeing T from beggining of id1 and id2
-    id1.remove(0, 1);
-    id2.remove(0, 1);
-
-
     // Load the configuration file for the turnout
     QString configFilePath = QString(".tmp/svgConfigFiles/%1.xml").arg(elementId);
     QFile configFile(configFilePath);
@@ -779,39 +757,22 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
     }
     configFile.close();
 
-    QDomElement rootTurnout = configDoc.documentElement();
-    QDomElement id1Element = rootTurnout.firstChildElement("id1").firstChildElement("position");
-    QDomElement id2Element = rootTurnout.firstChildElement("id2").firstChildElement("position");
+    int id1_positionTurnout_basic, id1_positionTurnout_reverse, id2_positionTurnout_basic, id2_positionTurnout_reverse = -1;
 
-    if (id1Element.isNull() || id2Element.isNull()) {
-        qWarning() << "Position elements for id1 or id2 not found in config file";
-        return;
+    QDomElement rootTurnout = configDoc.documentElement();
+    QDomElement id1Element_basic = rootTurnout.firstChildElement("id1").firstChildElement("_basic");
+    QDomElement id1Element_reverse = rootTurnout.firstChildElement("id1").firstChildElement("_reverse");
+    QDomElement id2Element_basic = rootTurnout.firstChildElement("id2").firstChildElement("_basic");
+    QDomElement id2Element_reverse = rootTurnout.firstChildElement("id2").firstChildElement("_reverse");
+
+    if (!id1Element_basic.isNull() || !id1Element_reverse.isNull() || !id2Element_basic.isNull() || !id2Element_reverse.isNull()) {
+        id1_positionTurnout_basic = id1Element_basic.text().toInt();
+        id1_positionTurnout_reverse = id1Element_reverse.text().toInt();
+        id2_positionTurnout_basic = id2Element_basic.text().toInt();
+        id2_positionTurnout_reverse = id2Element_reverse.text().toInt();
     }
 
-    int positionTurnout_id1 = id1Element.text().toInt();
-    int positionTurnout_id2 = id2Element.text().toInt();
-
-    qDebug() << "id1 position:" << positionTurnout_id1 << "id2 position:" << positionTurnout_id2;
-
-
-    //
-
-
-      /*  setVisibility("_between", "visible");
-        saveAndReload(doc, path, turnoutID);
-
-        QString numberID = extractNumber(turnoutID);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(positionTurnout_basic);
-        qDebug() << "positionTurnout_basic" << positionTurnout_basic;
-        sendToArduino(command);
-        qDebug() << "Command sent to Arduino:" << command.toStdString();
-        std::this_thread::sleep_for(std::chrono::seconds(3));
-        setVisibility("_between", "hidden");
-        setVisibility("S++", "visible");
-        saveAndReload(doc, path, turnoutID);*/
-
-    // from ang_turnout change visibility visible to hidden
-
+    qDebug() << "id1_positionTurnout_basic:" << id1_positionTurnout_basic << "id1_positionTurnout_reverse:" << id1_positionTurnout_reverse << "id2_positionTurnout_basic:" << id2_positionTurnout_basic << "id2_positionTurnout_reverse:" << id2_positionTurnout_reverse;
 
 
     //all visibility to hidden of that elementID
@@ -859,11 +820,12 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
         QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1);
+        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_basic);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2);
+        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_basic);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
+        qDebug() << "Command sent to Arduino:" << command2.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("S++", "visible");
@@ -875,11 +837,12 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
         QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1);
+        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_reverse);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2);
+        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_reverse);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
+        qDebug() << "Command sent to Arduino:" << command2.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("S--", "visible");
@@ -891,11 +854,12 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
         QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1);
+        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_basic);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2);
+        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_reverse);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
+        qDebug() << "Command sent to Arduino:" << command2.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("S+-", "visible");
@@ -907,17 +871,21 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
         QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1);
+        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_reverse);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2);
+        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_basic);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
+        qDebug() << "Command sent to Arduino:" << command2.toStdString();
         std::this_thread::sleep_for(std::chrono::seconds(3));
         setVisibility("_between", "hidden");
         setVisibility("S-+", "visible");
 
         saveAndReload(doc, path, elementId);
         threadUpdateTurnoutStatus(elementId, "S-+");
+
+
+
     }
 
 

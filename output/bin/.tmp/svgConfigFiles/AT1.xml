@@ -1,9 +1,11 @@
 <turnoutConfig>
  <id1>
-  <position>0</position>
+  <_basic>0</_basic>
+  <_reverse>1</_reverse>
  </id1>
  <id2>
-  <position>1</position>
+  <_basic>1</_basic>
+  <_reverse>0</_reverse>
  </id2>
- <status>S+-</status>
+ <status>S-+</status>
 </turnoutConfig>

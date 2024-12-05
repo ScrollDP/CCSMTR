@@ -280,18 +280,28 @@ void StationControl::createTurnoutConfigFile(const QString &filePath, const QStr
     }
     else if (type == "ang_turnout") {
         QDomElement id1Element = doc.createElement("id1");
-        QDomElement basicElement1 = doc.createElement("position");
+        QDomElement basicElement1 = doc.createElement("_basic");
         QDomText basicInt1 = doc.createTextNode("0");
         basicElement1.appendChild(basicInt1);
         id1Element.appendChild(basicElement1);
 
+        QDomElement reverseElement1 = doc.createElement("_reverse");
+        QDomText reverseInt1 = doc.createTextNode("1");
+        reverseElement1.appendChild(reverseInt1);
+        id1Element.appendChild(reverseElement1);
+        root.appendChild(id1Element);
 
         QDomElement id2Element = doc.createElement("id2");
-        QDomElement basicElement2 = doc.createElement("position");
+        QDomElement basicElement2 = doc.createElement("_basic");
         QDomText basicInt2 = doc.createTextNode("0");
         basicElement2.appendChild(basicInt2);
         id2Element.appendChild(basicElement2);
 
+        QDomElement reverseElement2 = doc.createElement("_reverse");
+        QDomText reverseInt2 = doc.createTextNode("1");
+        reverseElement2.appendChild(reverseInt2);
+        id2Element.appendChild(reverseElement2);
+        root.appendChild(id2Element);
 
         QDomElement statusElement = doc.createElement("status");
         QDomText statusText = doc.createTextNode(status);
