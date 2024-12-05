@@ -885,9 +885,7 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
         threadUpdateTurnoutStatus(elementId, "S-+");
 
 
-
     }
-
 
 }
 
@@ -1728,6 +1726,9 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                         } else {
                             qWarning() << "Unknown desired position for ID:" << id;
                         }
+                    }
+                    if(id.startsWith("AT")) {
+                        //TODO: Implement of AT
                     }
                 }
 

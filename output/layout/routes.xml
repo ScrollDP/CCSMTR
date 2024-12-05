@@ -350,8 +350,7 @@
    <element id="R3.12"/>
    <element id="T11" position="S+"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -382,8 +381,7 @@
    <element id="R3.12"/>
    <element id="T11" position="S+"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -414,8 +412,7 @@
    <element id="R4.11"/>
    <element id="T11" position="S-"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -447,8 +444,7 @@
    <element id="R4.11"/>
    <element id="T11" position="S-"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -479,8 +475,7 @@
    <element id="R5.10"/>
    <element id="R4.10"/>
    <element id="T12" position="S-"/>
-   <element id="T9" position="S-"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S--"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -512,8 +507,7 @@
    <element id="R5.10"/>
    <element id="R4.10"/>
    <element id="T12" position="S-"/>
-   <element id="T9" position="S-"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S--"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -1071,8 +1065,7 @@
    <element id="R3.12"/>
    <element id="T11" position="S+"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -1115,8 +1108,7 @@
    <element id="R3.12"/>
    <element id="T11" position="S+"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -1158,8 +1150,7 @@
    <element id="R4.11"/>
    <element id="T11" position="S-"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -1202,8 +1193,7 @@
    <element id="R4.11"/>
    <element id="T11" position="S-"/>
    <element id="R3.10"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S-+"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -1246,8 +1236,7 @@
    <element id="R5.10"/>
    <element id="R4.10"/>
    <element id="T12" position="S-"/>
-   <element id="T9" position="S-"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S--"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -1291,8 +1280,7 @@
    <element id="R5.10"/>
    <element id="R4.10"/>
    <element id="T12" position="S-"/>
-   <element id="T9" position="S-"/>
-   <element id="T8" position="S-"/>
+   <element id="AT2" position="S--"/>
    <element id="T6" position="S-"/>
    <element id="R2.7"/>
    <element id="T4" position="S-"/>
@@ -1324,8 +1312,7 @@
    <element id="HN3"/>
    <element id="R3.12"/>
    <element id="T11" position="S+"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S+"/>
+   <element id="AT2" position="S++"/>
    <element id="R3.7"/>
    <element id="R3.5"/>
    <element id="R3.4"/>
@@ -1352,8 +1339,7 @@
    <element id="R4.12"/>
    <element id="R4.11"/>
    <element id="T11" position="S-"/>
-   <element id="T9" position="S+"/>
-   <element id="T8" position="S+"/>
+   <element id="AT2" position="S++"/>
    <element id="R3.7"/>
    <element id="R3.5"/>
    <element id="R3.4"/>
@@ -1381,8 +1367,7 @@
    <element id="R5.10"/>
    <element id="R4.10"/>
    <element id="T12" position="S-"/>
-   <element id="T9" position="S-"/>
-   <element id="T8" position="S+"/>
+   <element id="AT2" position="S+-"/>
    <element id="R3.7"/>
    <element id="R3.5"/>
    <element id="R3.4"/>
@@ -1605,9 +1590,8 @@
    <element id="R3.13"/>
    <element id="R3.12"/>
    <element id="T11" position="S+"/>
-   <element id="T9" position="S+"/>
    <element id="R3.10"/>
-   <element id="T8" position="S+"/>
+   <element id="AT2" position="S++"/>
    <element id="R3.7"/>
    <element id="ZN10"/>
   </elements>
@@ -1641,9 +1625,8 @@
    <element id="R4.12"/>
    <element id="R4.11"/>
    <element id="T11" position="S-"/>
-   <element id="T9" position="S+"/>
    <element id="R3.10"/>
-   <element id="T8" position="S+"/>
+   <element id="AT2" position="S++"/>
    <element id="R3.7"/>
    <element id="ZN10"/>
   </elements>
@@ -1679,8 +1662,7 @@
    <element id="R5.10"/>
    <element id="R4.10"/>
    <element id="T12" position="S-"/>
-   <element id="T9" position="S-"/>
-   <element id="T8" position="S+"/>
+   <element id="AT2" position="S+-"/>
    <element id="R3.7"/>
    <element id="ZN10"/>
   </elements>
