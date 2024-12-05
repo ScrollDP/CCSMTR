@@ -15,8 +15,8 @@
 class SVGHandleEvent : public QGraphicsSvgItem {
 Q_OBJECT
 
-    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread, updateTurnoutStatusInLayoutThread, stavanieVCCestyThread, stavaniePCCestyThread, reloadSVGThread, changeColorOfElementsThread;
-    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background, mtx_stavanie_vc_cesty, mtx_stavanie_pc_cesty, mtx_reload_svg, mtx_change_color_of_elements;
+    std::thread vyhybkaThread, vyhybkaThreadGroupTurnout, checkTurnoutsThread, colorBackgroundThread, updateTurnoutStatusInLayoutThread, stavanieVCCestyThread, stavaniePCCestyThread, reloadSVGThread, changeColorOfElementsThread, angToggleVisibilityThread;
+    std::mutex mtx_toggle_vyhybka, mtx_toggle_vyhybka_group_turnout, mtx_check_turnouts, mtx_color_background, mtx_stavanie_vc_cesty, mtx_stavanie_pc_cesty, mtx_reload_svg, mtx_change_color_of_elements, mtx_ang_toggle_visibility;
 
 public:
     explicit SVGHandleEvent(const QString &svgFilePath, QString elementId, int row, int col, bool flipped, int rotate, QGraphicsItem* parent = nullptr);
@@ -34,6 +34,8 @@ private:
     void vyhybkaMenu(const QPoint &pos, const QString &id);
     void threadToggleVyhybka(bool straight, bool diverging, const QString &path, const QString &elementId);
     void toggleVisibility(bool straight, bool diverging, const QString &path, const QString &elementId);
+    void threadAngToggleVisibility(QString status, const QString &path, const QString &elementId);
+    void angToggleVisibility(QString status, const QString &path, const QString &elementId);
 
 
     void hlavneNavestidloMenu(const QPoint &pos, const QString &id);

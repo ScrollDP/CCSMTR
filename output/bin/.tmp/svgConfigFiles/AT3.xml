@@ -1,0 +1,9 @@
+<turnoutConfig>
+ <id1>
+  <position>0</position>
+ </id1>
+ <id2>
+  <position>1</position>
+ </id2>
+ <status>S++</status>
+</turnoutConfig>
