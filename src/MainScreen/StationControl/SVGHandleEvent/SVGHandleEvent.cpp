@@ -92,6 +92,10 @@ void SVGHandleEvent::mousePressEvent(QGraphicsSceneMouseEvent *event) {
             vyhybkaMenu(event->screenPos(), elementId);
             return;
         }
+        else if(QRegularExpression("^AT\\d+(_\\d+)?$").match(elementId).hasMatch()) {
+            vyhybkaMenu(event->screenPos(), elementId);
+            return;
+        }
         else if(QRegularExpression("^ZN\\d+$").match(elementId).hasMatch()) {
             zriadovacieNavestidloMenu(event->screenPos(), elementId);
             return;
@@ -556,6 +560,8 @@ QString SVGHandleEvent::getSvgFilePathForTurnout(const QString &turnoutId) {
 }
 
 void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
+    qDebug() << "VyhybkaMenu, id:" << id;
+
     QString m_value;
     QMenu contextMenu;
     contextMenu.addAction(id);
@@ -580,6 +586,17 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
     QDomElement layoutRoot = layoutDoc.documentElement();
     QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
 
+    //display via qDebug the type of turnout
+    QString type;
+    for (int i = 0; i < turnoutElements.count(); ++i) {
+        QDomElement turnoutElement = turnoutElements.at(i).toElement();
+        if (turnoutElement.attribute("id") == id) {
+            type = turnoutElement.attribute("type");
+            break;
+        }
+    }
+    qDebug() << "Type of turnout:" << type;
+
 
     QFile file(svgFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -595,6 +612,7 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
     }
     file.close();
 
+
     QDomElement root = doc.documentElement();
     QDomNodeList elements = root.elementsByTagName("path");
 
@@ -605,37 +623,65 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
             continue;
         }
         QString Id = element.attribute("id");
-
-        if (Id == "_basic" || Id == "_reverse") {
-            QString visibility = element.attribute("visibility");
-            if (visibility == "visible") {
-                currentState = Id;
-                break;
+        if(type == "ang_turnout") {
+            if (Id == "S++" || Id == "S--" || Id == "S+-" || Id == "S-+") {
+                QString visibility = element.attribute("visibility");
+                if (visibility == "visible") {
+                    currentState = Id;
+                    break;
+                }
+            }
+        }
+        else {
+            if (Id == "_basic" || Id == "_reverse") {
+                QString visibility = element.attribute("visibility");
+                if (visibility == "visible") {
+                    currentState = Id;
+                    break;
+                }
             }
         }
     }
 
-    if (currentState == "_basic") {
-        contextMenu.addAction("S-");
-        qDebug() << "S-"<< id << " " << currentState << " file" << svgFilePath;
-    } else if (currentState == "_reverse") {
-        contextMenu.addAction("S+");
-        qDebug() << "S+"<< id << " " << currentState << " file" << svgFilePath;
-    }
+    if(QRegularExpression("^T\\d+(_\\d+)?$").match(id).hasMatch()) {
+        if (currentState == "_basic") {
+            contextMenu.addAction("S-");
+            qDebug() << "S-"<< id << " " << currentState << " file" << svgFilePath;
+        } else if (currentState == "_reverse") {
+            contextMenu.addAction("S+");
+            qDebug() << "S+"<< id << " " << currentState << " file" << svgFilePath;
+        }
 
-    QAction* selectedAction = contextMenu.exec(pos);
-    if (selectedAction) {
-        m_value = selectedAction->text();
-    }
+        QAction* selectedAction = contextMenu.exec(pos);
+        if (selectedAction) {
+            m_value = selectedAction->text();
+        }
 
-    if (m_value == "S+") {
-        threadToggleVyhybka(true, false,svgFilePath, id);
-        //qDebug() << "S+";
-    } else if (m_value == "S-") {
-        //qDebug() << "S-";
-        threadToggleVyhybka(false, true,svgFilePath,id);
+        if (m_value == "S+") {
+            threadToggleVyhybka(true, false,svgFilePath, id);
+            //qDebug() << "S+";
+        } else if (m_value == "S-") {
+            //qDebug() << "S-";
+            threadToggleVyhybka(false, true,svgFilePath,id);
+        }
     }
+    else if(QRegularExpression("^AT\\d+(_\\d+)?$").match(id).hasMatch()) {
+        QStringList allStates = {"S++", "S--", "S+-", "S-+"};
+        allStates.removeAll(currentState);
 
+        //displaying allStates
+        qDebug() << "All states:" << allStates.join(", ");
+
+        for (const QString &state : allStates) {
+            contextMenu.addAction(state);
+        }
+
+
+        QAction* selectedAction = contextMenu.exec(pos);
+        if (selectedAction) {
+            m_value = selectedAction->text();
+        }
+    }
 
 }
 
