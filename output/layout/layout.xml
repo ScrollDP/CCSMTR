@@ -1,7 +1,7 @@
 <layout>
  <locations_symbols>
   <location id="turnout" path="../layout/symboly/turnouts/turnout.svg"/>
-  <location id="cross_turnout" path="../layout/symboly/turnouts/cross_turnout.svg"/>
+  <location id="ang_turnout" path="../layout/symboly/turnouts/ang_turnout1.svg"/>
   <location id="rail" path="../layout/symboly/rails/rail.svg"/>
   <location id="rail_sklon1" path="../layout/symboly/rails/rail_sklon1.svg"/>
   <location id="rail_sklon2" path="../layout/symboly/rails/rail_sklon2.svg"/>
@@ -35,8 +35,8 @@
  </locations_symbols>
  <turnouts>
   <turnout col="5" flipped="true" id="T1_2" pared="1" rotate="180" row="-1"   type="turnout"/>
-  <turnout col="6" flipped="false" id="T3" rotate="180" row="-1"   type="turnout"/>
-  <turnout col="7" flipped="false" id="T1_1" pared="1" rotate="0" row="-1"   type="turnout"/>
+  <turnout col="6" flipped="false" id="T1_1" rotate="180" row="-1"   type="turnout"/>
+  <turnout col="7" flipped="false" id="T3" pared="1" rotate="0" row="-1"   type="turnout"/>
   <turnout col="8" flipped="false" id="T5" rotate="0" row="-2"   type="turnout"/>
   <turnout col="10" flipped="false" id="T7" rotate="0" row="-2"   type="turnout"/>
   <turnout col="31" flipped="true" id="T28_1" pared="3" rotate="180" row="-1"   type="turnout"/>
@@ -49,22 +49,23 @@
   <turnout col="29" flipped="true" id="T20" paredAT="AT3" rotate="180" row="-4"   type="turnout"/>
   <turnout col="27" flipped="true" id="T32" rotate="0" row="-5"   type="turnout"/>
   <turnout col="5" flipped="false" id="T2_2" pared="2" rotate="0" row="1"   type="turnout"/>
-  <turnout col="6" flipped="true" id="T4" rotate="0" row="1"   type="turnout"/>
-  <turnout col="7" flipped="true" id="T2_1" pared="2" rotate="180" row="1"   type="turnout"/>
+  <turnout col="6" flipped="true" id="T2_1" rotate="0" row="1"   type="turnout"/>
+  <turnout col="7" flipped="true" id="T4" pared="2" rotate="180" row="1"   type="turnout"/>
   <turnout col="8" flipped="true" id="T6" rotate="180" row="2"   type="turnout"/>
   <turnout col="9" flipped="true" id="T9" paredAT="AT1" rotate="180" row="3"   type="turnout"/>
   <turnout col="8" flipped="true" id="T8" paredAT="AT1" rotate="0" row="3"   type="turnout"/>
   <turnout col="11" flipped="true" id="T11" rotate="180" row="3"   type="turnout"/>
   <turnout col="9" flipped="true" id="T12" rotate="0" row="4"   type="turnout"/>
   <turnout col="8" flipped="false" id="T10" rotate="180" row="4"   type="turnout"/>
-  <turnout col="27" flipped="false" id="T17" rotate="180" row="4"   type="turnout"/>
+  <!-- <turnout col="27" flipped="false" id="T17" rotate="180"    type="turnout"/>-->
+  <!-- <turnout col="28" flipped="false" id="T18" rotate="0" row="4"   type="turnout"/>-->
   <turnout col="28" flipped="false" id="T23" rotate="180" row="3"   type="turnout"/>
-  <turnout col="28" flipped="false" id="T18" rotate="0" row="4"   type="turnout"/>
   <!--overit id vyhybky bolanefunkčna-->
   <turnout col="28" flipped="false" id="T24" rotate="180" row="1"   type="turnout"/>
   <turnout col="30" flipped="false" id="T27" rotate="180" row="1"   type="turnout"/>
   <turnout col="31" flipped="false" id="T29_1" pared="4" rotate="0" row="1"   type="turnout"/>
   <turnout col="32" flipped="true" id="T29_2" pared="4" rotate="0" row="1"   type="turnout"/>
+  <turnout col="27" id="AT1" id1="T17" id2="T18" row="4" type="ang_turnout"/>
  </turnouts>
  <paredTurnouts>
   <paredTurnout id="T29" pared="4" turnout1="T29_1" turnout2="T29_2"/>
@@ -72,11 +73,6 @@
   <paredTurnout id="T2" pared="2" turnout1="T2_1" turnout2="T2_2"/>
   <paredTurnout id="T1" pared="1" turnout1="T1_1" turnout2="T1_2"/>
  </paredTurnouts>
- <ang_turnouts>
-  <ang_turnout id="AT8_9" turnout1="T8" turnout2="T9" paredAT="AT1"/>
-  <ang_turnout id="AT21_22" turnout1="T21" turnout2="T22" paredAT="AT2"/>
-  <ang_turnout id="AT19_20" turnout1="T19" turnout2="T20" paredAT="AT3"/>
- </ang_turnouts>
  <cross_turnouts>
   <cross_turnout col="5" id="CT1" rotate="0" row="0" type="cross_turnout"/>
   <cross_turnout col="31" id="CT2" rotate="0" row="0" type="cross_turnout"/>

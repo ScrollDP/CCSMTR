@@ -634,19 +634,19 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
         }
         if (m_value == "S++") {
             threadToggleVyhybka(true, false, svgFilePath1, turnout1);
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
             threadToggleVyhybka(true, false, svgFilePath2, turnout2);
         } else if (m_value == "S--") {
             threadToggleVyhybka(false, true, svgFilePath1, turnout1);
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
             threadToggleVyhybka(false, true, svgFilePath2, turnout2);
         } else if (m_value == "S+-") {
             threadToggleVyhybka(true, false, svgFilePath1, turnout1);
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
             threadToggleVyhybka(false, true, svgFilePath2, turnout2);
         } else if (m_value == "S-+") {
             threadToggleVyhybka(false, true, svgFilePath1, turnout1);
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
             threadToggleVyhybka(true, false, svgFilePath2, turnout2);
         } else {
             qDebug() << "Invalid action:" << m_value;
