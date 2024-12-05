@@ -26,7 +26,7 @@ private:
     QSvgRenderer *renderer;
     QString svgFilePath;
 
-    void createTurnoutConfigFile(const QString &filePath, const QString &status);
+    void createTurnoutConfigFile(const QString &filePath, const QString &status, const QString &type);
 
     QString loadTurnoutStatusFromConfigFile(const QString &turnoutID);
 };

@@ -113,7 +113,7 @@ void StationControl::LoadingSvgFile() {
                 continue;
             }
 
-            // Create a temporary file
+            // Create a svg temporary file
             QDir dir;
             if (!dir.exists(".tmp/svgFiles")) {
                 dir.mkpath(".tmp/svgFiles");
@@ -124,16 +124,21 @@ void StationControl::LoadingSvgFile() {
             }
 
             // Create config file if it does not exist
-            QString configFilePath = QString(".tmp/svgConfigFiles/%1.xml").arg(id);
-            if (!QFile::exists(configFilePath) && id.startsWith("T")) {
-                createTurnoutConfigFile(configFilePath, "S-"); // Default status
+            if(type == "turnout" || type == "ang_turnout") {
+                QString configFilePath = QString(".tmp/svgConfigFiles/%1.xml").arg(id);
+                if (!QFile::exists(configFilePath) && id.startsWith("T")) {
+                    createTurnoutConfigFile(configFilePath, "S-", type); // Default status
+                }
+                else if(!QFile::exists(configFilePath) && id.startsWith("AT")) {
+                    createTurnoutConfigFile(configFilePath, "S+-", type); // Default status
+                }
             }
 
             // Load status from the turnout config file
             QString status = loadTurnoutStatusFromConfigFile(id);
 
             // Edit the temporary SVG file based on the status
-            if (type == "turnout") {
+            if (type == "turnout" || type == "ang_turnout") {
                 QFile tmpFile(tmpFilePath);
                 if (!tmpFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
                     qWarning() << "Failed to open temporary SVG file:" << tmpFilePath;
@@ -149,6 +154,7 @@ void StationControl::LoadingSvgFile() {
 
                 QDomElement svgRoot = svgDoc.documentElement();
                 QDomNodeList paths = svgRoot.elementsByTagName("path");
+
 
                 for (int k = 0; k < paths.count(); ++k) {
                     QDomElement path = paths.at(k).toElement();
@@ -209,12 +215,21 @@ void StationControl::ApplyTransformation(bool flipped, int rotate, SVGHandleEven
             }
         }
     }
+    if(m_type == "ang_turnout"){
+        if (rotate == 0) {
+            if (flipped) {
+                transformStr = "scale(-1, 1) translate(-16,0) rotate(0)"; //vymenit 0 za 1
+            } else {
+                transformStr = "scale(1, 1) translate(0,0) rotate(0)"; //vymenit 0 za 1
+            }
+        }
+    }
 
     svgItem->updateTransform(transformStr);
 }
 
 // Function to create the configuration XML file for a turnout
-void StationControl::createTurnoutConfigFile(const QString &filePath, const QString &status) {
+void StationControl::createTurnoutConfigFile(const QString &filePath, const QString &status, const QString &type) {
     // Check if the file already exists
     QFile file(filePath);
     if (file.exists()) {
@@ -225,21 +240,52 @@ void StationControl::createTurnoutConfigFile(const QString &filePath, const QStr
     QDomDocument doc;
     QDomElement root = doc.createElement("turnoutConfig");
     doc.appendChild(root);
+    if(type == "turnout") {
+        QDomElement basicElement = doc.createElement("_basic");
+        QDomText basicInt = doc.createTextNode("1");
+        basicElement.appendChild(basicInt);
+        root.appendChild(basicElement);
 
-    QDomElement basicElement = doc.createElement("_basic");
-    QDomText basicInt = doc.createTextNode("1");
-    basicElement.appendChild(basicInt);
-    root.appendChild(basicElement);
+        QDomElement reverseElement = doc.createElement("_reverse");
+        QDomText reverseInt = doc.createTextNode("0");
+        reverseElement.appendChild(reverseInt);
+        root.appendChild(reverseElement);
 
-    QDomElement reverseElement = doc.createElement("_reverse");
-    QDomText reverseInt = doc.createTextNode("0");
-    reverseElement.appendChild(reverseInt);
-    root.appendChild(reverseElement);
+        QDomElement statusElement = doc.createElement("status");
+        QDomText statusText = doc.createTextNode(status);
+        statusElement.appendChild(statusText);
+        root.appendChild(statusElement);
+    }
+    else if (type == "ang_turnout") {
+        QDomElement id1Element = doc.createElement("id1");
+        QDomElement basicElement1 = doc.createElement("_basic");
+        QDomText basicInt1 = doc.createTextNode("0");
+        basicElement1.appendChild(basicInt1);
+        id1Element.appendChild(basicElement1);
 
-    QDomElement statusElement = doc.createElement("status");
-    QDomText statusText = doc.createTextNode(status);
-    statusElement.appendChild(statusText);
-    root.appendChild(statusElement);
+        QDomElement reverseElement1 = doc.createElement("_reverse");
+        QDomText reverseInt1 = doc.createTextNode("1");
+        reverseElement1.appendChild(reverseInt1);
+        id1Element.appendChild(reverseElement1);
+        root.appendChild(id1Element);
+
+        QDomElement id2Element = doc.createElement("id2");
+        QDomElement basicElement2 = doc.createElement("_basic");
+        QDomText basicInt2 = doc.createTextNode("0");
+        basicElement2.appendChild(basicInt2);
+        id2Element.appendChild(basicElement2);
+
+        QDomElement reverseElement2 = doc.createElement("_reverse");
+        QDomText reverseInt2 = doc.createTextNode("1");
+        reverseElement2.appendChild(reverseInt2);
+        id2Element.appendChild(reverseElement2);
+        root.appendChild(id2Element);
+
+        QDomElement statusElement = doc.createElement("status");
+        QDomText statusText = doc.createTextNode(status);
+        statusElement.appendChild(statusText);
+        root.appendChild(statusElement);
+    }
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "Failed to open file for writing:" << filePath;

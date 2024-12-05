@@ -1,5 +1,5 @@
 <svg height="12" overflow="visible" viewBox="0 0 16 12" width="16" xmlns="http://www.w3.org/2000/svg">
-    <g id="turnout" stroke="gray" transform="scale(1, 1) translate(0,0) rotate(0)">
+    <g id="turnout" stroke="gray" transform="scale(-1, 1) translate(-16,0) rotate(0)">
         <!-- Splus_plus state -->
         <path d="M16,6 L0,6 M12,0,L11,1.5 M4,12,L5,10.5" id="S++" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
         <!-- Sminus_minus state -->
