@@ -189,7 +189,9 @@ void StationControl::LoadingSvgFile() {
 
                 // Update the text element with the turnout ID
                 QString modifiedId = id;
-                modifiedId.remove('T');
+                if(type == "turnout") {
+                    modifiedId.remove('T');
+                }
                 QDomNodeList texts = svgRoot.elementsByTagName("text");
                 for (int k = 0; k < texts.count(); ++k) {
                     QDomElement text = texts.at(k).toElement();

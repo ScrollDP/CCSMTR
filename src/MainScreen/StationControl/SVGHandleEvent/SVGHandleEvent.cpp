@@ -580,136 +580,62 @@ void SVGHandleEvent::vyhybkaMenu(const QPoint &pos, const QString &id) {
     QDomElement layoutRoot = layoutDoc.documentElement();
     QDomNodeList turnoutElements = layoutRoot.elementsByTagName("turnout");
 
-    QString paredGroup;
-    for (int i = 0; i < turnoutElements.count(); ++i) {
-        QDomElement turnoutElement = turnoutElements.at(i).toElement();
-        if (turnoutElement.attribute("id") == id && turnoutElement.hasAttribute("paredAT")) {
-            paredGroup = turnoutElement.attribute("paredAT");
-            break;
-        }
+
+    QFile file(svgFilePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open SVG file:" << svgFilePath;
+        return;
     }
 
-    if (!paredGroup.isEmpty()) {
-        QDomNodeList angTurnoutElements = layoutRoot.elementsByTagName("ang_turnout");
-        QString turnout1, turnout2;
-
-
-        for (int i = 0; i < angTurnoutElements.count(); ++i) {
-            QDomElement angTurnoutElement = angTurnoutElements.at(i).toElement();
-            if (angTurnoutElement.attribute("paredAT") == paredGroup) {
-                turnout1 = angTurnoutElement.attribute("turnout1");
-                turnout2 = angTurnoutElement.attribute("turnout2");
-                qDebug() << "Clicked turnout:" << id << "belongs to group:" << paredGroup;
-                qDebug() << "Related turnouts:" << turnout1 << "," << turnout2;
-
-
-            }
-        }
-        contextMenu.addAction("S++");
-        contextMenu.addAction("S--");
-        contextMenu.addAction("S-+");
-        contextMenu.addAction("S+-");
-
-
-        QString svgFilePath1 = getSvgFilePathForTurnout(turnout1);
-        qDebug() << "SVG file path for turnout1:" << svgFilePath1;
-        QString svgFilePath2 = getSvgFilePathForTurnout(turnout2);
-        qDebug() << "SVG file path for turnout2:" << svgFilePath2;
-
-        QSvgRenderer svgRenderer1(svgFilePath1);
-        if (!svgRenderer1.isValid()) {
-            qWarning() << "Failed to load SVG file:" << svgFilePath1;
-            return;
-        }
-
-        QSvgRenderer svgRenderer2(svgFilePath2);
-        if (!svgRenderer2.isValid()) {
-            qWarning() << "Failed to load SVG file:" << svgFilePath2;
-            return;
-        }
-
-        QAction* selectedAction = contextMenu.exec(pos);
-        if (selectedAction) {
-            m_value = selectedAction->text();
-        }
-        if (m_value == "S++") {
-            threadToggleVyhybka(true, false, svgFilePath1, turnout1);
-            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            threadToggleVyhybka(true, false, svgFilePath2, turnout2);
-        } else if (m_value == "S--") {
-            threadToggleVyhybka(false, true, svgFilePath1, turnout1);
-            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            threadToggleVyhybka(false, true, svgFilePath2, turnout2);
-        } else if (m_value == "S+-") {
-            threadToggleVyhybka(true, false, svgFilePath1, turnout1);
-            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            threadToggleVyhybka(false, true, svgFilePath2, turnout2);
-        } else if (m_value == "S-+") {
-            threadToggleVyhybka(false, true, svgFilePath1, turnout1);
-            //std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            threadToggleVyhybka(true, false, svgFilePath2, turnout2);
-        } else {
-            qDebug() << "Invalid action:" << m_value;
-        }
-
-    }
-    else {
-
-        QFile file(svgFilePath);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open SVG file:" << svgFilePath;
-            return;
-        }
-
-        QDomDocument doc;
-        if (!doc.setContent(&file)) {
-            qWarning() << "Failed to parse SVG file:" << svgFilePath;
-            file.close();
-            return;
-        }
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse SVG file:" << svgFilePath;
         file.close();
+        return;
+    }
+    file.close();
 
-        QDomElement root = doc.documentElement();
-        QDomNodeList elements = root.elementsByTagName("path");
+    QDomElement root = doc.documentElement();
+    QDomNodeList elements = root.elementsByTagName("path");
 
-        QString currentState;
-        for (int i = 0; i < elements.count(); ++i) {
-            QDomElement element = elements.at(i).toElement();
-            if (element.isNull()) {
-                continue;
+    QString currentState;
+    for (int i = 0; i < elements.count(); ++i) {
+        QDomElement element = elements.at(i).toElement();
+        if (element.isNull()) {
+            continue;
+        }
+        QString Id = element.attribute("id");
+
+        if (Id == "_basic" || Id == "_reverse") {
+            QString visibility = element.attribute("visibility");
+            if (visibility == "visible") {
+                currentState = Id;
+                break;
             }
-            QString Id = element.attribute("id");
-
-            if (Id == "_basic" || Id == "_reverse") {
-                QString visibility = element.attribute("visibility");
-                if (visibility == "visible") {
-                    currentState = Id;
-                    break;
-                }
-            }
-        }
-
-        if (currentState == "_basic") {
-            contextMenu.addAction("S-");
-            qDebug() << "S-"<< id << " " << currentState << " file" << svgFilePath;
-        } else if (currentState == "_reverse") {
-            contextMenu.addAction("S+");
-            qDebug() << "S+"<< id << " " << currentState << " file" << svgFilePath;
-        }
-
-        QAction* selectedAction = contextMenu.exec(pos);
-        if (selectedAction) {
-            m_value = selectedAction->text();
-        }
-
-        if (m_value == "S+") {
-            threadToggleVyhybka(true, false,svgFilePath, id);
-            //qDebug() << "S+";
-        } else if (m_value == "S-") {
-            //qDebug() << "S-";
-            threadToggleVyhybka(false, true,svgFilePath,id);
         }
     }
+
+    if (currentState == "_basic") {
+        contextMenu.addAction("S-");
+        qDebug() << "S-"<< id << " " << currentState << " file" << svgFilePath;
+    } else if (currentState == "_reverse") {
+        contextMenu.addAction("S+");
+        qDebug() << "S+"<< id << " " << currentState << " file" << svgFilePath;
+    }
+
+    QAction* selectedAction = contextMenu.exec(pos);
+    if (selectedAction) {
+        m_value = selectedAction->text();
+    }
+
+    if (m_value == "S+") {
+        threadToggleVyhybka(true, false,svgFilePath, id);
+        //qDebug() << "S+";
+    } else if (m_value == "S-") {
+        //qDebug() << "S-";
+        threadToggleVyhybka(false, true,svgFilePath,id);
+    }
+
 
 }
 
