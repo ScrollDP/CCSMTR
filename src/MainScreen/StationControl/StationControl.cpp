@@ -18,6 +18,7 @@ StationControl::StationControl(QWidget *parent, const QString &svgFilePath)
 
     ui->setupUi(this);
     ui->Refresh->hide();
+    ui->ResetRoutes->hide();
     // Set background color of graphicsView to black
     ui->graphicsView->setStyleSheet("background-color: black");
 
@@ -25,6 +26,10 @@ StationControl::StationControl(QWidget *parent, const QString &svgFilePath)
 
     connect(ui->Refresh, &QPushButton::clicked, this, [svgFilePath, this]() {
         LoadingSvgFile();
+    });
+    connect(ui->ResetRoutes, &QPushButton::clicked, this, [this]() {
+        ResetRoutes();
+        qDebug() << "Reset routes button clicked.";
     });
 
 }
@@ -58,6 +63,61 @@ std::unordered_map<QString, QString> loadTypeToFilePath(const QString &filePath)
 
     file.close();
     return typeToFilePath;
+}
+
+void StationControl::ResetRoutes() {
+    // Open and parse routes.xml
+    QFile file("../layout/routes.xml");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes file:" << "../layout/routes.xml";
+        return;
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        qWarning() << "Failed to parse routes file:" << "../layout/routes.xml";
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomNodeList routes = root.elementsByTagName("route");
+
+    // Iterate through each route and update VC, PC, locked, and inUse elements
+    for (int i = 0; i < routes.count(); ++i) {
+        QDomElement route = routes.at(i).toElement();
+        QDomElement status = route.firstChildElement("status");
+        QDomElement VC = status.firstChildElement("VC");
+        QDomElement PC = status.firstChildElement("PC");
+        QDomElement locked = status.firstChildElement("locked");
+        QDomElement activeElements = status.firstChildElement("activeElements");
+        QDomElement inUse = status.firstChildElement("inUse");
+
+        if (VC.text() == "true") {
+            VC.firstChild().setNodeValue("false");
+        }
+        if (PC.text() == "true") {
+            PC.firstChild().setNodeValue("false");
+        }
+        if (locked.text() == "true") {
+            locked.firstChild().setNodeValue("false");
+        }
+        if (activeElements.text() == "true") {
+            activeElements.firstChild().setNodeValue("false");
+        }
+        inUse.setAttribute("name", "");
+    }
+
+    // Save the changes back to routes.xml
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open routes file for writing:" << "../layout/routes.xml";
+        return;
+    }
+
+    QTextStream stream(&file);
+    stream << doc.toString();
+    file.close();
 }
 
 

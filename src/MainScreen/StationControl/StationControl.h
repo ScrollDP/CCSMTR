@@ -17,6 +17,7 @@ public:
 
 private:
     void LoadingSvgFile();
+    void ResetRoutes();
 
     int Scale = 4;
     int Position_Col = 8;

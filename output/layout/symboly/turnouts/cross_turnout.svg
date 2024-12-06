@@ -1,7 +1,7 @@
 <svg width="16" height="12"  viewBox="0 0 16 12"  overflow="visible" xmlns="http://www.w3.org/2000/svg">
     <g id="cross_turnout" stroke="gray">
         <!-- cross State -->
-        <path d="M8,6 L4,12 M8,6 L4,0 M8,6 L12,0 M8,6 L12,12" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
+        <path d="M8,6,L4,12 M8,6,L4,0 M8,6,L12,0 M8,6,L12,12" stroke-linecap="round" stroke-width="1.1" visibility="visible"/>
         <!--<rect x="0" y="0" width="16" height="12" fill="none" stroke="red" stroke-width="0.4" visibility="visible"/>-->
     </g>
 </svg>

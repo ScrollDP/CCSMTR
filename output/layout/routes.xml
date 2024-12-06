@@ -168,7 +168,6 @@
    <element id="T3" position="S-"/>
    <element id="T1_1" position="S-"/>
    <element id="T2_2" position="S-"/>
-   <element id="CT1"/>
    <element id="R1.4"/>
    <element id="R1.2"/>
    <element id="R1.0"/>
@@ -1358,7 +1357,7 @@
  <route name="deviata_Se10">
   <marks>
    <start point="HN2"/>
-   <end point="Z6"/>
+   <end point="R3.7"/>
   </marks>
   <!--elements for route by id-->
   <elements>
@@ -1414,7 +1413,7 @@
  <route name="deviata_Se8">
   <marks>
    <start point="HN2"/>
-   <end point="Z2"/>
+   <end point="R5.7"/>
   </marks>
   <!--elements for route by id-->
   <elements>
@@ -1706,7 +1705,7 @@
    <locked>false</locked>
    <VC>false</VC>
    <PC>false</PC>
-   <inUse name="ZN9"/>
+   <inUse name=""/>
    <activeElements>false</activeElements>
    <isPC>yes</isPC>
   </status>

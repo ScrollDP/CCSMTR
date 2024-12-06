@@ -462,7 +462,7 @@ void SVGHandleEvent::changeColorOfElements(const QString &m_routeName, const QSt
                     if (group.attribute("id") == "zarazadlo") {
                         group.setAttribute("stroke", targetColor);
                     }
-                } else if (elementId.startsWith("CT1")){
+                } else if (elementId.startsWith("CT")){
                     if (group.attribute("id") == "cross_turnout") {
                         group.setAttribute("stroke", targetColor);
                     }
@@ -1211,8 +1211,6 @@ void SVGHandleEvent::updateTransform(const QString &transformStr) {
 }
 
 void SVGHandleEvent::vlakovaCestaRouteVC(const QString &m_elementID) {
-
-
     // Open and parse routes.xml
     QFile routesFile("../layout/routes.xml");
     if (!routesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -1785,16 +1783,21 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                             if (path.isNull()) {
                                 continue;
                             }
-                            QString pathId = path.attribute("id");
+                            QString Id = element.attribute("id");
 
-                            if (pathId == "S++" || pathId == "S--" || pathId == "S+-" || pathId == "S-+") {
+                            if (Id == "S++" || Id == "S--" || Id == "S+-" || Id == "S-+") {
                                 QString visibility = element.attribute("visibility");
                                 if (visibility == "visible") {
-                                    currentState = pathId;
+                                    currentState = Id;
                                     break;
                                 }
                             }
                         }
+
+
+                        qDebug() << "va currentState:" << currentState;
+                        qDebug() << "va desiredPosition:" << element.attribute("position");
+
                         QString desiredPosition = element.attribute("position");
                         if ((currentState == "S++" && desiredPosition == "S++") ||
                             (currentState == "S--" && desiredPosition == "S--") ||
@@ -2042,7 +2045,7 @@ void SVGHandleEvent::rusenieCesty(const QString &id) {
             //inUse.setAttribute("name", "");
 
             qDebug() << "Route" << route.attribute("name") << "is now unlocked";
-            threadChangeColorOfElements(route.attribute("name"), "gray", true);
+            changeColorOfElements(route.attribute("name"), "gray", true);
         }
 
     }

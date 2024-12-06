@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -22,7 +23,9 @@ class Ui_StationControl
 {
 public:
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout;
     QPushButton *Refresh;
+    QPushButton *ResetRoutes;
     QGraphicsView *graphicsView;
 
     void setupUi(QWidget *StationControl)
@@ -39,10 +42,20 @@ public:
         verticalLayout = new QVBoxLayout(StationControl);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName("horizontalLayout");
         Refresh = new QPushButton(StationControl);
         Refresh->setObjectName("Refresh");
 
-        verticalLayout->addWidget(Refresh);
+        horizontalLayout->addWidget(Refresh);
+
+        ResetRoutes = new QPushButton(StationControl);
+        ResetRoutes->setObjectName("ResetRoutes");
+
+        horizontalLayout->addWidget(ResetRoutes);
+
+
+        verticalLayout->addLayout(horizontalLayout);
 
         graphicsView = new QGraphicsView(StationControl);
         graphicsView->setObjectName("graphicsView");
@@ -58,7 +71,8 @@ public:
     void retranslateUi(QWidget *StationControl)
     {
         StationControl->setWindowTitle(QString());
-        Refresh->setText(QCoreApplication::translate("StationControl", "Refresh", nullptr));
+        Refresh->setText(QCoreApplication::translate("StationControl", "Refresh SVGs", nullptr));
+        ResetRoutes->setText(QCoreApplication::translate("StationControl", "reset routes", nullptr));
     } // retranslateUi
 
 };

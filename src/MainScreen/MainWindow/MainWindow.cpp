@@ -128,12 +128,14 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
 
 void MainWindow::editMenuEnabled() {
     if (ui->checkBox->isChecked()) {
-        if (stationControllWindow && stationControllWindow->ui && stationControllWindow->ui->Refresh) {
+        if (stationControllWindow && stationControllWindow->ui && stationControllWindow->ui->Refresh && stationControllWindow->ui->ResetRoutes) {
             stationControllWindow->ui->Refresh->show();
+            stationControllWindow->ui->ResetRoutes->show();
         }
     } else {
-        if (stationControllWindow && stationControllWindow->ui && stationControllWindow->ui->Refresh) {
+        if (stationControllWindow && stationControllWindow->ui && stationControllWindow->ui->Refresh && stationControllWindow->ui->ResetRoutes) {
             stationControllWindow->ui->Refresh->hide();
+            stationControllWindow->ui->ResetRoutes->hide();
         }
     }
 }
