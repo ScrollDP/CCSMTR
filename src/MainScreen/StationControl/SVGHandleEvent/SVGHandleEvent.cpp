@@ -445,6 +445,10 @@ void SVGHandleEvent::changeColorOfElements(const QString &m_routeName, const QSt
                     if (group.attribute("id") == "turnout") {
                         group.setAttribute("stroke", targetColor);
                     }
+                } else if (elementId.startsWith("AT")) {
+                    if (group.attribute("id") == "ang_turnout") {
+                        group.setAttribute("stroke", targetColor);
+                    }
                 } else if (elementId.startsWith("ZN")) {
                     if (group.attribute("id") == "zriadovacie_navestidlo") {
                         group.setAttribute("stroke", targetColor);
@@ -721,6 +725,19 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
     }
     layoutFile.close();
 
+    QString firstID, secondID;
+    QDomNodeList turnouts = layoutDoc.elementsByTagName("turnout");
+    for (int i = 0; i < turnouts.count(); ++i) {
+        QDomElement turnout = turnouts.at(i).toElement();
+        if (turnout.attribute("id") == elementId) {
+            firstID = turnout.attribute("first");
+            secondID = turnout.attribute("second");
+            qDebug() << "First ID:" << firstID;
+            qDebug() << "Second ID:" << secondID;
+            break;
+        }
+    }
+
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open SVG file:" << path;
@@ -819,10 +836,11 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
     if(status == "S++") {
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
-        QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_basic);
+        QString m_firstID = extractNumber(firstID);
+        QString command = QString("<T %1 %2>").arg(m_firstID).arg(id1_positionTurnout_basic);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_basic);
+        QString m_secondID = extractNumber(secondID);
+        QString command2 = QString("<T %1 %2>").arg(m_secondID).arg(id2_positionTurnout_basic);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         qDebug() << "Command sent to Arduino:" << command2.toStdString();
@@ -836,10 +854,11 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
     else if(status == "S--") {
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
-        QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_reverse);
+        QString m_firstID = extractNumber(firstID);
+        QString command = QString("<T %1 %2>").arg(m_firstID).arg(id1_positionTurnout_reverse);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_reverse);
+        QString m_secondID = extractNumber(secondID);
+        QString command2 = QString("<T %1 %2>").arg(m_secondID).arg(id2_positionTurnout_reverse);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         qDebug() << "Command sent to Arduino:" << command2.toStdString();
@@ -853,10 +872,11 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
     else if(status == "S+-") {
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
-        QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_basic);
+        QString m_firstID = extractNumber(firstID);
+        QString command = QString("<T %1 %2>").arg(m_firstID).arg(id1_positionTurnout_basic);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_reverse);
+        QString m_secondID = extractNumber(secondID);
+        QString command2 = QString("<T %1 %2>").arg(m_secondID).arg(id2_positionTurnout_reverse);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         qDebug() << "Command sent to Arduino:" << command2.toStdString();
@@ -870,10 +890,11 @@ void SVGHandleEvent::angToggleVisibility(QString status, const QString &path, co
     else if(status == "S-+") {
         setVisibility("_between", "visible");
         saveAndReload(doc, path, elementId);
-        QString numberID = extractNumber(elementId);
-        QString command = QString("<T %1 %2>").arg(numberID).arg(id1_positionTurnout_reverse);
+        QString m_firstID = extractNumber(firstID);
+        QString command = QString("<T %1 %2>").arg(m_firstID).arg(id1_positionTurnout_reverse);
         sendToArduino(command);
-        QString command2 = QString("<T %1 %2>").arg(numberID).arg(id2_positionTurnout_basic);
+        QString m_secondID = extractNumber(secondID);
+        QString command2 = QString("<T %1 %2>").arg(m_secondID).arg(id2_positionTurnout_basic);
         sendToArduino(command2);
         qDebug() << "Command sent to Arduino:" << command.toStdString();
         qDebug() << "Command sent to Arduino:" << command2.toStdString();
@@ -1718,7 +1739,6 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                         QString desiredPosition = element.attribute("position");
                         if ((currentState == "_basic" && desiredPosition == "S+") ||
                             (currentState == "_reverse" && desiredPosition == "S-")) {
-                            continue;
                         } else if (desiredPosition == "S-") {
                             turnoutItem->threadToggleVyhybka(false, true, turnoutItem->svgFilePath, id);
                         } else if (desiredPosition == "S+") {
@@ -1728,7 +1748,70 @@ void SVGHandleEvent::stavanieVCCesty(const QString &m_elementId) {
                         }
                     }
                     if(id.startsWith("AT")) {
-                        //TODO: Implement of AT
+                        SVGHandleEvent *turnoutItem = nullptr;
+                        for (QGraphicsItem *item : this->scene()->items()) {
+                            SVGHandleEvent *svgItem = dynamic_cast<SVGHandleEvent *>(item);
+                            if (svgItem && svgItem->elementId == id) {
+                                turnoutItem = svgItem;
+                                break;
+                            }
+                        }
+
+                        if (!turnoutItem) {
+                            qWarning() << "Turnout item not found for ID:" << id;
+                            continue;
+                        }
+
+                        QFile file(turnoutItem->svgFilePath);
+                        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                            qWarning() << "Failed to open SVG file:" << turnoutItem->svgFilePath;
+                            continue;
+                        }
+
+                        QDomDocument doc;
+                        if (!doc.setContent(&file)) {
+                            qWarning() << "Failed to parse SVG file:" << turnoutItem->svgFilePath;
+                            file.close();
+                            continue;
+                        }
+                        file.close();
+
+                        QDomElement root = doc.documentElement();
+                        QDomNodeList paths = root.elementsByTagName("path");
+
+                        QString currentState;
+                        for (int k = 0; k < paths.count(); ++k) {
+                            QDomElement path = paths.at(k).toElement();
+                            if (path.isNull()) {
+                                continue;
+                            }
+                            QString pathId = path.attribute("id");
+
+                            if (pathId == "S++" || pathId == "S--" || pathId == "S+-" || pathId == "S-+") {
+                                QString visibility = element.attribute("visibility");
+                                if (visibility == "visible") {
+                                    currentState = pathId;
+                                    break;
+                                }
+                            }
+                        }
+                        QString desiredPosition = element.attribute("position");
+                        if ((currentState == "S++" && desiredPosition == "S++") ||
+                            (currentState == "S--" && desiredPosition == "S--") ||
+                            (currentState == "S+-" && desiredPosition == "S+-") ||
+                            (currentState == "S-+" && desiredPosition == "S-+")) {
+                        } else if (desiredPosition == "S++") {
+                            turnoutItem->threadAngToggleVisibility(desiredPosition, turnoutItem->svgFilePath, id);
+                        } else if (desiredPosition == "S--") {
+                            turnoutItem->threadAngToggleVisibility(desiredPosition, turnoutItem->svgFilePath, id);
+                        } else if (desiredPosition == "S+-") {
+                            turnoutItem->threadAngToggleVisibility(desiredPosition, turnoutItem->svgFilePath, id);
+                        } else if (desiredPosition == "S-+") {
+                            turnoutItem->threadAngToggleVisibility(desiredPosition, turnoutItem->svgFilePath, id);
+                        } else {
+                            qWarning() << "Unknown desired position for ID:" << id;
+                        }
+
                     }
                 }
 
