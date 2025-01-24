@@ -199,9 +199,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>false</VC>
+   <VC>true</VC>
    <PC>false</PC>
-   <inUse name=""/>
+   <inUse name="HN6"/>
    <activeElements>false</activeElements>
    <isPC>no</isPC>
   </status>
@@ -225,9 +225,9 @@
   </elements>
   <status>
    <locked>false</locked>
-   <VC>false</VC>
+   <VC>true</VC>
    <PC>false</PC>
-   <inUse name=""/>
+   <inUse name="HN6"/>
    <activeElements>false</activeElements>
    <isPC>no</isPC>
   </status>
