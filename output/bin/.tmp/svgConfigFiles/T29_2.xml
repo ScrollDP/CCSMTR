@@ -1,5 +1,5 @@
 <turnoutConfig>
- <_basic>0</_basic>
- <_reverse>1</_reverse>
+ <_basic>1</_basic>
+ <_reverse>0</_reverse>
  <status>S-</status>
 </turnoutConfig>

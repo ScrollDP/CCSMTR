@@ -2473,7 +2473,7 @@ void SVGHandleEvent::toggleVyhybkaInGroup(bool straight, bool diverging, const Q
     if (!configDoc.setContent(&configFile)) {
         qWarning() << "Failed to parse turnout config file:" << configFilePath;
         configFile.close();
-        return;
+        //return;
     }
     configFile.close();
 

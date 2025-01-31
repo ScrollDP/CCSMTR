@@ -68,7 +68,7 @@
   <turnout col="31" flipped="false" id="T29_1" pared="4" rotate="0" row="1" type="turnout"/>
   <turnout col="32" flipped="true" id="T29_2" pared="4" rotate="0" row="1" type="turnout"/>
   <turnout col="27" flipped="false" id="AT1" first="T17" second="T18" rotate="0" row="4" type="ang_turnout"/>
-  <turnout col="8" flipped="true" id="AT2" first="T8" second="T9" rotate="0" row="3" type="ang_turnout"/>
+  <turnout col="8" flipped="true" id="AT2" first="T9" second="T8" rotate="0" row="3" type="ang_turnout"/>
   <turnout col="28" flipped="true" id="AT3" first="T22" second="T21" rotate="0" row="-2" type="ang_turnout"/>
   <turnout col="28" flipped="true" id="AT4" first="T20" second="T19" rotate="0" row="-4" type="ang_turnout"/>
 
